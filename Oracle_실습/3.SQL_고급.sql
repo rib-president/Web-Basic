@@ -86,6 +86,34 @@ WHERE NOT EXISTS (SELECT *
             WHERE address LIKE '%대한민국%' AND cs.custid=od.custid);
 
 
+--ROWNUM
+SELECT ROWNUM, custid, name, phone
+FROM customer;
+
+SELECT ROWNUM, book.* from book;
+
+SELECT ROWNUM "순번", custid, name, phone
+FROM customer
+WHERE ROWNUM <= 2;
+
+--book table에서 price가 가장 작은 2개의 책을 선택
+--1)order by 적용하여 오름차순으로 sorting -> price가 가장 작은 2개 책을 선택 불가
+SELECT ROWNUM, book.*
+FROM book
+ORDER BY price;
+
+--2)price로 order by 된 뷰를 가져와 rownum이 2보다 작은 튜플 조회
+SELECT ROWNUM, b.*
+FROM (SELECT * FROM book ORDER BY price) b
+WHERE ROWNUM <= 2;
+
+--책 값이 가장 비싼 3개의 행을 선택
+SELECT ROWNUM, b.*
+FROM (SELECT * FROM book ORDER BY price DESC) b
+WHERE ROWNUM <= 3;
+
+
+
 
 
 
