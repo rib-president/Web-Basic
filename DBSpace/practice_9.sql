@@ -236,3 +236,5 @@ ORDER BY t.treat_date ASC;
 SELECT *
 FROM Nurses
 WHERE nur_id LIKE 05 || '%';
+
+COMMIT;
