@@ -76,7 +76,7 @@ public class HospitalDB {
 			pstmt.close();
 		} catch (SQLException e) {
 //			e.printStackTrace();
-			System.out.println("employee search error");
+			System.out.println("select all error");
 		}
 	}
 	
@@ -101,7 +101,8 @@ public class HospitalDB {
 				return rs.getInt(1);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("get nextval error");
 		} finally {
 			try {
 				rs.close();
@@ -137,7 +138,8 @@ public class HospitalDB {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("insert doctors error");
 		}
 		return false;
 	}
@@ -147,12 +149,7 @@ public class HospitalDB {
 				 " = ? WHERE " + searchCol;
 		PreparedStatement pstmt = null;
 		
-		if(searchVal.toUpperCase().indexOf("NOT NULL") != -1)
-			query += " IS NOT " + null;
-		else if(searchVal.toUpperCase().indexOf("NULL") != -1)
-			query += " IS " + null;
-		else
-			query += " = '" + searchVal + "'";
+		query += checkSearchVal(searchVal);
 
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -166,7 +163,8 @@ public class HospitalDB {
 				return true;
 			}			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("update error");
 		}
 		return false;
 	}
@@ -175,12 +173,7 @@ public class HospitalDB {
 		String query = "DELETE FROM " + tableName + " WHERE " + searchCol;
 		PreparedStatement pstmt = null;
 		
-		if(searchVal.toUpperCase().indexOf("NOT NULL") != -1)
-			query += " IS NOT " + null;
-		else if(searchVal.toUpperCase().indexOf("NULL") != -1)
-			query += " IS " + null;
-		else
-			query += " = '" + searchVal + "'";
+		query += checkSearchVal(searchVal);
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -192,21 +185,28 @@ public class HospitalDB {
 				return true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("delete error");
 		}
 		return false;
+	}
+	
+	public String checkSearchVal(String searchVal) {
+		if(searchVal.toUpperCase().indexOf("NOT NULL") != -1)
+			searchVal = " IS NOT " + null;
+		else if(searchVal.toUpperCase().indexOf("NULL") != -1)
+			searchVal = " IS " + null;
+		else
+			searchVal = " = '" + searchVal + "'";
+		
+		return searchVal;
 	}
 	
 	public ArrayList<Doctors> searchDoctors(String searchCol, String searchVal) {
 		String query = "SELECT * FROM Doctors WHERE " + searchCol;
 		PreparedStatement pstmt = null;
 		
-		if(searchVal.toUpperCase().indexOf("NOT NULL") != -1)
-			query += " IS NOT " + null;
-		else if(searchVal.toUpperCase().indexOf("NULL") != -1)
-			query += " IS " + null;
-		else
-			query += " = '" + searchVal + "'";
+		query += checkSearchVal(searchVal);
 
 		ArrayList<Doctors> docList = new ArrayList<>();
 		ResultSet rs = null;
@@ -228,7 +228,8 @@ public class HospitalDB {
 			}			
 			return docList;			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("search doctors error");
 		} finally {
 			try {
 				rs.close();
