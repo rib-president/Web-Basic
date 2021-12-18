@@ -77,6 +77,4 @@ public class Nurses {
 	public void setNur_position(String nur_position) {
 		this.nur_position = nur_position;
 	}
-	
-	
 }

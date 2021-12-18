@@ -36,11 +36,11 @@ INCREMENT BY 1
 START WITH 1;
 
 --시퀀스 초기화
-DROP SEQUENCE doc_seq;
+/*DROP SEQUENCE doc_seq;
 DROP SEQUENCE nur_seq;
 DROP SEQUENCE pat_seq;
 DROP SEQUENCE treat_seq;
-DROP SEQUENCE chart_seq;
+DROP SEQUENCE chart_seq;*/
 
 --의사는 의사ID를 부여하여 식별하며 담당진료과목, 성명, 성별, 전화번호, 이메일, 직급을 가짐
 --환자에 대한 모든 정보 검색

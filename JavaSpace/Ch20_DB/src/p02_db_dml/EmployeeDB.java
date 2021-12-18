@@ -122,7 +122,6 @@ public class EmployeeDB {
 
 	
 	public boolean employeeDelete (String emplid) {
-		
 		try {
 			String query = "DELETE FROM employee WHERE emplid = ?";
 //			String query = "UPDATE employee SET adminyn = 'N' WHERE emplid = ?";
