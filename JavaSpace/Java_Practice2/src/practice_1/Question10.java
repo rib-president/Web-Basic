@@ -4,7 +4,7 @@ package practice_1;
 public class Question10 {
 	public static void main(String[] args) {
 		String result = "소수 입니다.";
-		for(int i=2;i<=(863/2);i++) {
+		for(int i=2;i<=Math.sqrt(863);i++) {
 			if(863 % i == 0) {
 				result = "소수가 아닙니다.";
 				break;
@@ -16,7 +16,7 @@ public class Question10 {
 		
 		for(int i=2;i<=100;i++) {
 			int count = 1;
-			for(int j=2;j<=(i/2);j++) {
+			for(int j=2;j<=Math.sqrt(i);j++) {
 				if(i % j == 0)
 					count++;
 			}
