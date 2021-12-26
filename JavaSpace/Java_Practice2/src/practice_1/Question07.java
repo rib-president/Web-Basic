@@ -19,6 +19,6 @@ public class Question07 {
 			}
 			i++;
 		}
-		System.out.println(count + "번 더했을 때, " + sum + "으로 1000이 넘는다.");
+		System.out.println(i-1 + "일 때 " + sum + "으로 1000이 넘는다.");
 	}
 }

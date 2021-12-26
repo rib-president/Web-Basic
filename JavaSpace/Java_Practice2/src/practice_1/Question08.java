@@ -13,6 +13,6 @@ public class Question08 {
 			 
 			i++;
 		}
-		System.out.println(i);
+		System.out.println(i-1);
 	}
 }
