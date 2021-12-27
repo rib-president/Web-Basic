@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>안녕하세요</title>
+    </head>
+    <body>
+        <h1>제목태그 글자 커진다...</h1>
+        
+        <hr> <!--구분선-->
+
+        <ul>
+            <li>안녕하세요</li>
+            <li>안녕하세요</li>
+            <li>안녕하세요</li>
+            <li>안녕하세요</li>
+        </ul>
+
+        <p>단락 태그...글자 내용 담을 때 사용</p>
+
+        <!--절대적으로 중요한 태그 1개-->
+        <div>굉장히 의미 없는 태그...그래서 중요함 css와의 관련(레이아웃용)</div>
+        <div>굉장히 의미 없는 태그...그래서 중요함 css와의 관련</div>
+
+        <span>딱히 의미 없는데...오른쪽으로 감..특정 글자 컨트롤할 때 씀</span>
+        <span>딱히 의미 없는데...오른쪽으로 감..</span>
+        <span>딱히 의미 없는데...오른쪽으로 감..</span>
+        
+        <br><br> <!--은근 중요, 웬만하면 최소화-->
+        
+        <!--중요태그-->
+        <a href="./test.html">안녕하세요1</a> <!--링크태그..페이지 이동-->
+        <a href="test.html">안녕하세요2</a> <!--링크태그..페이지 이동-->
+        <a href="../test.html">안녕하세요3</a> <!--링크태그..페이지 이동-->
+        <a href="https://www.naver.com">안녕하세요4</a> <!--링크태그..페이지 이동-->
+
+        <!--이미지 태그-->
+        <br>
+        <img src="./img/jjang.jpg" width="300" alt="짱구이미지였는데..." title="겨울짱구"><br>
+        <img src="./img/jjang2.jpg" alt="짱구입니다"><br>
+
+        <!--이미지에 링크태그-->
+        <a href="https://naver.com"><img src="./img/naver.png"></a>
+
+        <!--table-->
+        <table border="1">
+            <thead>
+                <tr>    <!--행-->
+                    <td>이름</td>   <!--열-->
+                    <td>나이</td>
+                    <td>점수</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>트레이서</td>
+                    <td>24</td>
+                    <td>77</td>
+                </tr>
+                <tr>
+                    <td>한조</td>
+                    <td>33</td>
+                    <td>99</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <!--입력 양식-->
+        ID : <input type="text" placeholder="아이디를 입력하세요"><br><br>
+        PW : <input type="password"><br><br>
+        색상 입력하세요 : <input type="color"><br><br>
+        생년 월일 : <input type="date"><br><br>
+        취미 :
+            농구 <input type="checkbox">
+            축구 <input type="checkbox">
+            야구 <input type="checkbox">
+        <br><br>
+        성별 : 
+            <input type="radio" name="gender" checked>남
+            <input type="radio" name="gender">여
+        <br><br>
+        사진등록 : <input type="file" accept="image/*" multiple>
+        <br><br>
+
+        지역 :
+        <select>
+            <option>서울</option>
+            <option>부산</option>
+            <option>대전</option>
+            <option selected>제주</option>
+        </select>
+        <br><br>
+
+        제목 : <input type="text"><br><br>
+        내용 :
+        <textarea rows="10" cols="50"></textarea>
+        <br><br>
+        ID : <input type="email">
+        <br><br>
+        <input type="button" value="버튼 입니다."> 
+        <button>버튼 입니다.</button>
+
+
+    </body>
+</html>

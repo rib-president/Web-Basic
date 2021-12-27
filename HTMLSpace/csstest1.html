@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            /* css 주석... */
+            /* # : 선택자 */
+            /*
+                기본 선택자 :
+                1.전체 선택자(*) : 모든 태그들
+                2.태그 선택자(태그명) : 특정 태그들(ex.모든 li)
+                3.아이디 선택자(#) : 단 하나의 엘리먼트
+                4.클래스 선택자(.) : 특정 클래스명을 가지고 있는 엘리먼트들
+            */
+
+            /* 전체 선택자 */
+            *{
+                color : blue;
+            }
+
+            /* 태그 선택자 */
+            li {
+                color : red;
+            }
+
+            p {
+                font-size : 30px;
+            }
+
+            /* 아이디 선택자 */
+            /* 절대 동일한 아이디를 가진 엘리먼트가 2개이상이면 안됨 */
+            #qqq111 {
+                color : black;
+            }
+
+            #rrr333 {
+                color : blueviolet;
+            }
+
+            /* 클래스 선택자 */
+            .myYellowColor {
+                color : yellow;
+            }
+
+            .myBigFont {
+                font-size : 50px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <ul>
+            <li class="myYellowColor myBigFont qqqqqqqq aa b3">안녕하세요1</li>
+            <li id="qqq111" class="myBigFont">안녕하세요2</li>
+            <li class="myBigFont">안녕하세요3</li>
+            <li class="myYellowColor">안녕하세요4</li>
+            <li id="rrr333">안녕하세요5</li>
+        </ul>
+
+        <ul>
+            <li>반갑습니다1</li>
+            <li>반갑습니다2</li>
+            <li>반갑습니다3</li>
+            <li class="myYellowColor myBigFont">반갑습니다4</li>
+            <li>반갑습니다5</li>
+        </ul>
+
+        <p>하하하하하핳하</p>
+
+    </body>
+</html>
