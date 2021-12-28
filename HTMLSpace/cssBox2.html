@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <style>
+            .x1 {
+                border : 1px solid red;
+                display : inline;
+            }
+
+            .x2 {
+                border : 1px solid red;
+                display : block;
+            }
+
+            .x3 {
+                /*div태그는 기본속성이 block*/
+                border : 1px solid blue;
+            }
+            
+            .x4 {
+                /*span태그는 기본속성이 inline*/
+                border : 1px solid purple;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="x1">안녕하세요</div>
+        <div class="x1">안녕하세요</div>
+        <hr>
+        <div class="x2">안녕하세요</div>
+        <div class="x2">안녕하세요</div>    
+        <hr>
+        <div class="x3"> 안녕하세요</div>
+        <div class="x3"> 안녕하세요</div>
+
+        <span class="x4">안녕하세요</span>
+        <span class="x4">안녕하세요</span>
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <!-- css 로드 -->
+        <link href="./css/ttt.css" rel="stylesheet">
+
+        <style>
+            /* css 적용하는 3가지 방법 */
+            /*1. style 태그 이용해서 적용하는 법*/
+            /*단점 : html 페이지 수가 늘어날 경우 페이지마다 일일이 지정해줘야함*/
+            .x1 {
+                color : red;
+            }
+
+            /*2. 외부 CSS파일 로드하는 법(공통적인 스타일 즉 클래스 대상)*/
+            /*3. 태그 내에 속성으로 직접 적용하는 방법(단일 엘리먼트에 적용)*/
+        </style>
+    </head>
+    <body>
+        <ul>
+            <li class="x1">안녕하세요1</li>
+            <li>안녕하세요2</li>
+            <li class="x2">안녕하세요3</li>
+            <li style="color : blue; font-size : 50px;">안녕하세요4</li>
+            <li class="x3">안녕하세요5</li>
+        </ul>
+    </body>
+</html>

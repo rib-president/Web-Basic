@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <style>
+            /*
+                레이아웃 잡는 순서:
+                1.구조를 대략적으로 잡는다(옆으로 갈지 아래로 갈지)
+                2.세밀한 레이아웃 정리(margin(중요), padding)
+                3.더 세밀한 것들 설정(1, 2로 잘 안됐을 때 어쩔 수 없이 하는 것)
+            */
+
+            #someWrapper {
+                background-color: chartreuse;
+                width : 800px;
+                overflow : hidden;
+            }
+
+            .x1 {
+                float : left;
+                width : 100px;
+                height : 100px;
+                background: coral;
+            }
+
+            #f1 {
+                position: relative;
+                left : 10px; /*왼쪽을 기준으로 오른쪽으로 10px 이동*/
+                top : 10px; /*위를 기준으로 아래로 10px 이동*/
+            }
+        </style>
+    </head>
+    <body>
+        <div id="someWrapper">
+            <div id="f1" class="x1"></div>
+            <div class="x1"></div>
+            <div class="x1"></div>
+            <div class="x1"></div>
+            <div class="x1"></div>
+            <div class="x1"></div>
+            <div class="x1"></div>
+            <div class="x1"></div>
+        </div>
+    </body>
+</html>
