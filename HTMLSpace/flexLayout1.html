@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            /*container*/
+            #t1 {
+                width : 800px;
+                background-color: aquamarine;
+                display : flex;
+                flex-wrap : wrap;
+            }
+            /*element or item*/
+            .innerBox {
+                background-color: blueviolet;
+                flex-grow : 2; /*박스 크기 비율*/
+            }
+
+            #x1 {
+                flex-grow : 3;
+                background-color: brown;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="t1">
+            <div class="innerBox">1</div>
+            <div class="innerBox">2</div>
+            <div class="innerBox">3</div>
+            <div id="x1">4<br>4<br>4</div>
+            <div class="innerBox">3</div>
+        </div>
+    </body>
+</html>
