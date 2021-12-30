@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            var a = 10;
+            a = 20;
+            // 이미 선언된 변수지만 재선언 가능
+            // HashMap의 key : value식이라고 생각하면 됨
+            var a = 30;
+            console.log(a);   // 30
+
+            // 파이썬처럼 var 안 붙이고 바로 선언 가능(가독성 좋지 않아 권장X)
+            b = 10;
+            b = "안녕하세요";   // 다른 타입 값 넣기도 가능
+            console.log(b); // 안녕하세요
+
+            // let은 이미 선언된 변수 재선언 안됨
+            // es6 이후부터는 진짜 프로그래밍 언어를 따라가려고 함
+            let a2 = 20;
+            // let a2 = 30; 에러발생
+            a2 = "안녕하세요";
+            console.log(a2);    // 다른 타입 값 넣기는 가능
+            a2 = 40;
+                    
+</script>
+    </head>
+    <body>
+
+    </body>
+</html>

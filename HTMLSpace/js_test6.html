@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            function test1() {
+                // 안녕하세요를 다섯 번 출력하자
+                for(var i=0;i<5;i++) {
+                    console.log("안녕하세요")
+                }
+            }
+
+            function test2() {
+                /*
+                    for문을 이용해서
+                    1부터 76까지의 합을 구하는 코드를 작성하자
+                */
+                var sum = 0;
+                for(i=1;i<=76;i++) {
+                    sum += i;
+                }
+                alert("답 : " + sum);
+            }
+
+            function test4() {
+                /* 
+                    구구단을 출력해보자
+                    구구단을 출력하되 7단과 8단을 제외하고 출력하자.
+                */
+                for(x=2;x<=9;x++) {
+                    if(x == 7 || x == 8) {
+                        continue;
+                    }
+                    for(y=1;y<=9;y++) {
+                        var result = x * y;
+                        console.log(x + " X " + y + " = " + result);
+                    }
+                    console.log("\n");
+                }
+            }
+
+
+
+
+        </script>
+    </head>
+    <body>
+        <button onclick="test1()">1번 문제</button>
+        <button onclick="test2()">2번 문제</button>
+        <button onclick="test4()">4번 문제</button>
+        <button onclick="test5()">5번 문제</button>
+        <button onclick="test6()">6번 문제</button>
+    </body>
+</html>

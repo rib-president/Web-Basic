@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 제어문과 반복문
+
+            // if문
+            var a = 13;
+
+            if(a > 10) {
+
+            }else if(a > 5) {
+
+            }else {
+
+            }
+
+            // a가 positive한 값이면 true, negative한 값(0, 음수)이면 false
+            if(a) {
+
+            } else {
+
+            }
+
+            // switch ~ case문
+            a = 3;
+            switch(a) {
+                case 1:
+                    console.log("1입니다");
+                    break;
+                case 2:
+                    console.log("2입니다");
+                    break;
+                default:
+                    console.log("이도저도 아닙니다");
+            }
+
+            // for문
+            for(var i=1;i<=10;i++){
+                console.log(i);
+            }
+
+            // 향상된 for문(두 가지 버전이 있음)
+            var arr = [1, 2, 3, 4, 4, 76, 856, 4];    // list 선언
+
+            // 옛 버전(es5 이전)
+            for(var i in arr) {
+                console.log(i);     // list의 인덱스가 출력됨(type도 string임)
+                console.log(arr[i]);    // 인덱스로 list에 접근하여 원소 출력
+            }
+
+            // es6 이후 향상된 for문
+            for(var data of arr) {
+                console.log(data);  // list의 원소가 순서대로 출력됨
+            }
+
+
+            // while문
+            var i = 0;
+            while(true) {
+                if(i == 10) {
+                    console.log("탈출");
+                    break;
+                }
+                i++;
+            }
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

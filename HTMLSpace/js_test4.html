@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 연산자
+
+            // 산술 연산자(+, -, *, /, %)
+            var a1 = 10;
+            var b1 = 20;
+            var result1 = a1 + b1;
+            console.log(result1);
+
+            var a2 = 5;
+            var b2 = 2;
+            var result2 = a2 / b2;
+            console.log(result2);   // 정수 연산인데 타입이 없어 2.5가 나옴
+            result2 = parseInt(a2 / b2);    // 정수로 변환
+            console.log(result2);
+
+            var a3 = 5;
+            var b3 = 2;
+            var result3 = a3 % b3;  // 나머지 연산
+            console.log(result3);
+
+
+            // 비교 연산자
+            // equals 대신 ==로 문자열 비교 가능
+            // 타입이 없어서 문자 "1"과 숫자 1 비교가 가능하고 심지어 "같다"임
+            var a4 = "1";
+            var b4 = 1;
+            if(a4 == b4) {
+                console.log("같다");
+            } else {
+                console.log("다르다");
+            }   // 같다
+
+            // === 형태까지 같은지 비교
+            if(a4 === b4) {
+                console.log("같다");
+            } else {
+                console.log("다르다");
+            } // 다르다
+
+
+            // 타입 확인하는 API
+            var a5 = 10;
+            var test = typeof a5;   // typeof : 메모리 타입 조사하여 문자로 리턴
+            console.log(test);      // number
+            console.log(typeof test);   // string
+
+            var a6 = 10;
+            var b6 = 20;
+            if(a6 > b6) {
+                console.log("크다");
+            } else {
+                console.log("작다");
+            }   // 작다
+
+
+            // 논리 연산자(&&, ||, ...)
+            var a7 = 10;
+            // 이중 비교가 가능
+            if(5 < a7 < 20) {
+                console.log("a7은 5와 20 사이에 있다")
+            }
+
+            if(a7 > 5 && a7 < 20) {
+                console.log("a7은 5보다 크고 20보다 작다.")
+            }
+
+            // 문자열 연산 +
+            var a8 = "안녕하세요" + 1234;
+            console.log(a8);    // 안녕하세요1234       .
+
+
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
