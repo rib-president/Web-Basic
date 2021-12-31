@@ -30,8 +30,24 @@
 
             .divHr hr {margin-top: 1px; margin-bottom: 1px;}
 
+            .cursorPointer {cursor: pointer;}
+
+            #context_menu {background-color: cornsilk; border: 1px solid #444;}
+
         </style>
 
+        <script>
+            function openContextMenu(event) {
+              event.preventDefault();
+              
+              const contextMenu = document.getElementById("context_menu");
+              contextMenu.style.display = "block";
+              contextMenu.style.position = "fixed";
+              contextMenu.style.top = event.pageY + "px";
+              contextMenu.style.left = event.pageX + "px";
+            }
+     
+        </script>
 
     </head>
     <body style="overflow-y: scroll; overflow-x: hidden;">
@@ -152,7 +168,7 @@
                                               </div>
                                             </div>
                                           </td>
-                                          <td>트레이서</td>
+                                          <td id="tracer "class="cursorPointer" onclick="openContextMenu(event)">트레이서</td>
                                           <td>13</td>
                                           <td>2020-05-20</td>
                                         </tr>
@@ -442,6 +458,11 @@
                     <div class="col-1"></div>                
                 </div>
             </div>
+        </div>
+        <div id="context_menu" style="display: none; width: 100px;">
+          <div>작성글 보기</div>
+          <div>쪽지 보내기</div>
+          <div>닫기</div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
