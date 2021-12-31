@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            .blueColor {color: blue;}
+            .redColor {color: red;}
+            .smallFont {font-size: 5px;}
+            .bigFont {font-size: 30px;}
+        </style>
+        <script>
+            // DOM... Attribute
+            function test1() {
+                var e = document.getElementById("x1");
+                // 속성을 변경(id, class, onclick 등 전부 속성임)
+                // 주로 클래스 바꿀 때 사용
+                // 적용할 속성(key), 값(value) 입력
+                e.setAttribute("class", "redColor bigFont");
+            }
+
+            function test2() {
+                var e = document.getElementById("x1");
+                // 속성 class(key값)에 해당하는 value(string) 가져옴
+                var value = e.getAttribute("class");
+                alert(value);
+            }
+        </script>
+    </head>
+    <body>
+        <div id="x1" class="smallFont blueColor">안녕하세요</div>
+        <button onclick="test1()">테스트1</button>
+        <button onclick="test2()">테스트2</button>
+    </body>
+</html>

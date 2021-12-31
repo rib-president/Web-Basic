@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 함수 선언
+            function test1(a, b, c) {
+                // code 작성
+                console.log("클릭됨!");
+            }
+
+            function test2() {
+                console.log("test2 호출됨");
+            }
+
+            function test3() {
+                console.log("aaaaaa");
+            }
+
+            // 함수 호출
+            // test1(1, 2, 3);
+            // test2();
+            // test3();
+
+            // 함수를 호출한 뒤 리턴값을 변수 aaa에 대입
+            var aaa = test2();
+
+            // 함수 자체를 변수에 넣음(함수의 주소를 변수 aaa에 대입) - 호출X
+            aaa = test2;
+
+            // 둘 다 동일 함수 호출됨
+            aaa();
+            test2();
+
+            aaa = test3;
+            aaa();
+
+            // 익명함수
+            var ttt = function () {
+                console.log("ggggggg");
+            };
+            ttt();
+
+            // 익명함수 사용 경우
+            function test10() {
+                console.log("test10이 호출됨...");
+            }
+
+            function test11() {
+                console.log("test11이 호출됨...");
+            }
+
+            // some은 API라고 가정(다른 사람이 만든 함수)
+            function some(aaaa) {
+                console.log("some 호출됨...");
+                aaaa();
+            }
+
+            // 콜백함수 : 내가 만들었지만 내가 호출하진 않은 함수
+            // 다른 함수를 호출했는데 그 함수에서 내 함수를 호출하는 경우
+            some(test10);   // 개념적으로 test10은 콜백함수
+            some(test11);   // 개념적으로 test11은 콜백함수
+            some(function () {
+                console.log("익명함수 호출됨...!!");
+            });     // 굳이 함수를 정의해놓고 파라미터로 넘기고싶지 않을 때 익명함수 사용
+
+
+
+
+        </script>
+        <style>
+            #x1 {width: 100px; height: 100px; background-color: aqua;}
+        </style>
+    </head>
+    <body>
+        <div id="x1" onclick="test1()" onmouseover="test2()">안녕하세요</div>
+    </body>
+</html>

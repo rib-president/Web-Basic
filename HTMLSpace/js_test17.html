@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 내용 컨트롤
+            // innerText, innerHTML(사용금지)
+            function test1() {
+                var e = document.getElementById("x1");
+                e.innerText = "<div><p>반갑습니다<br>하하하<p></div>";
+            }
+
+            function test2() {
+                var e = document.getElementById("x2");
+                // <div id="x2">속에 실제로 태그가 적용됨(사용하지말것)
+                // 1.코드가 지저분해짐 2.학습상 좋지 않음 but 내용 초기화할 때만 써라
+                // <div id="x2"><div><p>반갑습니다<br>하하하<p></div></div>
+                e.innerHTML = "<div><p>반갑습니다<br>하하하<p></div>";
+
+                // 박스 내부 내용 초기화
+                e.innerHTML = "";
+            }
+        </script>
+    </head>
+    <body>
+        <div id="x1">안녕하세요</div>
+        <div id="x2">안녕하세요</div>
+
+        <button onclick="test1()">테스트1</button>
+        <button onclick="test2()">테스트2</button>
+    </body>
+</html>

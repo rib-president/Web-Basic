@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 접근 API(getElement, getElements)
+            // document : 미리 선언된 변수/객체(이 문서 전체, 루트 객체)
+            // DOM Document 눌렀을 때 나오는 함수들 다 이걸로 접근가능
+
+            function test1() {
+                // ID 접근
+                var y1 = document.getElementById("y1");  // HTML element 리턴, 참조 주소값
+                
+                // DOM Element 눌렀을 때 나오는 함수들 y1으로 접근 가능 
+                console.log(y1.innerText);
+                y1.innerText = "반갑습니다.";
+            }
+
+            function test2() {
+                // 클래스 접근(getElements!!)
+                // 엘리먼트 배열로 리턴(Elements인건 다 배열로 리턴)
+                var c1s = document.getElementsByClassName("c1");
+                for(e of c1s) {
+                    e.innerText = "하하하하하히히히히";
+                }
+            }
+
+            function test3() {
+                // x2에 있는 c1만 하하하하로 바꾸자
+                var x2 = document.getElementById("x2");
+
+                // element로 자식 엘리먼트 접근 가능
+                // 다만 id는 전체 문서에 딱 하나만 존재하기때문에 굳이 element로
+                // 접근하지 않아도 됨(document.getElementById 로만 사용 가능)
+                var c1s = x2.getElementsByClassName("c2");
+                for(e of c1s) {
+                    e.innerText = "gkgkgkgk";
+                }
+            }
+
+            function test4() {
+                // querySelector는 무조건 첫 번째 1개만 리턴함 -> 반복문X
+                //var e = document.querySelector("#y1");  // css 선택자 문자열로 접근
+                var e = document.querySelector(".c1");  // 맨 처음 엘리먼트만 리턴
+                e.innerText = "yyyyyy";
+            }
+
+            function test5() {  
+                // querySelectorAll은 무조건 배열로 리턴(id의 경우 [0]로 꺼냄)
+                // css 선택자 문자열로 접근 -> 한 번에 자식태그로 타고타고갈 수 있음
+                var elements = document.querySelectorAll("#x2 .c1");
+                for(e of elements) {
+                    e.innerText = "qwerqwerqwer";
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <ul id="x1">
+            <li class="c1">안녕하세요</li>
+            <li id="y1">안녕하세요</li>
+            <li>안녕하세요</li>
+            <li class="c1">안녕하세요</li>
+            <li>안녕하세요</li>
+            <li class="c1">안녕하세요</li>
+        </ul>
+
+        <ul id="x2">
+            <li class="c1">반갑습니다</li>
+            <li class="c1">반갑습니다</li>
+            <li>반갑습니다</li>
+            <li>반갑습니다</li>
+            <li>반갑습니다</li>
+        </ul>
+
+        <button onclick="test1()">테스트1</button>
+        <button onclick="test2()">테스트2</button>
+        <button onclick="test3()">테스트3</button>
+        <button onclick="test4()">테스트4</button>
+        <button onclick="test5()">테스트5</button>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // es6 - 클래스 문법(객체의 형태를 정의) 등장
+            // es5 - 클래스 문법 없음(개념적으로 객체는 있음, json { })
+            // 객체를 정의하는 문법(클래스 느낌은 아님, 값까지 같이 정의하기 때문)
+            var st1 = {
+                score : 30,
+                name : '한조'
+            };
+
+            var st2 = {
+                score : 70,
+                name : '트레이서'
+            };
+
+            // 함수가 생성자 역할을 함
+            function Student(score, name) {
+                // 필드 선언
+                this.score = score;
+                this.name = name;
+
+                // 메소드 정의 -> 이렇게하면 new로 메모리 생성될 때마다 메소드 메모리도 계속 생성됨
+                this.study = function() {
+                    console.log(this.name + "가 공부를 합니다.");
+                };
+            }
+
+            // 그냥 함수 호출
+            //var a = Student();  // a는 undefined
+
+            // 새로운 메모리를 생성해서 함수 호출 -> 메모리의 참조주소를 리턴
+            var b1 = new Student(50, '한조');  // b1은 메모리의 주소값
+            var b2 = new Student(40, '트레이서');
+            //console.log(a);
+            console.log(b1.name);
+            console.log(b2.name);
+            b1.study(); // b1의 메소드 호출
+            b2.study();
+
+            // 대문자로 시작하는 API 함수들은 new로 생성하여 사용하는 것이 정석
+            var aa = new Date(123123123);
+            console.log(aa.getDate());
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

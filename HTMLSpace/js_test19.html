@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 엘리먼트 생성과 삽입
+            function test1() {
+                // 엘리먼트 생성(매개변수는 태그명)
+                var e = document.createElement("li");   //<li></li> 생성
+                
+                // 추가 컨트롤
+                e.innerText = "qwer";
+                e.style.color = "red";
+                e.setAttribute("class", "blueFont");
+
+                // 부모 엘리먼트 밑에 삽입
+                var target = document.getElementById("x1");
+                target.appendChild(e);  // 부모의 자식 엘리먼트로 삽입
+            }
+
+            function test2() {
+                // <li><p>안녕하세요</p><p>반갑습니다</p></li> 생성
+                var li = document.createElement("li");
+                var p1 = document.createElement("p");
+                p1.innerText = "안녕하세요";
+                // appendChild 순서가 중요(먼저 호출한 순서대로 붙음)
+                li.appendChild(p1);
+              
+                var p2 = document.createElement("p");
+                p2.innerText ="반갑습니다";
+                li.appendChild(p2);     
+
+                var p3 = document.createElement("p");
+                p3.innerText = "X";
+                p3.setAttribute("onclick", "remove(this)");
+                li.appendChild(p3);
+
+                var x1 = document.getElementById("x1");
+                x1.appendChild(li);
+            }
+
+            function remove(e) {
+                e.parentElement.remove();
+            }
+        </script>
+    </head>
+    <body>
+        <ul id="x1">
+            <li>안녕하세요1</li>
+            <li>안녕하세요2</li>
+            <li>안녕하세요3</li>
+            <li><p>안녕하세요</p><p>반갑습니다</p><p onclick="remove(this)">X</p></li>
+            <li>안녕하세요4</li>
+            <li>안녕하세요5</li>
+        </ul>
+
+        <button onclick="test1()">테스트1</button>
+        <button onclick="test2()">테스트2</button>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // css 스타일 컨트롤(이거보단 setAttribute로 class 설정하는게 좋음)
+            function test1() {
+                var e = document.getElementById("x1");
+
+                // style.css의 속성들 = "문자열 값";
+                e.style.backgroundColor = "red";    
+            }
+
+            function test2() {
+                var e = document.getElementById("x1");
+                e.style.fontSize = "10em";
+            }
+
+            function test3() {
+                var e = document.getElementById("x1");
+                e.style.width = "100px";
+            }
+        </script>
+    </head>
+    <body>
+        <div id="x1">안녕하세요</div>
+
+        <button onclick="test1()">테스트1</button>
+        <button onclick="test2()">테스트2</button>
+        <button onclick="test3()">테스트3</button>
+    </body>
+</html>
