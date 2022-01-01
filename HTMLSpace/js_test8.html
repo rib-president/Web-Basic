@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            function test1() {
+                alert("공부합니다.");
+            }
+
+            // map(java script에서 map과 object가 같음)
+            // JSON(java script object notation(선언법, 표현법, 문법))
+            var st1 = {};   // 비어있는 오브젝트 혹은 맵
+
+            // 맵 기준 : key는 score, value는 77
+            // object 기준 : score 필드에 77이라는 값이 있음(st1은 참조변수)
+            // object형태로 사용
+            st1 = {
+                score : 77,
+                name : '한조',
+                age : 15,
+                doStudy : test1
+            };
+
+            // 접근
+            st1.name = '트레이서';
+            console.log(st1.score);
+            console.log(st1.name);
+            console.log(st1.age);
+
+            st1.doStudy();  // 메소드처럼 사용
+
+            // 맵 형태로 사용
+            var map1 = {};
+            map1['score'] = 40; // put, key는 'score' value는 40 
+            console.log(map1['score']); // get -> 40
+
+            // map 방식과 object 방식 섞어서 사용할 수는 있음(추천X)
+            // 헷갈리므로 처음 의도한 용도에 따른 방식으로 사용할 것 권장
+            // map이면 ['']로 접근, object면 .로 접근
+            var some = {
+                a : 10,
+                b : 20
+            };
+
+            console.log(some.a);
+            console.log(some['a']);
+
+            // 없으면 만듦
+            some.c = 30;
+            console.log(some.c);
+            console.log(some['c']);
+
+            some['d'] = 40;
+            console.log(some.d);
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

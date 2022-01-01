@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // function(함수) : 리턴 타입이 없음
+            function test1() {
+                console.log("test1 호출됨");
+            }
+
+            // 호출
+            test1();
+            test1();
+            test1();
+
+            function test2(a, b) {
+                // java script에서 제공하는 undefined 비교기능
+                if(b == undefined) {
+                    console.log("undefined 컨트롤 가능하다")
+                }
+                console.log("test2 호출됨 : " + a + " : " + b)
+            }
+
+            test2(1, 2);
+            test2("안녕", 17);
+
+            // undefined로 b 값이 넘어감
+            /* 
+                null : 주소 값이 없음
+                undefined : 정의가 되지 않음
+            */
+            test2(13);  // null과 undefined는 다름
+
+
+            // return type이 문법적으로 없어 return type을 지정할 필요가 없음
+            function test3() {
+                return 13;
+            }
+
+            var value = test3();
+            console.log(value);
+
+            /*
+                return type을 지정하지 않음 =>
+                    return 값이 없는 함수의 return을 받을 수 있음
+            */
+            value = test1();
+            console.log(value); // undefined
+
+            function test4(a) {
+                if(a > 10) {
+                    return "안녕하세요";
+                }
+                // a <= 10일 때는 undefined를 리턴
+            }
+
+            var result = test4(30);
+            console.log(result);    // 안녕하세요
+            result = test4(5);
+            console.log(result);    // undefined
+
+
+            // 신경써야될 것(중요)
+            // 함수자체를 변수에 넣는 것이 가능(java에서만 불가능, 인터페이스로 구현)
+            var aaa = test3;
+            console.log(aaa());
+
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

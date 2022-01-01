@@ -39,8 +39,114 @@
                 }
             }
 
+            function test5() {
+                /*
+                    1부터 200까지의 정수 중에서 2 또는 3의 배수가 아닌 수의 총합을 구하시오.
+                */
+                var sum = 0;
+                for(i=1;i<=200;i++) {
+                    if(!(i % 2 == 0 || i % 3 == 0)) {
+                        sum += i;
+                    }
+                }
+                console.log(sum);
+            }
 
+            function test8() {
+                /*
+                    1+(-2)+3+(-4)+...과 같은 식으로 더해나갔을 때,
+                    몇까지 더해야 총합이 100이상이 되는지 구하시오
+                */
+                var sum=0;
 
+                // 첫 번째 방법
+                for(i=1;true;i++) {
+                    if(i%2 == 1) {
+                        sum += i;
+                    } else {
+                        sum -= i;
+                    }
+                    if(sum >= 100) {
+                        console.log(i);
+                        break;
+                    }
+                }
+
+                // 두 번째 방법
+                sum = 0;
+                var weight = -1;
+                for(i=1;true;i++) {
+                    weight = weight * (-1);
+                    sum += i * weight;
+
+                    if(sum >= 100) {
+                        console.log(i);
+                        break;
+                    }
+                }
+            }
+
+            function test9() {
+                /*
+                    1+(1+2)+(1+2+3)+...+(1+2+3+...+10)의 결과를 계산하시오
+                */
+
+                // 첫 번째 방법(문제 그대로 푸는 방법)
+                var sum = 0;
+                for(x=1;x<=10;x++) {
+                    for(y=1;y<=x;y++) {
+                        sum+=y;
+                    }
+                }
+                console.log(sum);
+
+                // 두 번째 방법(변수를 적절히 사용)
+                var tempSum = 0;
+                sum = 0;
+                for(i=1;i<=10;i++) {
+                    tempSum += i;
+                    sum += tempSum;
+                }
+                console.log(sum);
+
+                // 세 번째 방법(재구성)
+                sum = 0;
+                for(i=1;i<=10;i++) {
+                    sum += i * (11-i);
+                }
+                console.log(sum);
+            }
+            
+            function test11() {
+                /* 피보나치 수열 문제 (수열의 10번째 수 구하기)*/
+                var left = 1;
+                var right = 1;
+                var result = 0;
+
+                for(i=3;i<=10;i++) {
+                    result = left + right;
+                    left = right;
+                    right =  result;
+                }
+                console.log(right);
+            }
+
+            function test12() {
+                /*
+                    1부터 10000사이에 8이 몇 번 나오는가
+                */
+                var count = 0;
+                for(x=1;x<=10000;x++) {
+                    var temp = x;
+                    while(temp != 0) {
+                        if(temp % 10 == 8) {
+                            count++;
+                        }
+                        temp = parseInt(temp / 10);
+                    }
+                }
+                console.log(count);
+            }
 
         </script>
     </head>
@@ -49,6 +155,9 @@
         <button onclick="test2()">2번 문제</button>
         <button onclick="test4()">4번 문제</button>
         <button onclick="test5()">5번 문제</button>
-        <button onclick="test6()">6번 문제</button>
+        <button onclick="test8()">8번 문제</button>
+        <button onclick="test9()">9번 문제</button>
+        <button onclick="test11()">11번 문제</button>
+        <button onclick="test12()">12번 문제</button>
     </body>
 </html>
