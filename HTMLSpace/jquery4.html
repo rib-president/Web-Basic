@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            function test1() {
+                //createElement
+                // $("<p>안녕하세요</p>")   // 아래와 동일
+                var temp = $("<p></p>").text("안녕하세요");
+                $("#x1").append(temp);  // id x1의 자식으로 append
+            }
+
+            function test2() {
+                // 엘리먼트 삭제
+                $("#x1").remove();
+            }
+        </script>
+    </head>
+    <body>
+        <div id="x1"></div>
+        <div id="x2"></div>
+
+        <button onclick="test1()">테스트1</button>
+        <button onclick="test2()">테스트2</button>
+    </body>
+</html>

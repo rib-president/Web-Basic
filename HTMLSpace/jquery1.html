@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            // 버튼을 클릭했을 때 vanilla js, jquery로 엘리먼트를 변경
+            function test1() {
+                // vanilla js
+                var x1List = document.getElementsByClassName("x1");
+                for (e of x1List) {
+                    e.innerText = "잘 부탁드립니다...";
+                    e.style.color = "red";
+                }
+            }
+
+            function test1_jquery() {
+                // 위 하고 같은 동작을 jquery library 활용하여 구현
+                $(".x1").text("잘 부탁드립니다...").css("color", "red");
+            }
+
+            function test2() {
+                // vanilla js
+                var u2 = document.getElementById("u2");
+                var x1List = u2.getElementsByClassName("x1");
+                for(e of x1List) {
+                    e.innerText = "하하하하";
+                    e.style.color = "red";
+                    e.style.backgroundColor = "blue";
+                    e.setAttribute("q", "q");
+                }
+            }
+
+            function test2_jquery() {
+                // jquery
+                $("#u2 .x1").text("하하하하").css("color", "red")
+                .css("backgroundColor", "blue").attr("q", "q");
+            }
+        </script>
+    </head>
+    <body>
+        <ul id="u1">
+            <li>안녕하세요</li>
+            <li class="x1">안녕하세요</li>
+            <li class="x1">안녕하세요</li>
+            <li>안녕하세요</li>
+            <li class="x1">안녕하세요</li>
+        </ul>
+        <ul id="u2">
+            <li>반갑습니다</li>
+            <li class="x1">반갑습니다</li>
+            <li class="x1">반갑습니다</li>
+            <li>반갑습니다</li>
+            <li>반갑습니다</li>
+        </ul>
+
+        <button onclick="test1()">테스트1</button>
+        <button onclick="test1_jquery()">테스트1 제이쿼리</button>
+
+        <button onclick="test2()">테스트2</button>
+        <button onclick="test2_jquery()">테스트2 제이쿼리</button>
+    </body>
+</html>

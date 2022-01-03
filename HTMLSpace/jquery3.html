@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            // jquery는 set, get이 같은 함수
+            function test1() {
+                // 텍스트
+                // set일 때는 jquery object를 return
+                $("#x1").text("반갑습니다..!!");    // setter로 사용(값을 넣음)
+
+                // get일 때는 값을 return
+                var value = $("#x1").text();    // getter로 사용(값을 안 넣음)
+                alert(value);
+            }
+
+            function test2() {
+                // 스타일
+                // css의 key로 js명칭 또는 css 명칭 모두 사용 가능(다만 통일하는게 좋음)
+                $("#x2").css("color", "red").css("font-size","3em");    // set
+                var color = $("#x2").css("color");  // get(key만 넣으면 value를 return 받음)
+                alert(color);
+            }
+
+            function test3() {
+                // $("#x1").css("color", "red").css("font-size", "3em").css("background-color", "blue");
+                // json 객체 넣을 수 있음
+                $("#x1").css({
+                    "color": "red",
+                    "fontSize": "3em",
+                    "backgroundColor": "blue"})
+                .text("하하하하하");
+            }
+
+            function test4() {
+                // 속성(attribute)
+                //$("#x2").attr("q", "tttt");  // set
+                $("#x2").attr("class", "bigFont");
+                $("#img1").attr("src", "./img/jjang.jpg");  // img src set
+
+                var value = $("#x2").attr("class"); // get
+                alert(value);   //bigFont
+            }
+
+            function test5_1() {
+                // 클래스 속성 컨트롤
+                // $("#x2").attr("class", "bigFont");
+
+                // attr : class 속성의 값을 항상 통째로 지정해 줘야함
+                // addClass : 기존 class 속성 값을 유지하며 새로운 class를 추가
+                $("#x2").addClass("bigFont");
+            }
+
+            function test5_2() {
+                $("#x2").addClass("bgColor");
+            }
+
+            function test5_3() {
+                // 해당 class 속성 값 해제
+                $("#x2").removeClass("bigFont");
+            }
+
+            function test5_4() {
+                // class 속성에 해당 값이 있으면 지우고 없으면 추가
+                $("#x2").toggleClass("bgColor");
+            }
+        </script>
+        <style>
+            .bgColor {
+                background-color: cadetblue;
+            }
+
+            .bigFont{
+                font-size: 3em;
+                color: blueviolet;
+            }
+        </style>
+    </head>
+    <body>
+        <img id="img1" src="aaa.jpg">
+        <div id="x1">안녕하세요</div>
+        <div id="x2">안녕하세요</div>
+
+        <button onclick="test1()">테스트1</button>
+        <button onclick="test2()">테스트2</button>
+        <button onclick="test3()">테스트3</button>
+        <button onclick="test4()">테스트4</button>
+        <button onclick="test5_1()">테스트5_1</button>
+        <button onclick="test5_2()">테스트5_2</button>
+        <button onclick="test5_3()">테스트5_3</button>
+        <button onclick="test5_4()">테스트5_4</button>
+    </body>
+</html>
