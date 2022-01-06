@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>P20220106_1</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 프로젝트 설정 -->
+  
+  <session-config>
+  	<session-timeout>5</session-timeout>
+  </session-config>
+  
+  <servlet>
+  	<servlet-name>qwer</servlet-name>
+  	<servlet-class>q.q.q.GetMemberList</servlet-class>
+  </servlet>
+  
+  <!-- 서블릿을 언제 실행할 것인지 맵핑 -->
+  
+  <servlet-mapping>
+  	<servlet-name>qwer</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
