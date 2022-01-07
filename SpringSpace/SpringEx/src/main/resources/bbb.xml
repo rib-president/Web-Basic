@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- Annotation 설정법 -->
+	<!-- 핵심은 두 가지 : bean(instance) 등록과 의존 설정 -->
+	
+	<!-- polymorphism 패키지의 모든 하위 클래스 조사하여
+	특정 annotation이 붙어있는 클래스의 instance 생성
+	(ex. @Component)-->
+	<context:component-scan base-package="polymorphism"></context:component-scan>
+
+</beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- spring framework container 설정 파일 -->
+	<!-- 사실상 spring framework의 핵심 -->
+	
+	<!-- bean/beans: instance/instances 생성 -->
+	<!-- 일반적으로 VO는 안 넣음, logic 수행과 관련된 module만 넣음 -->
+	<!-- container가 가동되면서 SamsungTV/LgTV instance가 생성이 됨 -->
+	<!-- id는 중복 불가 -->
+	<bean id="tv" class="polymorphism.SamsungTV">
+		<property name="speaker" ref="appleSpeaker"></property>	<!-- DI: setter, setSpeaker() 호출 -->
+	</bean>	
+	<!-- <bean id="tv" class="polymorphism.LgTV"></bean> -->
+
+	<bean id="sonySpeaker" class="polymorphism.SonySpeaker"></bean>
+	<bean id="appleSpeaker" class="polymorphism.AppleSpeaker"></bean>
+</beans>
