@@ -8,16 +8,17 @@
 </head>
 <body>
 	<h1>회원가입</h1>
-	<form action="./joinMemberProcess">
-		ID : <input type="text" name="id"><br>
-		PW : <input type="password" name="pw"><br>
-		Nickname : <input type="text"><br>
+	<form action="./joinMemberProcess" method="post">
+		ID : <input type="text" name="member_id"><br>
+		PW : <input type="password" name="member_pw"><br>
+		Nickname : <input type="text" name="member_nick"><br>
 		gender :
-		<input type="radio"> 남
-		<input type="radio"> 여<br>
-		birth : <input type="date"><br>
-		phone : <input type="text"><br>
-		e-mail : <input type="text"><br>
+		<!-- 체크, 라디오, 셀렉트는 value값을 미리 지정해야함 -->
+		<input type="radio" name="member_gender" value="M"> 남
+		<input type="radio" name="member_gender" value="F"> 여<br>
+		birth : <input type="date" name="member_birth"><br>
+		phone : <input type="text" name="member_phone"><br>
+		e-mail : <input type="text" name="member_email"><br>
 		<input type="submit" value="회원가입">
 	</form>
 </body>
