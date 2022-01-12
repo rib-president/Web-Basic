@@ -15,4 +15,11 @@
 		#{member_email},
 		SYSDATE)
 	</insert>
+	
+	<select id="getMemberByIdAndPw" resultType="com.ja.finalproject.vo.MemberVO">
+		SELECT *
+		FROM FP_Member
+		WHERE member_id = #{member_id}
+		AND member_pw = #{member_pw}
+	</select>
 </mapper>

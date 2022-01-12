@@ -8,9 +8,9 @@
 </head>
 <body>
 	<h1>로그인</h1>
-	<form action="">
-		ID : <input type="text"><br>
-		PW : <input type="password"><br>
+	<form action="./loginProcess" method="post">
+		ID : <input type="text" name="member_id"><br>
+		PW : <input type="password" name="member_pw"><br>
 		<input type="submit" value="로그인">
 	</form>
 	<a href="./joinMemberPage">회원가입</a> 

@@ -17,4 +17,10 @@ public class MemberService {
 
 		memberSQLMapper.joinMember(vo);
 	}
+	
+	public MemberVO login(MemberVO vo) {
+		MemberVO result = memberSQLMapper.getMemberByIdAndPw(vo);
+		
+		return result;
+	}
 }
