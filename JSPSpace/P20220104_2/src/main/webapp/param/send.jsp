@@ -22,7 +22,7 @@
 	
 	<!-- 2-1.입력 양식을 감싸는 form태그 존재 -->
 	<!-- 2-3.request를 받을 곳 설정-->
-	<form action="./result.jsp" method="post"> 
+	<form action="./result.jsp" method="get"> 
 	<!-- 2-4.입력양식에 name을 지정 -->
 	v1 : <input type="text" name="v1"><br>
 	v2 : <input type="text" name="v2"><br>
