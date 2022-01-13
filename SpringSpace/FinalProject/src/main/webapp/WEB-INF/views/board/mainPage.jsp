@@ -30,27 +30,15 @@
 			<td>작성일</td>
 			<td>조회수</td>		
 		</tr>										
+		<c:forEach items="${dataList }" var="data">
 		<tr>
-			<td>3</td>
-			<td>안녕하세요~!!</td>
-			<td>트레이서</td>
-			<td>22.1.3</td>
-			<td>13</td>		
-		</tr>										
-		<tr>
-			<td>2</td>
-			<td>반갑습니다...</td>
-			<td>한조</td>
-			<td>22.1.1</td>
-			<td>43</td>		
-		</tr>	
-		<tr>
-			<td>1</td>
-			<td>하하하하핳 밥먹자</td>
-			<td>피즈</td>
-			<td>21.12.31</td>
-			<td>55</td>		
-		</tr>																					
+			<td>${data.boardVO.board_no }</td>
+			<td><a href="./readContentPage?board_no=${data.boardVO.board_no }">${data.boardVO.board_title }</a></td>
+			<td>${data.memberVO.member_nick }</td>
+			<td>${data.boardVO.board_writedate }</td>
+			<td>${data.boardVO.board_readcount }</td>
+		</tr>
+		</c:forEach>																					
 	</table>
 	<c:if test="${!empty(sessionUser) }">
 		<a href="./writeContentPage">글쓰기</a>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ja.finalproject.board.mapper.BoardSQLMapper">
+	<insert id="insertBoard">
+		INSERT INTO FP_Board VALUES (
+	    FP_Board_seq.nextval,
+	    #{member_no},
+	    #{board_title},
+	    #{board_content},
+	    0,
+	    SYSDATE
+		)
+	</insert>
+	
+	<!-- resultType : 한 행이 어떤 타입인지 -->
+	<select id="getBoardList" resultType="com.ja.finalproject.vo.BoardVO">
+		SELECT *
+		FROM FP_Board
+		ORDER BY board_no DESC
+	</select>
+	
+	<select id="getBoardByNo" resultType="com.ja.finalproject.vo.BoardVO">
+		SELECT *
+		FROM FP_Board
+		WHERE board_no = #{no}
+	</select>
+</mapper>
