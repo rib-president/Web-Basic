@@ -26,4 +26,21 @@
 		FROM FP_Board
 		WHERE board_no = #{no}
 	</select>
+	
+	<update id="increaseReadCount">
+		UPDATE FP_Board
+		SET board_readcount = board_readcount + 1
+		WHERE board_no = #{no}
+	</update>
+	
+	<delete id="deleteBoard">
+		DELETE FROM FP_Board
+		WHERE board_no = #{no}
+	</delete>
+	
+	<update id="updateBoard">
+		UPDATE FP_Board
+		SET board_title = #{board_title}, board_content = #{board_content}
+		WHERE board_no = #{board_no}
+	</update>
 </mapper>

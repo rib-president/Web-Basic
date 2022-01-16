@@ -11,5 +11,15 @@ public interface BoardSQLMapper {
 	// 1개의 행을 받을 땐 단일 객체 return, N개의 행을 받을 대는 List로  return 받아야함
 	public ArrayList<BoardVO> getBoardList(); 
 	
+	// 게시글 상세 보기
 	public BoardVO getBoardByNo(int no);
+	
+	// 조회수 1 증가시키기
+	public void increaseReadCount(int no);
+	
+	// 글 삭제
+	public void deleteBoard(int no);
+	
+	// 글 수정
+	public void updateBoard(BoardVO vo);
 }

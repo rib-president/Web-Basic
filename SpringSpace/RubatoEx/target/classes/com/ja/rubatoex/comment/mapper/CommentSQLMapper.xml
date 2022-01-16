@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ja.rubatoex.comment.mapper.CommentSQLMapper">
+<insert id="insertComment">
+	INSERT INTO FP_Comment VALUES (
+	FP_Comment_seq.nextval,	
+	#{member_no},
+	#{board_no},
+	#{comment_content},
+	SYSDATE
+	)
+</insert>
+
+<select id="selectCommentByNo" resultType="com.ja.rubatoex.vo.CommentVO">
+	SELECT *
+	FROM FP_Comment
+	WHERE board_no = #{no}
+	ORDER BY comment_writedate DESC
+</select>
+
+<delete id="deleteCommentByNo">
+	DELETE FROM FP_Comment
+	WHERE comment_no = #{no}
+</delete>
+
+<delete id="deleteCommentByBoardNo">
+	DELETE FROM FP_Comment
+	WHERE board_no = #{board_no}
+</delete>
+
+<update id="updateCommentByNo">
+	UPDATE FP_Comment
+	SET comment_content = #{comment_content}
+	WHERE comment_no = #{comment_no}
+</update>
+</mapper>

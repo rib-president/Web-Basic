@@ -56,4 +56,18 @@ public class BoardService {
 		
 		return map;
 	}
+	
+	public void increaseReadCount(int board_no) {
+		boardSQLMapper.increaseReadCount(board_no);
+	}
+	
+	public void deleteBoard(int board_no) {
+		// 정말 지워도 되는지 예외처리를 많이 해야 함
+		// 실제론 다른 사람이 지울 수도 있어 보안 관련 처리 필요
+		boardSQLMapper.deleteBoard(board_no);
+	}
+	
+	public void updateBoard(BoardVO vo) {
+		boardSQLMapper.updateBoard(vo);
+	}
 }

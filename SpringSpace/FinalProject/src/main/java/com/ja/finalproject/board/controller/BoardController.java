@@ -55,11 +55,35 @@ public class BoardController {
 	
 	@RequestMapping("readContentPage")
 	public String readContentPage(int board_no, Model model) {
+		boardService.increaseReadCount(board_no);
 		
 		HashMap<String, Object> map = boardService.getBoard(board_no);
 		
 		model.addAttribute("data", map);
 		
 		return "board/readContentPage";
+	}
+	
+	@RequestMapping("deleteContentProcess")
+	public String deleteContentProcess(int board_no) {
+		boardService.deleteBoard(board_no);
+		
+		return "redirect:./mainPage";
+	}
+	
+	@RequestMapping("updateContentPage")
+	public String updateContentPage(int board_no, Model model) {
+		HashMap<String, Object> map = boardService.getBoard(board_no);
+		
+		model.addAttribute("data", map);
+		
+		return "board/updateContentPage";
+	}
+	
+	@RequestMapping("updateContentProcess")
+	public String updateContentProcess(BoardVO vo) {
+		boardService.updateBoard(vo);
+		
+		return "redirect:./mainPage";
 	}
 }

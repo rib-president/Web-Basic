@@ -21,8 +21,8 @@
 	
 	<!-- 로그인+본인이 쓴 글일경우 수정, 삭제 버튼 나타남 -->
 	<c:if test="${!empty sessionUser && sessionUser.member_no == data.boardVO.member_no }">
-	수정
-	삭제
+	<a href="./deleteContentProcess?board_no=${data.boardVO.board_no }">삭제</a>
+	<a href="./updateContentPage?board_no=${data.boardVO.board_no }">수정</a>
 	</c:if>
 </body>
 </html>

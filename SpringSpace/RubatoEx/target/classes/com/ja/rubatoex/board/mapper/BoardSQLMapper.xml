@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ja.rubatoex.board.mapper.BoardSQLMapper">
+<select id="selectAllBoard" resultType="com.ja.rubatoex.vo.BoardVO">
+	SELECT *
+	FROM FP_Board
+	ORDER BY board_no DESC
+</select>
+
+<select id="selectBoardByTitle" resultType="com.ja.rubatoex.vo.BoardVO">
+	SELECT *
+	FROM FP_Board
+	WHERE board_title LIKE '%'||#{title}||'%' 
+	ORDER BY board_no DESC
+</select>
+
+<select id="selectBoardByContent" resultType="com.ja.rubatoex.vo.BoardVO">
+	SELECT *
+	FROM FP_Board
+	WHERE board_content LIKE '%'||#{content}||'%'
+	ORDER BY board_no DESC
+</select>
+
+<select id="selectBoardByWriter" resultType="com.ja.rubatoex.vo.BoardVO">
+	SELECT *
+	FROM FP_Board
+	WHERE member_no = #{member_no}
+	ORDER BY board_no DESC
+</select>
+
+
+<select id="select4Board" resultType="com.ja.rubatoex.vo.BoardVO">
+	SELECT *
+	FROM 
+	(SELECT *
+	FROM FP_Board
+	ORDER BY board_no DESC) b
+	<![CDATA[WHERE ROWNUM <= 4]]>
+</select>
+
+<select id="selectCountBoard" resultType="Integer">
+	SELECT COUNT(*)
+	FROM FP_Board
+</select>
+
+<select id="selectBoardByNo" resultType="com.ja.rubatoex.vo.BoardVO">
+	SELECT *
+	FROM FP_Board
+	WHERE board_no = #{no}
+</select>
+
+<update id="updateBoardReadCount">
+	UPDATE FP_Board
+	SET board_readcount = board_readcount + 1
+	WHERE board_no = #{no}
+</update>
+
+<delete id="deleteBoard">
+	DELETE FROM FP_Board
+	WHERE board_no = #{no}
+</delete>
+
+<insert id="insertBoard">
+	INSERT INTO FP_Board VALUES (
+	FP_Board_seq.nextval,
+	#{member_no},
+	#{board_title},
+	#{board_content},
+	0,
+	SYSDATE
+	)
+</insert>
+
+<update id="updateBoard">
+	UPDATE FP_Board
+	SET board_title = #{board_title}, board_content = #{board_content}
+	WHERE board_no = #{board_no}
+</update>
+</mapper>
