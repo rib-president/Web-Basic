@@ -57,7 +57,7 @@ public class BoardController {
 	public String readContentPage(int board_no, Model model) {
 		boardService.increaseReadCount(board_no);
 		
-		HashMap<String, Object> map = boardService.getBoard(board_no);
+		HashMap<String, Object> map = boardService.getBoard(board_no, true);
 		
 		model.addAttribute("data", map);
 		
@@ -73,7 +73,7 @@ public class BoardController {
 	
 	@RequestMapping("updateContentPage")
 	public String updateContentPage(int board_no, Model model) {
-		HashMap<String, Object> map = boardService.getBoard(board_no);
+		HashMap<String, Object> map = boardService.getBoard(board_no, false);
 		
 		model.addAttribute("data", map);
 		

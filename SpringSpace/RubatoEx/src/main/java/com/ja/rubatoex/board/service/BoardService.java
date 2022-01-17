@@ -2,6 +2,7 @@ package com.ja.rubatoex.board.service;
 
 import java.util.ArrayList;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +16,23 @@ public class BoardService {
 	
 	public ArrayList<BoardVO> getBoardList() {
 		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectAllBoard();
-		return resultVOList;
+		return titleEscape(resultVOList);
 	}
 	
 	public ArrayList<BoardVO> getBoardByTitle(String title) {
 		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByTitle(title);
-		return resultVOList;
+		
+		return titleEscape(resultVOList);
 	}
 	
 	public ArrayList<BoardVO> getBoardByContent(String content) {
 		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByContent(content);
-		return resultVOList;
+		return titleEscape(resultVOList);
 	}
 	
 	public ArrayList<BoardVO> getBoardByWriter(int member_no) {
 		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByWriter(member_no);
-		return resultVOList;
+		return titleEscape(resultVOList);
 	}
 	
 	public Integer getCountBoard() {
@@ -38,8 +40,14 @@ public class BoardService {
 		return count;
 	}
 
-	public BoardVO getBoard(int no) {
+	public BoardVO getBoard(int no, boolean isEscape) {
 		BoardVO resultVO = boardSQLMapper.selectBoardByNo(no);
+		
+		if(isEscape) {
+			titleEscape(resultVO);
+			contentEscape(resultVO);
+		}
+		
 		return resultVO;
 	}
 		
@@ -60,8 +68,31 @@ public class BoardService {
 	}
 	
 	public ArrayList<BoardVO> get4Board() {
-		ArrayList<BoardVO> resultVO = boardSQLMapper.select4Board();
-		
-		return resultVO;
+		ArrayList<BoardVO> resultVOList = boardSQLMapper.select4Board();
+		return titleEscape(resultVOList);
 	}
+	
+	public ArrayList<BoardVO> titleEscape(ArrayList<BoardVO> voList) {
+		for(BoardVO vo : voList) {
+			vo.setBoard_title(StringEscapeUtils.escapeHtml4(vo.getBoard_title())
+					.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;"));
+		}
+		return voList;
+	}
+	
+	public BoardVO titleEscape(BoardVO vo) {
+		vo.setBoard_title(StringEscapeUtils.escapeHtml4(vo.getBoard_title())
+		.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;"));
+
+		return vo;
+	}
+	
+	public BoardVO contentEscape(BoardVO vo) {
+		vo.setBoard_content(StringEscapeUtils.escapeHtml4(vo.getBoard_content())
+		.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;"));
+
+		return vo;
+	}
+	
+	
 }

@@ -1,13 +1,17 @@
 package com.ja.finalproject.member.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ja.finalproject.member.service.MemberService;
+import com.ja.finalproject.vo.HobbyCategoryVO;
 import com.ja.finalproject.vo.MemberVO;
 
 @Controller
@@ -24,14 +28,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping("joinMemberPage")
-	public String joinMemberPage() {
+	public String joinMemberPage(Model model) {
 		System.out.println("시스템 로그] 회원가입 페이지 실행");
+		
+		ArrayList<HobbyCategoryVO> list = memberService.getHobbyCategoryList();
+		
+		model.addAttribute("hobbyCategoryList", list);
 		
 		return "member/joinMemberPage";
 	}
 	
 	@RequestMapping("joinMemberProcess")
-	public String joinMemberProcess(MemberVO param) {
+	public String joinMemberProcess(MemberVO param, int[] hobby_category_no) {
 		System.out.println("시스템 로그] 회원가입 프로세스 실행");
 		System.out.println("시스템 로그] 파라미터 값 id : " + param.getMember_id());
 		System.out.println("시스템 로그] 파라미터 값 pw : " + param.getMember_pw());
@@ -41,7 +49,7 @@ public class MemberController {
 		System.out.println("시스템 로그] 파라미터 값 phone : " + param.getMember_phone());
 		System.out.println("시스템 로그] 파라미터 값 email : " + param.getMember_email());
 		
-		memberService.joinMember(param);
+		memberService.joinMember(param, hobby_category_no);
 		
 		return "member/joinMemberComplete";
 	}

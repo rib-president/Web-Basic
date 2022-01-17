@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -37,34 +38,7 @@
 </nav>
 </header> <!-- header -->
 <aside>
-  <article id="login_box">
-    <img id="login_title" src="../resources/img/ttl_login.png">
-    <c:choose>
-    <c:when test="${empty sessionUser }">
-	    <form action="../member/loginProcess" method="post">
-	    <div id="input_button">
-	    <ul id="login_input">
-	      <li><input type="text" name="member_id"></li>
-	      <li><input type="password" name="member_pw"></li>
-	    </ul>
-	    <button><img id="login_btn" src="../resources/img/btn_login.gif"></button>
-	    </div>
-	    </form>
-        <div class="clear"></div>
-    	<div id="join_search">
-      		<a href="../member/joinMemberPage"><img src="../resources/img/btn_join.gif"></a>
-      		<img src="../resources/img/btn_search.gif">
-    	</div>
-    </c:when>
-    <c:otherwise>
-    	<div style="margin: 10px;">
-    	${sessionUser.member_nick }님 환영합니다!
-    	</div>
-    	<br>
-    	<a href="../member/logoutProcess"><button>로그아웃</button></a>
-    </c:otherwise>
-    </c:choose>
-  </article>
+  <jsp:include page="../commons/loginBox.jsp"></jsp:include>
   <nav id="sub_menu">
     <ul>
       <li><a href="./boardListPage">+ 자유 게시판</a></li>
@@ -88,7 +62,7 @@
   <h2 id="board_title">자유 게시판 </h2>
   <div id="view_title_box"> 
     <span>${resultBoard.boardVO.board_title }</span>
-    <span id="info">${resultBoard.memberVO.member_nick } | 조회 : ${resultBoard.boardVO.board_readcount } | ${resultBoard.writedate }</span>
+    <span id="info">${resultBoard.memberVO.member_nick } | 조회 : ${resultBoard.boardVO.board_readcount } | <fmt:formatDate value="${resultBoard.boardVO.board_writedate }" pattern="yyyy-MM-dd (HH:mm)" /></span>
   </div>	
   <p id="view_content">
   ${resultBoard.boardVO.board_content }
@@ -110,7 +84,7 @@
 	<c:otherwise>
 		<div class="fleft comment_div">${comment.memberVO.member_nick } </div>
 	  	<div class="fleft comment_div">${comment.commentVO.comment_content }</div>
-	  	<div class="fright comment_div">${comment.writedate }</div>
+	  	<div class="fright comment_div"><fmt:formatDate value="${comment.commentVO.comment_writedate }" pattern="yy-MM-dd" /></div>
 	  	<c:if test="${sessionUser.member_no == comment.memberVO.member_no }">
 	  		<div class="fright comment_div"><a href="../comment/commentDeleteByNoProcess?comment_no=${comment.commentVO.comment_no }&board_no=${comment.commentVO.board_no }">삭제 </a></div>
 	  		<div class="fright comment_div"> | </div>

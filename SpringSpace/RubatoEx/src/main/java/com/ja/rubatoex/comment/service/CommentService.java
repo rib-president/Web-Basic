@@ -2,6 +2,7 @@ package com.ja.rubatoex.comment.service;
 
 import java.util.ArrayList;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,15 @@ public class CommentService {
 		commentSQLMapper.insertComment(vo);
 	}
 	
-	public ArrayList<CommentVO> commentGetByNoProcess(int no) {
+	public ArrayList<CommentVO> commentGetByNoProcess(int no, boolean isEscape) {
 		ArrayList<CommentVO> resultCommentVO = commentSQLMapper.selectCommentByNo(no);
 		
+		if(isEscape) {
+			for(CommentVO vo : resultCommentVO) {
+				vo.setComment_content(StringEscapeUtils.escapeHtml4(vo.getComment_content())
+				.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;"));
+			}
+		}
 		return resultCommentVO;
 	}
 	

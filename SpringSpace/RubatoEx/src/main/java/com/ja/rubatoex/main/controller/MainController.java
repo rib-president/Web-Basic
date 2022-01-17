@@ -1,6 +1,6 @@
 package com.ja.rubatoex.main.controller;
 
-import java.text.SimpleDateFormat;
+//import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +21,11 @@ public class MainController {
 	public String main(Model model) {
 		ArrayList<BoardVO> voList = boardService.get4Board();
 		ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		for(BoardVO vo : voList) {
 			HashMap<String, Object> map = new HashMap<>();
-			String writedate = sdf.format(vo.getBoard_writedate());
 			
 			map.put("boardVO", vo);
-			map.put("writedate", writedate);
 			
 			resultList.add(map);
 		}

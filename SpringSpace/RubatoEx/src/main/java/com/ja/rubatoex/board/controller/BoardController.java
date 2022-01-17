@@ -1,6 +1,5 @@
 package com.ja.rubatoex.board.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,11 +34,8 @@ public class BoardController {
 //		ArrayList<BoardVO> boardList = boardService.getBoardList();
 //		Integer count = boardService.getCountBoard();
 //		ArrayList<HashMap<String, Object>> resultBoardList = new ArrayList<>();
-//		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		
+//				
 //		for(BoardVO boardVO : boardList) {
-//			Date board_writedate = boardVO.getBoard_writedate();
 //
 //			int member_no = boardVO.getMember_no();
 //			MemberVO memberVO = memberService.getMemberByNo(member_no);
@@ -47,7 +43,6 @@ public class BoardController {
 //			HashMap<String, Object> map = new HashMap<>();
 //			map.put("boardVO", boardVO);
 //			map.put("memberVO", memberVO);
-//			map.put("writedate", sdf.format(board_writedate));
 //			
 //			resultBoardList.add(map);
 //		}
@@ -89,11 +84,8 @@ public class BoardController {
 		Integer count = resultVOList.size();
 		//Integer count = boardService.getCountBoard();
 		ArrayList<HashMap<String, Object>> resultBoardList = new ArrayList<>();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+				
 		for(BoardVO boardVO : resultVOList) {
-			Date board_writedate = boardVO.getBoard_writedate();
 
 			int member_no = boardVO.getMember_no();
 			MemberVO memberVO = memberService.getMemberByNo(member_no);
@@ -101,7 +93,6 @@ public class BoardController {
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("boardVO", boardVO);
 			map.put("memberVO", memberVO);
-			map.put("writedate", sdf.format(board_writedate));
 			
 			resultBoardList.add(map);
 		}
@@ -116,22 +107,23 @@ public class BoardController {
 	
 	@RequestMapping("boardViewPage")
 	public String boardViewPage(int board_no, String category, String keyword, Model model, HttpSession session) {
+		ArrayList<CommentVO> commentList = new ArrayList<>();
 		if(session.getAttribute("modifyCommentNo") != null) {
 			int modifyCommentNo = (Integer) session.getAttribute("modifyCommentNo");
 			session.removeAttribute("modifyCommentNo");
 			model.addAttribute("modifyCommentNo", modifyCommentNo);
+			commentList = commentService.commentGetByNoProcess(board_no, false);
+		} else {
+			commentList = commentService.commentGetByNoProcess(board_no, true);
 		}
 		
 		HashMap<String, Object> map = new HashMap<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd (HH:mm)");
 		
 		boardService.increaseReadCount(board_no);
-		BoardVO resultBoardVO = boardService.getBoard(board_no);
-		Date board_writedate = null;
+		BoardVO resultBoardVO = boardService.getBoard(board_no, true);
 		
-		try {
-			board_writedate = resultBoardVO.getBoard_writedate();
-		} catch(NullPointerException e) {
+
+		if(resultBoardVO == null) {
 			return "board/unavailableAccess";
 		}
 		
@@ -141,22 +133,16 @@ public class BoardController {
 		
 		map.put("boardVO", resultBoardVO);
 		map.put("memberVO", resultMemberVO);
-		map.put("writedate", sdf.format(board_writedate));
-		
-		ArrayList<CommentVO> commentList = commentService.commentGetByNoProcess(board_no);
+
 		ArrayList<HashMap<String, Object>> resultCommentList = new ArrayList<>();
-		SimpleDateFormat sdfComment = new SimpleDateFormat("yy-MM-dd");
 		
 		for(CommentVO commentVO : commentList) {
 			int comment_member_no = commentVO.getMember_no();
 			MemberVO memberVO = memberService.getMemberByNo(comment_member_no);
 			
-			Date comment_writedate = commentVO.getComment_writedate();
-			
 			HashMap<String, Object> commentMap = new HashMap<>();
 			commentMap.put("commentVO", commentVO);
 			commentMap.put("memberVO", memberVO);
-			commentMap.put("writedate", sdfComment.format(comment_writedate));
 			
 			resultCommentList.add(commentMap);
 		}
@@ -211,7 +197,7 @@ public class BoardController {
 			return "board/denyInvalidAccess";
 		}
 		
-		BoardVO resultVO = boardService.getBoard(board_no);
+		BoardVO resultVO = boardService.getBoard(board_no, false);
 		
 		model.addAttribute("boardVO", resultVO);
 		
