@@ -32,7 +32,7 @@ public class BoardService {
 		
 		for(BoardVO boardVO : boardVOList) {
 			int memberNo = boardVO.getMember_no();	// 작성자 번호			
-
+			
 			// 제목에 escape 적용
 			boardVO.setBoard_title(
 					StringEscapeUtils.escapeHtml4(boardVO.getBoard_title())

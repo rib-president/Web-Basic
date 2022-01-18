@@ -13,6 +13,10 @@
   <link rel="stylesheet" type="text/css" href="../resources/css/footer.css">
   <link rel="stylesheet" type="text/css" href="../resources/css/board_left.css">
   <link rel="stylesheet" type="text/css" href="../resources/css/board_list_main.css">
+  
+  <style>
+  	.col1 ul li {float: left;}
+  </style>
 </head>
 <body>
 <div id="wrap">
@@ -96,8 +100,8 @@
       	<tr>
       		<td class="col1">${map.boardVO.board_no }</td>
       		<c:choose>
-      			<c:when test="${!empty page}">
-      				<td class="col2"><a href="./boardViewPage?board_no=${map.boardVO.board_no }&page=${page }${tailParam }">${map.boardVO.board_title }</a></td>
+      			<c:when test="${!empty curPage}">
+      				<td class="col2"><a href="./boardViewPage?board_no=${map.boardVO.board_no }&page=${curPage }${tailParam }">${map.boardVO.board_title }</a></td>
       			</c:when>
       			<c:otherwise>
       				<td class="col2"><a href="./boardViewPage?board_no=${map.boardVO.board_no }${tailParam }">${map.boardVO.board_title }</a></td>
@@ -110,7 +114,42 @@
       </c:forEach>
     </table>
     <div id="buttons">
-      <div class="col1">◀ 이전 1 다음 ▶</div>
+      <div class="col1">
+      	<ul style="overflow: hidden;">
+
+      		<c:choose>
+      			<c:when test="${startPage <= 1 }">
+      				<li>&lt;</li>
+      			</c:when>
+      			<c:otherwise>
+	      			<li><a href="./boardListPage?page=${startPage - 1 }${tailParam }">&lt;</a></li>
+      			</c:otherwise>
+      		</c:choose>
+			<li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+		    <c:forEach begin="${startPage }" end="${endPage }" var="i">		
+
+      	  	  <c:choose>
+      			<c:when test="${curPage == i }">
+      				<li><a href="./boardListPage?page=${i }${tailParam }" style="font-size: 2em; font-weight: bold;">${i }</a></li>
+      			</c:when>
+      			<c:otherwise>
+      				<li><a href="./boardListPage?page=${i }${tailParam }">${i }</a></li>
+      			</c:otherwise>
+      		  </c:choose>
+			  <li>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+    		</c:forEach>
+			<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+      		<c:choose>
+      			<c:when test="${endPage >= totalPage }">
+      				<li>&gt;</li>
+      			</c:when>
+      			<c:otherwise>
+					<li><a href="./boardListPage?page=${endPage + 1 }${tailParam }">&gt;</a></li>      			
+      			</c:otherwise>
+      		</c:choose>
+    		
+      	</ul>
+      </div>
       <div class="col2">
         <a href="./boardListPage"><img src="../resources/img/list.png"></a>
         <c:if test="${!empty sessionUser }">

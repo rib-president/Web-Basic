@@ -1,5 +1,6 @@
 package com.ja.rubatoex.board.service;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.commons.text.StringEscapeUtils;
@@ -18,26 +19,26 @@ public class BoardService {
 //		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectAllBoard();
 //		return titleEscape(resultVOList);
 //	}
-	
-	public ArrayList<BoardVO> getBoardByTitle(String title) {
-		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByTitle(title);
-		
-		return titleEscape(resultVOList);
-	}
-	
-	public ArrayList<BoardVO> getBoardByContent(String content) {
-		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByContent(content);
-		return titleEscape(resultVOList);
-	}
-	
-	public ArrayList<BoardVO> getBoardByWriter(int member_no) {
-		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByWriter(member_no);
-		return titleEscape(resultVOList);
-	}
+//	
+//	public ArrayList<BoardVO> getBoardByTitle(String title) {
+//		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByTitle(title);
+//		
+//		return titleEscape(resultVOList);
+//	}
+//	
+//	public ArrayList<BoardVO> getBoardByContent(String content) {
+//		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByContent(content);
+//		return titleEscape(resultVOList);
+//	}
+//	
+//	public ArrayList<BoardVO> getBoardByWriter(int member_no) {
+//		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByWriter(member_no);
+//		return titleEscape(resultVOList);
+//	}
 	
 	public ArrayList<BoardVO> getBoardList(String category,
 			String keyword, int page) {
-		return boardSQLMapper.selectBoardList(category, keyword, page);
+		return titleEscape(boardSQLMapper.selectBoardList(category, keyword, page));
 	}
 	
 	public int getCountBoard(String category, String keyword) {
@@ -73,6 +74,7 @@ public class BoardService {
 	
 	public ArrayList<BoardVO> get4Board() {
 		ArrayList<BoardVO> resultVOList = boardSQLMapper.select4Board();
+
 		return titleEscape(resultVOList);
 	}
 	
@@ -98,5 +100,25 @@ public class BoardService {
 		return vo;
 	}
 	
+	public String makeTailParam(String category, String keyword) {
+		String tailParam = "";
+		if(category != null) {			
+			try {
+				tailParam += "&category=" + URLEncoder.encode(category, "utf-8");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(keyword != null) {
+			try {
+				tailParam += "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}			
+		}
+		
+		return tailParam;
+	}
 	
 }

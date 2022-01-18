@@ -98,12 +98,8 @@ public class MemberController {
 		String joinReferer = "main/main";
 		
 		if(splitReferer[4].equals("board")) {
-			if(splitReferer[5].indexOf("boardViewPage") != -1) {
-				String[] tailReferer = Arrays.copyOfRange(splitReferer, 4, splitReferer.length); 
-				joinReferer = String.join("/", tailReferer);
-			} else {
-				joinReferer = splitReferer[4] + "/boardListPage";
-			}
+			String[] tailReferer = Arrays.copyOfRange(splitReferer, 4, splitReferer.length); 
+			joinReferer = String.join("/", tailReferer);
 		}
 		
 		return "redirect:../" + joinReferer;

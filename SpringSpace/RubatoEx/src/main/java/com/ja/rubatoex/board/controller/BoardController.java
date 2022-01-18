@@ -1,6 +1,5 @@
 package com.ja.rubatoex.board.controller;
 
-import java.net.URLEncoder;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -105,44 +104,35 @@ public class BoardController {
 			resultBoardList.add(map);
 		}
 		
-		int totalPage = (int) Math.ceil(page / 10.0);
+		int totalPage = (int) Math.ceil(count / 10.0);
 		int startPage = ((page-1)/5) * 5 + 1;
 		int endPage = ((page-1)/5 + 1) * 5;
 		
 		if(endPage > totalPage)
 			endPage = totalPage;
-		
-		String tailParam = "";
-		
-		if(category != null) {			
-			try {
-				tailParam += "&category=" + URLEncoder.encode(category, "utf-8");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		if(keyword != null) {
-			try {
-				tailParam += "&keyword=" + URLEncoder.encode(keyword, "utf-8");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}			
-		}
-		
+				
+		model.addAttribute("category", category);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("curPage", page);
 		model.addAttribute("resultBoardList", resultBoardList);
 		model.addAttribute("countBoard", count);
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-		model.addAttribute("tailParam", tailParam);
+		model.addAttribute("tailParam", boardService.makeTailParam(category, keyword));
 		
 		return "board/boardListPage";
 	}
 	
 	
 	@RequestMapping("boardViewPage")
-	public String boardViewPage(int board_no, String category, String keyword, Model model, HttpSession session) {
+	public String boardViewPage(
+			int board_no,
+			String category,
+			String keyword,
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			Model model, HttpSession session)
+	{
 		ArrayList<CommentVO> commentList = new ArrayList<>();
 		if(session.getAttribute("modifyCommentNo") != null) {
 			int modifyCommentNo = (Integer) session.getAttribute("modifyCommentNo");
@@ -185,24 +175,29 @@ public class BoardController {
 		
 		model.addAttribute("resultBoard", map);
 		model.addAttribute("resultComment", resultCommentList);
-		if(category != null) {
-			model.addAttribute("category", category);
-			model.addAttribute("keyword", keyword);
-		}
+		model.addAttribute("tailParam", boardService.makeTailParam(category, keyword));
+		model.addAttribute("curPage", page);
 		
 		return "board/boardViewPage";
 	}
 	
 	@RequestMapping("boardDeleteProcess")
-	public String boardDeleteProcess(int board_no, HttpSession session) {
+	public String boardDeleteProcess(
+			int board_no,
+			String category,
+			String keyword,
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			HttpSession session) {
 		if(session.getAttribute("sessionUser") == null) {
 			return "board/denyInvalidAccess";
 		}
 		
+		String tailParam = boardService.makeTailParam(category, keyword);
+		
 		boardService.deleteBoard(board_no);
 		commentService.commentDeleteByBoardNoProcess(board_no);
 		
-		return "redirect:./boardListPage";
+		return "redirect:./boardListPage?page=" + page + tailParam;
 	}
 	
 	@RequestMapping("boardWritePage")
@@ -228,23 +223,41 @@ public class BoardController {
 	}
 	
 	@RequestMapping("boardModifyPage")
-	public String boardModifyPage(Integer board_no, Model model, HttpSession session) {
+	public String boardModifyPage(
+			@RequestParam(value = "board_no", defaultValue = "-1") int board_no,
+			String category,
+			String keyword,
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			Model model,
+			HttpSession session) 
+	{
 		if(session.getAttribute("sessionUser") == null) {
 			return "board/denyInvalidAccess";
 		}
 		
+		if(board_no == -1) {
+			return "board/unavailableAccess";
+		}
+		
 		BoardVO resultVO = boardService.getBoard(board_no, false);
 		
+		
 		model.addAttribute("boardVO", resultVO);
+		model.addAttribute("curPage", page);
+		model.addAttribute("tailParam", boardService.makeTailParam(category, keyword));		
 		
 		return "board/boardModifyPage";
 	}
 	
 	@RequestMapping("boardModifyProcess")
-	public String boardModifyProcess(BoardVO vo, HttpSession session) {
+	public String boardModifyProcess(
+			BoardVO vo,
+			String tailParam,
+			@RequestParam(value = "curPage", defaultValue = "1") int page,
+			HttpSession session) {
 
 		boardService.modifyBoard(vo);
 		
-		return "redirect:./boardListPage";
+		return "redirect:./boardViewPage?board_no=" + vo.getBoard_no() + "&page=" + page + tailParam;
 	}
 }

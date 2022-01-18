@@ -67,6 +67,8 @@
       <td class="col1">내용</td>
       <td class="col2"><textarea name="board_content">${boardVO.board_content }</textarea>
       <input type="hidden" name="board_no" value="${boardVO.board_no }">
+      <input type="hidden" name="curPage" value="${curPage }">
+      <input type="hidden" name="tailParam" value="${tailParam }">
       </td>
     </tr>	
     <tr id="upload">
@@ -76,7 +78,7 @@
   </table>
   <div id="buttons">
     <button><img src="../resources/img/ok.png"></button>
-    <a href="./boardListPage"><img src="../resources/img/list.png"></a>
+    <a href="./boardListPage?page=${curPage }${tailParam }"><img src="../resources/img/list.png"></a>
   </div>
   </form>
 </section> <!-- section main -->

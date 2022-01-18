@@ -78,6 +78,8 @@
   		<textarea name="comment_content">${comment.commentVO.comment_content }</textarea>
   		<input type="hidden" name="comment_no" value="${modifyCommentNo }">
   		<input type="hidden" name="board_no" value="${comment.commentVO.board_no }">
+  		<input type="hidden" name="page" value="${curPage }">
+  		<input type="hidden" name="tailParam" value="${tailParam }">
   		<input type="submit" value="수정 완료">
   	  </form>
   	</c:when>
@@ -86,9 +88,9 @@
 	  	<div class="fleft comment_div">${comment.commentVO.comment_content }</div>
 	  	<div class="fright comment_div"><fmt:formatDate value="${comment.commentVO.comment_writedate }" pattern="yy-MM-dd" /></div>
 	  	<c:if test="${sessionUser.member_no == comment.memberVO.member_no }">
-	  		<div class="fright comment_div"><a href="../comment/commentDeleteByNoProcess?comment_no=${comment.commentVO.comment_no }&board_no=${comment.commentVO.board_no }">삭제 </a></div>
+	  		<div class="fright comment_div"><a href="../comment/commentDeleteByNoProcess?comment_no=${comment.commentVO.comment_no }&board_no=${comment.commentVO.board_no }&page=${curPage }${tailParam }">삭제 </a></div>
 	  		<div class="fright comment_div"> | </div>
-	  		<div class="fright comment_div"><a href="../comment/commentModifyByNoPage?comment_no=${comment.commentVO.comment_no }&board_no=${comment.commentVO.board_no }"> 수정</a></div>
+	  		<div class="fright comment_div"><a href="../comment/commentModifyByNoPage?comment_no=${comment.commentVO.comment_no }&board_no=${comment.commentVO.board_no }&page=${curPage }${tailParam }"> 수정</a></div>
 	  	</c:if>	
 	</c:otherwise>
   </c:choose>
@@ -102,6 +104,8 @@
     	<textarea name="comment_content"></textarea>
     	<input type="hidden" name="board_no" value="${resultBoard.boardVO.board_no }">
     	<input type="hidden" name="member_no" value="${sessionUser.member_no }">
+    	<input type="hidden" name="page" value="${curPage }">
+    	<input type="hidden" name="tailParam" value="${tailParam }">
     	<button><img id="ok_ripple" src="../resources/img/ok_ripple.gif"></button>
   	  </div>
   	  </form>
@@ -116,18 +120,12 @@
   </c:choose>
   <div id="buttons">
   	<c:if test="${!empty sessionUser && sessionUser.member_no == resultBoard.boardVO.member_no }">
-  	<a href="./boardModifyPage?board_no=${resultBoard.boardVO.board_no }"><img src="../resources/img/modify.png"></a>
-    <a href="./boardDeleteProcess?board_no=${resultBoard.boardVO.board_no }"><img src="../resources/img/delete.png"></a>
+  	<a href="./boardModifyPage?board_no=${resultBoard.boardVO.board_no }&page=${curPage }${tailParam }"><img src="../resources/img/modify.png"></a>
+    <a href="./boardDeleteProcess?board_no=${resultBoard.boardVO.board_no }&page=${curPage }${tailParam }"><img src="../resources/img/delete.png"></a>
     </c:if>	
     
-    <c:choose>
-    	<c:when test="${!empty category && !empty keyword }">
-    		<a href="./boardListPage?category=${category }&keyword=${keyword }"><img src="../resources/img/list.png"></a>
-    	</c:when>
-    	<c:otherwise>
-			<a href="./boardListPage"><img src="../resources/img/list.png"></a>    	
-    	</c:otherwise>
-    </c:choose>
+	<a href="./boardListPage?page=${curPage }${tailParam }"><img src="../resources/img/list.png"></a>
+
    	<c:if test="${!empty sessionUser }">
     <a href="./boardWritePage"><img src="../resources/img/write.png"></a>
     </c:if>			

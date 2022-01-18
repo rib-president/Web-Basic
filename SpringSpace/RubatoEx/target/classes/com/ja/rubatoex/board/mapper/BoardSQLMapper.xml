@@ -73,15 +73,16 @@
 <select id="selectCountBoard" resultType="int">
 	SELECT COUNT(*)
 	FROM FP_Board fb, FP_Member fm
+	WHERE fb.member_no = fm.member_no
 	<choose>
 		<when test="category == 'title'">
-			WHERE fb.board_title LIKE '%'||#{keyword}||'%'
+			AND fb.board_title LIKE '%'||#{keyword}||'%'
 		</when>
 		<when test="category == 'content'">
-			WHERE fb.board_content LIKE '%'||#{keyword}||'%'		
+			AND fb.board_content LIKE '%'||#{keyword}||'%'		
 		</when>
 		<when test="category == 'writer'">
-			WHERE fm.member_nick LIKE '%'||#{keyword}||'%'		
+			AND fm.member_nick LIKE '%'||#{keyword}||'%'		
 		</when>
 	</choose>
 </select>
