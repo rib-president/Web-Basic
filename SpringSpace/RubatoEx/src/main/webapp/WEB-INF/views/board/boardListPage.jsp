@@ -96,11 +96,11 @@
       	<tr>
       		<td class="col1">${map.boardVO.board_no }</td>
       		<c:choose>
-      			<c:when test="${!empty category && !empty keyword}">
-      				<td class="col2"><a href="./boardViewPage?board_no=${map.boardVO.board_no }&category=${category }&keyword=${keyword }">${map.boardVO.board_title }</a></td>
+      			<c:when test="${!empty page}">
+      				<td class="col2"><a href="./boardViewPage?board_no=${map.boardVO.board_no }&page=${page }${tailParam }">${map.boardVO.board_title }</a></td>
       			</c:when>
       			<c:otherwise>
-      				<td class="col2"><a href="./boardViewPage?board_no=${map.boardVO.board_no }">${map.boardVO.board_title }</a></td>
+      				<td class="col2"><a href="./boardViewPage?board_no=${map.boardVO.board_no }${tailParam }">${map.boardVO.board_title }</a></td>
       			</c:otherwise>
       		</c:choose>
       		<td class="col3">${map.memberVO.member_nick }</td>

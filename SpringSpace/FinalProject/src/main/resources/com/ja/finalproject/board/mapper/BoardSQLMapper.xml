@@ -15,11 +15,54 @@
 	</insert>
 	
 	<!-- resultType : 한 행이 어떤 타입인지 -->
+	<!-- 동적 쿼리 -->
 	<select id="getBoardList" resultType="com.ja.finalproject.vo.BoardVO">
-		SELECT *
-		FROM FP_Board
-		ORDER BY board_no DESC
+		SELECT t2.* FROM (
+			SELECT t1.*, ROWNUM AS rnum FROM (
+				SELECT fb.* FROM FP_BOARD fb, FP_MEMBER fm 
+				WHERE fb.member_no = fm.member_no
+				<if test="searchOption != null">
+					<choose>
+						<when test="searchOption == 'title'">
+							AND fb.board_title LIKE '%'|| #{searchWord} ||'%'
+						</when>
+						<when test="searchOption == 'content'">
+							AND fb.board_content LIKE '%'|| #{searchWord} ||'%'
+						</when>
+						<when test="searchOption == 'nick'">
+							AND fm.member_nick LIKE '%'|| #{searchWord} ||'%'
+						</when>
+					</choose>
+				</if>
+				ORDER BY fb.board_no DESC) t1
+			) t2
+		
+		<![CDATA[ 
+		WHERE t2.rnum >= (#{pageNum}-1) * 10 + 1
+		AND t2.rnum <= #{pageNum} * 10
+		]]>
 	</select>
+	
+	
+	<select id="getBoardCount" resultType="int">
+		SELECT COUNT(*)
+		FROM FP_BOARD fb, FP_MEMBER fm
+		WHERE fb.MEMBER_NO = fm.MEMBER_NO
+		<if test="searchOption != null">
+			<choose>
+				<when test="searchOption == 'title'">
+					AND fb.board_title LIKE '%'|| #{searchWord} ||'%'
+				</when>
+				<when test="searchOption == 'content'">
+					AND fb.board_content LIKE '%'|| #{searchWord} ||'%'
+				</when>
+				<when test="searchOption == 'nick'">
+					AND fm.member_nick LIKE '%'|| #{searchWord} ||'%'
+				</when>
+			</choose>
+		</if>
+	</select>
+	
 	
 	<select id="getBoardByNo" resultType="com.ja.finalproject.vo.BoardVO">
 		SELECT *

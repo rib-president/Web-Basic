@@ -24,10 +24,11 @@ public class BoardService {
 		boardSQLMapper.insertBoard(vo);
 	}
 	
-	public ArrayList<HashMap<String, Object>> getBoardList() {
-		ArrayList<BoardVO> boardVOList = boardSQLMapper.getBoardList();
-		
+	public ArrayList<HashMap<String, Object>> getBoardList(
+			String searchOption, String searchWord, int pageNum) {
 		ArrayList<HashMap<String, Object>> dataList = new ArrayList<>();
+		
+		ArrayList<BoardVO> boardVOList = boardSQLMapper.getBoardList(searchOption, searchWord, pageNum);
 		
 		for(BoardVO boardVO : boardVOList) {
 			int memberNo = boardVO.getMember_no();	// 작성자 번호			
@@ -59,6 +60,12 @@ public class BoardService {
 		}
 		return dataList;
 	}
+	
+	
+	public int getBoardCount(String searchOption, String searchWord) {
+		return boardSQLMapper.getBoardCount(searchOption, searchWord);
+	}
+	
 	
 	public HashMap<String, Object> getBoard(int board_no, boolean isEscape) {
 		HashMap<String, Object> map = new HashMap<>();

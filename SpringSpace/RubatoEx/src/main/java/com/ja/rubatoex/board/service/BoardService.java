@@ -14,10 +14,10 @@ public class BoardService {
 	@Autowired
 	private BoardSQLMapper boardSQLMapper;
 	
-	public ArrayList<BoardVO> getBoardList() {
-		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectAllBoard();
-		return titleEscape(resultVOList);
-	}
+//	public ArrayList<BoardVO> getBoardList() {
+//		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectAllBoard();
+//		return titleEscape(resultVOList);
+//	}
 	
 	public ArrayList<BoardVO> getBoardByTitle(String title) {
 		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByTitle(title);
@@ -35,9 +35,13 @@ public class BoardService {
 		return titleEscape(resultVOList);
 	}
 	
-	public Integer getCountBoard() {
-		Integer count = boardSQLMapper.selectCountBoard();
-		return count;
+	public ArrayList<BoardVO> getBoardList(String category,
+			String keyword, int page) {
+		return boardSQLMapper.selectBoardList(category, keyword, page);
+	}
+	
+	public int getCountBoard(String category, String keyword) {
+		return boardSQLMapper.selectCountBoard(category, keyword);
 	}
 
 	public BoardVO getBoard(int no, boolean isEscape) {

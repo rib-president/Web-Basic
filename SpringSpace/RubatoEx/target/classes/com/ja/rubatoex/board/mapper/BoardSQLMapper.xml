@@ -9,6 +9,36 @@
 	ORDER BY board_no DESC
 </select>
 
+
+<select id="selectBoardList" resultType="com.ja.rubatoex.vo.BoardVO">
+	SELECT t2.*
+	FROM (
+		SELECT t1.*, ROWNUM as rnum
+		FROM (
+			SELECT fb.*
+			FROM FP_Board fb, FP_Member fm
+			WHERE fb.member_no = fm.member_no
+			<choose>
+				<when test="category == 'title'">
+					AND fb.board_title LIKE '%'||#{keyword}||'%'
+				</when>
+				<when test="category == 'content'">
+					AND fb.board_content LIKE '%'||#{keyword}||'%'
+				</when>
+				<when test="category == 'writer'">
+					AND fm.member_nick LIKE '%'||#{keyword}||'%'
+				</when>
+			</choose>
+			ORDER BY fb.board_no DESC
+			) t1
+		) t2
+	<![CDATA[ 
+	WHERE t2.rnum >= (#{page}-1) * 10 + 1
+	AND t2.rnum <= #{page} * 10
+	]]>
+</select>
+
+
 <select id="selectBoardByTitle" resultType="com.ja.rubatoex.vo.BoardVO">
 	SELECT *
 	FROM FP_Board
@@ -40,9 +70,20 @@
 	<![CDATA[WHERE ROWNUM <= 4]]>
 </select>
 
-<select id="selectCountBoard" resultType="Integer">
+<select id="selectCountBoard" resultType="int">
 	SELECT COUNT(*)
-	FROM FP_Board
+	FROM FP_Board fb, FP_Member fm
+	<choose>
+		<when test="category == 'title'">
+			WHERE fb.board_title LIKE '%'||#{keyword}||'%'
+		</when>
+		<when test="category == 'content'">
+			WHERE fb.board_content LIKE '%'||#{keyword}||'%'		
+		</when>
+		<when test="category == 'writer'">
+			WHERE fm.member_nick LIKE '%'||#{keyword}||'%'		
+		</when>
+	</choose>
 </select>
 
 <select id="selectBoardByNo" resultType="com.ja.rubatoex.vo.BoardVO">
