@@ -3,9 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ja.finalproject.board.mapper.BoardSQLMapper">
+	<!-- 보드 테이블 PK 생성 -->
+	<select id="createBoardPK" resultType="int">
+		SELECT FP_Board_seq.nextval
+		FROM dual
+	</select>
+
 	<insert id="insertBoard">
 		INSERT INTO FP_Board VALUES (
-	    FP_Board_seq.nextval,
+	    #{board_no},	<!-- FP_Board_seq.nextval => #{board_no}로 수정 -->
 	    #{member_no},
 	    #{board_title},
 	    #{board_content},
@@ -86,4 +92,22 @@
 		SET board_title = #{board_title}, board_content = #{board_content}
 		WHERE board_no = #{board_no}
 	</update>
+	
+	
+	<!-- 이미지 테이블에 INSERT -->
+	<insert id="insertImage">
+		INSERT INTO FP_BoardImage VALUES(
+			FP_BoardImage_seq.nextval,
+			#{board_no},
+			#{image_url},
+			#{image_original_filename}
+		)
+	</insert>
+	
+	<!-- board_no로 이미지테이블에서 SELECT -->
+	<select id="getImageListByBoardNo" resultType="com.ja.finalproject.vo.BoardImageVO">
+		SELECT *
+		FROM FP_BoardImage
+		WHERE board_no = #{boardNo}
+	</select>
 </mapper>

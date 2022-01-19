@@ -65,6 +65,10 @@
     <span id="info">${resultBoard.memberVO.member_nick } | 조회 : ${resultBoard.boardVO.board_readcount } | <fmt:formatDate value="${resultBoard.boardVO.board_writedate }" pattern="yyyy-MM-dd (HH:mm)" /></span>
   </div>	
   <p id="view_content">
+  <c:forEach items="${boardImageVOList }" var="boardImageVO">
+  	<img src="/upload/${boardImageVO.image_url }" width="30%"><br>
+  </c:forEach>
+  <br>
   ${resultBoard.boardVO.board_content }
   </p>
   

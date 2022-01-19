@@ -14,6 +14,13 @@
 	작성자 : ${data.memberVO.member_nick }<br>
 	작성일 : ${data.boardVO.board_writedate }<br>
 	조회수 : ${data.boardVO.board_readcount }<br>
+	
+	이미지 : <br>
+	<c:forEach items="${data.boardImageVOList }" var="boardImageVO">
+		<img src="/upload/${boardImageVO.image_url }"><br>
+	</c:forEach>
+	
+	
 	내용 :<br>
 	${data.boardVO.board_content }<br>
 	

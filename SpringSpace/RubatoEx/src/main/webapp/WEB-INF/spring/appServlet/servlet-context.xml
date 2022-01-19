@@ -24,6 +24,10 @@
 	<!--  ja : 아래 바꿀 것.. -->
 	<context:component-scan base-package="com.ja.rubatoex.*.controller" />
 	
-	
+	<!-- ja: 파일 업로드 관련 추가 빈 -->
+	<beans:bean id="multipartResolver" 
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="100000000"></beans:property>
+	</beans:bean>
 	
 </beans:beans>

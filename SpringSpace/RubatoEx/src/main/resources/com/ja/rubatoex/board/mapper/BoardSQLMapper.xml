@@ -3,13 +3,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ja.rubatoex.board.mapper.BoardSQLMapper">
-<select id="selectAllBoard" resultType="com.ja.rubatoex.vo.BoardVO">
-	SELECT *
-	FROM FP_Board
-	ORDER BY board_no DESC
-</select>
-
-
 <select id="selectBoardList" resultType="com.ja.rubatoex.vo.BoardVO">
 	SELECT t2.*
 	FROM (
@@ -38,6 +31,13 @@
 	]]>
 </select>
 
+<!-- 
+<select id="selectAllBoard" resultType="com.ja.rubatoex.vo.BoardVO">
+	SELECT *
+	FROM FP_Board
+	ORDER BY board_no DESC
+</select>
+
 
 <select id="selectBoardByTitle" resultType="com.ja.rubatoex.vo.BoardVO">
 	SELECT *
@@ -59,7 +59,7 @@
 	WHERE member_no = #{member_no}
 	ORDER BY board_no DESC
 </select>
-
+ -->
 
 <select id="select4Board" resultType="com.ja.rubatoex.vo.BoardVO">
 	SELECT *
@@ -93,6 +93,13 @@
 	WHERE board_no = #{no}
 </select>
 
+<select id="selectBoardImageByBoardNo" resultType="com.ja.rubatoex.vo.BoardImageVO">
+	SELECT *
+	FROM FP_BoardImage
+	WHERE board_no = #{board_no}
+	ORDER BY image_no
+</select>
+
 <update id="updateBoardReadCount">
 	UPDATE FP_Board
 	SET board_readcount = board_readcount + 1
@@ -104,14 +111,38 @@
 	WHERE board_no = #{no}
 </delete>
 
+<delete id="deleteBoardImage">
+	DELETE FROM FP_BoardImage
+	WHERE board_no = #{board_no}
+</delete>
+
+<delete id="deleteBoardImageByNo">
+	DELETE FROM FP_BoardImage
+	WHERE image_no = #{no}
+</delete>
+
+<select id="createBoardPK" resultType="int">
+	SELECT FP_Board_seq.nextval
+	FROM dual
+</select>
+
 <insert id="insertBoard">
 	INSERT INTO FP_Board VALUES (
-	FP_Board_seq.nextval,
+	#{board_no},
 	#{member_no},
 	#{board_title},
 	#{board_content},
 	0,
 	SYSDATE
+	)
+</insert>
+
+<insert id="insertBoardImage">
+	INSERT INTO FP_BoardImage VALUES (
+	FP_BoardImage_seq.nextval,
+	#{board_no},
+	#{image_url},
+	#{image_original_filename}
 	)
 </insert>
 

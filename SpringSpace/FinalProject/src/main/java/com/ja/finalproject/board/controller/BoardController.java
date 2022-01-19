@@ -1,6 +1,8 @@
 package com.ja.finalproject.board.controller;
 
+import java.io.File;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -10,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ja.finalproject.board.service.BoardService;
+import com.ja.finalproject.vo.BoardImageVO;
 import com.ja.finalproject.vo.BoardVO;
 import com.ja.finalproject.vo.MemberVO;
 
@@ -85,8 +89,71 @@ public class BoardController {
 	}
 	
 	@RequestMapping("writeContentProcess")
-	public String writeContentProcess(BoardVO param, HttpSession session) {
+	// 파일 업로드jsp부분에서 multiple 설정을 해줬으므로 배열(MultipartFile[])로 받음
+	public String writeContentProcess(BoardVO param, MultipartFile[] uploadFiles, HttpSession session) {
 		System.out.println("시스템 로그] 글쓰기 프로세스 실행");
+		
+		ArrayList<BoardImageVO> boardImageVOList = new ArrayList<>();
+		
+		String uploadFolder = "C:/uploadfolder/";
+		
+		// 파일 업로드
+		if(uploadFiles != null) {
+			for(MultipartFile uploadFile : uploadFiles) {
+				// 업로드된 파일이 없어도 꼭 한 번은 루핑 돌기 때문에 isEmpty로 체크
+				if(uploadFile.isEmpty()) {
+					continue;
+				}
+				
+				// 날짜 별 폴더 생성 2022/01/19
+				Date today = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/"); 
+				String folderPath= sdf.format(today);
+				
+				// file뿐만이 아닌 folder까지 컨트롤, folder도 file임
+				// C:/uploadfolder/2022/01/19/
+				File todayFolder = new File(uploadFolder + folderPath);
+				
+				if(!todayFolder.exists()) {
+					// path 상위에서부터 없는 폴더 생성
+					todayFolder.mkdirs();
+				}
+				
+				// 중복되지 않게 저장해야 함(덮어씀 방지)
+				// 방법 : 랜덤  + 시간
+				String fileName = "";
+				
+				// universally unique identifier
+				UUID uuid = UUID.randomUUID();				
+				fileName += uuid.toString();
+				
+				long currentTime = System.currentTimeMillis();
+				fileName += "_" + currentTime;
+				
+				// 확장자 추가
+				// getOriginalFilename : 업로드한 쪽에서 설정한 파일명				
+				String originalFileName = uploadFile.getOriginalFilename();
+				String ext = originalFileName.substring(
+						originalFileName.lastIndexOf("."));
+				fileName += ext;
+				
+				try {
+					// transferTo(File dest) : dest로 파일을 receive
+					uploadFile.transferTo(new File(uploadFolder +
+							folderPath + fileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				// 서비스에 보내기 위한 데이터 구성
+				BoardImageVO boardImageVO = new BoardImageVO();
+				boardImageVO.setImage_url(folderPath + fileName);
+				boardImageVO.setImage_original_filename(originalFileName);
+				
+				boardImageVOList.add(boardImageVO);
+			}
+		}
+		
 		
 		// 파라미터로 title, content 2개 값 + session에서 member_no 받아와서 param에 넣음
 		// 총 3개 값 세팅
@@ -95,7 +162,7 @@ public class BoardController {
 		param.setMember_no(memberNo);
 		
 		// Service(class) -> Mapper(interface, XML) -> INSERT
-		boardService.writeContent(param);
+		boardService.writeContent(param, boardImageVOList);
 		
 		return "redirect:./mainPage";
 	}

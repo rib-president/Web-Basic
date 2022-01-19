@@ -4,9 +4,13 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.ja.finalproject.vo.BoardImageVO;
 import com.ja.finalproject.vo.BoardVO;
 
 public interface BoardSQLMapper {
+	// 보드 테이블 PK 생성
+	public int createBoardPK();
+	
 	// insert, update, delete는 return type void
 	public void insertBoard(BoardVO vo);
 	
@@ -32,4 +36,10 @@ public interface BoardSQLMapper {
 	
 	// 글 수정
 	public void updateBoard(BoardVO vo);
+	
+	// 이미지 테이블에 INSERT
+	public void insertImage(BoardImageVO vo);
+	
+	// 이미지 테이블에서 board_no로 SELECT
+	public ArrayList<BoardImageVO> getImageListByBoardNo(int boardNo);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ja.finalproject.board.mapper.BoardSQLMapper;
 import com.ja.finalproject.member.mapper.MemberSQLMapper;
+import com.ja.finalproject.vo.BoardImageVO;
 import com.ja.finalproject.vo.BoardVO;
 import com.ja.finalproject.vo.MemberVO;
 
@@ -19,9 +20,17 @@ public class BoardService {
 	@Autowired
 	private MemberSQLMapper memberSQLMapper;
 	
-	public void writeContent(BoardVO vo) {
+	public void writeContent(BoardVO vo, ArrayList<BoardImageVO> boardImageVOList) {
 		// 실제는 유효성 검사해야하는 부분(제목에 욕 같은거)
+		int boardNo = boardSQLMapper.createBoardPK();
+		
+		vo.setBoard_no(boardNo);
 		boardSQLMapper.insertBoard(vo);
+		
+		for(BoardImageVO boardImageVO : boardImageVOList) {
+			boardImageVO.setBoard_no(boardNo);
+			boardSQLMapper.insertImage(boardImageVO);
+		}
 	}
 	
 	public ArrayList<HashMap<String, Object>> getBoardList(
@@ -94,11 +103,16 @@ public class BoardService {
 			
 		}
 				
-		int memberNo = boardVO.getMember_no();
+		int memberNo = boardVO.getMember_no();	
 		MemberVO memberVO = memberSQLMapper.getMemberByNo(memberNo);
+		
+		ArrayList<BoardImageVO> boardImageVOList = 
+				boardSQLMapper.getImageListByBoardNo(board_no);
+		
 		
 		map.put("memberVO", memberVO);
 		map.put("boardVO", boardVO);
+		map.put("boardImageVOList", boardImageVOList);
 		
 		return map;
 	}
