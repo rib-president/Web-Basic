@@ -19,7 +19,7 @@ import com.ja.finalproject.vo.MemberVO;
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
-
+	
 	@RequestMapping("loginPage")
 	public String loginPage() {
 		System.out.println("시스템 로그] 로그인 페이지 실행");
@@ -83,4 +83,14 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:../board/mainPage";
 	}
+	
+	@RequestMapping("mailAuthProcess")
+	public String mailAuthProcess(String authKey) {
+		
+		memberService.authMail(authKey);
+		
+		return "member/authMailProcessComplete";
+	}
+	
+	
 }

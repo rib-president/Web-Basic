@@ -31,36 +31,6 @@
 	]]>
 </select>
 
-<!-- 
-<select id="selectAllBoard" resultType="com.ja.rubatoex.vo.BoardVO">
-	SELECT *
-	FROM FP_Board
-	ORDER BY board_no DESC
-</select>
-
-
-<select id="selectBoardByTitle" resultType="com.ja.rubatoex.vo.BoardVO">
-	SELECT *
-	FROM FP_Board
-	WHERE board_title LIKE '%'||#{title}||'%' 
-	ORDER BY board_no DESC
-</select>
-
-<select id="selectBoardByContent" resultType="com.ja.rubatoex.vo.BoardVO">
-	SELECT *
-	FROM FP_Board
-	WHERE board_content LIKE '%'||#{content}||'%'
-	ORDER BY board_no DESC
-</select>
-
-<select id="selectBoardByWriter" resultType="com.ja.rubatoex.vo.BoardVO">
-	SELECT *
-	FROM FP_Board
-	WHERE member_no = #{member_no}
-	ORDER BY board_no DESC
-</select>
- -->
-
 <select id="select4Board" resultType="com.ja.rubatoex.vo.BoardVO">
 	SELECT *
 	FROM 

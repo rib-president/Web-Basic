@@ -31,57 +31,6 @@ public class BoardController {
 	@Autowired
 	private CommentService commentService;
 	
-//	@RequestMapping("boardListPage")
-//	public String boardListPage(String category, String keyword, Model model) {
-//		ArrayList<BoardVO> resultVOList = new ArrayList<>();
-//		if(category != null) {
-//			if(category.equals("title")) {
-//				resultVOList = boardService.getBoardByTitle(keyword);
-//			} else if(category.equals("content")) {
-//				resultVOList = boardService.getBoardByContent(keyword);			
-//			} else if(category.equals("writer")) {
-//				ArrayList<MemberVO> resultMemberVOList = memberService.getMemberByNick(keyword);
-//				resultVOList = new ArrayList<>();
-//				
-//				for(MemberVO memberVO : resultMemberVOList) {
-//					int search_member_no = memberVO.getMember_no();
-//					ArrayList<BoardVO> boardVOList = boardService.getBoardByWriter(search_member_no);
-//					resultVOList.addAll(boardVOList);
-//				}
-//		
-//				resultVOList = (ArrayList<BoardVO>) resultVOList.stream().
-//								sorted((a, b) -> Integer.compare(b.getBoard_no(), a.getBoard_no())).
-//								collect(Collectors.toList());
-//			}
-//			model.addAttribute("category", category);
-//			model.addAttribute("keyword", keyword);
-//		} else if(category == null && keyword == null) {
-//			resultVOList = boardService.getBoardList();
-//		}
-//		
-//		Integer count = resultVOList.size();
-//		//Integer count = boardService.getCountBoard();
-//		ArrayList<HashMap<String, Object>> resultBoardList = new ArrayList<>();
-//				
-//		for(BoardVO boardVO : resultVOList) {
-//
-//			int member_no = boardVO.getMember_no();
-//			MemberVO memberVO = memberService.getMemberByNo(member_no);
-//			
-//			HashMap<String, Object> map = new HashMap<>();
-//			map.put("boardVO", boardVO);
-//			map.put("memberVO", memberVO);
-//			
-//			resultBoardList.add(map);
-//		}
-//		
-//		model.addAttribute("resultBoardList", resultBoardList);
-//		model.addAttribute("countBoard", count);
-//		
-//		return "board/boardListPage";
-//	}
-	
-	
 	@RequestMapping("boardListPage")
 	public String boardListPage(
 			String category,

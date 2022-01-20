@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ja.rubatoex.commons.MessageDigestUtil;
 import com.ja.rubatoex.member.mapper.MemberSQLMapper;
 import com.ja.rubatoex.vo.MemberVO;
 
@@ -14,23 +15,22 @@ public class MemberService {
 	private MemberSQLMapper memberSQLMapper;
 	
 	public void joinMember(MemberVO vo) {
+		vo.setMember_pw(MessageDigestUtil.passwordHashing(
+				vo.getMember_pw()));
 		memberSQLMapper.joinMember(vo);
 	}
 	
 	public MemberVO login(MemberVO vo) {
-		MemberVO resultVO = memberSQLMapper.login(vo);
-		return resultVO;
+		vo.setMember_pw(MessageDigestUtil.passwordHashing(
+				vo.getMember_pw()));	
+		return memberSQLMapper.login(vo);
 	}
 	
 	public MemberVO getMemberByNo(int no) {
-		MemberVO resultVO = memberSQLMapper.selectMemberByNo(no);
-		
-		return resultVO;
+		return memberSQLMapper.selectMemberByNo(no);
 	}
 	
 	public ArrayList<MemberVO> getMemberByNick(String member_nick) {
-		ArrayList<MemberVO> resultVOList = memberSQLMapper.selectMemberByNick(member_nick);
-		
-		return resultVOList;
+		return memberSQLMapper.selectMemberByNick(member_nick);
 	}
 }

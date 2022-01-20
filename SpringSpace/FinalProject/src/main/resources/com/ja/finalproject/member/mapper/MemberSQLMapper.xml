@@ -20,11 +20,22 @@
 		SYSDATE)
 	</insert>
 	
+	<!-- 메일 인증 안 하는 경우 사용 -->
+	<!-- 
 	<select id="getMemberByIdAndPw" resultType="com.ja.finalproject.vo.MemberVO">
 		SELECT *
 		FROM FP_Member
 		WHERE member_id = #{member_id}
 		AND member_pw = #{member_pw}
+	</select>
+	 -->
+	 
+ 	<select id="getMemberByIdAndPw" resultType="com.ja.finalproject.vo.MemberVO">
+		SELECT * FROM FP_Member fmb, FP_MailAuth fma
+		WHERE fmb.member_no = fma.member_no
+		AND fmb.member_id = #{member_id}
+		AND fmb.member_pw = #{member_pw}
+		AND fma.mailauth_complete = 'Y'
 	</select>
 	
 	<select id="getMemberByNo" resultType="com.ja.finalproject.vo.MemberVO">
@@ -46,4 +57,22 @@
 		#{hobby_category_no}
 		)
 	</insert>
+	
+	<!-- 메일 인증 -->
+	<insert id="insertMailAuth">
+		INSERT INTO FP_MailAuth VALUES (
+		FP_MailAuth_seq.nextval,
+		#{member_no},
+		#{mailauth_key},
+		'N',
+		NULL
+	)		
+	</insert>	
+
+	<!-- 메일 인증 완료 -->
+	<update id="updateMailAuthComplete">
+		UPDATE FP_MailAuth
+		SET mailauth_complete = 'Y', mailauth_date = SYSDATE
+		WHERE mailauth_key = #{authKey}
+	</update>
 </mapper>

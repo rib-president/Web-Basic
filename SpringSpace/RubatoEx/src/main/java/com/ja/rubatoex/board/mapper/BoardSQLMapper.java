@@ -10,12 +10,7 @@ import com.ja.rubatoex.vo.BoardVO;
 public interface BoardSQLMapper {
 	public BoardVO selectBoardByNo(int no);
 	public ArrayList<BoardImageVO> selectBoardImageByBoardNo(int board_no);
-	/*
-	public ArrayList<BoardVO> selectAllBoard();
-	public ArrayList<BoardVO> selectBoardByTitle(String title);
-	public ArrayList<BoardVO> selectBoardByContent(String content);
-	public ArrayList<BoardVO> selectBoardByWriter(int member_no);
-	*/
+
 	public ArrayList<BoardVO> selectBoardList(
 			@Param("category") String category,
 			@Param("keyword") String keyword,

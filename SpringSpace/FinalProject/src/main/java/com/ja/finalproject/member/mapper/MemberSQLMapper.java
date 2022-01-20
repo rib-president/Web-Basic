@@ -3,6 +3,7 @@ package com.ja.finalproject.member.mapper;
 import java.util.ArrayList;
 
 import com.ja.finalproject.vo.HobbyCategoryVO;
+import com.ja.finalproject.vo.MailAuthVO;
 import com.ja.finalproject.vo.MemberHobbyVO;
 import com.ja.finalproject.vo.MemberVO;
 
@@ -19,4 +20,8 @@ public interface MemberSQLMapper {
 	
 	// 회원 취미 관련
 	public void insertMemberHobby(MemberHobbyVO vo);
+	
+	// 메일 인증 관련
+	public void insertMailAuth(MailAuthVO vo);
+	public void updateMailAuthComplete(String authKey);
 }

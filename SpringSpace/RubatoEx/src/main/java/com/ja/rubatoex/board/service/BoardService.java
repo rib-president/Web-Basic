@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ja.rubatoex.board.mapper.BoardSQLMapper;
+import com.ja.rubatoex.commons.StringEscapeUtil;
 import com.ja.rubatoex.vo.BoardImageVO;
 import com.ja.rubatoex.vo.BoardVO;
 
@@ -21,30 +21,9 @@ public class BoardService {
 	@Autowired
 	private BoardSQLMapper boardSQLMapper;
 	
-//	public ArrayList<BoardVO> getBoardList() {
-//		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectAllBoard();
-//		return titleEscape(resultVOList);
-//	}
-//	
-//	public ArrayList<BoardVO> getBoardByTitle(String title) {
-//		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByTitle(title);
-//		
-//		return titleEscape(resultVOList);
-//	}
-//	
-//	public ArrayList<BoardVO> getBoardByContent(String content) {
-//		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByContent(content);
-//		return titleEscape(resultVOList);
-//	}
-//	
-//	public ArrayList<BoardVO> getBoardByWriter(int member_no) {
-//		ArrayList<BoardVO> resultVOList = boardSQLMapper.selectBoardByWriter(member_no);
-//		return titleEscape(resultVOList);
-//	}
-	
 	public ArrayList<BoardVO> getBoardList(String category,
 			String keyword, int page) {
-		return titleEscape(boardSQLMapper.selectBoardList(category, keyword, page));
+		return StringEscapeUtil.titleEscape(boardSQLMapper.selectBoardList(category, keyword, page));
 	}
 	
 	public int getCountBoard(String category, String keyword) {
@@ -55,8 +34,8 @@ public class BoardService {
 		BoardVO resultVO = boardSQLMapper.selectBoardByNo(no);
 		
 		if(isEscape) {
-			titleEscape(resultVO);
-			contentEscape(resultVO);
+			StringEscapeUtil.titleEscape(resultVO);
+			StringEscapeUtil.contentEscape(resultVO);
 		}
 		
 		return resultVO;
@@ -103,30 +82,9 @@ public class BoardService {
 	public ArrayList<BoardVO> get4Board() {
 		ArrayList<BoardVO> resultVOList = boardSQLMapper.select4Board();
 
-		return titleEscape(resultVOList);
+		return StringEscapeUtil.titleEscape(resultVOList);
 	}
 	
-	public ArrayList<BoardVO> titleEscape(ArrayList<BoardVO> voList) {
-		for(BoardVO vo : voList) {
-			vo.setBoard_title(StringEscapeUtils.escapeHtml4(vo.getBoard_title())
-					.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;"));
-		}
-		return voList;
-	}
-	
-	public BoardVO titleEscape(BoardVO vo) {
-		vo.setBoard_title(StringEscapeUtils.escapeHtml4(vo.getBoard_title())
-		.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;"));
-
-		return vo;
-	}
-	
-	public BoardVO contentEscape(BoardVO vo) {
-		vo.setBoard_content(StringEscapeUtils.escapeHtml4(vo.getBoard_content())
-		.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;"));
-
-		return vo;
-	}
 	
 	public String makeTailParam(String category, String keyword) {
 		String tailParam = "";
