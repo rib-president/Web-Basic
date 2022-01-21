@@ -2,6 +2,9 @@ package com.ja.rubatoex.board.controller;
 
 import java.util.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +85,8 @@ public class BoardController {
 			String category,
 			String keyword,
 			@RequestParam(value = "page", defaultValue = "1") int page,
-			Model model, HttpSession session)
+			Model model, HttpSession session, 
+			HttpServletRequest request, HttpServletResponse response)
 	{
 		ArrayList<CommentVO> commentList = new ArrayList<>();
 		if(session.getAttribute("modifyCommentNo") != null) {
@@ -96,7 +100,35 @@ public class BoardController {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		
-		boardService.increaseReadCount(board_no);
+		
+		Cookie[] cookies = request.getCookies();
+		String cBoard_no = "/" + String.valueOf(board_no) + "/";
+		int countFlag = 0;
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals("readBoardNo")) {
+					
+					String readBoardNo = cookie.getValue();
+					countFlag++;
+					if(readBoardNo.indexOf(cBoard_no) == -1) {
+						Cookie newCookie = new Cookie("readBoardNo", readBoardNo + cBoard_no);
+						response.addCookie(newCookie);
+
+						boardService.increaseReadCount(board_no);
+						break;
+					}
+				}
+			}
+		}
+		
+		if(countFlag == 0) {
+			Cookie newCookie = new Cookie("readBoardNo", cBoard_no);
+			response.addCookie(newCookie);
+			boardService.increaseReadCount(board_no);	
+		}
+		
+		
+		
 		BoardVO resultBoardVO = boardService.getBoard(board_no, true);	
 
 		if(resultBoardVO == null) {
@@ -130,7 +162,6 @@ public class BoardController {
 		model.addAttribute("resultComment", resultCommentList);
 		model.addAttribute("tailParam", boardService.makeTailParam(category, keyword));
 		model.addAttribute("curPage", page);
-		
 		return "board/boardViewPage";
 	}
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 
 import com.ja.finalproject.vo.BoardImageVO;
+import com.ja.finalproject.vo.BoardLikeVO;
 import com.ja.finalproject.vo.BoardVO;
 
 public interface BoardSQLMapper {
@@ -42,4 +43,11 @@ public interface BoardSQLMapper {
 	
 	// 이미지 테이블에서 board_no로 SELECT
 	public ArrayList<BoardImageVO> getImageListByBoardNo(int boardNo);
+	
+	// 좋아요 테이블
+	public void insertLike(BoardLikeVO vo);
+	public void deleteLike(BoardLikeVO vo);
+	public int getTotalLikeCount(int board_no);
+	public int getMyLikeCount(BoardLikeVO vo);
+	
 }

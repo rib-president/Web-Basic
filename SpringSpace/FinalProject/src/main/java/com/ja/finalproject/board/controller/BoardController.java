@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ja.finalproject.board.service.BoardService;
 import com.ja.finalproject.vo.BoardImageVO;
+import com.ja.finalproject.vo.BoardLikeVO;
 import com.ja.finalproject.vo.BoardVO;
 import com.ja.finalproject.vo.MemberVO;
 
@@ -168,12 +169,29 @@ public class BoardController {
 	}
 	
 	@RequestMapping("readContentPage")
-	public String readContentPage(int board_no, Model model) {
+	public String readContentPage(int board_no, Model model, HttpSession session) {
 		boardService.increaseReadCount(board_no);
 		
 		HashMap<String, Object> map = boardService.getBoard(board_no, true);
 		
 		model.addAttribute("data", map);
+		
+		// 게시글의 총 좋아요 수
+		int totalLikeCount = boardService.getTotalLikeCount(board_no);
+		model.addAttribute("totalLikeCount", totalLikeCount);
+		
+		// 로그인인한 회원의 좋아요 여부 확인
+		MemberVO sessionUser = (MemberVO) session.getAttribute("sessionUser");
+		if(sessionUser != null) {
+			BoardLikeVO boardLikeVO = new BoardLikeVO();
+			boardLikeVO.setMember_no(sessionUser.getMember_no());
+			boardLikeVO.setBoard_no(board_no);
+			
+			int myLikeCount = boardService.getMyLikeCount(boardLikeVO);
+			
+			model.addAttribute("myLikeCount", myLikeCount);
+		}
+		
 		
 		return "board/readContentPage";
 	}
@@ -199,5 +217,17 @@ public class BoardController {
 		boardService.updateBoard(vo);
 		
 		return "redirect:./readContentPage?board_no=" + vo.getBoard_no();
+	}
+	
+	@RequestMapping("likeProcess")
+	public String likeProcess(BoardLikeVO param, HttpSession session) {
+		// 행위자 정보는 꼭 세션에서 가져올 것
+		MemberVO sessionUser = (MemberVO) session.getAttribute("sessionUser");
+		int memberNo = sessionUser.getMember_no();
+		param.setMember_no(memberNo);
+		
+		boardService.doLike(param);
+		
+		return "redirect:./readContentPage?board_no=" + param.getBoard_no();
 	}
 }

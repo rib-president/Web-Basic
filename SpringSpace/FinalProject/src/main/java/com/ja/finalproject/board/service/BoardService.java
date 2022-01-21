@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ja.finalproject.board.mapper.BoardSQLMapper;
 import com.ja.finalproject.member.mapper.MemberSQLMapper;
 import com.ja.finalproject.vo.BoardImageVO;
+import com.ja.finalproject.vo.BoardLikeVO;
 import com.ja.finalproject.vo.BoardVO;
 import com.ja.finalproject.vo.MemberVO;
 
@@ -130,4 +131,25 @@ public class BoardService {
 	public void updateBoard(BoardVO vo) {
 		boardSQLMapper.updateBoard(vo);
 	}
+	
+	// 좋아요
+	public void doLike(BoardLikeVO vo) {
+		int count = boardSQLMapper.getMyLikeCount(vo);
+		
+		if(count > 0) {
+			boardSQLMapper.deleteLike(vo);
+		} else {
+			boardSQLMapper.insertLike(vo);
+		}
+	}
+	
+	public int getTotalLikeCount(int boardNo) {
+		
+		return boardSQLMapper.getTotalLikeCount(boardNo);
+	}
+	
+	public int getMyLikeCount(BoardLikeVO vo) {
+		return boardSQLMapper.getMyLikeCount(vo);
+	}
+	
 }

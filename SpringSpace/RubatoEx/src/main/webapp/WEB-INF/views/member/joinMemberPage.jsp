@@ -18,6 +18,80 @@
 	padding: 0px;
 }
 </style>
+
+<script>
+	function joinMemberSubmit() {
+		var frm = document.getElementById("frm");		
+		var inputId = document.getElementById("inputId");
+		var inputPw = document.getElementById("inputPw");
+		var inputPwChk = document.getElementById("inputPwChk");
+		var inputNick = document.getElementById("inputNick");
+		var inputBirth = document.getElementById("inputBirth");
+		var inputPhone = document.getElementById("inputPhone");
+		var inputEmail = document.getElementById("inputEmail");
+		
+		var regExp = /^[a-z0-9_]{4,20}$/;
+		
+		if(!regExp.test(inputId.value)) {
+			alert("아이디는 영소문자/숫자/_로 이루어진 4~20자 이어야 합니다.");
+			inputId.focus();
+			return;
+		}
+		
+		regExp = /(?=.*\d)(?=.*[a-zA-ZS]).{6,16}/;
+		
+		if(!regExp.test(inputPw.value)) {
+			alert("비밀번호는 문자와 숫자를 포함한 6~16자 이어야 합니다.");
+			inputPw.focus();
+			return;
+		}
+		
+		if(inputPw.value != inputPwChk.value) {
+			alert("비밀번호와 비밀번호 확인 문자가 일치하지 않습니다.");
+			inputPw.value = "";
+			inputPwChk.value = "";
+			inputPw.focus();
+			return;
+		}
+		
+		if(inputNick.value == "") {
+			alert("닉네임을 입력해주세요.");
+			inputNick.focus();
+			return;
+		}	
+		
+		if(inputBirth.value == "") {
+			alert("생년월일을 선택해주세요.");
+			inputBirth.focus();
+			return;
+		}		
+		
+		if(inputBirth.value == "") {
+			alert("생년월일을 선택해주세요.");
+			inputBirth.focus();
+			return;
+		}			
+		
+		regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+		if(!regExp.test(inputPhone.value)) {
+			alert("휴대폰번호 형식에 맞게 입력해주세요.");
+			inputPhone.focus();
+			return;
+		}
+		
+		regExp = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+		if(!regExp.test(inputEmail.value)) {
+			alert("이메일 형식에 맞게 입력해주세요.");
+			inputEmail.focus();
+			return;
+		}
+		
+		frm.submit();
+		alert("회원가입이 완료되었습니다. 가입시 입력한 이메일로 인증을 해주셔야 로그인 서비스 이용가능합니다.");
+		
+	}
+
+</script>
 </head>
 <body>
 <div id="wrap" style="overflow: hidden;">
@@ -69,7 +143,7 @@
 
 <section id="main">
 <div class="continer-fluid">
-	<form action="./joinMemberProcess" method="post">
+	<form id="frm" action="./joinMemberProcess" method="post">
 	<div class="row">
 		<div class="col fs-7 fw-bold mt-5 ms-3 mb-3" style="border-left: 3px solid #272727;">
 			회원가입
@@ -80,17 +154,22 @@
 		<div class="col">
 			<div class="row">
 				<div class="col">
-					아이디 : <input type="text" name="member_id" value="${memberVO.member_id }">
+					아이디 : <input id="inputId" type="text" name="member_id" value="${memberVO.member_id }">
 				</div>
 			</div>
 			<div class="row mt-2">
 				<div class="col">
-					비밀번호 : <input type="password" name="member_pw">
+					비밀번호 : <input id="inputPw" type="password" name="member_pw">
 				</div>
 			</div>
 			<div class="row mt-2">
 				<div class="col">
-					닉네임 : <input type="text" name="member_nick" value="${memberVO.member_nick }">
+					비밀번호 확인 : <input id="inputPwChk" type="password">
+				</div>
+			</div>
+			<div class="row mt-2">
+				<div class="col">
+					닉네임 : <input id="inputNick" type="text" name="member_nick" value="${memberVO.member_nick }">
 				</div>
 			</div>
 			<div class="row mt-2">
@@ -101,17 +180,17 @@
 			</div>
 			<div class="row mt-2">
 				<div class="col">
-					생년월일 : <input type="date" name="member_birth">
+					생년월일 : <input id="inputBirth" type="date" name="member_birth">
 				</div>
 			</div>
 			<div class="row mt-2">
 				<div class="col">
-					핸드폰번호 : <input type="text" name="member_phone" value="${memberVO.member_phone }">
+					핸드폰번호 : <input id="inputPhone" type="text" name="member_phone" value="${memberVO.member_phone }">
 				</div>
 			</div>
 			<div class="row mt-2">
 				<div class="col">
-					이메일 : <input type="email" name="member_email" value="${memberVO.member_email }">
+					이메일 : <input id="inputEmail" type="email" name="member_email" value="${memberVO.member_email }">
 				</div>
 			</div>												
 		</div>
@@ -119,7 +198,7 @@
 	<div class="row mt-4">
 		<hr>
 		<div class="col-2 mt-1">
-			<input type="submit" class="btn btn-dark d-grid" value="가입신청">
+			<input type="button" onclick="joinMemberSubmit()" class="btn btn-dark d-grid" value="회원가입">
 		</div>
 		<c:if test="${!empty isEmpty }">
 		<div class="col">입력하지 않은 정보가 있습니다.</div>

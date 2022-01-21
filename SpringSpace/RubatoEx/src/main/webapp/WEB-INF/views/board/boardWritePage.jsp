@@ -42,9 +42,9 @@
   </nav>
   <article id="sub_banner">
     <ul>
-      <li><img src="img/banner1.png"></li>
-      <li><img src="img/banner2.png"></li>		
-      <li><img src="img/banner3.png"></li>
+      <li><img src="../resources/img/banner1.png"></li>
+      <li><img src="../resources/img/banner2.png"></li>		
+      <li><img src="../resources/img/banner3.png"></li>
     </ul>    
   </article>
 </aside> 
