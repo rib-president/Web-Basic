@@ -1,0 +1,73 @@
+package com.lotto.shinnanda.member.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.lotto.shinnanda.member.service.MemberService;
+import com.lotto.shinnanda.vo.MemberVo;
+
+
+@Controller
+@RequestMapping("/member/*")
+public class MemberController {
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@RequestMapping("loginPage")
+	public String mainPage() {
+		
+		System.out.println("시스템 로그] 메인 페이지가 실행되었습니다.");
+		return "member/loginPage";
+	
+	}
+	
+	@RequestMapping("joinMemberPage")
+	public String joinMemberPage() {
+		
+		System.out.println("시스템 로그] 회원가입 페이지 실행");
+		
+		return "member/joinMemberPage";
+	}
+	
+	@RequestMapping("joinMemberProcess")
+	public String joinMemberProcess(MemberVo param) {
+		
+		System.out.println("시스템 로그] 회원가입 프로세스 실행");
+		System.out.println("시스템 로그] 파라미터 값 id : " + param.getMember_id());
+		System.out.println("시스템 로그] 파라미터 값 pw : " + param.getMember_pw());
+		System.out.println("시스템 로그] 파라미터 값 nick : " + param.getMember_nick());
+		System.out.println("시스템 로그] 파라미터 값 gender : " + param.getMember_gender());
+		System.out.println("시스템 로그] 파라미터 값 birth : " + param.getMember_birth());
+		System.out.println("시스템 로그] 파라미터 값 phone : " + param.getMember_phone());
+		System.out.println("시스템 로그] 파라미터 값 email : " + param.getMember_email());
+		
+		memberService.joinMember(param);
+		
+		return "member/joinMemberComplete";
+	}
+	
+	@RequestMapping("loginProcess")
+	public String loginProcess(MemberVo param , HttpSession session) {
+		
+		System.out.println("시스템 로그] 로그인 프로세스 실행");
+		
+		MemberVo sessionUser = memberService.login(param);
+		
+		if(sessionUser != null) {
+			//인증(로그인) 성공
+			//이 부분 신경쓰기 session.setAttribute 딱 한번 활용됨. 앞으로 session.setAttribute 많이 쓴다.
+			session.setAttribute("sessionUser", sessionUser);
+			
+			return "redirect:../board/mainPageRN";
+			
+		}else {
+			//인증(로그인) 실패
+			return "member/loginFail";
+		}
+
+	}
+}

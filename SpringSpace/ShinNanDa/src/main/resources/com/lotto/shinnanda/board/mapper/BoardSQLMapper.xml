@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lotto.shinnanda.board.mapper.BoardSQLMapper">
+<select id="createBoardNo" resultType="int">
+	SELECT SN_Board_seq.nextval
+	FROM dual
+</select>
+
+<insert id="insertBoard">
+	INSERT INTO SN_Board VALUES (
+		#{board_no},
+		#{member_no},
+		#{board_title},
+		#{board_content},
+		0,
+		SYSDATE
+	)	
+</insert>
+
+<insert id="insertBoardImage">
+	INSERT INTO SN_BoardImage VALUES (
+		SN_BoardImage_seq.nextval,
+		#{board_no},
+		#{image_url},
+		#{image_originalname}
+	)
+</insert>
+
+<select id="selectBoardByNo" resultType="map">
+	SELECT *
+	FROM SN_Board sb, SN_Member sm
+	WHERE sb.member_no = sm.member_no
+	AND sb.board_no = #{board_no}
+</select>
+
+<select id="selectBoardImageByBoardNo" resultType="com.lotto.shinnanda.vo.BoardImageVo">
+	SELECT *
+	FROM SN_BoardImage
+	WHERE board_no = #{board_no}
+</select>
+
+<select id="selectBoardList" resultType="com.lotto.shinnanda.vo.BoardVo">
+	SELECT t2.*
+	FROM (
+		SELECT t1.*, ROWNUM AS rnum
+		FROM (
+			SELECT sb.*
+			FROM SN_Board sb, SN_Member sm
+			WHERE sb.member_no = sm.member_no
+			<if test="searchOption != null">
+				<choose>
+					<when test="searchOption == 'title'">
+						AND sb.board_title LIKE '%'||#{searchWord}||'%'
+					</when>
+					<when test="searchOption == 'content'">
+						AND sb.board_content LIKE '%'||#{searchWord}||'%'
+					</when>
+					<when test="searchOption == 'nick'">
+						AND sm.member_nick LIKE '%'||#{searchWord}||'%'
+					</when>					
+				</choose>						
+			</if>
+			ORDER BY sb.board_no DESC
+		) t1
+	) t2
+	<![CDATA[
+	WHERE t2.rnum >= (#{pageNum}-1) * 6 + 1
+	AND t2.rnum <= #{pageNum} * 6
+	]]>
+</select>
+
+<select id="selectBoardImageThumbnailByBoardNo" resultType="com.lotto.shinnanda.vo.BoardImageVo">
+	SELECT *
+	FROM (
+		SELECT *
+		FROM SN_BoardImage
+		WHERE board_no = #{board_no}
+		ORDER BY image_no
+	)
+	WHERE ROWNUM = 1	
+</select>
+
+<select id="selectTotalBoardCount" resultType="int">
+	SELECT COUNT(*)
+	FROM SN_Board sb, SN_Member sm
+	WHERE sb.member_no = sm.member_no
+	<if test="searchOption != null">
+	<choose>
+		<when test="searchOption == 'title'">
+			AND sb.board_title LIKE '%'||#{searchWord}||'%'
+		</when>
+		<when test="searchOption == 'content'">
+			AND sb.board_content LIKE '%'||#{searchWord}||'%'
+		</when>
+		<when test="searchOption == 'nick'">
+			AND sm.member_nick LIKE '%'||#{searchWord}||'%'
+		</when>
+	</choose>
+	</if>
+</select>
+
+<update id="updateBoard">
+	UPDATE SN_Board
+	SET board_title = #{board_title}, board_content = #{board_content}
+	WHERE board_no = #{board_no}
+</update>
+
+<delete id="deleteBoardByNo">
+	DELETE FROM SN_Board
+	WHERE board_no = #{no}
+</delete>
+
+<delete id="deleteBoardImageByNo">
+	DELETE FROM SN_BoardImage
+	WHERE image_no = #{no}
+</delete>
+
+<delete id="deleteBoardImaegeByBoardNo">
+	DELETE FROM SN_BoardImage
+	WHERE board_no = #{board_no}
+</delete>
+
+</mapper>
