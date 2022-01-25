@@ -16,7 +16,9 @@ public interface BoardSQLMapper {
 	public void insertBoardImage(BoardImageVo vo);
 	
 	// select
-	public HashMap<String, Object> selectBoardByNo(int board_no);
+	public Map<String, Object> selectBoardByNo(int board_no);
+	public void increaseReadCountByNo(int no);
+	public int selectBoardReadCount(int no);
 	public ArrayList<BoardImageVo> selectBoardImageByBoardNo(int board_no);
 	public ArrayList<BoardVo> selectBoardList(
 			@Param("pageNum") int pageNum,

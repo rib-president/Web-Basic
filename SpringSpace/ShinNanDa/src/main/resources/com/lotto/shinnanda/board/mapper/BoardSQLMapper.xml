@@ -35,6 +35,18 @@
 	AND sb.board_no = #{board_no}
 </select>
 
+<select id="selectBoardReadCount" resultType="int">
+	SELECT board_readcount
+	FROM SN_Board
+	WHERE board_no = #{no}
+</select>
+
+<update id="increaseReadCountByNo">
+	UPDATE SN_Board
+	SET board_readcount = board_readcount + 1
+	WHERE board_no = #{no}
+</update>
+
 <select id="selectBoardImageByBoardNo" resultType="com.lotto.shinnanda.vo.BoardImageVo">
 	SELECT *
 	FROM SN_BoardImage

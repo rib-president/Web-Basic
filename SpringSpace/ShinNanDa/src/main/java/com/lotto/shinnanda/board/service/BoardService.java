@@ -71,12 +71,23 @@ public class BoardService {
 		return boardSQLMapper.selectTotalBoardCount(searchOption, searchWord);
 	}
 	
-	public HashMap<String, Object> getBoard(int board_no) {
-		HashMap<String, Object> resultVo = boardSQLMapper.selectBoardByNo(board_no);
-		resultVo.put("board_title",StringUtil.escapeHTML((String) resultVo.get("board_title")));
-		resultVo.put("board_content",StringUtil.escapeHTML((String) resultVo.get("board_content")));
+	public Map<String, Object> getBoard(int board_no, boolean isEscape) {
+		Map<String, Object> resultVo = boardSQLMapper.selectBoardByNo(board_no);
+
+		if(isEscape == true) {
+			resultVo.put("board_title",StringUtil.escapeHTML((String) resultVo.get("BOARD_TITLE")));
+			resultVo.put("board_content",StringUtil.escapeHTML((String) resultVo.get("BOARD_CONTENT")));
+		}
 		
 		return resultVo;
+	}
+	
+	public void increaseReadCount(int no) {
+		boardSQLMapper.increaseReadCountByNo(no);
+	}
+	
+	public int getBoardReadCount(int no) {
+		return boardSQLMapper.selectBoardReadCount(no);
 	}
 	
 	public ArrayList<BoardImageVo> getBoardImage(int board_no) {

@@ -25,19 +25,63 @@ a:hover { color: black; text-decoration: underline;}
 			<div class="col"><!-- 글로벌 nav -->
 				<jsp:include page="../commons/global_nav.jsp"></jsp:include>
 			</div>
-		</div>	
+		</div>
+		
+		<%-- board start --%>	
 		<div class="row mt-3">
 			<div class="col"><h1>전체 글 보기</h1></div>
 		</div>
 
+		<%-- search bar --%>
+		<form action="../board/mainPageRN?searchOption=${searchOption }&searchWord=${searchWord }">		
+		<div class="row mt-3">
+			<div class="col-2">
+				<select class="form-select" name="searchOption">
+				  <c:choose>
+					<c:when test="${searchOption == 'content' }">
+						<option value="title">제목</option>
+						<option value="content" selected>내용</option>
+						<option value="nick">닉네임</option>					
+					</c:when>
+					<c:when test="${searchOption == 'nick' }">
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="nick" selected>닉네임</option>					
+					</c:when>	
+					<c:otherwise>
+						<option value="title" selected>제목</option>
+						<option value="content">내용</option>
+						<option value="nick">닉네임</option>					
+					</c:otherwise>										
+				  </c:choose>
+				</select>
+			</div>
+			<div class="col-8">
+				<input type="text" name="searchWord" class="form-control" value="${searchWord }" placeholder="검색어를 입력해주세요">
+			</div>
+			<div class="col-2 d-grid">
+				<button class="btn btn-dark">검색</button>
+			</div>
+		</div>
+		</form>
+		<br>
+		<%-- card board --%>
 		<div class="row row-cols-1 row-cols-md-3 g-2">
 		  <c:forEach items="${boardList }" var="board">
 		  <div class="col">
 		    <div class="card h-100">
  		      <h5 class="card-title">${board.memberVo.member_nick }</h5>
  		      <h6><fmt:formatDate value="${board.boardVo.board_writedate }" pattern="MMM dd, yyyy" /></h6>
+ 		      <h4>${board.boardVo.board_title }</h4>
 		      <div class="card-body">
-		      	<a href="" class="card-text">${board.boardVo.board_content }</a><br><br>
+				<c:choose>
+					<c:when test="${!empty searchOption && !empty searchWord }">
+				      	<a href="../board/readContentPage?board_no=${board.boardVo.board_no }&searchOption=${searchOption }&searchWord=${searchWord }" class="card-text">${board.boardVo.board_content }</a><br><br>
+					</c:when>			
+					<c:otherwise>
+						<a href="../board/readContentPage?board_no=${board.boardVo.board_no }" class="card-text">${board.boardVo.board_content }</a><br><br>
+					</c:otherwise>
+				</c:choose>
 		      	<img src="${board.boardImageVo.image_url }" class="card-img-top" alt="Image not found">
 		      </div>
 		      <div class="card-footer">
@@ -48,6 +92,7 @@ a:hover { color: black; text-decoration: underline;}
 		  </div>		  		  
 		  </c:forEach>
 		</div>			
+		<%-- paging --%>
 		<div class="row mt-3">
 			<div class="col-3"></div>
 			<div class="col">
