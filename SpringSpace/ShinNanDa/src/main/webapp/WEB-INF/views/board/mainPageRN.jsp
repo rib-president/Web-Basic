@@ -76,13 +76,21 @@ a:hover { color: black; text-decoration: underline;}
 		      <div class="card-body">
 				<c:choose>
 					<c:when test="${!empty searchOption && !empty searchWord }">
-				      	<a href="../board/readContentPage?board_no=${board.boardVo.board_no }&searchOption=${searchOption }&searchWord=${searchWord }" class="card-text">${board.boardVo.board_content }</a><br><br>
+				      	<a href="../board/readContentPage?board_no=${board.boardVo.board_no }&pageNum=${currentPage }&searchOption=${searchOption }&searchWord=${searchWord }" class="card-text">${board.boardVo.board_content }</a><br><br>
 					</c:when>			
 					<c:otherwise>
-						<a href="../board/readContentPage?board_no=${board.boardVo.board_no }" class="card-text">${board.boardVo.board_content }</a><br><br>
+						<a href="../board/readContentPage?board_no=${board.boardVo.board_no }&pageNum=${currentPage }" class="card-text">${board.boardVo.board_content }</a><br><br>
 					</c:otherwise>
 				</c:choose>
-		      	<img src="${board.boardImageVo.image_url }" class="card-img-top" alt="Image not found">
+				
+				<c:choose>
+					<c:when test="${empty board.boardImageVo }">
+						<img src="../resources/img/default_thumbnail.jpg"  class="card-img-top" title="기본 이미지" alt="Image not found">
+					</c:when>
+					<c:otherwise>
+						<img src="/upload/${board.boardImageVo.image_url }" class="card-img-top" alt="Image not found">
+					</c:otherwise>
+				</c:choose>	      	
 		      </div>
 		      <div class="card-footer">
 		      	<small class="text-muted">글 번호 : ${board.boardVo.board_no }</small>

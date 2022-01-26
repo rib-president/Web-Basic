@@ -134,4 +134,37 @@
 	WHERE board_no = #{board_no}
 </delete>
 
+<insert id="insertComment">
+	INSERT INTO SN_Comment VALUES (
+		SN_Comment_seq.nextval,
+		#{board_no}, 
+		#{member_no},
+		#{comment_content},
+		SYSDATE
+	)
+</insert>
+
+<select id="selectCommentByBoardNo" resultType="map">
+	SELECT *
+	FROM SN_Comment sc, SN_Member sm
+	WHERE sc.member_no = sm.member_no
+	AND board_no = #{board_no}
+</select>
+
+<update id="updateComment">
+	UPDATE SN_Comment
+	SET comment_content = #{comment_content}
+	WHERE comment_no = #{comment_no}
+</update>
+
+<delete id="deleteCommentByNo">
+	DELETE FROM SN_Comment
+	WHERE comment_no = #{no}
+</delete>
+
+<delete id="deleteCommentByBoardNo">
+	DELETE FROM SN_Comment
+	WHERE board_no = #{board_no}
+</delete>
+
 </mapper>

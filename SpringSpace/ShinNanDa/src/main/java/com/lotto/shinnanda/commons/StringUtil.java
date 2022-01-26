@@ -8,7 +8,7 @@ public class StringUtil {
 	public static String escapeHTML(String text) {
 		
 		return StringEscapeUtils.escapeHtml4(text)
-			.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;");
+			.replaceAll("(\r\n|\r|\n|\n\r)", "<br>").replaceAll(" ", "&nbsp;");
 	}
 	
 	public static String tailParam(String searchOption, String searchWord) {

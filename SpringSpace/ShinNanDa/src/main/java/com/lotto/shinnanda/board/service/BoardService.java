@@ -10,6 +10,7 @@ import com.lotto.shinnanda.commons.StringUtil;
 import com.lotto.shinnanda.member.mapper.MemberSQLMapper;
 import com.lotto.shinnanda.vo.BoardImageVo;
 import com.lotto.shinnanda.vo.BoardVo;
+import com.lotto.shinnanda.vo.CommentVo;
 import com.lotto.shinnanda.vo.MemberVo;
 
 @Service
@@ -20,7 +21,7 @@ public class BoardService {
 	@Autowired
 	private MemberSQLMapper memberSQLMapper;
 	
-	public void writeBoard(BoardVo boardVo, ArrayList<BoardImageVo> boardImageVoList) {
+	public int writeBoard(BoardVo boardVo, ArrayList<BoardImageVo> boardImageVoList) {
 		int board_no = boardSQLMapper.createBoardNo();
 		
 		boardVo.setBoard_no(board_no);
@@ -30,6 +31,8 @@ public class BoardService {
 			boardImageVo.setBoard_no(board_no);
 			boardSQLMapper.insertBoardImage(boardImageVo);
 		}
+		
+		return board_no;
 	};
 	
 	public ArrayList<HashMap<String, Object>> getBoardList(int pageNum, String searchOption, String searchWord) {
@@ -50,12 +53,6 @@ public class BoardService {
 			int board_no = boardVo.getBoard_no();
 			BoardImageVo boardImageVo = boardSQLMapper.selectBoardImageThumbnailByBoardNo(board_no);
 			
-			if(boardImageVo == null) {
-				boardImageVo = new BoardImageVo();
-				boardImageVo.setBoard_no(board_no);
-				boardImageVo.setImage_url("../resources/img/default_thumbnail.jpg");
-			}
-			
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("boardVo", boardVo);
 			map.put("memberVo", memberVo);
@@ -74,7 +71,7 @@ public class BoardService {
 	public Map<String, Object> getBoard(int board_no, boolean isEscape) {
 		Map<String, Object> resultVo = boardSQLMapper.selectBoardByNo(board_no);
 
-		if(isEscape == true) {
+		if(isEscape) {
 			resultVo.put("board_title",StringUtil.escapeHTML((String) resultVo.get("BOARD_TITLE")));
 			resultVo.put("board_content",StringUtil.escapeHTML((String) resultVo.get("BOARD_CONTENT")));
 		}
@@ -98,12 +95,15 @@ public class BoardService {
 		boardSQLMapper.updateBoard(vo);	
 	}
 	
-	public void addBoardImage(BoardImageVo vo) {
-		boardSQLMapper.insertBoardImage(vo);
+	public void addBoardImage(ArrayList<BoardImageVo> voList, int board_no) {
+		for(BoardImageVo vo : voList) {
+			vo.setBoard_no(board_no);
+			boardSQLMapper.insertBoardImage(vo);
+		}
 	}
 	
 	public void delBoardImageByNo(int no) {
-		boardSQLMapper.deleteBoardByNo(no);
+		boardSQLMapper.deleteBoardImageByNo(no);
 	}
 	
 	public void delBoardByNo(int no) {
@@ -112,5 +112,34 @@ public class BoardService {
 	
 	public void delBoardImageByBoardNo(int board_no) {
 		boardSQLMapper.deleteBoardImaegeByBoardNo(board_no);
+	}
+	
+	public void writeComment(CommentVo vo) {
+		boardSQLMapper.insertComment(vo);
+	}
+	
+	public ArrayList<HashMap<String, Object>> getCommentList(int board_no) {
+		ArrayList<HashMap<String, Object>> voList = boardSQLMapper.selectCommentByBoardNo(board_no);
+		
+		ArrayList<HashMap<String, Object>> resultVoList = new ArrayList<>();
+		for(HashMap<String, Object> map : voList) {
+			map.put("COMMENT_CONTENT_NONE_ESCAPE", (String) map.get("COMMENT_CONTENT"));				
+			map.put("COMMENT_CONTENT", StringUtil.escapeHTML((String) map.get("COMMENT_CONTENT")));		
+
+			resultVoList.add(map);
+		}
+		return resultVoList;
+	}
+	
+	public void modifyComment(CommentVo vo) {
+		boardSQLMapper.updateComment(vo);
+	}
+	
+	public void delCommentByNo(int no) {
+		boardSQLMapper.deleteCommentByNo(no);
+	}
+	
+	public void delCommentByBoardNo(int board_no) {
+		boardSQLMapper.deleteCommentByBoardNo(board_no);
 	}
 }

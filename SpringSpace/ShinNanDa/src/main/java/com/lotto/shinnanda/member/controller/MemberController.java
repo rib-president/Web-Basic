@@ -70,4 +70,12 @@ public class MemberController {
 		}
 
 	}
+	
+	@RequestMapping("logoutProcess")
+	public String logoutProcess(HttpSession session) {
+		session.invalidate();
+		
+		return "redirect:../board/mainPageRN";
+	}
+
 }
