@@ -76,7 +76,7 @@ a:hover { color: black; text-decoration: underline;}
 		      <div class="card-body">
 				<c:choose>
 					<c:when test="${!empty searchOption && !empty searchWord }">
-				      	<a href="../board/readContentPage?board_no=${board.boardVo.board_no }&pageNum=${currentPage }&searchOption=${searchOption }&searchWord=${searchWord }" class="card-text">${board.boardVo.board_content }</a><br><br>
+				      	<a href="../board/readContentPage?board_no=${board.boardVo.board_no }&pageNum=${currentPage }${tailParam}" class="card-text">${board.boardVo.board_content }</a><br><br>
 					</c:when>			
 					<c:otherwise>
 						<a href="../board/readContentPage?board_no=${board.boardVo.board_no }&pageNum=${currentPage }" class="card-text">${board.boardVo.board_content }</a><br><br>

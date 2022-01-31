@@ -32,4 +32,8 @@ public class MemberService {
 		return memberSQLMapper.getMemberByNo(no);
 	}
 
+	public void modifyMemberInfo(MemberVo vo) {
+		memberSQLMapper.updateMemberVo(vo);
+	}
+	
 }

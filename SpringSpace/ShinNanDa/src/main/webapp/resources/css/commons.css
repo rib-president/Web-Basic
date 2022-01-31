@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+* {margin: 0px; padding: 0px;}
+#menu-bar {background-color: rgb(232,216,175);}
+#logo {font-size: 25px; font-weight: bold;}
+a {color: black;}

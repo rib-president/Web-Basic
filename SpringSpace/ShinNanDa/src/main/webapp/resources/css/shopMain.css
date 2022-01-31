@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.product_info {opacity:0; top: 70%;	left: 20%; width:249.84px; background-color: yellow; position: absolute;}
+
+.product_image {position: relative; }
+
+.product_image:hover .product_info {opacity:1;}

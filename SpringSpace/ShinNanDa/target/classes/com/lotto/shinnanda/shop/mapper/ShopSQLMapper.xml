@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lotto.shinnanda.shop.mapper.ShopSQLMapper">
+<select id="selectLatest16Product" resultType="com.lotto.shinnanda.vo.ProductVo">
+	SELECT t1.*
+	FROM (	
+		SELECT *
+		FROM SN_Product
+		ORDER BY product_date DESC
+	) t1
+	<![CDATA[ 
+	WHERE ROWNUM <= 16
+	]]>
+</select>
+
+<select id="selectProductByCategoryNoBrandNo" resultType="com.lotto.shinnanda.vo.ProductVo">
+	SELECT *
+	FROM SN_Product 
+	WHERE product_category_no = #{product_category_no}
+	<if test="brand_no != 0">
+		AND brand_no = #{brand_no}
+	</if>
+	ORDER BY product_no DESC
+</select>
+
+<select id="selectProductCategoryByNo" resultType="com.lotto.shinnanda.vo.Product_CategoryVo">
+	SELECT *
+	FROM SN_Product_Category
+	WHERE product_category_no = #{no}
+</select>
+
+<select id="selectBrandCategoryCount" resultType="map">
+	SELECT sb.brand_no, sb.brand_name, COUNT(sb.brand_no) AS product_count
+	FROM SN_Brand_Category sb, (
+		SELECT *
+		FROM SN_Product
+		WHERE product_category_no = #{product_category_no}
+	) sp
+	WHERE sb.brand_no = sp.brand_no
+	GROUP BY sb.brand_no, sb.brand_name
+	ORDER BY sb.brand_no
+</select>
+
+<select id="selectProductByNo" resultType="com.lotto.shinnanda.vo.ProductVo">
+	SELECT *
+	FROM SN_Product
+	WHERE product_no = #{no}
+</select>
+
+<select id="selectProductDetailByProductNo" resultType="com.lotto.shinnanda.vo.Product_DetailVo">
+	SELECT *
+	FROM SN_Product_Detail
+	WHERE product_no = #{product_no}
+	ORDER BY product_detail_no DESC
+</select>
+
+<select id="selectProductDetailByNo" resultType="com.lotto.shinnanda.vo.Product_DetailVo">
+	SELECT *
+	FROM SN_Product_Detail
+	WHERE product_detail_no = #{no}
+</select>
+
+<select id="selectProductImageByProductNo" resultType="com.lotto.shinnanda.vo.ImageVo">
+	SELECT *
+	FROM SN_Image
+	WHERE product_no = #{product_no}
+	ORDER BY image_no DESC
+</select>
+
+<insert id="insertCart">
+	INSERT INTO SN_Cart VALUES (
+		SN_Cart_seq.nextval,
+		#{product_detail_no},
+		#{member_no},
+		#{cart_count}
+	)	
+</insert>
+
+<select id="selectCartByMemberNo" resultType="com.lotto.shinnanda.vo.CartVo">
+	SELECT *
+	FROM SN_Cart
+	WHERE member_no = #{member_no}
+	ORDER BY cart_no DESC
+</select>
+
+<select id="selectCartByNo" resultType="com.lotto.shinnanda.vo.CartVo">
+	SELECT *
+	FROM SN_Cart 
+	WHERE cart_no = #{no}
+</select>
+
+<update id="updateCartCount">
+	UPDATE SN_Cart
+	SET cart_count = #{cart_count}
+	WHERE cart_no = #{cart_no}
+</update>
+
+<delete id="deleteCartByNo">
+	DELETE FROM SN_Cart
+	WHERE cart_no = #{no}
+</delete>
+
+<delete id="deleteCartByMemberNo">
+	DELETE FROM SN_Cart
+	WHERE member_no = #{member_no}
+</delete>
+
+<select id="createOrdersNo" resultType="int">
+	SELECT SN_Orders_seq.nextval
+	FROM dual
+</select>
+
+<insert id="insertOrders">
+	INSERT INTO SN_Orders VALUES(
+		#{orders_no},
+		#{member_no},
+		#{orders_name},
+		#{orders_phone},
+		#{orders_address},
+		'입금대기',
+		SYSDATE
+	)
+</insert>
+
+<select id="selectOrdersByNo" resultType="com.lotto.shinnanda.vo.OrdersVo">
+	SELECT *
+	FROM SN_Orders 
+	WHERE orders_no = #{no}
+</select>
+
+<select id="selectOrdersByMemberNo" resultType="com.lotto.shinnanda.vo.OrdersVo">
+	SELECT *
+	FROM SN_Orders
+	WHERE member_no = #{member_no}
+	<choose>
+		<when test="searchState == '입금대기'">
+			AND orders_state LIKE '%입금대기%'
+		</when>
+		<when test="searchState == '입금완료'">
+			AND orders_state LIKE '%입금완료%'
+		</when>
+		<when test="searchState == '배송중'">
+			AND orders_state LIKE '%배송중%'
+		</when>
+		<when test="searchState == '배송완료'">
+			AND orders_state LIKE '%배송완료%'
+		</when>
+	</choose>
+	ORDER BY orders_no DESC
+</select>
+
+<select id="selectOrdersStateCount" resultType="map">
+	SELECT orders_state, COUNT(orders_state) AS state_count
+	FROM SN_Orders
+	WHERE member_no = #{member_no}
+	GROUP BY orders_state
+</select>
+
+<insert id="insertOrdersDetail">
+	INSERT INTO SN_Orders_Detail VALUES (
+		SN_Orders_Detail_seq.nextval,
+		#{orders_no},
+		#{product_detail_no},
+		#{orders_detail_count}
+	)
+</insert>
+
+<select id="selectOrdersDetailByOrdersNo" resultType="com.lotto.shinnanda.vo.Orders_DetailVo">
+	SELECT *
+	FROM SN_Orders_Detail
+	WHERE orders_no = #{orders_no}
+	ORDER BY orders_detail_no DESC
+</select>
+
+<update id="updateOrdersState">
+	UPDATE SN_Orders
+	SET orders_state = #{orders_state}
+	WHERE orders_no = #{orders_no}
+</update>
+
+</mapper>

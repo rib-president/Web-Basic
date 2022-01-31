@@ -11,6 +11,8 @@ import com.lotto.shinnanda.member.mapper.MemberSQLMapper;
 import com.lotto.shinnanda.vo.BoardImageVo;
 import com.lotto.shinnanda.vo.BoardVo;
 import com.lotto.shinnanda.vo.CommentVo;
+import com.lotto.shinnanda.vo.LikeCategoryVo;
+import com.lotto.shinnanda.vo.LikeVo;
 import com.lotto.shinnanda.vo.MemberVo;
 
 @Service
@@ -141,5 +143,44 @@ public class BoardService {
 	
 	public void delCommentByBoardNo(int board_no) {
 		boardSQLMapper.deleteCommentByBoardNo(board_no);
+	}
+	
+	public ArrayList<LikeCategoryVo> getLikeCategory() {
+		return boardSQLMapper.selectLikeCategory();
+	}
+	
+	public void addLike(LikeVo vo) {
+		int[] likecategories = boardSQLMapper.selectMemberBoardLikeCategory(vo);
+		
+		for(int likecategory : likecategories) {
+			LikeVo deleteVo = new LikeVo();
+			deleteVo.setBoard_no(vo.getBoard_no());
+			deleteVo.setMember_no(vo.getMember_no());
+			deleteVo.setLikecategory_no(likecategory);
+			boardSQLMapper.deleteMemberBoardLike(deleteVo);
+		}
+		
+		boardSQLMapper.insertLike(vo);
+	}
+	
+	public void cancleLike(LikeVo vo) {
+		boardSQLMapper.deleteMemberBoardLike(vo);
+	}
+	
+	public int getMemberBoardLikeCategory(LikeVo vo) {
+		int[] likecategories = boardSQLMapper.selectMemberBoardLikeCategory(vo);
+
+		for(int i=0;i<likecategories.length;i++) {
+			if(i == 0) continue;
+			else {
+				vo.setLikecategory_no(likecategories[i]);
+				boardSQLMapper.deleteMemberBoardLike(vo);
+			}
+		}	
+		return (likecategories.length > 0) ? likecategories[0] : 0; 
+	}
+	
+	public int getBoardLikeCategoryCount(LikeVo vo) {
+		return boardSQLMapper.selectBoardLikeCategoryCount(vo);
 	}
 }

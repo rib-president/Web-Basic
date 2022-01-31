@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 <script>
 	function modifyCommentContent(comment_content, comment_no, board_no, pageNum, tailParam) {
 		var fast_modify_comment = document.getElementsByClassName("cur_modify_comment");
@@ -131,6 +131,66 @@
 	
 	<div class="row mt-3">
 		<div class="col">
+		  <c:choose>
+		  	<c:when test="${!empty sessionUser }">
+		  	  <c:choose>
+		  	  	<c:when test="${userLikeCategoryNo == 1 }">
+				  <a href="../board/likeCancleProcess?board_no=${resultMap.BOARD_NO }&member_no=${sessionUser.member_no }&likecategory_no=1&pageNum=${pageNum}&tailParam=${tailParam }">
+				  <i class="bi bi-emoji-heart-eyes-fill"></i></a>
+				</c:when>
+				<c:otherwise>
+				  <a href="../board/likeProcess?board_no=${resultMap.BOARD_NO }&member_no=${sessionUser.member_no }&likecategory_no=1&pageNum=${pageNum}&tailParam=${tailParam }">
+				  <i class="bi bi-emoji-heart-eyes"></i></a>
+				</c:otherwise>
+			  </c:choose> ${likeCountMap.get('1') }개
+			  
+			  <c:choose>
+		  	  	<c:when test="${userLikeCategoryNo == 2 }">
+				  <a href="../board/likeCancleProcess?board_no=${resultMap.BOARD_NO }&member_no=${sessionUser.member_no }&likecategory_no=2&pageNum=${pageNum}&tailParam=${tailParam }">
+				  <i class="bi bi-emoji-angry-fill"></i></a>
+				</c:when>
+				<c:otherwise>
+				  <a href="../board/likeProcess?board_no=${resultMap.BOARD_NO }&member_no=${sessionUser.member_no }&likecategory_no=2&pageNum=${pageNum}&tailParam=${tailParam }">
+				  <i class="bi bi-emoji-angry"></i></a>				
+				</c:otherwise>
+			  </c:choose> ${likeCountMap.get('2') }개
+			  
+			  <c:choose>
+		  	  	<c:when test="${userLikeCategoryNo == 3 }">
+				  <a href="../board/likeCancleProcess?board_no=${resultMap.BOARD_NO }&member_no=${sessionUser.member_no }&likecategory_no=3&pageNum=${pageNum}&tailParam=${tailParam }">
+				  <i class="bi bi-emoji-frown-fill"></i></a>
+				</c:when>
+				<c:otherwise>
+				  <a href="../board/likeProcess?board_no=${resultMap.BOARD_NO }&member_no=${sessionUser.member_no }&likecategory_no=3&pageNum=${pageNum}&tailParam=${tailParam }">
+				  <i class="bi bi-emoji-frown"></i></a>				
+				</c:otherwise>
+			  </c:choose> ${likeCountMap.get('3') }개
+			  
+			  <c:choose>
+			    <c:when test="${userLikeCategoryNo == 4 }">
+				  <a href="../board/likeCancleProcess?board_no=${resultMap.BOARD_NO }&member_no=${sessionUser.member_no }&likecategory_no=4&pageNum=${pageNum}&tailParam=${tailParam }">
+				  <i class="bi bi-emoji-expressionless-fill"></i></a>
+				</c:when>
+				<c:otherwise>
+				  <a href="../board/likeProcess?board_no=${resultMap.BOARD_NO }&member_no=${sessionUser.member_no }&likecategory_no=4&pageNum=${pageNum}&tailParam=${tailParam }">
+				  <i class="bi bi-emoji-expressionless"></i></a>
+				</c:otherwise>
+			  </c:choose> ${likeCountMap.get('4') }개
+			  
+		    </c:when>
+		    <c:otherwise>
+				<i class="bi bi-emoji-heart-eyes"></i> ${likeCountMap.get('1') }개
+				<i class="bi bi-emoji-angry"></i> ${likeCountMap.get('2') }개
+				<i class="bi bi-emoji-frown"></i> ${likeCountMap.get('3') }개	
+				<i class="bi bi-emoji-expressionless"></i> ${likeCountMap.get('4') }개															    	
+		    </c:otherwise>
+		  </c:choose>
+		</div>
+
+	</div>
+	
+	<div class="row mt-3">
+		<div class="col">
 			<c:if test="${!empty resultCommentMapList }">
 				<c:forEach items="${resultCommentMapList }" var="resultCommentMap">
 					<div class="row mt-2 mb-2">
@@ -147,7 +207,7 @@
 						</div>
 						<c:if test="${!empty sessionUser && sessionUser.member_no == resultCommentMap.MEMBER_NO }">		
 						  <div id="comment_control_box_${resultCommentMap.COMMENT_NO }" class="col-2">	
-							<span><a onclick="modifyCommentContent('${fn:replace(resultCommentMap.COMMENT_CONTENT_NONE_ESCAPE,crlf,'<br/>') }', ${resultCommentMap.COMMENT_NO }, ${resultCommentMap.BOARD_NO}, ${pageNum }, ${tailParam })">수정</a></span>
+							<span><a onclick="modifyCommentContent('${fn:replace(resultCommentMap.COMMENT_CONTENT_NONE_ESCAPE,crlf,'<br/>') }', ${resultCommentMap.COMMENT_NO }, ${resultCommentMap.BOARD_NO}, ${pageNum }, '${tailParam }')">수정</a></span>
 							<span>&nbsp;|&nbsp;</span>
 							<span><a href="../board/deleteCommentProcess?comment_no=${resultCommentMap.COMMENT_NO }&board_no=${resultCommentMap.BOARD_NO}&pageNum=${pageNum}${tailParam }">삭제</a></span>
 						  </div>	

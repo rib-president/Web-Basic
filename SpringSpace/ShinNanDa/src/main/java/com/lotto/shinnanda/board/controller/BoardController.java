@@ -20,6 +20,8 @@ import com.lotto.shinnanda.commons.StringUtil;
 import com.lotto.shinnanda.vo.BoardImageVo;
 import com.lotto.shinnanda.vo.BoardVo;
 import com.lotto.shinnanda.vo.CommentVo;
+import com.lotto.shinnanda.vo.LikeCategoryVo;
+import com.lotto.shinnanda.vo.LikeVo;
 import com.lotto.shinnanda.vo.MemberVo;
 
 @Controller
@@ -61,7 +63,7 @@ public class BoardController {
 	@RequestMapping("readContentPage")
 	public String readContentPage(int board_no,
 			@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, 
-			String searchOption, String searchWord,
+			String searchOption, String searchWord, HttpSession session,
 			Model model, HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> resultMap = boardService.getBoard(board_no, true);		
 		ArrayList<BoardImageVo> boardImageVo = boardService.getBoardImage(board_no);
@@ -91,15 +93,42 @@ public class BoardController {
 			boardService.increaseReadCount(board_no);
 		}
 		
+		// comment
 		ArrayList<HashMap<String, Object>> resultCommentMapList = boardService.getCommentList(board_no);
 		
+		// like
+		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
+		if(sessionUser != null) {
+			LikeVo likeVo = new LikeVo();
+			likeVo.setBoard_no(board_no);
+			likeVo.setMember_no(sessionUser.getMember_no());
+			model.addAttribute("userLikeCategoryNo", boardService.getMemberBoardLikeCategory(likeVo));
+		}
+		
+		ArrayList<LikeCategoryVo> likeCategoryVoList = boardService.getLikeCategory();
+		HashMap<String, Integer> likeCountMap = new HashMap<>();
+		for(LikeCategoryVo likeCategoryVo : likeCategoryVoList) {
+			LikeVo likeVo = new LikeVo();
+			int likecategory_no = likeCategoryVo.getLikecategory_no();
+			
+			likeVo.setBoard_no(board_no);
+			likeVo.setLikecategory_no(likecategory_no);
+
+			likeCountMap.put(String.valueOf(likecategory_no), boardService.getBoardLikeCategoryCount(likeVo));
+		}
+		
+		System.out.println(likeCountMap.get("1"));
+		System.out.println(likeCountMap.get("2"));
+		System.out.println(likeCountMap.get("3"));
+		System.out.println(likeCountMap.get("4"));
+		// set attribute
 		model.addAttribute("resultMap", resultMap);
 		model.addAttribute("resultCommentMapList", resultCommentMapList);
 		model.addAttribute("boardImageVo", boardImageVo);
 		model.addAttribute("readCount", boardService.getBoardReadCount(board_no));
+		model.addAttribute("likeCountMap", likeCountMap);
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("tailParam", StringUtil.tailParam(searchOption, searchWord));
-		
 		return "board/readContentPage";
 	}
 	
@@ -123,22 +152,18 @@ public class BoardController {
 	
 	@RequestMapping("deleteContentProcess")
 	public String deleteContentProcess(int board_no, 
-			@RequestParam(value="pageNum", defaultValue="1") int pageNum, String tailParam) {
+			@RequestParam(value="pageNum", defaultValue="1") int pageNum, String searchOption, String searchWord) {
 		
 		boardService.delBoardByNo(board_no);
 		boardService.delBoardImageByBoardNo(board_no);
 		boardService.delCommentByBoardNo(board_no);
 		
-		if(tailParam == null) {
-			tailParam = "";
-		}
-		
-		return "redirect:../board/mainPageRN?pageNum=" + pageNum + tailParam;
+		return "redirect:../board/mainPageRN?pageNum=" + pageNum + StringUtil.tailParam(searchOption, searchWord);
 	}
 	
 	@RequestMapping("modifyContentPage")
 	public String modifyContentPage(int board_no,
-			@RequestParam(value="pageNum", defaultValue="1") int pageNum, String tailParam, Model model) {
+			@RequestParam(value="pageNum", defaultValue="1") int pageNum, String searchOption, String searchWord, Model model) {
 		
 		Map<String, Object> resultMap = boardService.getBoard(board_no, false);
 		ArrayList<BoardImageVo> boardImageVoList = boardService.getBoardImage(board_no);
@@ -147,7 +172,7 @@ public class BoardController {
 		model.addAttribute("boardImageVoList", boardImageVoList);
 		model.addAttribute("board_no", board_no);
 		model.addAttribute("pageNum", pageNum);
-		model.addAttribute("tailParam", tailParam);
+		model.addAttribute("tailParam", StringUtil.tailParam(searchOption, searchWord));
 		
 		return "board/modifyContentPage";
 	}
@@ -177,23 +202,36 @@ public class BoardController {
 	}
 	
 	@RequestMapping("deleteCommentProcess")
-	public String deleteCommentProcess(int comment_no, int board_no, int pageNum, String tailParam) {
+	public String deleteCommentProcess(int comment_no, int board_no, int pageNum, String searchOption, String searchWord) {
 		boardService.delCommentByNo(comment_no);
-		
-		if(tailParam == null) {
-			tailParam = "";
-		}
-		return "redirect:../board/readContentPage?board_no=" + board_no + "&pageNum=" + pageNum + tailParam;
+
+		return "redirect:../board/readContentPage?board_no=" + board_no + "&pageNum=" + pageNum + StringUtil.tailParam(searchOption, searchWord);
 	}
 	
 	@RequestMapping("modifyCommentProcess")
 	public String modifyCommentProcess(CommentVo vo, int board_no, int pageNum, String tailParam) {
 		boardService.modifyComment(vo);
 		
-		if(tailParam.equals("undefined")) {
-			tailParam = "";
-		}
-		
 		return "redirect:../board/readContentPage?board_no=" + board_no + "&pageNum=" + pageNum + tailParam;
+	}
+	
+	@RequestMapping("likeProcess")
+	public String likeProcess(LikeVo vo, int pageNum, String searchOption, String searchWord, HttpSession session) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("sessionUser");
+		vo.setMember_no(memberVo.getMember_no());
+		
+		boardService.addLike(vo);
+		
+		return "redirect:../board/readContentPage?board_no=" + vo.getBoard_no() + "&pageNum=" + pageNum + StringUtil.tailParam(searchOption, searchWord);
+	}
+	
+	@RequestMapping("likeCancleProcess")
+	public String likeCancleProcess(LikeVo vo, int pageNum, String searchOption, String searchWord, HttpSession session) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("sessionUser");
+		vo.setMember_no(memberVo.getMember_no());
+		
+		boardService.cancleLike(vo);
+		
+		return "redirect:../board/readContentPage?board_no=" + vo.getBoard_no() + "&pageNum=" + pageNum + StringUtil.tailParam(searchOption, searchWord);
 	}
 }

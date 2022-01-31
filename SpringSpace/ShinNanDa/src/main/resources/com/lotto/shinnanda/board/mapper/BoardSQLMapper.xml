@@ -149,6 +149,7 @@
 	FROM SN_Comment sc, SN_Member sm
 	WHERE sc.member_no = sm.member_no
 	AND board_no = #{board_no}
+	ORDER BY sc.comment_no DESC
 </select>
 
 <update id="updateComment">
@@ -167,4 +168,40 @@
 	WHERE board_no = #{board_no}
 </delete>
 
+<select id="selectLikeCategory" resultType="com.lotto.shinnanda.vo.LikeCategoryVo">
+	SELECT *
+	FROM SN_LikeCategory
+</select>
+
+<insert id="insertLike">
+	INSERT INTO SN_Like VALUES (
+		SN_Like_seq.nextval,
+		#{board_no},
+		#{member_no},
+		#{likecategory_no},
+		SYSDATE
+	)
+</insert>
+
+<select id="selectBoardLikeCategoryCount" resultType="int">
+	SELECT COUNT(*)
+	FROM SN_Like
+	WHERE board_no = #{board_no}
+	AND likecategory_no = #{likecategory_no}
+</select>
+
+<select id="selectMemberBoardLikeCategory" resultType="int">
+	SELECT likecategory_no
+	FROM SN_Like
+	WHERE board_no = #{board_no}
+	AND member_no = #{member_no}
+	ORDER BY like_no
+</select>
+
+<delete id="deleteMemberBoardLike">
+	DELETE FROM SN_Like
+	WHERE board_no = #{board_no}
+	AND member_no = #{member_no}
+	AND likecategory_no = #{likecategory_no}
+</delete>
 </mapper>

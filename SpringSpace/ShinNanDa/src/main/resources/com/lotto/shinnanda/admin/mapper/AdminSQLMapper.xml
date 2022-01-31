@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lotto.shinnanda.admin.mapper.AdminSQLMapper">
+<select id="createProductNo" resultType="int">
+	SELECT SN_Product_seq.nextval
+	FROM dual
+</select>
+
+<select id="selectProductCategory" resultType="com.lotto.shinnanda.vo.Product_CategoryVo">
+	SELECT *
+	FROM SN_Product_Category
+	ORDER BY product_category_no
+</select>
+
+<select id="selectBrandCategory" resultType="com.lotto.shinnanda.vo.Brand_CategoryVo">
+	SELECT *
+	FROM SN_Brand_Category
+	ORDER BY brand_no
+</select>
+
+<insert id="insertProduct">
+	INSERT INTO SN_Product VALUES (
+		#{product_no},
+		#{product_category_no},
+		#{brand_no},
+		#{product_title},
+		#{product_model},
+		#{product_price},
+		#{product_content},
+		#{product_image},
+		SYSDATE
+	)
+</insert>
+
+<insert id="insertProductDetail">
+	INSERT INTO SN_Product_Detail VALUES (
+		SN_Product_detail_seq.nextval,
+		#{product_no},
+		#{product_detail_option},
+		#{product_detail_stock}
+	)
+</insert>
+
+<insert id="insertProductImage">
+	INSERT INTO SN_Image VALUES (
+		SN_Image_seq.nextval,
+		#{product_no},
+		#{image_url}
+	)	
+</insert>
+
+<select id="selectProduct" resultType="com.lotto.shinnanda.vo.ProductVo">
+	SELECT *
+	FROM SN_Product
+	ORDER BY product_no DESC
+</select>
+
+<select id="selectSumOrdersDetailCountByProductDetailNo" resultType="Integer">
+	SELECT SUM(orders_detail_count)
+	FROM SN_Orders_Detail
+	WHERE product_detail_no = #{product_detail_no}
+</select>
+
+<select id="selectOrders" resultType="com.lotto.shinnanda.vo.OrdersVo">
+	SELECT * FROM SN_Orders
+	ORDER BY orders_no DESC
+</select>
+
+</mapper>

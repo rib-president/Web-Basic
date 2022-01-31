@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.lotto.shinnanda.vo.BoardImageVo;
 import com.lotto.shinnanda.vo.BoardVo;
 import com.lotto.shinnanda.vo.CommentVo;
+import com.lotto.shinnanda.vo.LikeCategoryVo;
+import com.lotto.shinnanda.vo.LikeVo;
 
 public interface BoardSQLMapper {
 	// board_no PK 생성
@@ -43,4 +45,11 @@ public interface BoardSQLMapper {
 	public void updateComment(CommentVo vo);
 	public void deleteCommentByNo(int no);
 	public void deleteCommentByBoardNo(int board_no);
+	
+	// like
+	public ArrayList<LikeCategoryVo> selectLikeCategory();
+	public void insertLike(LikeVo vo);
+	public int selectBoardLikeCategoryCount(LikeVo vo);
+	public int[] selectMemberBoardLikeCategory(LikeVo vo);
+	public void deleteMemberBoardLike(LikeVo vo);
 }

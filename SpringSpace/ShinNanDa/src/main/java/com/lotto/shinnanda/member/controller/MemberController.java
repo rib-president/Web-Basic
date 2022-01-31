@@ -18,7 +18,11 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@RequestMapping("loginPage")
-	public String mainPage() {
+	public String mainPage(HttpSession session) {
+		if(session.getAttribute("sessionUser") != null || session.getAttribute("sessionAdmin") != null) {
+			return "member/loginDuplicate";
+		}
+		
 		
 		System.out.println("시스템 로그] 메인 페이지가 실행되었습니다.");
 		return "member/loginPage";
@@ -26,10 +30,15 @@ public class MemberController {
 	}
 	
 	@RequestMapping("joinMemberPage")
-	public String joinMemberPage() {
+	public String joinMemberPage(HttpSession session) {
 		
 		System.out.println("시스템 로그] 회원가입 페이지 실행");
 		
+		if(session.getAttribute("sessionUser") != null || session.getAttribute("sessionAdmin") != null) {
+			return "member/loginDuplicate";
+		}
+		
+				
 		return "member/joinMemberPage";
 	}
 	
@@ -57,25 +66,47 @@ public class MemberController {
 		
 		MemberVo sessionUser = memberService.login(param);
 		
-		if(sessionUser != null) {
-			//인증(로그인) 성공
-			//이 부분 신경쓰기 session.setAttribute 딱 한번 활용됨. 앞으로 session.setAttribute 많이 쓴다.
+		if(sessionUser == null) {
+			//인증(로그인) 실패
+			return "member/loginFail";			
+		}			
+		
+		//인증(로그인) 성공
+		if(sessionUser.getMember_admin().equals("N")) {
 			session.setAttribute("sessionUser", sessionUser);
 			
-			return "redirect:../board/mainPageRN";
+			return "redirect:../shop/main";			
+		} else {
+			session.setAttribute("sessionAdmin", sessionUser);
 			
-		}else {
-			//인증(로그인) 실패
-			return "member/loginFail";
-		}
-
+			return "redirect:../admin/main";
+		}	
 	}
 	
 	@RequestMapping("logoutProcess")
 	public String logoutProcess(HttpSession session) {
 		session.invalidate();
 		
-		return "redirect:../board/mainPageRN";
+		return "redirect:../shop/main";
+	}
+	
+	@RequestMapping("memberInfo")
+	public String memberInfo() {
+		
+		return "member/memberInfo";
+	}
+	
+	@RequestMapping("modifyMemberInfo")
+	public String modifyMemberInfo(MemberVo vo, HttpSession session) {
+		int member_no = ((MemberVo) session.getAttribute("sessionUser")).getMember_no();
+		vo.setMember_no(member_no);
+		
+		memberService.modifyMemberInfo(vo);
+		
+		
+		session.setAttribute("sessionUser", memberService.getMemberByNo(member_no));
+		
+		return "member/memberInfo";
 	}
 
 }

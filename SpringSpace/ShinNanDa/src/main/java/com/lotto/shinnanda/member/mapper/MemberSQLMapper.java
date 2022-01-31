@@ -11,6 +11,8 @@ public interface MemberSQLMapper {
 		public MemberVo getMemberByIdAndPw(MemberVo vo);	//select
 		
 		public MemberVo getMemberByNo(int no);
+		
+		public void updateMemberVo(MemberVo vo);
 }
 
 

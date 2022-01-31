@@ -42,7 +42,7 @@
 		</div>
 		<div class="row mt-3">
 			<div class="col mb-3">
-			  <input class="form-control" name="uploadFiles" type="file" id="formFileMultiple" multiple accept="image/*">
+			  <input class="form-control" name="uploadFiles" type="file" multiple accept="image/*">
 			</div>
 		</div>		
 		<div class="row mt-3">

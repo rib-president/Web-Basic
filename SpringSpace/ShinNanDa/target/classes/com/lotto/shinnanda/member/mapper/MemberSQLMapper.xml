@@ -4,8 +4,20 @@
 
 <mapper namespace="com.lotto.shinnanda.member.mapper.MemberSQLMapper">
 	<insert id="joinMember">
-		INSERT INTO SN_Member VALUES(SN_Member_seq.nextval , #{member_id}, #{member_pw}, 
-		#{member_nick}, #{member_gender}, #{member_birth}, #{member_phone}, #{member_email}, SYSDATE )
+		INSERT INTO SN_Member VALUES(
+			SN_Member_seq.nextval,
+			#{member_name},
+			#{member_id},
+			#{member_pw}, 
+			#{member_nick},
+			#{member_gender},
+			#{member_birth},
+			#{member_phone},
+			#{member_address},
+			#{member_email},
+			'N',
+			SYSDATE
+		)
 	</insert>
 	<!-- 주의사항 : 1. 맨 뒤에 ; 빼야함    2. select의 경우   resultType 작성하자 -->
 	<select id="getMemberByIdAndPw" resultType="com.lotto.shinnanda.vo.MemberVo">
@@ -16,7 +28,17 @@
 	
 	</select>
 	<select id="getMemberByNo" resultType="com.lotto.shinnanda.vo.MemberVo">
-		SELECT * FROM SN_Member WHERE member_no = #{no}
+		SELECT *
+		FROM SN_Member
+		WHERE member_no = #{no}
 	</select>
+	
+	<update id="updateMemberVo">
+		UPDATE SN_Member
+		SET member_pw = #{member_pw}, member_nick = #{member_nick}, 
+		member_phone = #{member_phone}, member_address = #{member_address},
+		member_email = #{member_email}
+		WHERE member_no = #{member_no}
+	</update>
 
 </mapper>
