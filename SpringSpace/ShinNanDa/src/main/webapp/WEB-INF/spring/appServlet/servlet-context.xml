@@ -30,4 +30,14 @@
 		<beans:property name="maxUploadSize" value="100000000"></beans:property>
 	</beans:bean>
 	
+	<!-- 인터셉터 설정 -->
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/board/*"/>
+	        <exclude-mapping path="/board/mainPageRN"/>
+	        <exclude-mapping path="/board/readContentPage"/>
+	        <beans:bean class="com.lotto.shinnanda.interceptor.AuthInterceptor"></beans:bean>
+	    </interceptor>
+	</interceptors>	
+	
 </beans:beans>
