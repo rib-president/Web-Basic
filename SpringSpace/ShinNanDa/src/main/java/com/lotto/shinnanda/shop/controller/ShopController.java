@@ -53,8 +53,14 @@ public class ShopController {
 		for(Product_DetailVo detailVo : detailVoList) {
 			HashMap<String, Object> map = new HashMap<>();
 			
+			int product_detail_no = detailVo.getProduct_detail_no();
+
+			Integer orderCount = adminService.getSumOrdersDetailCountByProductDetailNo(product_detail_no);
+			if(orderCount == null) orderCount = 0; 
+			int stock = detailVo.getProduct_detail_stock() - orderCount;
+			
 			map.put("detailVo", detailVo);
-			map.put("sumOrdersDetailCount", adminService.getSumOrdersDetailCountByProductDetailNo(detailVo.getProduct_detail_no()));
+			map.put("stock", stock);
 			
 			productDetailVoList.add(map);
 		}
@@ -92,13 +98,19 @@ public class ShopController {
 		for(CartVo cartVo : cartVoList) {
 			HashMap<String, Object> map = new HashMap<>();
 			
-			Product_DetailVo product_DetailVo = shopService.getProductDetailByNo(cartVo.getProduct_detail_no());
+			int product_detail_no = cartVo.getProduct_detail_no();
+			Product_DetailVo product_DetailVo = shopService.getProductDetailByNo(product_detail_no);
 
+			Integer orderCount = adminService.getSumOrdersDetailCountByProductDetailNo(product_detail_no);
+			if(orderCount == null) orderCount = 0; 
+			int stock = product_DetailVo.getProduct_detail_stock() - orderCount;
+			
 			int product_no = product_DetailVo.getProduct_no();
 			ProductVo productVo = shopService.getProduct(product_no);
 			
 			map.put("productVo", productVo);
 			map.put("product_DetailVo", product_DetailVo);
+			map.put("stock", stock);
 			map.put("cartVo", cartVo);
 			
 			totalVoList.add(map);

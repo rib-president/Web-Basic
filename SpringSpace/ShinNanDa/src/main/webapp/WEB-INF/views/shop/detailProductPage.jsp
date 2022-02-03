@@ -16,6 +16,14 @@
 <link href="../resources/css/shopMain.css" rel="stylesheet">
 
 <script>
+
+	document.addEventListener('keydown', function(event) {
+		  if (event.keyCode === 13) {
+		    event.preventDefault();
+		  };
+		}, true);	
+
+
 	var old_count = 0;
 
 	function optionOnChange(selectBox) {
@@ -46,10 +54,18 @@
 		  var col2 = document.createElement("div");
 		  col2.setAttribute("class", "col");
 		  
+		  var hidden_no = selectBox.value.split("&stock")[0];
+		  var hidden_stock = selectBox.value.split("&stock")[1];
+
 		  var submitOptions = document.createElement("input");
 		  submitOptions.setAttribute("type", "hidden");
 		  submitOptions.setAttribute("name", "product_detail_no");
-		  submitOptions.setAttribute("value", selectBox.value);
+		  submitOptions.setAttribute("value", hidden_no);
+
+		  var submitDiv = document.createElement("div");
+		  submitDiv.setAttribute("style", "display: none;");
+		  submitDiv.setAttribute("class", "stock");
+		  submitDiv.innerText = hidden_stock;
 		  
 		  var inputNumber = document.createElement("input");
 		  inputNumber.setAttribute("type", "number");
@@ -58,14 +74,15 @@
 		  inputNumber.setAttribute("max", "999");
 		  inputNumber.setAttribute("value", "1");
 		  inputNumber.setAttribute("class", "count")
-		  inputNumber.setAttribute("onchange", "countOnChange()");
+		  inputNumber.setAttribute("onchange", "countOnChange(this)");
 		  
 		  var delBtn = document.createElement("button");
 		  delBtn.innerText = "X";
-		  delBtn.setAttribute("class", "ms-2");
+		  delBtn.setAttribute("class", "ms-2 delBtn");
 		  delBtn.setAttribute("onclick", "deleteOption(this)");
 		  
 		  col2.appendChild(submitOptions);
+		  col2.appendChild(submitDiv);
 		  col2.appendChild(inputNumber);
 		  col2.appendChild(delBtn);
 		
@@ -81,7 +98,19 @@
 		  selectedProductBox.appendChild(row);		  
 	}
 	
-	function countOnChange() {
+	function countOnChange(cnt) {
+		var col = cnt.closest(".col");
+		var stock = col.querySelector(".stock").innerText;
+		
+		if(parseInt(cnt.value) > parseInt(stock)) {
+			alert("재고가 부족합니다. 현재  " + stock + "개");
+			cnt.value = stock;
+		}
+		
+		changeTotal();
+	}
+	
+	function changeTotal() {
 		var countList = document.getElementsByClassName("count");
 		var totalCount = 0;
 		for(count of countList) {
@@ -90,17 +119,23 @@
 		old_count = totalCount;
 		
 		document.getElementById("totalPrice").innerText = "<c:out value='${productVo.product_price }'/>"  * totalCount;
-		document.getElementById("totalCount").innerText = "(" + totalCount + "개)";			
+		document.getElementById("totalCount").innerText = "(" + totalCount + "개)";		
 	}
 	
 	function deleteOption(delBtn) {
 		var target = delBtn.closest(".row");
 		target.remove();
-		countOnChange();
+		changeTotal();
 	}
 	
 	function buynow(btn) {
 		var form = btn.closest("#frm");
+		
+		if(form.querySelector("input[name='product_detail_no']") == null) {
+			alert("상품 옵션을 선택해주세요");
+			return;
+		}
+		
 		form.setAttribute("action", "../shop/orderPage");
 		form.setAttribute("target", "_self");
 		
@@ -116,13 +151,19 @@
 			type: "POST",
 			data: param,
 			success:function(data) {
-
+				$("#layerpop").modal("show");
 			}
 		})
 	}*/
 	
 	function addCart(btn) {
 		var form = btn.closest("#frm");
+		
+		if(form.querySelector("input[name='product_detail_no']") == null) {
+			alert("상품 옵션을 선택해주세요");
+			return;
+		}
+		
 		form.setAttribute("action", "../shop/addCartProcess");
 		form.setAttribute("target", "iframe1");
 		
@@ -134,7 +175,6 @@
 	    $("#layerpop").modal("hide");
 
 	}
-
 </script>
 
 </head>
@@ -180,11 +220,11 @@
 		  		  	  	    <option value="invalidOption" selected>옵션선택</option>
 		  		  	  	    <c:forEach items="${productDetailVoList }" var="productDetailVo">
 		  		  	  	      <c:choose>		  		  	  	      
-		  		  	  	        <c:when test="${productDetailVo.detailVo.product_detail_stock-productDetailVo.sumOrdersDetailCount <= 0 }">
+		  		  	  	        <c:when test="${productDetailVo.stock <= 0 }">
 		  		  	  	          <option disabled>${productDetailVo.detailVo.product_detail_option } (품절)</option>
 		  		  	  	        </c:when>
 		  		  	  	      	<c:otherwise>
-		  		  	  	      	  <option value="${productDetailVo.detailVo.product_detail_no }">${productDetailVo.detailVo.product_detail_option }</option>
+		  		  	  	      	  <option value="${productDetailVo.detailVo.product_detail_no }&stock${productDetailVo.stock }">${productDetailVo.detailVo.product_detail_option }</option>
 		  		  	  	      	</c:otherwise>
 		  		  	  	      </c:choose>		  		  	  	      
 		  		  	  	    </c:forEach>		  		  	  	    
@@ -248,7 +288,6 @@
 				        <p>
 					                교환, 환불 안됩니다.<br>
 					                샀으면 평생 신으세요.<br>
-					                어려운 사람 도왔다고 칩시다.<br>
 				        </p>
 				      </div>     
 				    </div>

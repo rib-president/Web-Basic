@@ -29,6 +29,15 @@
 		var oldCountInput = frm.querySelector(".oldCount");
 		var oldCount = oldCountInput.value;
 		
+		var stock = frm.querySelector(".stock").innerText;
+		
+		if(parseInt(countInput.value) > parseInt(stock)) {
+			alert("재고가 부족합니다");
+			countInput.value = oldCount;
+			return;
+		}
+		
+		
 		var priceTd = frm.closest("tr").getElementsByClassName("price")[0];		
 		var price = priceTd.innerText;
 		
@@ -54,7 +63,7 @@
 		var frm = btn.closest("#delFrm");
 		frm.setAttribute("action","delCartProcess");
 		
-		frm.subtmi();
+		frm.submit();
 	}
 	
 	function delCheckedProduct(btn) {
@@ -201,6 +210,7 @@
 						      			<input class="count" type="number" name="cart_count" min="1" max="999" value="${totalVo.cartVo.cart_count }">
 						      			<input class="oldCount" type="hidden" value="${totalVo.cartVo.cart_count }">
 						      			<input type="hidden" name="cart_no" value="${totalVo.cartVo.cart_no }">
+						      			<div class="stock" style="display: none;">${totalVo.stock }</div>
 						      		</div>
 						      		<div class="col mt-3">
 						      			<button class="btn btn-outline-dark" onclick="changeCount(this)">변경</button>

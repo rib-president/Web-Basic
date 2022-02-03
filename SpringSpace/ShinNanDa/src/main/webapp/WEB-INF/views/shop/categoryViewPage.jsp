@@ -27,7 +27,7 @@
 		<jsp:include page="../commons/menu_bar.jsp"></jsp:include>
 		<div class="col">	  
 		  <div class="row mt-3">
-		  	<div class="col"><h1>${product_CategoryVo.product_category_name }</h1></div>
+		  	<div class="col"><h1><a href="../shop/categoryViewPage?product_category_no=${product_CategoryVo.product_category_no }">${product_CategoryVo.product_category_name }</a></h1></div>
 		  </div>
 		  <div class="row mt-5">
 		  	<div class="col">
