@@ -10,7 +10,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 <link href="../resources/css/commons.css" rel="stylesheet">
 
+<style>
+	.image-selected {border: 3px solid black; opacity: 0.5;}
+
+</style>
+
 <script>
+
+	var image_map = new Map();
+
+
 	function addOptionStockBox() {
 		var row = document.createElement("div");
 		var col1 = document.createElement("div");
@@ -40,6 +49,48 @@
 		optionStockBox.appendChild(row);	
 	}
 
+	
+	function viewUploadDetailImage(event) {
+		const image_container = document.querySelector("div#image_container");
+		while (image_container.hasChildNodes()) {	
+			image_container.removeChild(image_container.firstChild);
+		}
+		
+		var i = 0;
+		for (var image of event.target.files) {
+			
+			var reader = new FileReader();
+			image_map.set("img_" + i, image.name);
+			reader.onload = function(event) {
+				var img = document.createElement("img");
+				img.setAttribute("id", "img_" + i);
+				img.setAttribute("src", event.target.result);
+				img.setAttribute("style", "width: 300px;");
+				img.setAttribute("onclick", "selectThumbnail(this)");
+				document.querySelector("div#image_container").appendChild(img);
+			};
+			console.log(image);
+			reader.readAsDataURL(image); 
+		} 
+	}
+	
+	function selectThumbnail(img) {
+		
+		if(img.getAttribute("class") != null) return;
+		
+		var selected_images = document.getElementsByClassName("image-selected");
+		if(selected_images != null) {
+			for(selected_image of selected_images) {
+				selected_image.removeAttribute("class");
+			}
+		}
+		
+		img.setAttribute("class", "image-selected");
+		
+		var thumbnailInput = document.getElementsByName("thumbnail")[0];
+		//thumbnailInput.name = image_map.get(img.getAttribute("id"));
+	}
+	
 
 </script>
 </head>
@@ -110,7 +161,10 @@
 					<div class="col">
 					 	상세 이미지 : 
 					 </div>
-					 <div class="col"><input type="file" accept="image/*" multiple name="detailimages"></div>
+					 <div class="col"><input type="file" accept="image/*" multiple name="detailimages" onchange="viewUploadDetailImage(event);"></div>
+				</div>
+				<div class="row mt-2">
+					<div class="col"><div id="image_container"></div></div>
 				</div>				
 				
 				<div class="row mt-2">

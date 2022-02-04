@@ -70,7 +70,6 @@ public class MultipartFileUtil {
 					continue;
 				}
 				
-				
 				File productFolder = new File(uploadFolder + product_title + "/");
 				
 				if(!productFolder.exists()) {

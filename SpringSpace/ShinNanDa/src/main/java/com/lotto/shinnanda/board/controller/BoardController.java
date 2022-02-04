@@ -31,7 +31,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping("mainPageRN")
-	public String mainPage(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, 
+	public String mainPageRN(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, 
 			String searchOption, String searchWord, Model model) {
 		
 		System.out.println("시스템 로그] 메인 페이지 실행");

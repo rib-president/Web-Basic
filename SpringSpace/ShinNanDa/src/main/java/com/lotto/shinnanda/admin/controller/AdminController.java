@@ -48,7 +48,7 @@ public class AdminController {
 	@RequestMapping("uploadProductProcess")
 	public String uploadProductProcess(ProductVo productVo, String[] product_detail_option, int[] product_detail_stock,
 			MultipartFile[] thumbnail, MultipartFile[] detailimages) {
-		
+
 		productVo.setProduct_image(MultipartFileUtil.transferToUploadProductFolder(thumbnail, productVo.getProduct_title(), true).get(0).getImage_url());
 		
 		ArrayList<ImageVo> imageVoList = MultipartFileUtil.transferToUploadProductFolder(detailimages, productVo.getProduct_title(), false);

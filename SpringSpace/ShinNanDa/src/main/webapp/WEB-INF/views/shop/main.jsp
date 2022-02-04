@@ -24,32 +24,36 @@
 
 	
  	<div class="row">
+		
 		<jsp:include page="../commons/menu_bar.jsp"></jsp:include>
+		
 		<div class="col">	  
 		  	  
 		  <c:set var="endNum" value="${fn:length(voList)/4-1}" />
 		  <c:set var="res" value="${fn:length(voList)% 4 }" />
 		  <c:set var="lastJ" value="0" />
 		  
-		  <c:forEach begin="0" end="${endNum }" var="i">
-		    <div class="row mt-5 ms-3">
-		      <c:forEach begin="${i*4 }" end="${i*4+3 }" var="j">
-		  	  	<div class="col product_image">
-		  	  	  <a href="../shop/detailProductPage?product_no=${voList.get(j).product_no }"><img class="img-fluid" src="/upload/product/${voList.get(j).product_image }" style="height:500px;"></a>
-		  	  	  <div class="row">
-		  	  	  	<div class="col product_info">
-		  	  	  	  <p>
-			  	  	  	상품명 : ${voList.get(j).product_title }<br>
-			  	  	  	모델명 : ${voList.get(j).product_model }<br>
-			  	  	  	가격 : ${voList.get(j).product_price }
-			  	  	  </p> 	  	  	  	
-		  	  	  	</div>
-		  	  	  </div>		  	  	  
-		  	  	</div>
-		  	  	<c:set var="lastJ" value="${j+1 }" />		        
-		      </c:forEach>
-		    </div>
-		  </c:forEach>
+		  <c:if test="${fn:length(voList)>=4 }">
+			  <c:forEach begin="0" end="${endNum }" var="i">
+			    <div class="row mt-5 ms-3">
+			      <c:forEach begin="${i*4 }" end="${i*4+3 }" var="j">
+			  	  	<div class="col product_image">
+			  	  	  <a href="../shop/detailProductPage?product_no=${voList.get(j).product_no }"><img class="img-fluid" src="/upload/product/${voList.get(j).product_image }" style="height:500px;"></a>
+			  	  	  <div class="row">
+			  	  	  	<div class="col product_info">
+			  	  	  	  <p>
+				  	  	  	상품명 : ${voList.get(j).product_title }<br>
+				  	  	  	모델명 : ${voList.get(j).product_model }<br>
+				  	  	  	가격 : ${voList.get(j).product_price }
+				  	  	  </p> 	  	  	  	
+			  	  	  	</div>
+			  	  	  </div>		  	  	  
+			  	  	</div>
+			  	  	<c:set var="lastJ" value="${j+1 }" />		        
+			      </c:forEach>
+			    </div>
+			  </c:forEach>
+		  </c:if>
 		
 		  <c:if test="${res > 0 }">
 		    <div class="row mt-5 ms-3">
