@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap" rel="stylesheet">
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -118,7 +122,7 @@
 		}
 		old_count = totalCount;
 		
-		document.getElementById("totalPrice").innerText = "<c:out value='${productVo.product_price }'/>"  * totalCount;
+		document.getElementById("totalPrice").innerText = "<c:out value='${productVo.product_price }'/>"  * totalCount + "원";
 		document.getElementById("totalCount").innerText = "(" + totalCount + "개)";		
 	}
 	
@@ -182,13 +186,13 @@
 <div style="margin: 0 auto;">
  <div class="container-fluid">
 	<div class="row">
-		<div class="col"><!-- 글로벌 nav -->
+		<div id="nav-bar" class="col"><!-- 글로벌 nav -->
 			<jsp:include page="../commons/global_nav.jsp"></jsp:include>
 		</div>
 	</div>
  	<div class="row">
 		<jsp:include page="../commons/menu_bar.jsp"></jsp:include>
-		<div class="col">
+		<div class="col shop-start-col">
 		  <div class="row mt-3"><div class="col" style="text-align: center;">${productVo.product_title }</div></div>
 		  <div class="row mt-5">
 		  	<div class="col"><img class="img-fluid" src="/upload/product/${productVo.product_image }"></div>
@@ -302,7 +306,7 @@
 	<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
 
 	<div class="modal fade" id="layerpop" data-bs-backdrop="static">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<!-- header -->
 					<div class="modal-header">

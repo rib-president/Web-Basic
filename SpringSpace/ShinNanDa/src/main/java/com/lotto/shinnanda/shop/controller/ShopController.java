@@ -88,7 +88,7 @@ public class ShopController {
 		
 		return "redirect:../shop/detailProductPage?product_no=" + product_no;
 	}
-	
+
 	@RequestMapping("cartPage")
 	public String cartPage(HttpSession session, Model model) {
 		

@@ -54,6 +54,11 @@
 			return;
 		}
 		
+		if(isConfirmed == false) {
+			alert("아이디 중복 검사를 해야 합니다.");
+			return;
+		}
+		
 		$("#frm1").submit();
 	}
 	
@@ -70,13 +75,54 @@
 		var frm1 = document.getElementById("frm1");
 		frm1.submit();
 	}
+	
+	var isConfirmed = false;
+	function confirmId() {
+		var idBox = document.getElementById("inputId");
+		var idValue = idBox.value;
+		
+		// ajax 호출(vanilla js)
+		var xhr = new XMLHttpRequest();	// js 내장 API
+		
+		// 응답받을 때 실행되는 function 설정(함수를 변수에 담음, 콜백함수)
+		// 총 4번 호출 : open, send, server에 도달했을 때, server로부터 응답받을 때
+		xhr.onreadystatechange = function() {
+			// server로부터 응답받을 때만 실행되도록 조건 설정
+			// 200 : 서버쪽 정상 응답(400, 500은 에러)
+			if(xhr.readyState == 4 && xhr.status == 200) {
+				//alert("서버로부터 받은 데이터 : " +  xhr.responseText); // {"result":true}
+				
+				// JSON 형태 문자열을 js object로 decoding
+				var data = JSON.parse(xhr.responseText);
+				
+				// 화면 조작(핵심 DOM 조작)
+				var confirmAlertBox = document.getElementById("confirmAlertBox");
+				// data["result"]도 가능
+				if(data.result == true) {
+					isConfirmed = false;
+					confirmAlertBox.innerText = "이미 존재하는 아이디 입니다.";
+					confirmAlertBox.style.color = "red";				
+				} else {
+					isConfirmed = true;
+					confirmAlertBox.innerText = "사용 가능한 아이디 입니다.";
+					confirmAlertBox.style.color = "green";					
+				}
+			}
+		};
+		
+		xhr.open("GET", "./isExistId?id=" + idValue, true);	// 3번째 파라미터는 일반적으로 true(동기식 호출, 가급적 피해라)
+		xhr.send();
+		
+	}
 
 </script>
 </head>
 <body>
 	<h1>회원가입</h1>
 	<form id="frm1" action="./joinMemberProcess" method="post">
-		ID : <input id="inputId" type="text" name="member_id"><br>
+		ID : <input id="inputId" type="text" name="member_id" onblur="confirmId()">
+		<br>		
+		<div id="confirmAlertBox"></div>		
 		PW : <input id="inputPw" type="password" name="member_pw"><br>
 		PW Confirm : <input id="inputPwConfirm" type="password"><br>
 		

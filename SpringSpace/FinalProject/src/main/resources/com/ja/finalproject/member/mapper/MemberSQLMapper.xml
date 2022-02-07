@@ -42,6 +42,12 @@
 		SELECT * FROM FP_Member WHERE member_no = #{no}
 	</select>
 	
+	<select id="getCountById" resultType="int">
+		SELECT COUNT(*)
+		FROM FP_Member
+		WHERE member_id = #{id}
+	</select>
+	
 	<!-- 취미 카테고리 관련 -->
 	<select id="getHobbyCategoryList" resultType="com.ja.finalproject.vo.HobbyCategoryVO">
 		SELECT *

@@ -37,7 +37,7 @@
 	        <exclude-mapping path="/board/mainPageRN"/>
 	        <exclude-mapping path="/board/readContentPage"/>
 	        <beans:bean class="com.lotto.shinnanda.interceptor.AuthInterceptor"></beans:bean>
-	    </interceptor>
+	    </interceptor>	    
 	</interceptors>	
 	
 </beans:beans>

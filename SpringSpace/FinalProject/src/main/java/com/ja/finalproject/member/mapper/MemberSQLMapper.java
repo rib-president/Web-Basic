@@ -15,6 +15,8 @@ public interface MemberSQLMapper {
 	
 	public MemberVO getMemberByNo(int no);
 	
+	public int getCountById(String id);
+	
 	// 취미 카테고리 관련
 	public ArrayList<HobbyCategoryVO> getHobbyCategoryList();
 	

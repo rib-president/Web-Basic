@@ -1,6 +1,12 @@
 @charset "UTF-8";
 
-* {margin: 0px; padding: 0px;}
-#menu-bar {background-color: rgb(232,216,175);}
-#logo {font-size: 25px; font-weight: bold;}
-a {color: black;}
+* {font-family: 'Gowun Batang', serif; margin: 0px; padding: 0px;}
+#nav-bar {position:fixed; z-index :99999;}
+#menu-bar {position:fixed; background-color: rgb(232,216,175); overflow : hidden;}
+#logo {font-size: 35px; font-weight: bold; letter-spacing: -4px;}
+a {color: black; text-decoration-line: none;}
+
+a:hover { color : black;}
+
+.text-center {text-align: center;}
+.zero-padding {padding: 0px;}

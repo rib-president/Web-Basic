@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-		<div id="menu-bar" class="col-2">
+		<div id="menu-bar" class="col-2" style="margin-top:3%; height:100%;">
 			<div class="row mt-5">
 				<div class="col">
 					<a id="logo" href="../shop/main">ShinNanDa</a>
@@ -11,25 +11,25 @@
 				<div class="col">
 					<div class="row center-text">
 						<div class="col">
-							<div class="row">
+							<div class="row ms-2">
 							  <c:choose>
 							    <c:when test="${!empty sessionUser }">
-							    	<div class="col"><a href="../member/logoutProcess">logout</a></div>
+							    	<div class="col zero-padding"><a href="../member/logoutProcess">logout</a></div>
 							    </c:when>
 							    <c:otherwise>
-									<div class="col-3" style="padding: 0px;"><a href="../member/loginPage">login</a></div>
-									<div class="col-1" style="padding: 0px;">&nbsp;|&nbsp;</div>
-									<div class="col-3" style="padding: 0px;"><a href="../member/joinMemberPage">join</a></div>
+									<div class="col-3 zero-padding"><a href="../member/loginPage">login</a></div>
+									<div class="col-1 zero-padding">&nbsp;|&nbsp;</div>
+									<div class="col-3 zero-padding"><a href="../member/joinMemberPage">join</a></div>
 									<div class="col"></div>							 							    
 							    </c:otherwise>
 							  </c:choose>
 							</div>
-							<div class="row">
-								<div class="col-3" style="padding: 0px;"><a href="#">guide</a></div>
-								<div class="col-1" style="padding: 0px;">&nbsp;|&nbsp;</div>
-								<div class="col-3" style="padding: 0px;"><a href="../shop/ordersInfoPage">order</a></div>
-								<div class="col-1" style="padding: 0px;">&nbsp;|&nbsp;</div>
-								<div class="col" style="padding: 0px;"><a href="../shop/myPage">my page</a></div>
+							<div class="row ms-2">
+								<div class="col-3 zero-padding"><a href="#">guide</a></div>
+								<div class="col-1 zero-padding">&nbsp;|&nbsp;</div>
+								<div class="col-3 zero-padding"><a href="../shop/ordersInfoPage">order</a></div>
+								<div class="col-1 zero-padding">&nbsp;|&nbsp;</div>
+								<div class="col zero-padding"><a href="../shop/myPage">my page</a></div>
 
 							</div>
 						</div>
@@ -77,8 +77,9 @@
 				</div>
 			</div>
 			<div class="row mt-2 mb-5">
-				<div class="col"><i class="bi bi-instagram"></i></div>
-				<div class="col"><i class="bi bi-facebook"></i></div>
-				<div class="col"><i class="bi bi-chat-dots-fill"></i></div>
+				<div class="col-1"><i class="bi bi-instagram"></i></div>
+				<div class="col-1"><i class="bi bi-facebook"></i></div>
+				<div class="col-1"><i class="bi bi-chat-dots-fill"></i></div>
+				<div class="col-9"></div>
 			</div>
 		</div>

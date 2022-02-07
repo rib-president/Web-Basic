@@ -77,6 +77,17 @@ public class MemberService {
 
 	}
 	
+	public boolean isExistId(String id) {
+		
+		int count = memberSQLMapper.getCountById(id);
+		
+		if(count > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public MemberVO login(MemberVO vo) {
 		
 		// 비밀번호 해싱

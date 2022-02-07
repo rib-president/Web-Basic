@@ -131,7 +131,7 @@ public class BoardController {
 		model.addAttribute("tailParam", StringUtil.tailParam(searchOption, searchWord));
 		return "board/readContentPage";
 	}
-	
+
 	@RequestMapping("writeContentPage")
 	public String writeContentPage() {
 		return "board/writeContentPage";

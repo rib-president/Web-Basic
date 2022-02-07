@@ -42,7 +42,7 @@ public class AdminController {
 		model.addAttribute("product_categoryVoList", adminService.getProductCategory());
 		model.addAttribute("brand_categoryVoList", adminService.getBrandCategory());
 		
-		return "admin/uploadProductPage";
+		return "admin/uploadProductPage2";
 	}
 	
 	@RequestMapping("uploadProductProcess")
@@ -50,11 +50,11 @@ public class AdminController {
 			MultipartFile[] thumbnail, MultipartFile[] detailimages) {
 
 		productVo.setProduct_image(MultipartFileUtil.transferToUploadProductFolder(thumbnail, productVo.getProduct_title(), true).get(0).getImage_url());
-		
+
 		ArrayList<ImageVo> imageVoList = MultipartFileUtil.transferToUploadProductFolder(detailimages, productVo.getProduct_title(), false);
-		
+
 		adminService.uploadProduct(productVo, product_detail_option, product_detail_stock, imageVoList);
-		
+
 		return "redirect:../admin/main";
 	}
 	
