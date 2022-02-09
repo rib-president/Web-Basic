@@ -33,13 +33,13 @@
 	<context:component-scan base-package="com.ja.finalproject.*.controller" />
 	
 	<!-- ja : 인터셉터 설정 -->
-	<interceptors>
+	<!-- <interceptors>
 		<interceptor>
 			<mapping path="/board/*"/>
 			<exclude-mapping path="/board/mainPage"/>
 			<exclude-mapping path="/board/readContentPage"/>
 			<beans:bean class="com.ja.finalproject.interceptor.AuthInterceptor"></beans:bean>
 		</interceptor>
-	</interceptors>
+	</interceptors> -->
 	
 </beans:beans>

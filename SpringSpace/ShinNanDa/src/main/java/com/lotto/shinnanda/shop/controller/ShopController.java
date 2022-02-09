@@ -45,49 +45,49 @@ public class ShopController {
 		return "shop/categoryViewPage";
 	}
 	
-	@RequestMapping("detailProductPage")
-	public String detailProductPage(int product_no, Model model) {
-		ArrayList<Product_DetailVo> detailVoList = shopService.getProductDetailByProductNo(product_no);
-		
-		ArrayList<HashMap<String, Object>> productDetailVoList = new ArrayList<>();
-		for(Product_DetailVo detailVo : detailVoList) {
-			HashMap<String, Object> map = new HashMap<>();
-			
-			int product_detail_no = detailVo.getProduct_detail_no();
-
-			Integer orderCount = adminService.getSumOrdersDetailCountByProductDetailNo(product_detail_no);
-			if(orderCount == null) orderCount = 0; 
-			int stock = detailVo.getProduct_detail_stock() - orderCount;
-			
-			map.put("detailVo", detailVo);
-			map.put("stock", stock);
-			
-			productDetailVoList.add(map);
-		}
-		
-		model.addAttribute("productVo", shopService.getProduct(product_no));
-		model.addAttribute("productDetailVoList", productDetailVoList);
-		model.addAttribute("productImageVoList", shopService.getProductImageByProductVo(product_no));
-		
-		return "shop/detailProductPage";
-	}
+//	@RequestMapping("detailProductPage")
+//	public String detailProductPage(int product_no, Model model) {
+//		ArrayList<Product_DetailVo> detailVoList = shopService.getProductDetailByProductNo(product_no);
+//		
+//		ArrayList<HashMap<String, Object>> productDetailVoList = new ArrayList<>();
+//		for(Product_DetailVo detailVo : detailVoList) {
+//			HashMap<String, Object> map = new HashMap<>();
+//			
+//			int product_detail_no = detailVo.getProduct_detail_no();
+//
+//			Integer orderCount = adminService.getSumOrdersDetailCountByProductDetailNo(product_detail_no);
+//			if(orderCount == null) orderCount = 0; 
+//			int stock = detailVo.getProduct_detail_stock() - orderCount;
+//			
+//			map.put("detailVo", detailVo);
+//			map.put("stock", stock);
+//			
+//			productDetailVoList.add(map);
+//		}
+//		
+//		model.addAttribute("productVo", shopService.getProduct(product_no));
+//		model.addAttribute("productDetailVoList", productDetailVoList);
+//		model.addAttribute("productImageVoList", shopService.getProductImageByProductVo(product_no));
+//		
+//		return "shop/detailProductPage";
+//	}
 	
-	@RequestMapping("addCartProcess")
-	public String addCartProcess(int product_no, int[] product_detail_no, int[] productCount, HttpSession session) {
-
-		int member_no = ((MemberVo) session.getAttribute("sessionUser")).getMember_no();
-		
-		for(int i=0;i<product_detail_no.length;i++) {
-			CartVo vo = new CartVo();
-			vo.setProduct_detail_no(product_detail_no[i]);
-			vo.setMember_no(member_no);
-			vo.setCart_count(productCount[i]);
-			
-			shopService.addCart(vo);
-		}
-		
-		return "redirect:../shop/detailProductPage?product_no=" + product_no;
-	}
+//	@RequestMapping("addCartProcess")
+//	public String addCartProcess(int product_no, int[] product_detail_no, int[] productCount, HttpSession session) {
+//
+//		int member_no = ((MemberVo) session.getAttribute("sessionUser")).getMember_no();
+//		
+//		for(int i=0;i<product_detail_no.length;i++) {
+//			CartVo vo = new CartVo();
+//			vo.setProduct_detail_no(product_detail_no[i]);
+//			vo.setMember_no(member_no);
+//			vo.setCart_count(productCount[i]);
+//			
+//			shopService.addCart(vo);
+//		}
+//		
+//		return "redirect:../shop/detailProductPage?product_no=" + product_no;
+//	}
 
 	@RequestMapping("cartPage")
 	public String cartPage(HttpSession session, Model model) {
@@ -121,29 +121,29 @@ public class ShopController {
 		return "shop/cartPage";
 	}
 	
-	@RequestMapping("changeCartCount")
-	public String changeCartCount(CartVo vo) {
-		shopService.modifyCartCount(vo);
-		
-		return "redirect:../shop/cartPage";
-	}
+//	@RequestMapping("changeCartCount")
+//	public String changeCartCount(CartVo vo) {
+//		shopService.modifyCartCount(vo);
+//		
+//		return "redirect:../shop/cartPage";
+//	}
 	
-	@RequestMapping("delCheckedCartProcess")
-	public String delCheckedCartProcess(String[] checked_cart_no_list) {
-		
-		for(String cart_no : checked_cart_no_list) {		
-			shopService.delCartByNo(Integer.parseInt(cart_no));
-		}
-
-		return "redirect:../shop/cartPage";
-	}
+//	@RequestMapping("delCheckedCartProcess")
+//	public String delCheckedCartProcess(String[] checked_cart_no_list) {
+//		
+//		for(String cart_no : checked_cart_no_list) {		
+//			shopService.delCartByNo(Integer.parseInt(cart_no));
+//		}
+//
+//		return "redirect:../shop/cartPage";
+//	}
 	
-	@RequestMapping("delCartProcess")
-	public String delCartProcess(HttpSession session) {
-		shopService.delCartByMemberNo(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
-		
-		return "redirect:../shop/cartPage";
-	}
+//	@RequestMapping("delCartProcess")
+//	public String delCartProcess(HttpSession session) {
+//		shopService.delCartByMemberNo(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
+//		
+//		return "redirect:../shop/cartPage";
+//	}
 	
 	@RequestMapping("orderPage")
 	public String orderPage(int[] product_detail_no, int[] productCount, 

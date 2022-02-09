@@ -27,31 +27,34 @@
 	}
 
 	
-	function changeCount(btn) {
-		var frm = btn.closest(".frm");
+	function changeCount(btn, event) {
+		event.preventDefault();
 		
-		var countInput = frm.querySelector(".count");
-		var oldCountInput = frm.querySelector(".oldCount");
-		var oldCount = oldCountInput.value;
+		var row = btn.closest(".row");
 		
-		var stock = frm.querySelector(".stock").innerText;
+		var cart_no = row.querySelector(".no").value;
+		var countInput = row.querySelector(".count");
+		var oldCountInput = row.querySelector(".oldCount");
+		var oldCount = oldCountInput.innerText;
+		
+		var stock = row.querySelector(".stock").innerText;
 		
 		if(parseInt(countInput.value) > parseInt(stock)) {
-			alert("재고가 부족합니다");
+			alert("재고가 부족합니다 : " + oldCount + " 개");
 			countInput.value = oldCount;
 			return;
 		}
 		
 		
-		var priceTd = frm.closest("tr").getElementsByClassName("price")[0];		
+		var priceTd = row.closest("tr").getElementsByClassName("price")[0];		
 		var price = priceTd.innerText;
 		
-		var calcPrice = frm.closest("tr").getElementsByClassName("calcPrice")[0];
-		//var oldPrice = oldCount * price;
+		var calcPrice = row.closest("tr").getElementsByClassName("calcPrice")[0];
+
 		var oldPrice = calcPrice.innerText;
 		var curPrice = countInput.value * price;
 		calcPrice.innerText = curPrice;
-		oldCountInput.value = countInput.value;
+		oldCountInput.innerText = countInput.value;
 		
 		if(oldPrice > curPrice) {
 			document.querySelector("#total").innerText = (document.querySelector("#total").innerText*1) - (oldPrice-curPrice);
@@ -60,44 +63,100 @@
 			document.querySelector("#total").innerText = (document.querySelector("#total").innerText*1) + (curPrice-oldPrice);
 		}
 		
-		frm.submit();
+
+		var xhr = new XMLHttpRequest();
+
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var data = JSON.parse(xhr.responseText);
+				
+			}
+			
+		};
+		
+		
+		xhr.open("POST" , "./changeCartCount", true);
+    	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded"); //Post
+		xhr.send("cart_no=" + cart_no + "&cart_count=" + countInput.value);
 	}
 
 	
-	function delAllProd(btn) {
-		var frm = btn.closest("#delFrm");
-		frm.setAttribute("action","delCartProcess");
+	function delAllProd(event) {
+		//AJAX...호출...
+		var xhr = new XMLHttpRequest();
 		
-		frm.submit();
+		//응답 받을때...
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var data = JSON.parse(xhr.responseText);
+				
+				if(data.result == 'success') {
+					var trs = document.querySelectorAll("table tbody tr");
+					for(tr of trs) {
+						tr.remove();
+					}
+					
+					document.querySelector("#total").innerText = 0;
+				}	
+			}			
+		};
+		
+		
+		xhr.open("GET" , "./delCartProcess", true);
+		xhr.send();
+
 	}
 	
-	function delCheckedProduct(btn) {
-		var frm = btn.closest("form");
+	function delCheckedProduct(btn, event) {
+		event.preventDefault();
 		
 		var checkList = document.getElementsByName("chkedCartNo");
 
-		var cart_no_list = [];
-		
+		var param = "";
 		for(check of checkList) {
 			if(check.checked) {
-				cart_no_list.push(check.value);
+				param += "checked_cart_no_list=" + check.value + "&";
 			}
 		}
 
-		if(cart_no_list.length == 0) {
+		if(param == "") {
 			alert("상품을 선택해주세요");
 			return;
 		}
-		
-		var hidden = document.createElement("input");
-		hidden.setAttribute("type", "hidden");
-		hidden.setAttribute("name", "checked_cart_no_list");
-		hidden.setAttribute("value", cart_no_list);
+		param = param.substring(0, param.length-1);
 
-		frm.appendChild(hidden);
-		frm.setAttribute("action","delCheckedCartProcess");
+		var xhr = new XMLHttpRequest();
 		
-		frm.submit();
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var data = JSON.parse(xhr.responseText);
+				
+				if(data.result == 'success') {
+					var checkList = document.getElementsByName("chkedCartNo");
+					var tr_list = [];
+					for(check of checkList) {
+						if(check.checked) {
+							var tr = check.closest("tr");
+							
+							var calcPrice = tr.querySelector(".calcPrice");
+							
+							document.querySelector("#total").innerText = parseInt(document.querySelector("#total").innerText) - parseInt(calcPrice.innerText);
+							
+							tr_list.push(tr);														
+						}						
+					}
+					for(tr of tr_list) {
+						tr.remove();
+					}
+				}				
+			}
+			
+		};
+		
+		xhr.open("post" , "./delCheckedCartProcess", true);
+    	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded"); //Post
+		xhr.send(param);
+    	
 	}
 	
 	function orderCheckedProduct(btn) {
@@ -209,19 +268,19 @@
 					      </td>
 					      <td class="price">${totalVo.productVo.product_price }</td>
 					      <td>
-					        <form class="frm" action="./changeCartCount" method="post" target="iframe1">
-						      	<div class="row">
-						      		<div class="col">						      			
-						      			<input class="count" type="number" name="cart_count" min="1" max="999" value="${totalVo.cartVo.cart_count }">
-						      			<input class="oldCount" type="hidden" value="${totalVo.cartVo.cart_count }">
-						      			<input type="hidden" name="cart_no" value="${totalVo.cartVo.cart_no }">
-						      			<div class="stock" style="display: none;">${totalVo.stock }</div>
-						      		</div>
-						      		<div class="col mt-3">
-						      			<button class="btn btn-outline-dark" onclick="changeCount(this)">변경</button>
-						      		</div>
-						      	</div>
-					        </form>
+
+					      	<div class="row">
+					      		<div class="col">						      			
+					      			<input class="count" type="number" name="cart_count" min="1" max="999" value="${totalVo.cartVo.cart_count }">
+					      			<div class="oldCount" style="display: none;">${totalVo.cartVo.cart_count }</div>
+					      			<input class="no" type="hidden" name="cart_no" value="${totalVo.cartVo.cart_no }">
+					      			<div class="stock" style="display: none;">${totalVo.stock }</div>
+					      		</div>
+					      		<div class="col mt-3">
+					      			<button class="btn btn-outline-dark" onclick="changeCount(this, event)">변경</button>
+					      		</div>
+					      	</div>
+
 					      </td>
 					      <td>무료</td>
 					      <td class="calcPrice">${totalVo.productVo.product_price * totalVo.cartVo.cart_count }</td>
@@ -237,7 +296,7 @@
 					      <td>
 					        <div class="row">
 					          <div class="col-5">상품 구매 금액 합계(배송비 무료) :</div>
-					          <div id="total" class="col-1">${totalPrice }</div>
+					          <div id="total" class="col-3">${totalPrice }</div>
 					          <div class="col-1">원</div>
 					          <div class="col"></div>
 					        </div>
@@ -252,10 +311,10 @@
 					      <td></td>
 					      <td>
 					      	<div class="row mt-3">
-					      	  <form id="delFrm" method="post">
-					      		<div class="col-5 mb-2"><button class="btn btn-primary" onclick="delCheckedProduct(this)">선택 상품 삭제</button></div>
-					      		<div class="col"><button class="btn btn-outline-primary" onclick="delAllProd(this)">장바구니 비우기</button></div>
-					      	  </form>
+
+				      		<div class="col-5 mb-2"><button class="btn btn-primary" onclick="delCheckedProduct(this, event)">선택 상품 삭제</button></div>
+				      		<div class="col"><button class="btn btn-outline-primary" onclick="delAllProd(event)">장바구니 비우기</button></div>
+
 					      	</div>
 					      </td>
 					      <td></td>
@@ -281,7 +340,7 @@
 				</div>
 
 			</div>
-	 	<iframe id="iframe1" name="iframe1" style="display:none"></iframe>			
+	 		<%-- <iframe id="iframe1" name="iframe1" style="display:none"></iframe> --%>			
 		  								
 		</div>
  	</div>

@@ -29,6 +29,7 @@
 
 
 	var old_count = 0;
+	var layerpop = null;
 
 	function optionOnChange(selectBox) {
 		
@@ -146,21 +147,8 @@
 		form.submit();
 	}
 	
-	/*function addCart(btn) {
-
-		var param = $("#frm").serialize();
-
-		$.ajax({
-			url: "addCartProcess",
-			type: "POST",
-			data: param,
-			success:function(data) {
-				$("#layerpop").modal("show");
-			}
-		})
-	}*/
-	
-	function addCart(btn) {
+	function addCart(btn, event) {
+		event.preventDefault();
 		var form = btn.closest("#frm");
 		
 		if(form.querySelector("input[name='product_detail_no']") == null) {
@@ -168,15 +156,54 @@
 			return;
 		}
 		
-		form.setAttribute("action", "../shop/addCartProcess");
-		form.setAttribute("target", "iframe1");
+		//form.setAttribute("action", "../shop/addCartProcess");
+		//form.setAttribute("target", "iframe1");
 		
-		form.submit();
-		$("#layerpop").modal("show");
+		//form.submit();
+		//$("#layerpop").modal("show");
+		
+		
+		var options = form.querySelectorAll("input[name='product_detail_no']");
+		var options_list = [];
+		for(option of options) {
+			options_list.push(option.value);
+		}
+		
+		var counts = form.querySelectorAll("input[name='productCount']");
+		var counts_list = [];
+		for(count of counts) {
+			counts_list.push(count.value);
+		}
+		
+		var data = {
+			product_detail_no : options_list,	
+			productCount : counts_list
+		}; 
+
+		var xhr = new XMLHttpRequest();
+
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var data = JSON.parse(xhr.responseText);
+				
+				if(data.result == 'success') {
+					layerpop = new bootstrap.Modal(document.getElementById('layerpop'));
+					layerpop.show();
+				}
+			}
+			
+		};
+		
+		console.log(data);
+		xhr.open("POST" , "./addCartProcess", true);	// GET일 때는 링크 뒤에 파라미터 붙임
+   		xhr.setRequestHeader("Content-type","application/json"); //Post
+		xhr.send(JSON.stringify(data));	// POST일 때는 send에 파라미터 넣음 xhr.send("board_no=6&member_no=1");
+
 	}
 	
 	function closeModal() {
-	    $("#layerpop").modal("hide");
+	    //$("#layerpop").modal("hide");
+	    layerpop.hide();
 
 	}
 </script>
@@ -246,12 +273,12 @@
 		  		  	  	<div id="totalPrice" class="col"></div>
 		  		  	  	<div id="totalCount" class="col"></div>
 		  		  	  </div>
-		  		  	  <input type="hidden" name="product_no" value="${productVo.product_no }">
+		  		  	  <%-- <input type="hidden" name="product_no" value="${productVo.product_no }"> --%>
 		  		  	  <div class="row mt-3">
 		  		  	  	<div class="col d-grid"><button class="btn btn-dark" onclick="buynow(this)">buy now</button></div>
 		  		  	  </div>
   		  		  	  <div class="row mt-3">
-		  		  	  	<div class="col d-grid"><button class="btn btn-outline-dark" onclick="addCart(this)">add cart</button></div>
+		  		  	  	<div class="col d-grid"><button class="btn btn-outline-dark" onclick="addCart(this, event)">add cart</button></div>
 		  		  	  </div>
 		  		  	  
 		  		  	</div>
@@ -303,30 +330,30 @@
 		</div>
  	</div>	
 
-	<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
+	<%-- <iframe id="iframe1" name="iframe1" style="display:none"></iframe> --%>
 
 	<div class="modal fade" id="layerpop" data-bs-backdrop="static">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<!-- header -->
-					<div class="modal-header">
-						<!-- header title -->
-						<h4 class="modal-title">장바구니 담기</h4>
-						<!-- 닫기(x) 버튼 -->
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<!-- body -->
-					<div class="modal-body">
-						선택하신 상품이 장바구니에 담겼습니다.
-					</div>
-					<!-- Footer -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-outline-dark" data-dismiss="modal" onclick = "location.href = '../shop/cartPage' ">장바구니 이동</button>
-						<button id="closeBtn" type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close" onclick="closeModal()">쇼핑계속하기</button>
-					</div>
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<!-- header -->
+				<div class="modal-header">
+					<!-- header title -->
+					<h4 class="modal-title">장바구니 담기</h4>
+					<!-- 닫기(x) 버튼 -->
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<!-- body -->
+				<div class="modal-body">
+					선택하신 상품이 장바구니에 담겼습니다.
+				</div>
+				<!-- Footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-dark" data-dismiss="modal" onclick = "location.href = '../shop/cartPage' ">장바구니 이동</button>
+					<button id="closeBtn" type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close" onclick="closeModal()">쇼핑계속하기</button>
 				</div>
 			</div>
-		</div>	
+		</div>
+	</div>	
  	
  	
 </div>
