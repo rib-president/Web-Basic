@@ -16,6 +16,110 @@
 <link href="../resources/css/commons.css" rel="stylesheet">
 <link href="../resources/css/shopMain.css" rel="stylesheet">
 
+<style>
+.modal {
+   z-index: 99999;
+}
+
+</style>
+
+<script>
+	var detailProductModal = null;
+
+	var product_price = 0;
+	
+	function openDetailProductModal(product_no) {		
+		
+		var xhr = new XMLHttpRequest();
+
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var data = JSON.parse(xhr.responseText);
+				
+				var modalRoot = document.getElementById('detailProductModal');
+				detailProductModal = new bootstrap.Modal(modalRoot);
+				
+				modalRoot.addEventListener('hidden.bs.modal', closeDetailProductModal());
+				
+				modalRoot.querySelector(".modal-title").innerText = data.productVo.product_title;
+				modalRoot.querySelector("#thumbnail").setAttribute("src", "/upload/product/" + data.productVo.product_image);
+				modalRoot.querySelector("#model").innerText = data.productVo.product_model;
+				modalRoot.querySelector("#price").innerText = data.productVo.product_price;
+				
+				var selectOption = modalRoot.querySelector("#select-option");
+				
+				while (selectOption.hasChildNodes()) {	
+					selectOption.removeChild(selectOption.firstChild);
+				}
+				
+				var option = document.createElement("option");
+				option.setAttribute("value", "invalidOption");
+				option.selected = true;
+				option.innerText = "옵션선택";
+				selectOption.appendChild(option);
+  	  	   		 
+  	  	   		 for(productDetailVo of data.productDetailVoList) {
+  	  	   			 if(productDetailVo.stock <= 0) {
+  	  	   				 var option = document.createElement("option");
+  	  	   				 option.disabled = true;
+  	  	   				 option.innerText = productDetailVo.detailVo.product_detail_option + " (품절)";
+  	  	   			 } else {
+  	  	   				 var option = document.createElement("option");
+  	  	   				 option.setAttribute("value", productDetailVo.detailVo.product_detail_no + "&stock" + productDetailVo.stock);
+  	  	   				 option.innerText = productDetailVo.detailVo.product_detail_option;
+  	  	   			 }
+  	  	   			 selectOption.appendChild(option);
+  	  	   		 }
+								
+				product_price = data.productVo.product_price;
+				
+				modalRoot.querySelector("#product_content").innerText = data.productVo.product_content;
+				
+				var detailImageBox = modalRoot.querySelector("#detailImageBox");
+				
+				for(productImageVo of data.productImageVoList) {
+
+					var row = document.createElement("div");
+					row.setAttribute("class", "row mt-5");
+					
+					var col = document.createElement("div");
+					col.setAttribute("class", "col text-center");
+					
+					var img = document.createElement("img");
+					img.setAttribute("class", "img-fluid");
+					img.setAttribute("src", "/upload/product/" + productImageVo.image_url);
+					
+					col.appendChild(img);
+					row.appendChild(col);
+					detailImageBox.appendChild(row);
+				}
+  	  	   		 
+				detailProductModal.show();				
+			}			
+		};
+		
+		
+		xhr.open("get" , "./detailProductPage?product_no=" + product_no, true);   		
+		xhr.send();
+	}
+	
+	function closeDetailProductModal() {
+		var selectedProductBox = document.querySelector("#selectedProductBox");
+		
+		while (selectedProductBox.hasChildNodes()) {	
+			selectedProductBox.removeChild(selectedProductBox.firstChild);
+		}	
+		
+		document.querySelector("#totalPrice").innerText = "";
+		document.querySelector("#totalCount").innerText = "";
+		old_count = 0;
+		
+		detailProductModal.hide();
+	}
+
+
+</script>
+
 </head>
 <body>
 <div style="margin: 0 auto;">
@@ -40,7 +144,7 @@
 			  <c:forEach begin="0" end="${endNum }" var="i">
 			    <div class="row mb-5 ms-3">
 			      <c:forEach begin="${i*4 }" end="${i*4+3 }" var="j">
-			  	  	<div class="col product_image me-3" onclick="location.href ='../shop/detailProductPage?product_no=${voList.get(j).product_no }'" style="cursor:pointer;">
+			  	  	<div class="col product_image me-3" onclick="openDetailProductModal('${voList.get(j).product_no }')" style="cursor:pointer;">
 			  	  	  <img src="/upload/product/${voList.get(j).product_image }">
 			  	  	  <div class="row">
 			  	  	  	<div class="col product_info">
@@ -87,8 +191,14 @@
 		  								
 		</div>
  	</div>
+ 	
+	<jsp:include page="./detailProductModal.jsp"></jsp:include>
+ 	
+ 	
+ 	
 </div>
 </div>
+<script src="../resources/js/detailProductJS.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

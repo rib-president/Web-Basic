@@ -11,6 +11,7 @@ import com.ja.finalproject.member.mapper.MemberSQLMapper;
 import com.ja.finalproject.vo.BoardImageVO;
 import com.ja.finalproject.vo.BoardLikeVO;
 import com.ja.finalproject.vo.BoardVO;
+import com.ja.finalproject.vo.CommentVO;
 import com.ja.finalproject.vo.MemberVO;
 
 @Service
@@ -150,6 +151,23 @@ public class BoardService {
 	
 	public int getMyLikeCount(BoardLikeVO vo) {
 		return boardSQLMapper.getMyLikeCount(vo);
+	}
+	
+	// 리플
+	public void insertComment(CommentVO vo) {
+		boardSQLMapper.insertComment(vo);
+	}
+	
+	public void deleteComment(int commentNo) {
+		boardSQLMapper.deleteComment(commentNo);
+	}
+	
+	public void updateComment(CommentVO vo) {
+		boardSQLMapper.updateComment(vo);
+	}
+	
+	public ArrayList<HashMap<String, Object>> getCommentList(int boardNo) {
+		return boardSQLMapper.getCommentListByBoardNo(boardNo);
 	}
 	
 }

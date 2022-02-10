@@ -92,7 +92,7 @@ public class MemberService {
 		
 		// 비밀번호 해싱
 		String password = vo.getMember_pw();
-		password = MessageDigestUtil.getPasswordHashCode(password);
+		//password = MessageDigestUtil.getPasswordHashCode(password);
 		vo.setMember_pw(password);
 		
 		MemberVO result = memberSQLMapper.getMemberByIdAndPw(vo);

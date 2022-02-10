@@ -139,4 +139,34 @@
 		WHERE member_no = #{member_no}
 		AND board_no = #{board_no}
 	</select>
+	
+	<!-- 코멘트 테이블 -->
+	<insert id="insertComment">
+		INSERT INTO FP_Comment VALUES (
+			FP_Comment_seq.nextval,
+			#{member_no}, 
+			#{board_no},
+			#{comment_content},
+			SYSDATE
+		)	
+	</insert>
+	
+	<select id="getCommentListByBoardNo" resultType="map">
+		SELECT fpc.*, fpm.member_nick
+		FROM FP_Comment fpc, FP_Member fpm
+		WHERE fpc.member_no = fpm.member_no
+		AND fpc.board_no = #{boardNo}
+		ORDER BY fpc.comment_no DESC
+	</select>
+	
+	<delete id="deleteComment">
+		DELETE FROM FP_Comment
+		WHERE comment_no = #{commentNo}
+	</delete>
+	
+	<update id="updateComment">
+		UPDATE FP_Comment
+		SET comment_content = #{comment_content}
+		WHERE comment_no = #{comment_no}
+	</update>
 </mapper>

@@ -42,7 +42,7 @@ public class AdminController {
 		model.addAttribute("product_categoryVoList", adminService.getProductCategory());
 		model.addAttribute("brand_categoryVoList", adminService.getBrandCategory());
 		
-		return "admin/uploadProductPage2";
+		return "admin/uploadProductPage";
 	}
 	
 	@RequestMapping("uploadProductProcess")

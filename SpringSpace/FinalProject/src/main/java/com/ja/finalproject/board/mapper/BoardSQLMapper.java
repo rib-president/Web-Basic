@@ -1,12 +1,13 @@
 package com.ja.finalproject.board.mapper;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.ja.finalproject.vo.BoardImageVO;
 import com.ja.finalproject.vo.BoardLikeVO;
 import com.ja.finalproject.vo.BoardVO;
+import com.ja.finalproject.vo.CommentVO;
 
 public interface BoardSQLMapper {
 	// 보드 테이블 PK 생성
@@ -50,4 +51,9 @@ public interface BoardSQLMapper {
 	public int getTotalLikeCount(int board_no);
 	public int getMyLikeCount(BoardLikeVO vo);
 	
+	// 코멘트 테이블
+	public void insertComment(CommentVO vo);
+	public ArrayList<HashMap<String, Object>> getCommentListByBoardNo(int boardNo);
+	public void deleteComment(int commentNo);
+	public void updateComment(CommentVO vo);
 }

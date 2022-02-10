@@ -51,32 +51,26 @@
 
 	
 	function viewUploadDetailImage(event) {
-		image_map.clear();
-
 		const image_container = document.querySelector("div#image_container");
 		while (image_container.hasChildNodes()) {	
 			image_container.removeChild(image_container.firstChild);
 		}
 		
 		var i = 0;
-		var j = 0;
 		for (var image of event.target.files) {
 			
 			var reader = new FileReader();
-
-			image_map.set("img_" + i, image);
+			image_map.set("img_" + i, image.name);
 			reader.onload = function(event) {
 				var img = document.createElement("img");
-				img.setAttribute("id", "img_" + j);
+				img.setAttribute("id", "img_" + i);
 				img.setAttribute("src", event.target.result);
 				img.setAttribute("style", "width: 300px;");
 				img.setAttribute("onclick", "selectThumbnail(this)");
 				document.querySelector("div#image_container").appendChild(img);
-				j++;
 			};
 			console.log(image);
 			reader.readAsDataURL(image); 
-			i++;
 		} 
 	}
 	
@@ -92,44 +86,9 @@
 		}
 		
 		img.setAttribute("class", "image-selected");
-	}
-	
-	function registProduct(event) {
-		event.preventDefault();
-		var formData = new FormData(document.querySelector("#frm"));
-		var selected_image = document.querySelector(".image-selected");
 		
-		if(selected_image == null) {
-			alert("대표이미지를 선택해주세요.");
-			return;
-		}
-		
-		var thumbnail_id = selected_image.getAttribute("id");
-		
-		var thumbnail = image_map.get(thumbnail_id);
-
-		formData.append("thumbnail", thumbnail);
-		image_map.delete(thumbnail_id);
-
-		for(key of image_map.keys()) {
-			formData.append("detailimages", image_map.get(key));
-		}
-
-		formData.enctype='multipart/form-data';
-
-		var xhr = new XMLHttpRequest();
-		
-		xhr.onreadystatechange = function() {
-			
-			if(xhr.readyState == 4 && xhr.status == 200) {
-				location.href = "../admin/manageProductPage";
-				
-			}
-		};
-		
-		xhr.open("POST", "./uploadProductProcess", true);
-		xhr.send(formData);
-		
+		var thumbnailInput = document.getElementsByName("thumbnail")[0];
+		//thumbnailInput.name = image_map.get(img.getAttribute("id"));
 	}
 	
 
@@ -145,7 +104,7 @@
 		</div>
 		<jsp:include page="../commons/admin_menu_bar.jsp"></jsp:include>
 		
-		<form id="frm" method="post" enctype="multipart/form-data">
+		<form action="./uploadProductProcess" method="post" enctype="multipart/form-data">
 		<div class="row">
 			<div class="col">
 				<div class="row mt-2">
@@ -191,25 +150,25 @@
 						<div class="col"><input name="product_detail_stock" type="text" placeholder="재고를 입력하세요"></div>
 					</div>
 				</div>
-				<%-- <div class="row mt-2">
+				<div class="row mt-2">
 					<div class="col">
 					 	대표 이미지 : 
 					 </div>
 					 <div class="col"><input type="file" accept="image/*" name="thumbnail"></div>
-				</div> --%>
+				</div>
 				
 				<div class="row mt-2">
 					<div class="col">
-					 	이미지 : 
+					 	상세 이미지 : 
 					 </div>
-					 <div class="col"><input type="file" accept="image/*" multiple onchange="viewUploadDetailImage(event);"></div>
+					 <div class="col"><input type="file" accept="image/*" multiple name="detailimages" onchange="viewUploadDetailImage(event);"></div>
 				</div>
 				<div class="row mt-2">
 					<div class="col"><div id="image_container"></div></div>
 				</div>				
 				
 				<div class="row mt-2">
-					<div class="col"><button onclick="registProduct(event)">상품 등록</button></div>
+					<div class="col"><input type="submit" value="상품 등록"></div>
 				</div>
 			</div>
 		</div>
