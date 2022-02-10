@@ -165,17 +165,25 @@
 					
 					var dateBox = document.createElement("div");
 					dateBox.setAttribute("class", "col-2 bg-warning");
-					dateBox.innerText = commentData.COMMENT_WRITEDATE;
+					
+					// 숫자 -> 날짜
+					var commentWriteDate = new Date(commentData.COMMENT_WRITEDATE);
+					// 날짜 -> 문자							
+					dateBox.innerText = commentWriteDate.getFullYear() + "." + 
+										(commentWriteDate.getMonth()+1) + "." + 
+										commentWriteDate.getDate();
 					rowBox.appendChild(dateBox);
 					
 					if(sessionInfo != null && commentData.MEMBER_NO == sessionInfo.memberNo) {
 						var deleteBox = document.createElement("div");
 						deleteBox.setAttribute("class", "col-1 bg-success");
+						deleteBox.setAttribute("onclick", "deleteComment("+ commentData.COMMENT_NO +")");
 						deleteBox.innerText = "X";
 						rowBox.appendChild(deleteBox);
 						
 						var updateBox = document.createElement("div");
 						updateBox.setAttribute("class", "col bg-info");
+						updateBox.setAttribute("onclick", "updateCommentForm(this, " + commentData.COMMENT_NO + ")");
 						updateBox.innerText = "수정";
 						rowBox.appendChild(updateBox);
 					}
@@ -189,13 +197,84 @@
 				
 	}
 	
+	function updateCommentForm(target, commentNo) {			
+				
+		var commentBox = target.closest(".commentBox");
+		
+		var commentValue = commentBox.children[1].innerText;
+		
+		commentBox.innerHTML = "";
+		
+		var textCol = document.createElement("div");
+		textCol.setAttribute("class", "col-8");
+		var textBox = document.createElement("textarea");
+		textBox.setAttribute("class", "form-controll");
+		textBox.value = commentValue;
+		textCol.appendChild(textBox);
+		
+		var inputButtonCol = document.createElement("div");
+		inputButtonCol.setAttribute("class", "col-2 d-grid");
+		var inputButton = document.createElement("button");
+		inputButton.setAttribute("class", "btn btn-primary");
+		inputButton.setAttribute("onclick", "updateComment(this, " + commentNo + ")");
+		inputButton.innerText = "입력";
+		inputButtonCol.appendChild(inputButton);
+		
+		var cancelUpdateFormCol = document.createElement("div");
+		cancelUpdateFormCol.setAttribute("class", "col-2 d-grid");
+		var cancelButton = document.createElement("button");
+		cancelButton.setAttribute("class", "btn btn-outline-primary");
+		cancelButton.setAttribute("onclick", "refreshCommentList()");
+		cancelButton.innerText = "취소";
+		cancelUpdateFormCol.appendChild(cancelButton);
+		
+		commentBox.appendChild(textCol);
+		commentBox.appendChild(inputButtonCol);
+		commentBox.appendChild(cancelUpdateFormCol);
+	}
+	
+	function updateComment(target, commentNo) {
+		var commentBox = target.closest(".commentBox");
+		var commentValue = commentBox.querySelector("textarea").value;
+		
+		var xhr = new XMLHttpRequest();
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+				var data = JSON.parse(xhr.responseText);
+				
+				refreshCommentList();
+			}
+		};
+		
+		xhr.open("post", "./updateComment", true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send("comment_no=" + commentNo + "&comment_content=" + commentValue);
+	}
+	
+	function deleteComment(commentNo) {
+		var xhr = new XMLHttpRequest();
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+				var data = JSON.parse(xhr.responseText);
+				
+				refreshCommentList();
+			}
+		};
+		
+		xhr.open("post", "./deleteComment", true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send("comment_no=" + commentNo);
+	}
+	
 	window.addEventListener("DOMContentLoaded", function(){
 		getSessionInfo();
 		refreshTotalCount();
 		refreshHeart();
 		refreshCommentList();
 		
-		setInterval(refreshCommentList, 3000);
+		//setInterval(refreshCommentList, 3000);
 	});
 
 

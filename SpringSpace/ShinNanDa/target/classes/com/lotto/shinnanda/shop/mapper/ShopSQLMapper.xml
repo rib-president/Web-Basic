@@ -66,7 +66,7 @@
 	SELECT *
 	FROM SN_Image
 	WHERE product_no = #{product_no}
-	ORDER BY image_no DESC
+	ORDER BY image_no
 </select>
 
 <insert id="insertCart">

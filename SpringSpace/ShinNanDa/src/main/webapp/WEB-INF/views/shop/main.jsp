@@ -25,19 +25,27 @@
 
 <script>
 	var detailProductModal = null;
-
+	
+	
+	window.addEventListener("DOMContentLoaded" , function(){
+		var modalRoot = document.getElementById('detailProductModal');
+		detailProductModal = new bootstrap.Modal(modalRoot);
+	});
+	
+	
 	var product_price = 0;
 	
 	function openDetailProductModal(product_no) {		
 		
 		var xhr = new XMLHttpRequest();
+		var modalRoot = document.getElementById('detailProductModal');
 
 		xhr.onreadystatechange = function(){
 			if(xhr.readyState == 4 && xhr.status == 200){
 				var data = JSON.parse(xhr.responseText);
 				
-				var modalRoot = document.getElementById('detailProductModal');
-				detailProductModal = new bootstrap.Modal(modalRoot);
+				
+				
 				
 				modalRoot.addEventListener('hidden.bs.modal', closeDetailProductModal());
 				
@@ -170,7 +178,7 @@
 		  	        <div class="col"></div>
 		  	      </c:when>
 		  	      <c:otherwise>
-			  	  	<div class="col product_image me-3" onclick="location.href ='../shop/detailProductPage?product_no=${voList.get(j).product_no }'" style="cursor:pointer;">
+			  	  	<div class="col product_image me-3" onclick="openDetailProductModal('${voList.get(j).product_no }')" style="cursor:pointer;">
 			  	  	  <img src="/upload/product/${voList.get(j).product_image }">
 			  	  	  <div class="row">
 			  	  	  	<div class="col product_info">

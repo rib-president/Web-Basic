@@ -12,6 +12,11 @@
 
 	var old_count = 0;
 	var layerpop = null;
+	
+	window.addEventListener("DOMContentLoaded" , function(){
+		layerpop = new bootstrap.Modal(document.getElementById('layerpop'));
+	});
+	
 
 	function optionOnChange(selectBox) {
 		
@@ -185,7 +190,7 @@
 				var data = JSON.parse(xhr.responseText);
 				
 				if(data.result == 'success') {
-					layerpop = new bootstrap.Modal(document.getElementById('layerpop'));
+					//layerpop = new bootstrap.Modal(document.getElementById('layerpop'));
 					layerpop.show();
 				}
 			}
