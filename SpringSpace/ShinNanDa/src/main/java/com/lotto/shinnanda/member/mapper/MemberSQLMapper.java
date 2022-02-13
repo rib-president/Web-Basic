@@ -1,5 +1,7 @@
 package com.lotto.shinnanda.member.mapper;
 
+import java.util.*;
+
 import com.lotto.shinnanda.vo.MemberVo;
 
 public interface MemberSQLMapper {
@@ -13,6 +15,8 @@ public interface MemberSQLMapper {
 		public MemberVo getMemberByNo(int no);
 		
 		public void updateMemberVo(MemberVo vo);
+		
+		public ArrayList<MemberVo> selectMember();
 }
 
 

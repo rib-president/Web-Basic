@@ -18,7 +18,6 @@
 <script>
 
 	var image_map = new Map();
-	var image_list = [];
 	
 	function addOptionStockBox() {
 		var row = document.createElement("div");
@@ -51,7 +50,7 @@
 
 	
 	function viewUploadDetailImage(event) {
-		image_list = [];
+
 		image_map.clear();
 
 		const image_container = document.querySelector("div#image_container");
@@ -59,52 +58,31 @@
 			image_container.removeChild(image_container.firstChild);
 		}
 		
-		var i = 0;
-		//var j = 0;
+		var files = document.querySelector('input[type=file]').files;
 		
-		/*for (var image of event.target.files) {
-			image_list.push(image);	
+		function readAndPrevies(file) {
 			var reader = new FileReader();
+			image_map.set(file.name, file);
+			reader.addEventListener("load", function() {
+				var image = new Image();
+
+				image.title = file.name;
+				image.src = this.result;
+				image.setAttribute("style", "width: 300px;");
+				image.setAttribute("onclick", "selectThumbnail(this)");
+				document.querySelector('div#image_container').appendChild(image);
+				
+			}, false);
 			
-			image_map.set("img_" + i, image);
-			reader.onload = function(e) {
-				var img = document.createElement("img");
-				//img.setAttribute("id", "img_" + j);
-				
-				img.setAttribute("src", e.target.result);
-				img.setAttribute("style", "width: 300px;");
-				img.setAttribute("onclick", "selectThumbnail(this)");
-				document.querySelector("div#image_container").appendChild(img);
-				//image_map.set("img_" + j, event.target.files[j]);
-				
-				//j++;
-			};
-			console.log(image);
-			reader.readAsDataURL(image); 
-			i++;
-		}*/
-		
-		for(var image of event.target.files) {
-			image_list.push(image);
+			console.log(file);
+			reader.readAsDataURL(file);
 		}
-		var j=0;
-		for(image of image_list) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				
-				var img = document.createElement("img");
-				image_map.set("img_" + j, image_list[j]);
-				img.setAttribute("id", "img_" + j);
-				j++;
-				img.setAttribute("src", e.target.result);
-				img.setAttribute("style", "width: 300px;");
-				img.setAttribute("onclick", "selectThumbnail(this)");
-				document.querySelector("div#image_container").appendChild(img);
-				
-			};
-			console.log(image);
-			reader.readAsDataURL(image);
-		}	
+		
+	
+		if(files) {
+			[].forEach.call(files, readAndPrevies);
+		}
+		
 	}
 	
 	function selectThumbnail(img) {
@@ -126,39 +104,23 @@
 		var formData = new FormData(document.querySelector("#frm"));
 		var selected_image = document.querySelector(".image-selected");
 
-		/*var imgs = document.querySelector("div#image_container").querySelectorAll("img");
-		var selected_image = null;
-		var thumbnail_id = 0;
-		
-		for(var j=0;j<imgs.length;j++) {
-			if(imgs[j].getAttribute("class") == "image-selected") {
-				selected_image = imgs[j];
-				thumbnail_id = "img_" + j;
-				//thumbnail_id = j;
-			}	
-		}*/		
-		
 		if(selected_image == null) {
 			alert("대표이미지를 선택해주세요.");
 			return;
 		}
 		
-		var thumbnail_id = selected_image.getAttribute("id");
+		var thumbnail_name = selected_image.getAttribute("title");
 		
 		
-		var thumbnail = image_map.get(thumbnail_id);
-		//var thumbnail = image_list[thumbnail_id];
+		var thumbnail = image_map.get(thumbnail_name);
+
 		formData.append("thumbnail", thumbnail);
-		image_map.delete(thumbnail_id);
-		//image_list.splice(thumbnail_id, 1);
+		image_map.delete(thumbnail_name);
+
 
 		for(key of image_map.keys()) {
 			formData.append("detailimages", image_map.get(key));			
 		}
-		
-		/*for(image of image_list) {
-			formData.append("detailimages", image);
-		}*/
 
 		formData.enctype='multipart/form-data';
 

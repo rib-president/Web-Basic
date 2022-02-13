@@ -89,37 +89,43 @@ public class ShopController {
 //		return "redirect:../shop/detailProductPage?product_no=" + product_no;
 //	}
 
+//	@RequestMapping("cartPage")
+//	public String cartPage(HttpSession session, Model model) {
+//		
+//		ArrayList<HashMap<String, Object>> totalVoList = new ArrayList<>();
+//		ArrayList<CartVo> cartVoList = shopService.getCartByMemberNo(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
+//		
+//		for(CartVo cartVo : cartVoList) {
+//			HashMap<String, Object> map = new HashMap<>();
+//			
+//			int product_detail_no = cartVo.getProduct_detail_no();
+//			Product_DetailVo product_DetailVo = shopService.getProductDetailByNo(product_detail_no);
+//
+//			Integer orderCount = adminService.getSumOrdersDetailCountByProductDetailNo(product_detail_no);
+//			if(orderCount == null) orderCount = 0; 
+//			int stock = product_DetailVo.getProduct_detail_stock() - orderCount;
+//			
+//			int product_no = product_DetailVo.getProduct_no();
+//			ProductVo productVo = shopService.getProduct(product_no);
+//			
+//			map.put("productVo", productVo);
+//			map.put("product_DetailVo", product_DetailVo);
+//			map.put("stock", stock);
+//			map.put("cartVo", cartVo);
+//			
+//			totalVoList.add(map);
+//		}
+//		
+//		model.addAttribute("totalVoList", totalVoList);
+//		
+//		return "shop/cartPage";
+//	}
+	
 	@RequestMapping("cartPage")
-	public String cartPage(HttpSession session, Model model) {
-		
-		ArrayList<HashMap<String, Object>> totalVoList = new ArrayList<>();
-		ArrayList<CartVo> cartVoList = shopService.getCartByMemberNo(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
-		
-		for(CartVo cartVo : cartVoList) {
-			HashMap<String, Object> map = new HashMap<>();
-			
-			int product_detail_no = cartVo.getProduct_detail_no();
-			Product_DetailVo product_DetailVo = shopService.getProductDetailByNo(product_detail_no);
-
-			Integer orderCount = adminService.getSumOrdersDetailCountByProductDetailNo(product_detail_no);
-			if(orderCount == null) orderCount = 0; 
-			int stock = product_DetailVo.getProduct_detail_stock() - orderCount;
-			
-			int product_no = product_DetailVo.getProduct_no();
-			ProductVo productVo = shopService.getProduct(product_no);
-			
-			map.put("productVo", productVo);
-			map.put("product_DetailVo", product_DetailVo);
-			map.put("stock", stock);
-			map.put("cartVo", cartVo);
-			
-			totalVoList.add(map);
-		}
-		
-		model.addAttribute("totalVoList", totalVoList);
+	public String cartPage() {
 		
 		return "shop/cartPage";
-	}
+	}	
 	
 //	@RequestMapping("changeCartCount")
 //	public String changeCartCount(CartVo vo) {

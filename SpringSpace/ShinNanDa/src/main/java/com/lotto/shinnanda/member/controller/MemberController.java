@@ -92,21 +92,21 @@ public class MemberController {
 	
 	@RequestMapping("memberInfo")
 	public String memberInfo() {
-		
+
 		return "member/memberInfo";
 	}
 	
-	@RequestMapping("modifyMemberInfo")
-	public String modifyMemberInfo(MemberVo vo, HttpSession session) {
-		int member_no = ((MemberVo) session.getAttribute("sessionUser")).getMember_no();
-		vo.setMember_no(member_no);
-		
-		memberService.modifyMemberInfo(vo);
-		
-		
-		session.setAttribute("sessionUser", memberService.getMemberByNo(member_no));
-		
-		return "member/memberInfo";
-	}
+//	@RequestMapping("modifyMemberInfo")
+//	public String modifyMemberInfo(MemberVo vo, HttpSession session) {
+//		int member_no = ((MemberVo) session.getAttribute("sessionUser")).getMember_no();
+//		vo.setMember_no(member_no);
+//		
+//		memberService.modifyMemberInfo(vo);
+//		
+//		
+//		session.setAttribute("sessionUser", memberService.getMemberByNo(member_no));
+//		
+//		return "member/memberInfo";
+//	}
 
 }

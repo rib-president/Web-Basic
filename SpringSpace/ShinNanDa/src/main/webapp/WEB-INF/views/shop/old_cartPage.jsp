@@ -19,128 +19,6 @@
 
 <script>
 
-	function refreshCart() {
-		var totalPrice = 0;
-	  	var xhr = new XMLHttpRequest();
-	  	
-	  	xhr.onreadystatechange = function(){
-	  		if(xhr.readyState == 4 && xhr.status == 200) {
-	  			var data = JSON.parse(xhr.responseText);
-				
-	  			var tbody = document.querySelector("tbody");
-	  			tbody.innerHTML = "";
-				for(totalVo of data.totalVoList) {
-					var tr = document.createElement("tr");
-					
-					var th = document.createElement("th");
-					th.setAttribute("scope", "row");					
-					var ckBox = document.createElement("input");
-					ckBox.setAttribute("type", "checkbox");
-					ckBox.setAttribute("name", "chkedCartNo");
-					ckBox.setAttribute("value", totalVo.cartVo.cart_no);
-					th.appendChild(ckBox);
-					
-					var td1 = document.createElement("td");
-					var img = document.createElement("img");
-					img.setAttribute("class", "img-fluid");
-					img.setAttribute("src", "/upload/product/" + totalVo.productVo.product_image);
-					img.setAttribute("style", "width: 300px;");
-					td1.appendChild(img);
-					
-					var td2 = document.createElement("td");
-					var td2_row1 = document.createElement("div");
-					td2_row1.setAttribute("class", "row");
-					var td2_row1_col = document.createElement("div");
-					td2_row1_col.setAttribute("class", "col");
-					var h3 = document.createElement("h3");
-					h3.innerText = totalVo.productVo.product_title;
-					td2_row1_col.appendChild(h3);
-					td2_row1.appendChild(td2_row1_col);
-					var td2_row2 = document.createElement("div");
-					td2_row2.setAttribute("class", "row");
-					var td2_row2_col = document.createElement("div");
-					td2_row2_col.setAttribute("class", "col");
-					td2_row2_col.innerText = totalVo.product_DetailVo.product_detail_option;
-					var td2_row2_div = document.createElement("div");
-					td2_row2_div.setAttribute("class", "detail_no");
-					td2_row2_div.setAttribute("style", "display:none;");
-					td2_row2_div.innerText = totalVo.product_DetailVo.product_detail_no;
-					td2_row2.appendChild(td2_row2_col);
-					td2_row2.appendChild(td2_row2_div);
-					td2.appendChild(td2_row1);
-					td2.appendChild(td2_row2);
-					
-					var td3 = document.createElement("td");
-					td3.setAttribute("class", "price");
-					td3.innerText = totalVo.productVo.product_price;
-					
-					var td4 = document.createElement("td");
-					var td4_row = document.createElement("div");
-					td4_row.setAttribute("class", "row");
-					var td4_row_col1 = document.createElement("div");
-					td4_row_col1.setAttribute("class", "col");
-					var input_count = document.createElement("input");
-					input_count.setAttribute("class", "count");
-					input_count.setAttribute("type", "number");
-					input_count.setAttribute("name", "cart_count");
-					input_count.setAttribute("min", "1");
-					input_count.setAttribute("max", "999");
-					input_count.setAttribute("value", totalVo.cartVo.cart_count);
-					var div_oldCount = document.createElement("div");
-					div_oldCount.setAttribute("class", "oldCount");
-					div_oldCount.setAttribute("style", "display:none;");
-					div_oldCount.innerText = totalVo.cartVo.cart_count;
-					var div_no = document.createElement("div");
-					div_no.setAttribute("class", "no");
-					div_no.setAttribute("style", "display:none;");
-					div_no.innerText = totalVo.cartVo.cart_no;
-					var div_stock = document.createElement("div");
-					div_stock.setAttribute("class", "stock");
-					div_stock.setAttribute("style", "display:none;");
-					div_stock.innerText = totalVo.stock;
-					td4_row_col1.appendChild(input_count);
-					td4_row_col1.appendChild(div_oldCount);
-					td4_row_col1.appendChild(div_no);
-					td4_row_col1.appendChild(div_stock);
-					var td4_row_col2 = document.createElement("div");
-					td4_row_col2.setAttribute("class", "col mt-3");
-					var btn_changeCount = document.createElement("button");
-					btn_changeCount.setAttribute("class", "btn btn-outline-dark");
-					btn_changeCount.setAttribute("onclick", "changeCount(this, event)");
-					btn_changeCount.innerText = "변경";
-					td4_row_col2.appendChild(btn_changeCount);
-					td4_row.appendChild(td4_row_col1);
-					td4_row.appendChild(td4_row_col2);
-					td4.appendChild(td4_row);
-					
-					var td5 = document.createElement("td");
-					td5.innerText = "무료";
-					
-					var td6 = document.createElement("td");
-					td6.setAttribute("class", "calcPrice");
-					td6.innerText = totalVo.productVo.product_price * totalVo.cartVo.cart_count;
-					
-					tr.appendChild(th);
-					tr.appendChild(td1);
-					tr.appendChild(td2);
-					tr.appendChild(td3);
-					tr.appendChild(td4);
-					tr.appendChild(td5);
-					tr.appendChild(td6);
-					tbody.appendChild(tr);
-					
-					totalPrice = totalVo.productVo.product_price * totalVo.cartVo.cart_count + totalPrice;
-				}
-				document.querySelector("#total").innerText = totalPrice;
-	  		}
-	  		
-	  	};	  
-	  
-	  	xhr.open("get", "./getCartInfoProcess", true);
-		xhr.send();		
-		
-	}
-
 	function selectAll(allChk) {
 	  const checkboxes = document.getElementsByName("chkedCartNo");
 	  
@@ -155,7 +33,7 @@
 		
 		var row = btn.closest(".row");
 		
-		var cart_no = row.querySelector(".no").innerText;
+		var cart_no = row.querySelector(".no").value;
 		var countInput = row.querySelector(".count");
 		var oldCountInput = row.querySelector(".oldCount");
 		var oldCount = oldCountInput.innerText;
@@ -166,7 +44,26 @@
 			alert("재고가 부족합니다 : " + oldCount + " 개");
 			countInput.value = oldCount;
 			return;
-		}	
+		}
+		
+		
+		var priceTd = row.closest("tr").getElementsByClassName("price")[0];		
+		var price = priceTd.innerText;
+		
+		var calcPrice = row.closest("tr").getElementsByClassName("calcPrice")[0];
+
+		var oldPrice = calcPrice.innerText;
+		var curPrice = countInput.value * price;
+		calcPrice.innerText = curPrice;
+		oldCountInput.innerText = countInput.value;
+		
+		if(oldPrice > curPrice) {
+			document.querySelector("#total").innerText = (document.querySelector("#total").innerText*1) - (oldPrice-curPrice);
+
+		} else if(oldPrice < curPrice) {
+			document.querySelector("#total").innerText = (document.querySelector("#total").innerText*1) + (curPrice-oldPrice);
+		}
+		
 
 		var xhr = new XMLHttpRequest();
 
@@ -174,7 +71,6 @@
 			if(xhr.readyState == 4 && xhr.status == 200){
 				var data = JSON.parse(xhr.responseText);
 				
-				refreshCart();
 			}
 			
 		};
@@ -196,8 +92,12 @@
 				var data = JSON.parse(xhr.responseText);
 				
 				if(data.result == 'success') {
-
-					refreshCart();
+					var trs = document.querySelectorAll("table tbody tr");
+					for(tr of trs) {
+						tr.remove();
+					}
+					
+					document.querySelector("#total").innerText = 0;
 				}	
 			}			
 		};
@@ -233,8 +133,22 @@
 				var data = JSON.parse(xhr.responseText);
 				
 				if(data.result == 'success') {
-					
-					refreshCart();
+					var checkList = document.getElementsByName("chkedCartNo");
+					var tr_list = [];
+					for(check of checkList) {
+						if(check.checked) {
+							var tr = check.closest("tr");
+							
+							var calcPrice = tr.querySelector(".calcPrice");
+							
+							document.querySelector("#total").innerText = parseInt(document.querySelector("#total").innerText) - parseInt(calcPrice.innerText);
+							
+							tr_list.push(tr);														
+						}						
+					}
+					for(tr of tr_list) {
+						tr.remove();
+					}
 				}				
 			}
 			
@@ -295,10 +209,6 @@
 		
 	}
 	
-	window.addEventListener("DOMContentLoaded" , function(){
-		refreshCart();
-	});
-	
 </script>
 </head>
 <body>
@@ -311,7 +221,7 @@
 	</div>
 
 	
-	
+	<c:set var="totalPrice" value="0" />
  	<div class="row">
 		<jsp:include page="../commons/menu_bar.jsp"></jsp:include>
 		<div class="col shop-start-col">	  
@@ -341,7 +251,45 @@
 					    </tr>
 					  </thead>
 					  <tbody>
+					  <c:forEach items="${totalVoList }" var="totalVo">
 
+					    <tr>
+					      <th scope="row">
+					      	<input type="checkbox" name="chkedCartNo" value="${totalVo.cartVo.cart_no }">
+					      </th>
+					      <td><img class="img-fluid" src="/upload/product/${totalVo.productVo.product_image }" style="width: 300px;"></td>
+					      <td>
+					      	<div class="row">
+					      		<div class="col"><h3>${totalVo.productVo.product_title }</h3></div>
+					      	</div>
+					      	<div class="row">
+					      		<div class="col">${totalVo.product_DetailVo.product_detail_option }</div>
+					      		<div class="detail_no" style="display:none;">${totalVo.product_DetailVo.product_detail_no }</div>
+					      	</div>
+					      </td>
+					      <td class="price">${totalVo.productVo.product_price }</td>
+					      <td>
+
+					      	<div class="row">
+					      		<div class="col">						      			
+					      			<input class="count" type="number" name="cart_count" min="1" max="999" value="${totalVo.cartVo.cart_count }">
+					      			<div class="oldCount" style="display: none;">${totalVo.cartVo.cart_count }</div>
+					      			<input class="no" type="hidden" name="cart_no" value="${totalVo.cartVo.cart_no }">
+					      			<div class="stock" style="display: none;">${totalVo.stock }</div>
+					      		</div>
+					      		<div class="col mt-3">
+					      			<button class="btn btn-outline-dark" onclick="changeCount(this, event)">변경</button>
+					      		</div>
+					      	</div>
+
+					      </td>
+					      <td>무료</td>
+					      <td class="calcPrice">${totalVo.productVo.product_price * totalVo.cartVo.cart_count }</td>
+					    </tr>
+
+					    
+					    <c:set var="totalPrice" value="${totalVo.productVo.product_price * totalVo.cartVo.cart_count + totalPrice }" />
+					  </c:forEach>
 					  </tbody>
 					  <tfoot>
 					    <tr>
@@ -349,7 +297,7 @@
 					      <td>
 					        <div class="row">
 					          <div class="col-5">상품 구매 금액 합계(배송비 무료) :</div>
-					          <div id="total" class="col-3"></div>
+					          <div id="total" class="col-3">${totalPrice }</div>
 					          <div class="col-1">원</div>
 					          <div class="col"></div>
 					        </div>

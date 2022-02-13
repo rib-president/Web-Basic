@@ -158,4 +158,20 @@ public class AdminController {
 		
 		return "admin/detailSalesStatusPage";
 	}
+	
+	@RequestMapping("memberListPage")
+	public String memberListPage(Model model) {
+		
+		model.addAttribute("memberVoList", memberService.getMemberList());
+		
+		return "admin/memberListPage";
+	}
+	
+	@RequestMapping("detailMemberPage")
+	public String detailMemberPage(int member_no, Model model) {
+		
+		model.addAttribute("member_no", member_no);
+		
+		return "admin/detailMemberPage";
+	}
 }

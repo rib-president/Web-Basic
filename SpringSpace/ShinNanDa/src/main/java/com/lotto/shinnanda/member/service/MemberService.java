@@ -1,5 +1,7 @@
 package com.lotto.shinnanda.member.service;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,4 +38,7 @@ public class MemberService {
 		memberSQLMapper.updateMemberVo(vo);
 	}
 	
+	public ArrayList<MemberVo> getMemberList() {
+		return memberSQLMapper.selectMember();
+	}	
 }

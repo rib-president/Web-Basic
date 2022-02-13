@@ -35,10 +35,20 @@
 	
 	<update id="updateMemberVo">
 		UPDATE SN_Member
-		SET member_pw = #{member_pw}, member_nick = #{member_nick}, 
+		SET 
+		<if test="member_name != null">
+			member_name = #{member_name}, member_gender = #{member_gender},
+			member_birth = #{member_birth},
+		</if>
+		member_pw = #{member_pw}, member_nick = #{member_nick}, 
 		member_phone = #{member_phone}, member_address = #{member_address},
 		member_email = #{member_email}
 		WHERE member_no = #{member_no}
 	</update>
 
+	<select id="selectMember" resultType="com.lotto.shinnanda.vo.MemberVo">
+		SELECT *
+		FROM SN_Member
+		ORDER BY member_no DESC
+	</select>
 </mapper>

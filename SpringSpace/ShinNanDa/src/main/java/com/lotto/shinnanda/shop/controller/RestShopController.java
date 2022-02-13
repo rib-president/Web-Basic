@@ -5,7 +5,7 @@ import java.util.*;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +14,7 @@ import com.lotto.shinnanda.admin.service.AdminService;
 import com.lotto.shinnanda.shop.service.ShopService;
 import com.lotto.shinnanda.vo.CartVo;
 import com.lotto.shinnanda.vo.MemberVo;
+import com.lotto.shinnanda.vo.ProductVo;
 import com.lotto.shinnanda.vo.Product_DetailVo;
 
 @RestController
@@ -80,6 +81,40 @@ public class RestShopController {
 		
 		return data;
 	}
+	
+	@RequestMapping("getCartInfoProcess")
+	public HashMap<String, Object> getCartInfoProcess(HttpSession session, Model model) {
+		
+		HashMap<String, Object> data = new HashMap<>();
+		
+		ArrayList<HashMap<String, Object>> totalVoList = new ArrayList<>();
+		ArrayList<CartVo> cartVoList = shopService.getCartByMemberNo(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
+		
+		for(CartVo cartVo : cartVoList) {
+			HashMap<String, Object> map = new HashMap<>();
+			
+			int product_detail_no = cartVo.getProduct_detail_no();
+			Product_DetailVo product_DetailVo = shopService.getProductDetailByNo(product_detail_no);
+
+			Integer orderCount = adminService.getSumOrdersDetailCountByProductDetailNo(product_detail_no);
+			if(orderCount == null) orderCount = 0; 
+			int stock = product_DetailVo.getProduct_detail_stock() - orderCount;
+			
+			int product_no = product_DetailVo.getProduct_no();
+			ProductVo productVo = shopService.getProduct(product_no);
+			
+			map.put("productVo", productVo);
+			map.put("product_DetailVo", product_DetailVo);
+			map.put("stock", stock);
+			map.put("cartVo", cartVo);
+			
+			totalVoList.add(map);
+		}
+		
+		data.put("totalVoList", totalVoList);
+		
+		return data;
+	}	
 	
 	@RequestMapping("changeCartCount")
 	public HashMap<String, Object> changeCartCount(CartVo vo) {
