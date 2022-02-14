@@ -14,6 +14,7 @@ public interface AdminSQLMapper {
 	public void insertProduct(ProductVo vo);
 	public void insertProductDetail(Product_DetailVo vo);
 	public void insertProductImage(ImageVo vo);
+	public void updateProductDetailStock(Product_DetailVo vo);
 	public ArrayList<Product_CategoryVo> selectProductCategory();
 	public ArrayList<Brand_CategoryVo> selectBrandCategory();
 	public ArrayList<ProductVo> selectLatest16Product();

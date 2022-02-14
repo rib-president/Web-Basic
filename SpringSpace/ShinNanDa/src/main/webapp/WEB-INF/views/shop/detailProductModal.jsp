@@ -111,6 +111,14 @@
 
 					</div>
 					<!-- Footer -->
+					
+						<div class="row">
+							<div class="col">
+								<canvas id="myChart"></canvas>							
+							</div>
+						</div>
+					
+					
 					<div class="modal-footer">
 						<form id="buyNowFrm" method="post" action="../shop/orderPage">						
 							<button type="button" class="btn btn-outline-dark" data-dismiss="modal" onclick="buynow(this)">buy now</button>

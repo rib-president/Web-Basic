@@ -51,6 +51,12 @@
 	)	
 </insert>
 
+<update id="updateProductDetailStock">
+	UPDATE SN_Product_Detail
+	SET product_detail_stock = product_detail_stock + #{product_detail_stock}
+	WHERE product_detail_no = #{product_detail_no}
+</update>
+
 <select id="selectProduct" resultType="com.lotto.shinnanda.vo.ProductVo">
 	SELECT *
 	FROM SN_Product

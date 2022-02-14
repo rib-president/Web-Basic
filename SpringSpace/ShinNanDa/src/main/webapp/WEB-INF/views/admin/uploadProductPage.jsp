@@ -51,12 +51,12 @@
 	
 	function viewUploadDetailImage(event) {
 
-		image_map.clear();
+		/*image_map.clear();
 
 		const image_container = document.querySelector("div#image_container");
 		while (image_container.hasChildNodes()) {	
 			image_container.removeChild(image_container.firstChild);
-		}
+		}*/
 		
 		var files = document.querySelector('input[type=file]').files;
 		
@@ -64,13 +64,27 @@
 			var reader = new FileReader();
 			image_map.set(file.name, file);
 			reader.addEventListener("load", function() {
+				var div = document.createElement("div");
+				div.setAttribute("class", "col");
+				
 				var image = new Image();
 
 				image.title = file.name;
 				image.src = this.result;
 				image.setAttribute("style", "width: 300px;");
 				image.setAttribute("onclick", "selectThumbnail(this)");
-				document.querySelector('div#image_container').appendChild(image);
+				
+				var xSpan = document.createElement("span");
+				xSpan.setAttribute("style", "cursor:pointer;");
+				xSpan.setAttribute("onclick", "removeImage(this)");
+				var icon = document.createElement("i");
+				icon.setAttribute("class", "bi bi-x-circle-fill");				
+				xSpan.appendChild(icon);
+				
+				div.appendChild(image);
+				div.appendChild(xSpan);
+				
+				document.querySelector('div#image_container').appendChild(div);
 				
 			}, false);
 			
@@ -83,6 +97,15 @@
 			[].forEach.call(files, readAndPrevies);
 		}
 		
+	}
+	
+	function removeImage(xSpan) {
+		var parentDiv = xSpan.closest("div");
+				
+		image_map.delete(parentDiv.querySelector("img").title);
+		
+		parentDiv.remove();
+		console.log(image_map);
 	}
 	
 	function selectThumbnail(img) {
@@ -212,7 +235,7 @@
 					 <div class="col"><input type="file" accept="image/*" multiple onchange="viewUploadDetailImage(event);"></div>
 				</div>
 				<div class="row mt-2">
-					<div class="col"><div id="image_container"></div></div>
+					<div class="col"><div id="image_container" class="row"></div></div>
 				</div>				
 				
 				<div class="row mt-2">

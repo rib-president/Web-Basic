@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 <link href="../resources/css/commons.css" rel="stylesheet">
 <link href="../resources/css/shopMain.css" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 .modal {
    z-index: 99999;
@@ -43,6 +43,59 @@
 		xhr.onreadystatechange = function(){
 			if(xhr.readyState == 4 && xhr.status == 200){
 				var data = JSON.parse(xhr.responseText);
+				
+				
+				var tttt = [
+					{age : 0 , cnt : 5},
+					{age : 10 , cnt : 33},
+					{age : 20 , cnt : 22},
+					{age : 30 , cnt : 11},
+					{age : 40 , cnt : 17},
+				]; 		
+				
+				
+				////....
+				  const labels = [];
+				  const statisticData = {
+						    labels: labels,
+						    datasets: [{
+						      label: 'My First dataset',
+						      backgroundColor: 'rgb(255, 99, 132)',
+						      borderColor: 'rgb(255, 99, 132)',
+						      data: [],
+						    }]
+						  };
+				
+				
+				for(x of tttt){
+					labels.push(x.age);
+					statisticData.datasets[0].data.push(x.cnt);
+				}
+				
+				
+				
+				
+				  
+				  const config = {
+						  type: 'bar',
+						  data: statisticData,
+						  options: {
+						    scales: {
+						      y: {
+						        beginAtZero: true
+						      }
+						    }
+						  },
+						};				  
+				  
+				
+				  const myChart = new Chart(
+						    document.getElementById('myChart'),
+						    config
+						  );
+				  myChart.destroy()
+				////.....
+				
 				
 				
 				

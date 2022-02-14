@@ -207,5 +207,6 @@
 	function closeModal() {
 	    //$("#layerpop").modal("hide");
 	    layerpop.hide();
+	    closeDetailProductModal();
 
 	}

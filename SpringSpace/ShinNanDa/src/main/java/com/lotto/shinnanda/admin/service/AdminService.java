@@ -47,6 +47,10 @@ public class AdminService {
 		}
 	}
 	
+	public void restock(Product_DetailVo vo) {
+		adminSQLMapper.updateProductDetailStock(vo);
+	}
+	
 	public ArrayList<ProductVo> getProduct() {
 		return adminSQLMapper.selectProduct();
 	}

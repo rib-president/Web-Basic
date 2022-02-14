@@ -85,6 +85,12 @@ public class AdminController {
 		
 		return "admin/manageProductPage";
 	}
+
+	@RequestMapping("restockPage")
+	public String restockPage() {
+		
+		return "admin/restockPage";
+	}
 	
 	@RequestMapping("salesStatusPage")
 	public String salesStatusPage(Model model) {
