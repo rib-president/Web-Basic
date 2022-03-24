@@ -10,9 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.lotto.shinnanda.admin.service.AdminService;
+import com.lotto.shinnanda.commons.KakaoRestAPI;
 import com.lotto.shinnanda.shop.service.ShopService;
 import com.lotto.shinnanda.vo.CartVo;
+import com.lotto.shinnanda.vo.KakaopayVo;
 import com.lotto.shinnanda.vo.MemberVo;
 import com.lotto.shinnanda.vo.OrdersVo;
 import com.lotto.shinnanda.vo.Orders_DetailVo;
@@ -25,14 +26,16 @@ public class ShopController {
 	@Autowired
 	private ShopService shopService;
 	
-	@Autowired
-	private AdminService adminService;
-	
 	@RequestMapping("main")
 	public String main(Model model) {
-		ArrayList<ProductVo> voList = shopService.getMainPage16Product();
-
-		model.addAttribute("voList", voList);		
+		//ArrayList<ProductVo> voList = shopService.getMainPage16Product();
+		//model.addAttribute("voList", voList);
+		
+		int productCnt = shopService.getProductCount();
+		int totalPageNum = (productCnt % 16 > 0) ? productCnt / 16 + 1 : productCnt / 16;
+		
+		model.addAttribute("totalPageNum", totalPageNum);
+				
 		return "shop/main";
 	}
 	
@@ -190,15 +193,58 @@ public class ShopController {
 		return "shop/orderPage";
 	}
 	
+	@RequestMapping("kakaoPayApproval")
+	public String kakaoPayApproval(String pg_token, HttpSession session, Model model) {
+
+		session.removeAttribute("response_code");
+		session.removeAttribute("tid");
+	
+		KakaopayVo vo = (KakaopayVo) session.getAttribute("kakaopayVo");
+		
+		KakaoRestAPI kakao = new KakaoRestAPI();
+		Map<String, String> result = kakao.payApprove(pg_token, vo, session);	
+		
+		model.addAttribute("response_code", result.get("response_code"));
+		
+		return "shop/payDone";
+	}
+	
+	@RequestMapping("kakaoPayCancel")
+	public String kakaoPayCancel(HttpSession session) {
+		session.removeAttribute("kakaopayVo");
+		
+		return "shop/payCancel";
+	}
+	
+	@RequestMapping("kakaoPayFail")
+	public String kakaoPayFail(HttpSession session) {
+		session.removeAttribute("kakaopayVo");
+		
+		return "shop/payFail";
+	}
+	
 	@RequestMapping("orderProcess")
-	public String orderProcess(OrdersVo ordersVo, int[] product_detail_no, int[] productCount, HttpSession session) {
+	public String orderProcess(OrdersVo ordersVo, int[] product_detail_no, int[] productCount, 
+			@RequestParam(value = "isBanking", defaultValue = "false") boolean isBanking, HttpSession session) {
 		
 		int member_no = ((MemberVo) session.getAttribute("sessionUser")).getMember_no();
 		
 		ordersVo.setMember_no(member_no);
 		ArrayList<CartVo> cartVoList = shopService.getCartByMemberNo(member_no);
 		
-		int orders_no = shopService.registOrders(ordersVo, product_detail_no, productCount, cartVoList );		
+		int orders_no = shopService.registOrders(ordersVo, product_detail_no, productCount, cartVoList );
+		
+		if(!isBanking) {
+			KakaopayVo kakaopayVo = (KakaopayVo) session.getAttribute("kakaopayVo");
+			kakaopayVo.setKakaopay_no(shopService.createKakaopayNo());
+			kakaopayVo.setOrders_no(orders_no);
+
+			shopService.registKakaopay(kakaopayVo);	
+			
+			ordersVo.setOrders_state("입금완료");
+			shopService.modifyOrdersState(ordersVo);
+		}
+		session.removeAttribute("kakaopayVo");
 		
 		return "redirect:../shop/detailOrdersInfoPage?orders_no=" + orders_no;
 	}
@@ -289,4 +335,16 @@ public class ShopController {
 		
 		return "shop/myPage";
 	}
+	
+	@RequestMapping("aboutUsPage")
+	public String aboutUsPage() {
+		
+		return "shop/aboutUsPage";
+	}
+	
+	@RequestMapping("guidePage")
+	public String guidePage() {
+		
+		return "shop/guidePage";
+	}	
 }

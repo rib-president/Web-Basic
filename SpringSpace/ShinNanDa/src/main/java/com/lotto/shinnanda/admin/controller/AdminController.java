@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lotto.shinnanda.admin.service.AdminService;
+import com.lotto.shinnanda.commons.KakaoRestAPI;
 import com.lotto.shinnanda.commons.MultipartFileUtil;
 import com.lotto.shinnanda.member.service.MemberService;
 import com.lotto.shinnanda.shop.service.ShopService;
 import com.lotto.shinnanda.vo.ImageVo;
+import com.lotto.shinnanda.vo.KakaopayVo;
 import com.lotto.shinnanda.vo.OrdersVo;
 import com.lotto.shinnanda.vo.Orders_DetailVo;
 import com.lotto.shinnanda.vo.ProductVo;
@@ -161,6 +163,13 @@ public class AdminController {
 		model.addAttribute("ordersVo", ordersVo);
 		model.addAttribute("totalVoList", totalVoList);
 		model.addAttribute("memberEmail", memberService.getMemberByNo(ordersVo.getMember_no()).getMember_email());
+		
+		KakaopayVo kakapayVo = shopService.getKakaopayByOrdersNo(orders_no);
+		if(kakapayVo != null) {
+			KakaoRestAPI kakao = new KakaoRestAPI();
+			Map<String, String> payResult = kakao.payInfo(kakapayVo.getTid());
+			model.addAttribute("payResult", payResult);
+		}
 		
 		return "admin/detailSalesStatusPage";
 	}

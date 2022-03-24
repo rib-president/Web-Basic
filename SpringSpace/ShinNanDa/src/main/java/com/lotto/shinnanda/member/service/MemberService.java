@@ -40,5 +40,13 @@ public class MemberService {
 	
 	public ArrayList<MemberVo> getMemberList() {
 		return memberSQLMapper.selectMember();
-	}	
+	}
+	
+	public MemberVo getMemberById(String member_id) {
+		return memberSQLMapper.selectMemberById(member_id);
+	}
+	
+	public int getCountMemberById(String member_id) {
+		return memberSQLMapper.getCountMemberById(member_id);
+	}
 }

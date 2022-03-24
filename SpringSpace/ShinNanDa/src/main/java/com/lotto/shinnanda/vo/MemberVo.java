@@ -19,6 +19,7 @@ public class MemberVo {
 	private String member_email;
 	private String member_admin;
 	private Date member_joindate;
+	private String member_kakao;
 	
 	public MemberVo() {
 		super();
@@ -26,7 +27,7 @@ public class MemberVo {
 
 	public MemberVo(int member_no, String member_name, String member_id, String member_pw, String member_nick,
 			String member_gender, Date member_birth, String member_phone, String member_address, String member_email,
-			String member_admin, Date member_joindate) {
+			String member_admin, Date member_joindate, String member_kakao) {
 		super();
 		this.member_no = member_no;
 		this.member_name = member_name;
@@ -40,6 +41,7 @@ public class MemberVo {
 		this.member_email = member_email;
 		this.member_admin = member_admin;
 		this.member_joindate = member_joindate;
+		this.member_kakao = member_kakao;
 	}
 
 	public int getMember_no() {
@@ -136,5 +138,13 @@ public class MemberVo {
 
 	public void setMember_joindate(Date member_joindate) {
 		this.member_joindate = member_joindate;
-	}	
+	}
+	
+	public String getMember_kakao() {
+		return member_kakao;
+	}
+	
+	public void setMember_kakao(String member_kakao) {
+		this.member_kakao = member_kakao;
+	}
 }

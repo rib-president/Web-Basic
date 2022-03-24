@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lotto.shinnanda.shop.mapper.ShopSQLMapper">
-<select id="selectLatest16Product" resultType="com.lotto.shinnanda.vo.ProductVo">
+<!-- <select id="selectLatest16Product" resultType="com.lotto.shinnanda.vo.ProductVo">
 	SELECT t1.*
 	FROM (	
 		SELECT *
@@ -13,6 +13,27 @@
 	<![CDATA[ 
 	WHERE ROWNUM <= 16
 	]]>
+</select> -->
+
+<select id="selectLatest16Product" resultType="com.lotto.shinnanda.vo.ProductVo">
+	SELECT t2.*
+	FROM (
+		SELECT t1.*, ROWNUM AS rnum
+		FROM (	
+			SELECT *
+			FROM SN_Product
+			ORDER BY product_no DESC
+		) t1
+	) t2
+	<![CDATA[ 
+	WHERE t2.rnum >= (#{pageNum}-1) * 16 + 1
+	AND t2.rnum <= #{pageNum} * 16
+	]]>	
+</select>
+
+<select id="selectProductCnt" resultType="int">
+	SELECT COUNT(*)
+	FROM SN_Product
 </select>
 
 <select id="selectProductByCategoryNoBrandNo" resultType="com.lotto.shinnanda.vo.ProductVo">
@@ -67,6 +88,22 @@
 	FROM SN_Image
 	WHERE product_no = #{product_no}
 	ORDER BY image_no
+</select>
+
+<select id="selectOrdersProductAgeCnt" resultType="map">
+	SELECT t1.age, SUM(t1.orders_detail_count) AS cnt FROM (
+	    SELECT sod.* , TRUNC((SYSDATE - (
+	        SELECT (
+	            SELECT sm.MEMBER_BIRTH FROM SN_MEMBER sm WHERE sm.MEMBER_NO = so.MEMBER_NO 
+	        ) FROM SN_ORDERS so WHERE so.ORDERS_NO = sod.orders_no
+	    ))/365 , -1) AS age
+	    FROM SN_ORDERS_DETAIL sod
+	    WHERE sod.PRODUCT_DETAIL_NO IN (
+	        SELECT spd.PRODUCT_DETAIL_NO FROM SN_PRODUCT_DETAIL spd 
+	        WHERE spd.PRODUCT_NO = #{product_no}
+	    )
+	) t1
+	GROUP BY t1.age
 </select>
 
 <insert id="insertCart">
@@ -179,5 +216,39 @@
 	SET orders_state = #{orders_state}
 	WHERE orders_no = #{orders_no}
 </update>
+
+<select id="createKakopayNo" resultType="int">
+	SELECT SN_Kakaopay_seq.nextval
+	FROM dual
+</select>
+
+<insert id="insertKakaopay">
+	INSERT INTO SN_Kakaopay VALUES (
+		#{kakaopay_no},
+		#{orders_no},
+		#{tid},
+		#{partner_order_id},
+		#{total_amount},
+		SYSDATE
+	)
+</insert>
+
+<update id="updateKakaopayOrdersNo">
+	UPDATE SN_Kakaopay
+	SET orders_no = #{orders_no}
+	WHERE kakaopay_no = #{kakaopay_no}
+</update>
+
+<select id="selectKakaopayByNo" resultType="com.lotto.shinnanda.vo.KakaopayVo">
+	SELECT *
+	FROM SN_Kakaopay
+	WHERE kakaopay_no = #{no}
+</select>
+
+<select id="selectKakaopayByOrdersNo" resultType="com.lotto.shinnanda.vo.KakaopayVo">
+	SELECT *
+	FROM SN_Kakaopay
+	WHERE orders_no = #{orders_no}
+</select>
 
 </mapper>

@@ -17,54 +17,123 @@
 <link href="../resources/css/shopMain.css" rel="stylesheet">
 
 <script>
-function findAddr(){
-	new daum.Postcode({
-        oncomplete: function(data) {
-			
-			// 도로명 주소 변수
-			var roadAddr = data.roadAddress;
-			// 지번 주소 변수
-			var jibunAddr = data.jibunAddress;
-			
-            if(roadAddr !== ''){
-                document.getElementById("addr").value = roadAddr;
-            } 
-            else if(jibunAddr !== ''){
-                document.getElementById("addr").value = jibunAddr;
-            }
-        }
-    }).open();
-}
-
-
-function order() {
-	var addr = document.getElementById("addr");
-	var detail_addr = document.getElementById("detail_addr");
 	
-	if(detail_addr.value != null) {
-		addr.value = addr.value + " " + detail_addr.value;
+	function findAddr(){
+		new daum.Postcode({
+	        oncomplete: function(data) {
+				
+				// 도로명 주소 변수
+				var roadAddr = data.roadAddress;
+				// 지번 주소 변수
+				var jibunAddr = data.jibunAddress;
+				
+	            if(roadAddr !== ''){
+	                document.getElementById("addr").value = roadAddr;
+	            } 
+	            else if(jibunAddr !== ''){
+	                document.getElementById("addr").value = jibunAddr;
+	            }
+	        }
+	    }).open();
 	}
 	
-	var frm = document.getElementById("frm");
 	
-	
-	<c:forEach var="totalVo" items="${totalVoList }" varStatus="status">
-		var hidden1 = document.createElement("input");
-		hidden1.setAttribute("type", "hidden");
-		hidden1.setAttribute("name", "product_detail_no");
-		hidden1.setAttribute("value", "${totalVo.product_DetailVo.product_detail_no}");
+	function order(total_amount) {
+
+		var radios = document.getElementsByName("payMethod");
+		var method = null;
+		for(radio of radios) {
+			if(radio.checked) {
+				method = radio.value;
+			}
+		}				
 		
-		var hidden2 = document.createElement("input");
-		hidden2.setAttribute("type", "hidden");
-		hidden2.setAttribute("name", "productCount");
-		hidden2.setAttribute("value", "${totalVo.productCount}");	
-		
-		frm.appendChild(hidden1);
-		frm.appendChild(hidden2);
-	</c:forEach>
+		if(method == "kakaopay") {
+			kakaoPay(total_amount);
+		} else {
+			submitData(true);			
+		}
+	}
 	
-	frm.submit();
-}
+	function kakaoPay(total_amount) {
+		var xhr = new XMLHttpRequest();	
+		
+		var quantity = 0;
+		var cnt = -1;
+		<c:forEach var="totalVo" items="${totalVoList }" varStatus="status">
+			quantity += parseInt('${totalVo.productCount}');	
+			cnt++;
+		</c:forEach>
+		
+		var item_name = null;
+		
+		if(cnt > 0) {
+			item_name = '${totalVoList.get(0).productVo.product_title}' + " 외 " + cnt + "건";
+		} else {
+			item_name = '${totalVoList.get(0).productVo.product_title}';
+		}
+	
+		var newWindow;
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+				var data = JSON.parse(xhr.responseText);				
+
+				newWindow = window.open(data.next_redirect_pc_url, "_blank");										
+			}
+		};
+		
+		xhr.open("post", "./payToKakao", false);
+		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xhr.send("item_name=" + item_name + "&quantity=" + quantity + "&total_amount=" + total_amount);
+	}
+	
+	function sendMeData(data) {
+		if(data == 200) {
+			submitData();
+		} else {
+			alert(data);
+			return;
+		}
+	}
+	
+	function submitData(isBanking = false) {
+		var addr = document.getElementById("addr");
+		var detail_addr = document.getElementById("detail_addr");
+		
+		if(detail_addr.value != null) {
+			addr.value = addr.value + " " + detail_addr.value;
+		}
+		
+		var frm = document.getElementById("frm");
+		
+		
+		<c:forEach var="totalVo" items="${totalVoList }" varStatus="status">
+			var hidden1 = document.createElement("input");
+			hidden1.setAttribute("type", "hidden");
+			hidden1.setAttribute("name", "product_detail_no");
+			hidden1.setAttribute("value", "${totalVo.product_DetailVo.product_detail_no}");
+			
+			var hidden2 = document.createElement("input");
+			hidden2.setAttribute("type", "hidden");
+			hidden2.setAttribute("name", "productCount");
+			hidden2.setAttribute("value", "${totalVo.productCount}");	
+			
+			frm.appendChild(hidden1);
+			frm.appendChild(hidden2);
+		</c:forEach>
+		
+		if(isBanking) {
+			var hidden3 = document.createElement("input");
+			hidden3.setAttribute("type", "hidden");
+			hidden3.setAttribute("name", "isBanking");
+			hidden3.setAttribute("value", isBanking);
+			frm.appendChild(hidden3);
+		}
+		
+		frm.submit();
+	}
+
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
@@ -83,7 +152,7 @@ function order() {
 		<jsp:include page="../commons/menu_bar.jsp"></jsp:include>
 		<div class="col shop-start-col">	  
 			<div class="row">
-				<div class="col"><h1>cart</h1><hr></div>
+				<div class="col"><h1>order</h1><hr></div>
 			</div>
 			<div class="row">
 				<div class="col">
@@ -207,50 +276,66 @@ function order() {
 					<hr>
 					<div class="row mt-5">
 						<div class="col">
-							<h5>무통장 입금</h5>
 							<div class="row mt-5">
+								<div class="col-1"><input type="radio" name="payMethod" value="kakaopay" checked></div>
+								<div class="col"><h5>카카오페이</h5></div>
+								<div class="col"><img src="../resources/img/kakaopay.png"></div>								
+							</div>
+								
+							<div class="row mt-5">							
 								<div class="col">
-									<table class="table">
-									  <tbody>
-									    <tr>
-									      <th scope="col">입금자명</th>
-									      <th scope="col"> ${sessionUser.member_name } </th>
-									    </tr>
-									    <tr>
-									      <th scope="row">입금은행</th>
-									      <td>
-									      	<select>
-									      		<option>국민</option>
-									      		<option>신한</option>
-									      		<option>기업</option>
-									      		<option>농협</option>
-									      		<option>카카오뱅크</option>
-									      	</select>									  
-									      </td>
-									    </tr>
-									    <tr>
-									      <th scope="row">계좌번호</th>
-									      <td>000000-0000000000-00000</td>
-									    </tr>
-									  </tbody>
-									</table>							
+									<div class="row">
+										<div class="col-1">
+											<input type="radio" name="payMethod" value="banking">								
+										</div>
+										<div class="col"><h5>무통장 입금</h5></div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<table class="table">
+											  <tbody>
+											    <tr>
+											      <th scope="col">입금자명</th>
+											      <th scope="col"> ${sessionUser.member_name } </th>
+											    </tr>
+											    <tr>
+											      <th scope="row">입금은행</th>
+											      <td>
+											      	<select>
+											      		<option>국민</option>
+											      		<option>신한</option>
+											      		<option>기업</option>
+											      		<option>농협</option>
+											      		<option>카카오뱅크</option>
+											      	</select>									  
+											      </td>
+											    </tr>
+											    <tr>
+											      <th scope="row">계좌번호</th>
+											      <td>000000-0000000000-00000</td>
+											    </tr>
+											  </tbody>
+											</table>
+										</div>
+									</div>							
 								</div>
 							</div>
-						</div>
+						</div>							
 						<div class="col">
 							<div class="row mt-3">
 								<div class="col"><h3>최종 결제 금액</h3></div>
 							</div>
 							<div class="row mt-3">${totalPrice } 원</div>
-							<div class="row mt-3"><input class="btn btn-primary" type="button" value="결제하기" onclick="order()"></div>
+							<div class="row mt-3"><input class="btn btn-primary" type="button" value="결제하기" onclick="order(${totalPrice})"></div>
 						</div>
-					</div>
+					
 				</div>
 			</div>
 			  
 		  								
 		</div>
  	</div>
+</div>
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

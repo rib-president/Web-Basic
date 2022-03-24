@@ -42,7 +42,9 @@
 
 	function refreshMemberInfo() {
 		document.querySelector("#member_pw").value = "";
-		document.querySelector("#check_pw").value = "";
+		if('${sessionUser.member_kakao}' == 'N') {
+			document.querySelector("#check_pw").value = "";
+		}
 		document.querySelector("#detail_addr").value = "";
 		
 		//AJAX...호출...
@@ -155,18 +157,27 @@
 			<%-- <form id="frm" action="../member/modifyMemberInfo" method="post"> --%>
 			<div class="row mt-5">
 			  <div class="col">
-			    <div class="row mt-3">
-			      <div class="col-3">아이디</div>
-			      <div id="member_id" class="col"></div>
-			    </div>
-			    <div class="row mt-3">
-			      <div class="col-3">비밀번호</div>
-			      <div class="col"><input class="form-control" id="member_pw" type="password" name="member_pw"></div>
-			    </div>
-			    <div class="row mt-3">
-			      <div class="col-3">비밀번호 확인</div>
-			      <div class="col"><input id="check_pw" class="form-control" type="password"></div>
-			    </div>
+			    <c:choose>
+			      <c:when test="${sessionUser.member_kakao == 'N' }">
+				    <div class="row mt-3">
+				      <div class="col-3">아이디</div>
+				      <div id="member_id" class="col"></div>
+				    </div>
+			    
+				    <div class="row mt-3">
+				      <div class="col-3">비밀번호</div>
+				      <div class="col"><input class="form-control" id="member_pw" type="password" name="member_pw"></div>
+				    </div>
+				    <div class="row mt-3">
+				      <div class="col-3">비밀번호 확인</div>
+				      <div class="col"><input id="check_pw" class="form-control" type="password"></div>
+				    </div>
+			      </c:when>
+			      <c:otherwise>
+			        <div id="member_id" style="display:none;"></div>
+			        <input id="member_pw" type="hidden" name="member_pw">
+			      </c:otherwise>
+			    </c:choose>
 			    <div class="row mt-3">
 			      <div class="col-3">이름</div>
 			      <div id="member_name" class="col"></div>
@@ -196,9 +207,18 @@
 			      <div class="col-3">상세 주소</div>
 			      <div class="col"><input class="form-control" id="detail_addr" type="text"></div>
 			    </div>				    
-			    <div class="row mt-3">
-			      <div class="col-3">이메일</div>
-			      <div class="col"><input class="form-control" type="text" id="member_email"></div>
+			    <div class="row mt-3">			      			     
+			      	<c:choose>
+			      		<c:when test="${sessionUser.member_kakao == 'N' }">
+			      		  <div class="col-3">이메일</div>
+			      		  <div class="col">
+			      			<input class="form-control" type="text" id="member_email">
+			      		  </div>
+			      		</c:when>
+			      		<c:otherwise>
+						  <div class="col" id="member_email"></div>
+			      		</c:otherwise>
+			      	</c:choose>			      
 			    </div>
 
 				<input type="button" value="수정완료" onclick="modifyMemberSubmit()">

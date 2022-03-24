@@ -1,11 +1,15 @@
 package com.lotto.shinnanda.member.controller;
 
+import java.util.*;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.lotto.shinnanda.commons.KakaoRestAPI;
 import com.lotto.shinnanda.member.service.MemberService;
 import com.lotto.shinnanda.vo.MemberVo;
 
@@ -43,7 +47,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("joinMemberProcess")
-	public String joinMemberProcess(MemberVo param) {
+	public String joinMemberProcess(MemberVo param, HttpSession session) {
 		
 		System.out.println("시스템 로그] 회원가입 프로세스 실행");
 		System.out.println("시스템 로그] 파라미터 값 id : " + param.getMember_id());
@@ -55,6 +59,11 @@ public class MemberController {
 		System.out.println("시스템 로그] 파라미터 값 email : " + param.getMember_email());
 		
 		memberService.joinMember(param);
+		
+		if(param.getMember_kakao().equals("Y")) {
+			session.setAttribute("sessionUser", memberService.getMemberById(param.getMember_id()));
+			return "redirect:../shop/main";
+		}
 		
 		return "member/joinMemberComplete";
 	}
@@ -83,8 +92,23 @@ public class MemberController {
 		}	
 	}
 	
+	@RequestMapping("loginGetCode")
+	public String loginGetCode(String code, Model model) {		
+		
+		KakaoRestAPI kakao = new KakaoRestAPI();		
+					
+		Map<String, String> result = kakao.loginGetToken(code);
+		
+		model.addAttribute("access_token", result.get("access_token"));
+		model.addAttribute("expires_in", result.get("expires_in"));
+		model.addAttribute("refresh_token", result.get("refresh_token"));
+		
+		return "member/getKakaoUserInfo";
+	}
+	
 	@RequestMapping("logoutProcess")
 	public String logoutProcess(HttpSession session) {
+		
 		session.invalidate();
 		
 		return "redirect:../shop/main";
@@ -108,5 +132,22 @@ public class MemberController {
 //		
 //		return "member/memberInfo";
 //	}
+	
+	@RequestMapping("checkJoin")
+	public String checkJoin(String member_id, String member_email, HttpSession session, Model model) {
+		MemberVo vo = memberService.getMemberById(member_id);
+		
+		if(vo != null) {
+			session.setAttribute("sessionUser", vo);
+			return "redirect:../shop/main";
+		} else {
+			model.addAttribute("member_kakao", "Y");
+			model.addAttribute("member_id", member_id);
+			model.addAttribute("member_email", member_email);
+			
+			return "member/joinMemberPage";
+
+		}
+	}
 
 }

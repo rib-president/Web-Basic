@@ -18,6 +18,13 @@
 	<dependencies>
 		<!-- ja : 라이브러리 추가 시작 -->
 		<!-- ja : 오라클!! -->
+		
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>1.12.1</version>
+		</dependency>		
+		
 		<dependency>
 		    <groupId>com.oracle.database.jdbc</groupId>
 		    <artifactId>ojdbc8</artifactId>

@@ -25,11 +25,18 @@
 
 <script>
 	var detailProductModal = null;
+	var myChart = null;
 	
+	var totalPageNum = 0;
+	var pageNum = 1;
 	
 	window.addEventListener("DOMContentLoaded" , function(){
+		totalPageNum = '${totalPageNum }';
+		load16Product();
+		
 		var modalRoot = document.getElementById('detailProductModal');
 		detailProductModal = new bootstrap.Modal(modalRoot);
+
 	});
 	
 	
@@ -45,59 +52,47 @@
 				var data = JSON.parse(xhr.responseText);
 				
 				
-				var tttt = [
-					{age : 0 , cnt : 5},
-					{age : 10 , cnt : 33},
-					{age : 20 , cnt : 22},
-					{age : 30 , cnt : 11},
-					{age : 40 , cnt : 17},
-				]; 		
+				//// sales graph
+				const labels = [];
+				const statisticData = {
+				    labels: labels,
+				    datasets: [{
+				      label: '연령대별 판매량',
+				      backgroundColor: 'rgb(255, 99, 132)',
+				      borderColor: 'rgb(255, 99, 132)',
+				      data: [],
+				    }]
+				};
 				
-				
-				////....
-				  const labels = [];
-				  const statisticData = {
-						    labels: labels,
-						    datasets: [{
-						      label: 'My First dataset',
-						      backgroundColor: 'rgb(255, 99, 132)',
-						      borderColor: 'rgb(255, 99, 132)',
-						      data: [],
-						    }]
-						  };
-				
-				
-				for(x of tttt){
-					labels.push(x.age);
-					statisticData.datasets[0].data.push(x.cnt);
-				}
-				
-				
-				
-				
+				for(ageCnt of data.AgeCntList) {
+					labels.push(ageCnt.AGE);
+					statisticData.datasets[0].data.push(ageCnt.CNT);
+				}								
 				  
-				  const config = {
-						  type: 'bar',
-						  data: statisticData,
-						  options: {
-						    scales: {
-						      y: {
-						        beginAtZero: true
-						      }
-						    }
-						  },
-						};				  
+				const config = {
+					type: 'bar',
+					data: statisticData,
+					options: {
+					  scales: {
+					    y: {
+					      beginAtZero: true
+					    }
+					  }
+					},
+				};				  
 				  
+				  
+				if(myChart instanceof Chart)
+                {
+					myChart.destroy();
+                }
 				
-				  const myChart = new Chart(
-						    document.getElementById('myChart'),
-						    config
-						  );
-				  myChart.destroy()
-				////.....
-				
-				
-				
+				myChart = new Chart(
+				    document.getElementById('myChart'),
+				    config
+				);
+				  
+				////
 				
 				
 				modalRoot.addEventListener('hidden.bs.modal', closeDetailProductModal());
@@ -155,7 +150,8 @@
 					detailImageBox.appendChild(row);
 				}
   	  	   		 
-				detailProductModal.show();				
+				detailProductModal.show();
+				
 			}			
 		};
 		
@@ -174,9 +170,87 @@
 		document.querySelector("#totalPrice").innerText = "";
 		document.querySelector("#totalCount").innerText = "";
 		old_count = 0;
-		
-		detailProductModal.hide();
+							
+		detailProductModal.hide();		
+
 	}
+	
+	function load16Product() {
+		if (pageNum > totalPageNum) {
+			return;
+		} 
+		
+		var xhr = new XMLHttpRequest();
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+
+				var vo_list = JSON.parse(xhr.responseText).voList;
+				
+				var cnt = 0;
+				var row = null;
+				
+				for(vo of vo_list) {
+					if(cnt == 0 || cnt % 4 == 0) {
+						row = document.createElement("div");
+						row.setAttribute("class", "row mb-5 ms-3");
+						document.querySelector(".shop-start-col").appendChild(row);
+					}
+					
+					createProductBox(vo, row);
+					cnt++;
+				}
+				
+				if(vo_list.length % 4 > 0) {
+					for(var i=0;i< 4-vo_list.length % 4;i++) {
+						var col = document.createElement("div");
+						col.setAttribute("class", "col product_image me-3");
+						row.appendChild(col);
+					}
+				}
+				
+				pageNum++;
+			}			
+		}
+		
+		xhr.open("get", "./load16Product?pageNum=" + pageNum, true);
+		xhr.send();
+	}
+
+	
+	function createProductBox(vo, root) {
+
+	  var imageBox = document.createElement("div");
+	  imageBox.setAttribute("class", "col product_image me-3");
+	  imageBox.setAttribute("onclick", "openDetailProductModal(" + vo.product_no + ")");
+	  imageBox.setAttribute("style", "cursor:pointer;");
+	  
+	  var img = document.createElement("img");
+	  img.setAttribute("src", "/upload/product/" + vo.product_image);
+	  var row = document.createElement("div");
+	  row.setAttribute("class", "row");
+	  var col = document.createElement("div");
+	  col.setAttribute("class", "col product_info");
+	  var p = document.createElement("p");
+	  p.innerText = "상품명 : " + vo.product_title + "\n모델명 : " + vo.product_model + "\n가격 : " + vo.product_price;
+	  col.appendChild(p);
+	  row.appendChild(col);
+	  
+	  imageBox.appendChild(img);
+	  imageBox.appendChild(row);
+	  root.appendChild(imageBox);
+	}
+	
+	window.addEventListener('scroll', function(){ 
+		const SCROLLED_HEIGHT = window.scrollY;
+		const WINDOW_HEIGHT = window.innerHeight;
+		const DOC_TOTAL_HEIGHT = document.body.offsetHeight;
+		const IS_BOTTOM = WINDOW_HEIGHT + SCROLLED_HEIGHT === DOC_TOTAL_HEIGHT;
+		 
+		if (IS_BOTTOM) {
+		  load16Product();
+		}
+	});
 
 
 </script>
@@ -197,66 +271,15 @@
 		<jsp:include page="../commons/menu_bar.jsp"></jsp:include>
 		
 		<div class="col shop-start-col">
-		  <c:set var="endNum" value="${fn:length(voList)/4-1}" />
-		  <c:set var="res" value="${fn:length(voList)% 4 }" />
-		  <c:set var="lastJ" value="0" />
-		  
-		  <c:if test="${fn:length(voList)>=4 }">
-			  <c:forEach begin="0" end="${endNum }" var="i">
-			    <div class="row mb-5 ms-3">
-			      <c:forEach begin="${i*4 }" end="${i*4+3 }" var="j">
-			  	  	<div class="col product_image me-3" onclick="openDetailProductModal('${voList.get(j).product_no }')" style="cursor:pointer;">
-			  	  	  <img src="/upload/product/${voList.get(j).product_image }">
-			  	  	  <div class="row">
-			  	  	  	<div class="col product_info">
-			  	  	  	  <p>
-				  	  	  	상품명 : ${voList.get(j).product_title }<br>
-				  	  	  	모델명 : ${voList.get(j).product_model }<br>
-				  	  	  	가격 : ${voList.get(j).product_price }
-				  	  	  </p> 	  	  	  	
-			  	  	  	</div>
-			  	  	  </div>		  	  	  
-			  	  	</div>
-			  	  	<c:set var="lastJ" value="${j+1 }" />		        
-			      </c:forEach>
-			    </div>
-			  </c:forEach>
-		  </c:if>
-		
-		  <c:if test="${res > 0 }">
-		    <div class="row mb-5 ms-3">
-		  	  <c:forEach begin="${lastJ }" end="${lastJ + 3 }" var="j">
-		  	    <c:choose>
-		  	      <c:when test="${fn:length(voList) <= j }">
-		  	        <div class="col"></div>
-		  	      </c:when>
-		  	      <c:otherwise>
-			  	  	<div class="col product_image me-3" onclick="openDetailProductModal('${voList.get(j).product_no }')" style="cursor:pointer;">
-			  	  	  <img src="/upload/product/${voList.get(j).product_image }">
-			  	  	  <div class="row">
-			  	  	  	<div class="col product_info">
-			  	  	  	  <p>
-				  	  	  	상품명 : ${voList.get(j).product_title }<br>
-				  	  	  	모델명 : ${voList.get(j).product_model }<br>
-				  	  	  	가격 : ${voList.get(j).product_price }
-				  	  	  </p> 	  	  	  	
-			  	  	  	</div>
-			  	  	  </div>		  	  	  
-			  	  	</div>			  	      
-		  	      </c:otherwise>
-		  	    </c:choose>		    
-		  	  </c:forEach>
-		  	</div>
-		  </c:if>
-			  
 		  								
 		</div>
  	</div>
  	
 	<jsp:include page="./detailProductModal.jsp"></jsp:include>
  	
- 	
- 	
+ 	<div style="position:fixed; bottom:35px; right:40px; z-index:99; width:100px; height:100px;"> 
+		<img src="../resources/img/gotop.png" onclick="location.href = '#'" style="cursor:pointer; width:100%;">
+	</div>
 </div>
 </div>
 <script src="../resources/js/detailProductJS.js"></script>

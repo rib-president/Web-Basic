@@ -72,4 +72,21 @@ public class RestMemberController {
 
 		return data;
 	}
+	
+	@RequestMapping("checkId")
+	public HashMap<String, Object> checkId(String member_id) {
+		HashMap<String, Object> data = new HashMap<>();
+		
+		int cnt = memberService.getCountMemberById(member_id);
+		
+		boolean isExist = false;
+		if(cnt > 0) {
+			isExist = true;
+		}
+		
+		data.put("isExist", isExist);
+		
+		return data;
+		
+	}
 }

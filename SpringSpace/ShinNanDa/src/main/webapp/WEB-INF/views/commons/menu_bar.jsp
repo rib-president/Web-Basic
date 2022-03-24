@@ -14,7 +14,7 @@
 							<div class="row ms-2">
 							  <c:choose>
 							    <c:when test="${!empty sessionUser }">
-							    	<div class="col zero-padding"><a href="../member/logoutProcess">logout</a></div>
+							    	<div class="col zero-padding" onclick="logout()" style="cursor:pointer;">logout</div>
 							    </c:when>
 							    <c:otherwise>
 									<div class="col-3 zero-padding"><a href="../member/loginPage">login</a></div>
@@ -25,7 +25,7 @@
 							  </c:choose>
 							</div>
 							<div class="row ms-2">
-								<div class="col-3 zero-padding"><a href="#">guide</a></div>
+								<div class="col-3 zero-padding"><a href="../shop/guidePage">guide</a></div>
 								<div class="col-1 zero-padding">&nbsp;|&nbsp;</div>
 								<div class="col-3 zero-padding"><a href="../shop/ordersInfoPage">order</a></div>
 								<div class="col-1 zero-padding">&nbsp;|&nbsp;</div>
@@ -40,7 +40,7 @@
 						<div class="col-10"></div>
 					</div>
 					<div class="row mt-5">
-						<div class="col"><a href="#">about us</a></div>
+						<div class="col"><a href="../shop/aboutUsPage">about us</a></div>
 					</div>
 					<div class="row mt-5">
 						<div class="col">
@@ -82,4 +82,4 @@
 				<div class="col-1"><i class="bi bi-chat-dots-fill"></i></div>
 				<div class="col-9"></div>
 			</div>
-		</div>
+		</div>  		

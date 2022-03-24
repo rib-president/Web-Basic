@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.lotto.shinnanda.shop.mapper.ShopSQLMapper;
 import com.lotto.shinnanda.vo.CartVo;
 import com.lotto.shinnanda.vo.ImageVo;
+import com.lotto.shinnanda.vo.KakaopayVo;
 import com.lotto.shinnanda.vo.OrdersVo;
 import com.lotto.shinnanda.vo.Orders_DetailVo;
 import com.lotto.shinnanda.vo.ProductVo;
@@ -19,8 +20,16 @@ public class ShopService {
 	@Autowired
 	private ShopSQLMapper shopSQLMapper;
 	
-	public ArrayList<ProductVo> getMainPage16Product() {
-		return shopSQLMapper.selectLatest16Product();
+//	public ArrayList<ProductVo> getMainPage16Product() {
+//		return shopSQLMapper.selectLatest16Product();
+//	}
+	
+	public ArrayList<ProductVo> getMainPage16Product(int pageNum) {
+		return shopSQLMapper.selectLatest16Product(pageNum);
+	}
+	
+	public int getProductCount() {
+		return shopSQLMapper.selectProductCnt();
 	}
 	
 	public ArrayList<ProductVo> getProductByCategoryNoBrandNo(int product_category_no, int brand_no) {
@@ -49,6 +58,10 @@ public class ShopService {
 	
 	public ArrayList<ImageVo> getProductImageByProductVo(int product_no) {
 		return shopSQLMapper.selectProductImageByProductNo(product_no);
+	}
+	
+	public ArrayList<HashMap<String, Integer>> getOrdersProductAgeCnt(int product_no) {
+		return shopSQLMapper.selectOrdersProductAgeCnt(product_no);
 	}
 	
 	public void addCart(CartVo vo) {
@@ -120,6 +133,26 @@ public class ShopService {
 	
 	public void modifyOrdersState(OrdersVo vo) {
 		shopSQLMapper.updateOrdersState(vo);
+	}
+	
+	public int createKakaopayNo() {
+		return shopSQLMapper.createKakopayNo();
+	}
+	
+	public void registKakaopay(KakaopayVo vo) {
+		shopSQLMapper.insertKakaopay(vo);
+	}
+	
+	public void modifyKakaopayOrdersNo(KakaopayVo vo) {
+		shopSQLMapper.updateKakaopayOrdersNo(vo);
+	}
+	
+	public KakaopayVo getKakaopayByNo(int no) {
+		return shopSQLMapper.selectKakaopayByNo(no);
+	}
+	
+	public KakaopayVo getKakaopayByOrdersNo(int orders_no) {
+		return shopSQLMapper.selectKakaopayByOrdersNo(orders_no);
 	}
 }
 

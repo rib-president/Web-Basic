@@ -50,7 +50,7 @@
 		          <li><a class="dropdown-item" href="../shop/myPage">마이페이지</a></li>
 		          <li><a class="dropdown-item" href="#">내가 쓴 글 목록</a></li>
 		          <li><hr class="dropdown-divider"></li>
-		          <li><a class="dropdown-item" href="../member/logoutProcess">로그아웃</a></li>
+		          <li><a class="dropdown-item" onclick="logout()">로그아웃 ${sessionUser.member_kakao}</a></li>
 		        </ul>
 		      </li>
 			</c:when>
@@ -75,4 +75,24 @@
       
     </div>
   </div>
-</nav>    
+</nav>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+
+	function logout() {		
+		
+		if('${sessionUser.member_kakao}' == 'Y') {
+			Kakao.init('dcba11bad3364b22a9a962b80ee0acfb');
+			
+			if (!Kakao.Auth.getAccessToken()) {
+			  console.log('Not logged in.');
+			  return;
+			}
+			Kakao.Auth.logout(function() {
+			  //console.log(Kakao.Auth.getAccessToken());
+			});
+		}
+		
+		location.href="../member/logoutProcess"
+	}
+</script>    

@@ -17,6 +17,10 @@ public interface MemberSQLMapper {
 		public void updateMemberVo(MemberVo vo);
 		
 		public ArrayList<MemberVo> selectMember();
+		
+		public MemberVo selectMemberById(String member_id);
+		
+		public int getCountMemberById(String member_id);
 }
 
 

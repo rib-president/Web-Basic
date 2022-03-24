@@ -15,7 +15,21 @@
 					<!-- body -->
 					<div class="modal-body">
 					  <div class="row mt-5">
-					  	<div class="col"><img id="thumbnail" class="img-fluid"></div>
+					  	<div class="col">
+					  	  <div class="row">
+					  	    <div class="col"><img id="thumbnail" class="img-fluid"></div>
+					  	  </div>
+					  	  <div class="row">
+					  	    <div class="col">					  	    
+							  <div class="row">
+								<div class="col">
+								  <canvas id="myChart"></canvas>							
+								</div>
+							  </div>					  	    					  	    
+					  	    </div>
+					  	  </div>
+					  	
+					  	</div>
 					  	<div class="col">
 					  		<div class="row">
 					  		  <div class="col">
@@ -111,14 +125,7 @@
 
 					</div>
 					<!-- Footer -->
-					
-						<div class="row">
-							<div class="col">
-								<canvas id="myChart"></canvas>							
-							</div>
-						</div>
-					
-					
+
 					<div class="modal-footer">
 						<form id="buyNowFrm" method="post" action="../shop/orderPage">						
 							<button type="button" class="btn btn-outline-dark" data-dismiss="modal" onclick="buynow(this)">buy now</button>

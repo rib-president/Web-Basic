@@ -16,7 +16,8 @@
 			#{member_address},
 			#{member_email},
 			'N',
-			SYSDATE
+			SYSDATE,
+			#{member_kakao}
 		)
 	</insert>
 	<!-- 주의사항 : 1. 맨 뒤에 ; 빼야함    2. select의 경우   resultType 작성하자 -->
@@ -50,5 +51,17 @@
 		SELECT *
 		FROM SN_Member
 		ORDER BY member_no DESC
+	</select>
+	
+	<select id="selectMemberById" resultType="com.lotto.shinnanda.vo.MemberVo">
+		SELECT *
+		FROM SN_Member
+		WHERE member_id = #{member_id}
+	</select>
+	
+	<select id="getCountMemberById" resultType="int">
+		SELECT COUNT(*)
+		FROM SN_Member
+		WHERE member_id = #{member_id}
 	</select>
 </mapper>

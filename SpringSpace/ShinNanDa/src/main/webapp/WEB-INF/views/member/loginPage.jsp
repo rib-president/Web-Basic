@@ -6,6 +6,18 @@
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <title>Insert title here</title>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+
+	function getCode() {
+		Kakao.init('dcba11bad3364b22a9a962b80ee0acfb');
+		
+		Kakao.Auth.authorize({
+			  redirectUri: 'http://localhost:8181/shinnanda/member/loginGetCode'
+		});
+	}
+	
+</script>
 </head>
 <body>
 	<div style="width:1200px;margin : 0 auto">
@@ -36,12 +48,20 @@
 					<div class="row mt-3">
 						<div class="col d-grid">
 							<input type="submit" value="로그인" class="btn btn-primary">
-						</div>
+						</div>						
 					</div>
-					<div class="row mt-1">
+					<div class="row mt-3">
+						<div class="col-1"></div>
+						<div class="col d-grid">
+							<img src="../resources/img/kakaologin.png" onclick="getCode()" style="cursor:pointer;;">
+						</div>
+						<div class="col-1"></div>					
+					</div>
+					<div class="row mt-1">						
 						<div class="col">
 							<a href="./joinMemberPage">회원가입</a>
 						</div>
+						
 					</div>
 					</form>
 				</div>

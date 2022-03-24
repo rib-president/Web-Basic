@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamb.shareoffice.guest.mapper.GuestMapper_H">
+
+<!--등록승인된 오피스 최신순 리스트  -->
+<select id="getLatestOfficeList" resultType="com.teamb.shareoffice.vo.OfficeInfoVo">
+select *
+from SO_OfficeInfo 
+where office_approve = 'Y'
+order by office_approve_date DESC
+</select>
+
+<!-- 오피스 상세보기 페이지 -->
+<select id="getOfficeByNo" resultType="com.teamb.shareoffice.vo.OfficeInfoVo">
+select * from SO_OfficeInfo
+where office_no = #{office_no}
+</select>
+
+<!-- 운영시간 정보 가져오기 -->
+<select id="getBusinessDayPriceByNo" resultType="com.teamb.shareoffice.vo.BusinessDayVo">
+select * from SO_BusinessDay
+where office_no=#{office_no}
+</select>
+
+<!-- 이미지 디테일 정보 가져오기 -->
+<select id="getImageDetailByNo" resultType="com.teamb.shareoffice.vo.ImageDetailVo">
+select * from SO_ImageDetail
+where office_no=#{office_no}
+</select>
+
+<!-- 편의시설 가져오기 -->
+<select id="getFacilityByNo" resultType="com.teamb.shareoffice.vo.FacilityCategoryVo">
+select cate.* 
+from SO_FacilityCategory as cate, SO_OfficeFacility as offi
+where cate.facility_no = offi.facility_no and offi.office_no=#{office_no}
+</select>
+
+
+
+<!-- 호스트 신청 페이지 -->
+<insert id="insertApplyHostInfo">
+insert into SO_Host( member_no, host_owner, host_name,host_license_number,
+host_license_img, host_apply_date, host_approve,host_approve_comment, host_approve_date ) 
+values (
+#{member_no},
+#{host_owner},
+#{host_name},
+#{host_license_number},
+#{host_license_img},
+NOW(),
+#{host_approve},
+#{host_approve_comment},
+#{host_approve_date}
+)
+</insert>
+
+<!-- 호스트 승인  -->
+<update id="updateHostApprove">
+update SO_Host set 
+host_approve=#{host_approve} ,
+host_approve_comment=#{host_approve_comment}, 
+host_approve_date=NOW() 
+where host_no=#{host_no}
+</update>
+
+<!-- 호스트 신청 현황 -->
+<select id="getHostApproveCheck" resultType="com.teamb.shareoffice.vo.HostVo">
+select *from SO_Host 
+where host_no=#{host_no}
+</select>
+
+
+
+
+
+
+
+
+</mapper>

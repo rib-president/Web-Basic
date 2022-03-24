@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamb.shareoffice.board.mapper.BoardMapperkt">
+	
+	<select id="getFreeBoardList" resultType="com.teamb.shareoffice.vo.FreeBoardVo">
+		SELECT * 
+		FROM SO_FreeBoard 
+		ORDER BY freeboard_no DESC
+		limit #{pageNum}, 10		
+		
+		
+	</select>
+	
+	<insert id="insertFreeBoard">
+		INSERT INTO SO_FreeBoard
+		(member_no, freeboard_title, freeboard_content, freeboard_readCount, freeboard_writeDate)
+		VALUES
+		(
+		#{member_no},
+		#{freeboard_title},
+		#{freeboard_content},
+		#{freeboard_readCount},
+		now()
+		)
+	</insert>
+	
+	<select id="readFreeBoardRow" resultType="com.teamb.shareoffice.vo.FreeBoardVo">
+		SELECT * 
+		FROM SO_FreeBoard 
+		WHERE freeboard_no = #{freeboard_no}
+	</select>
+	
+	<update id="increaseFreeBoardReadCount">
+		UPDATE SO_FreeBoard 
+		SET freeboard_readCount = freeboard_readCount + 1
+		WHERE freeboard_no = #{freeboard_no}
+	</update>
+
+	<delete id="deleteFreeBoardRow">
+		DELETE 
+		FROM SO_FreeBoard 
+		WHERE freeboard_no = #{freeboard_no}
+	</delete>
+	
+	<update id="fixFreeBoardRow">
+		UPDATE SO_FreeBoard 
+		SET freeboard_title = #{freeboard_title}, 
+		freeboard_content = #{freeboard_content}
+		WHERE freeboard_no = #{freeboard_no}
+	</update>
+	
+	<insert id="insertFreeBoardComment">
+		INSERT INTO SO_FreeBoardComment
+		(freeboard_no, member_no, comment_content, comment_writeDate)
+		VALUES
+		(
+		#{freeboard_no},
+		#{member_no},
+		#{comment_content},
+		now()
+		)
+	</insert>
+	<select id="getFreeBoardCommentList" resultType="com.teamb.shareoffice.vo.FreeBoardCommentVo">
+		SELECT *
+		FROM SO_FreeBoardComment
+		WHERE freeboard_no = #{freeboard_no}
+		ORDER BY comment_no DESC
+	</select>
+	
+	<select id="getFreeBoardCount" resultType="int">
+		SELECT COUNT(*) FROM SO_FreeBoard
+	</select>
+	 	 
+</mapper>
