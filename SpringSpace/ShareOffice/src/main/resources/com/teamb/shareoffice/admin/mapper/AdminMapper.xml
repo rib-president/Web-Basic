@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamb.shareoffice.admin.mapper.AdminMapper">
+
+<select id="getAdminPw" resultType="com.teamb.shareoffice.vo.AdminVo">
+	SELECT *
+	FROM SO_Admin
+	WHERE admin_pw = #{admin_pw}
+</select>
+
+<select id="getGuestInformation" resultType="com.teamb.shareoffice.vo.MemberVo">
+	SELECT * FROM SO_Member 
+		<choose>
+			<when test="searchOption == 'number'">
+				WHERE member_no = #{searchStr}
+			</when>
+			<when test="searchOption == 'nickname'">
+				WHERE member_nick LIKE CONCAT('%', #{searchStr}, '%')
+			</when>
+			<when test="searchOption == 'id'">
+				WHERE member_id LIKE CONCAT('%', #{searchStr}, '%')
+			</when>
+		</choose>
+	order by member_no desc
+</select>
+
+<select id="getHostInformation" resultType="com.teamb.shareoffice.vo.MemberVo">
+	SELECT * FROM SO_Host 
+		<choose>
+			<when test="searchOption == 'number'">
+				WHERE host_no = #{searchStr}
+			</when>
+			<when test="searchOption == 'name'">
+				WHERE host_name LIKE CONCAT('%', #{searchStr}, '%')
+			</when>
+			<when test="searchOption == 'id'">
+				WHERE host_owner LIKE CONCAT('%', #{searchStr}, '%')
+			</when>
+		</choose>
+	order by host_no desc
+</select>
+
+<delete id="deleteGuest">
+		delete from SO_Member
+		where member_no = #{member_no}
+</delete>
+
+</mapper>

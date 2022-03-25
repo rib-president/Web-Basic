@@ -105,7 +105,7 @@
 	
 		<div class="col"></div> <!-- 왼쪽 여백 -->
 		
-		<div class="col-8">
+		<div class="col-10">
 		<form id="frm" action="./paymentPage" method="post">
 			<div class="row mt-5">
 				<div class="col fs-2 center">예약하기</div>
@@ -118,8 +118,8 @@
 			<div class="row"><div class="col"><hr></div></div> <!-- 구분선 -->
 		
 			<div class="row"> <!-- 예약 오피스 정보 -->
-				<div class="col-3">
-					<img src="../resources/img/testImage.jpg" width="100%" height="100%">
+				<div class="col-6">
+					<img src="../resources/img/testImage.jpg" width="160em" height="170em">
 			   <!-- <img src="/upload/${officeInfo.officeInfoVo.office_thumbnail }" width="100%" height="100%"> -->
 				</div>
 			
@@ -147,7 +147,7 @@
 			<div class="row mt-5">
 				<div class="col">
 				
-					<div class="row">
+					<div class="row mt-5">
 						<div class="col">오피스 운영 요일, 시간 및 가격</div>
 					</div>
 					
@@ -199,6 +199,7 @@
 			
 			</div>
 			
+			<div class="row" style="padding:150px;"></div>
 			
 			
 			<div class="row mt-5">
@@ -212,7 +213,7 @@
 			
 			</form>
 			
-			<div class="row" style="padding:150px;"></div>
+			<div class="row" style="padding:50px;"></div>
 		
 		</div>
 		

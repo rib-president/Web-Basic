@@ -32,24 +32,31 @@
 	
 		<div class="col"></div> <!-- 왼쪽 여백 -->
 		
-		<div class="col-8">
+		<div class="col-12">
+		
+			<div class="row" style="padding:100px;"></div>
 			
 			<div class="row">
 				<div class="col"></div>
-				<div class="col-7 text-center fs-4 fw-bold"> 예약이 완료 되었습니다.</div>
+				<div class="col-10 text-center fs-4 fw-bold"> 오피스 예약이 완료 되었습니다.</div>
 				<div class="col"></div>
 			</div>
 			
 			
+			
+			
 			<div class="row mt-4">
 				<div class="col"></div>
-				<div class="col-2">
+				<div class="col-4">
 					<div class="d-grid">
 						<input type="submit" value="메인페이지로" class="btn btn-light" onClick="window.location.href='../mainPage'">
 					</div>
 				</div>
 				<div class="col"></div>
-			</div>			
+			</div>
+			
+			
+			<div class="row" style="padding:100px;"></div>			
 		
 		</div>
 		

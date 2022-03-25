@@ -65,9 +65,9 @@ public class RestNormalController {
 		
 		searchData.put("startNum", startNum);
 		
-		for(String key : searchData.keySet()) {
+		/*for(String key : searchData.keySet()) {
 			System.out.println("key : " + key + ", value : " + searchData.get(key));
-		}
+		}*/
 		
 		int totalCount = normalService.getProjectBoardCount(searchData);
 						
@@ -83,7 +83,8 @@ public class RestNormalController {
 			endPage = totalPage;
 		}		
 		
-		System.out.println("totalCount : " + totalCount);
+		//System.out.println("totalCount : " + totalCount);
+		
 		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
 		
 		searchData.put("sessionUser", sessionUser);

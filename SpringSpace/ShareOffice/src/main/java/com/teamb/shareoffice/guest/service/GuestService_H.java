@@ -13,6 +13,8 @@ import com.teamb.shareoffice.vo.FacilityCategoryVo;
 import com.teamb.shareoffice.vo.HostVo;
 import com.teamb.shareoffice.vo.ImageDetailVo;
 import com.teamb.shareoffice.vo.OfficeInfoVo;
+import com.teamb.shareoffice.vo.OrderVo;
+import com.teamb.shareoffice.vo.ReviewVo;
 
 @Service
 public class GuestService_H {
@@ -63,6 +65,32 @@ public class GuestService_H {
 		
 		return map;
 	}
+	
+	public ArrayList<HashMap<String, Object>> reviewList(int office_no) {
+
+		ArrayList<HashMap<String, Object>> reviewList = new ArrayList<HashMap<String, Object>>();
+		ArrayList<ReviewVo> reviewVoList = guestMapper_H.getReviewByOffiNo(office_no);
+
+		
+		for (ReviewVo reviewVo : reviewVoList) {
+			
+            int orderNo = reviewVo.getOrder_no();
+			OrderVo orderVo = guestMapper_H.getOrderByNo(orderNo);		
+			OfficeInfoVo officeInfoVo = guestMapper_H.getOfficeByNo(office_no);
+
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("officeInfoVo", officeInfoVo);
+			map.put("reviewVo",reviewVo);
+			map.put("orderVo",orderVo);
+			
+			reviewList.add(map);
+
+		}
+		
+		return reviewList;
+	}
+
+	
 	
 	public void applyHost(HostVo hvo) {
 		

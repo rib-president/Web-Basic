@@ -40,7 +40,7 @@
 	
 		<div class="col"></div> <!-- 왼쪽 여백 -->
 		
-		<div class="col-8">
+		<div class="col-10">
 		<form id="frm" action="orderAndPaymentProcess" method="post">
 		
 			<div class="row mt-5">
@@ -138,14 +138,21 @@
 					</div>
 				</div>
 			</div>
-			
+				
+				<input type="hidden" name="office_no" value="${officeInfo.officeInfoVo.office_no }">
+				<input type="hidden" name="order_personnel" value="${ovo.order_personnel }">
+				
 			<c:forEach items="${rental_date }" var="rental_date">
 				<input type="hidden" name="rental_date" value="${rental_date }">
 			</c:forEach>
 			
+			<c:forEach items="${businessDayVoList }" var="businessDayVoList">
+				<input type="hidden" name="rental_price" value="${businessDayVoList.business_day_price }">
+			</c:forEach>
+			
 			</form>
 			
-			<div class="row" style="padding:150px;"></div>
+			<div class="row" style="padding:30px;"></div>
 		
 		</div>
 		

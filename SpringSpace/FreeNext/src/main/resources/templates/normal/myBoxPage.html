@@ -271,10 +271,10 @@
     border-radius: 5px;
     font-weight: 600;
     font-size: 1rem;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
     }   
     
     .btn-large {
@@ -1108,19 +1108,21 @@
     	var row2 = document.createElement("div");
     	row2.setAttribute("class", "row");
     	row2.setAttribute("style", "height: 300px;");
+    	
     	var col2 = document.createElement("div");
     	col2.setAttribute("class", "col");
-    	
+    	var col2_row = document.createElement("div");
+    	col2_row.setAttribute("class", "row sticky-top");
     	var priceBox = document.createElement("div");
     	priceBox.setAttribute("class", "row");
     	var priceCol = document.createElement("div");
-    	priceCol.setAttribute("class", "col text-center");
+    	priceCol.setAttribute("class", "col text-center");    	
     	var priceSpan = document.createElement("span");
     	priceSpan.setAttribute("class", "btn-large btn-cf-dgray")
+    	priceSpan.setAttribute("style", "font-size:1.25rem;");
     	priceSpan.innerText = data.projectVo.project_price;
     	priceCol.appendChild(priceSpan);
     	priceBox.appendChild(priceCol);
-    	
     	var badgeBox1 = document.createElement("div");
     	badgeBox1.setAttribute("class", "row mt-2");
     	var badgeCol1 = document.createElement("div");
@@ -1165,9 +1167,15 @@
     	badgeCol1.appendChild(rtSpan);
     	badgeCol1.appendChild(stateSpan);    	
     	badgeBox1.appendChild(badgeCol1);
+    	col2_row.appendChild(priceBox);
+    	col2_row.appendChild(badgeBox1);    
+    	col2.appendChild(col2_row);
+    	row2.appendChild(col2);
     	
+    	var col3 = document.createElement("div");
+    	col3.setAttribute("class", "col");
     	var contentBox = document.createElement("p");
-    	contentBox.setAttribute("class", "etext-p leading-relaxed bold mt-4 text-gray-c_3c text-center");
+    	contentBox.setAttribute("class", "etext-p leading-relaxed bold mt-4 text-gray-c_3c text-center text-fs-30");
     	contentBox.innerText = data.projectVo.project_content;
 	
     	var btnBox = document.createElement("div");
@@ -1181,12 +1189,11 @@
     	btnCol.appendChild(btn);
     	btnBox.appendChild(btnCol);
     	    	
-    	col2.appendChild(priceBox);
-    	col2.appendChild(badgeBox1);
-    	col2.appendChild(contentBox);
-    	col2.appendChild(btnBox);
+
+    	col3.appendChild(contentBox);
+    	col3.appendChild(btnBox);
     	
-    	row2.appendChild(col2);
+    	row2.appendChild(col3);
     	collapseBox.appendChild(row2);
     	collapseContainer.appendChild(collapseBox);
     	col1.appendChild(collapseContainer);

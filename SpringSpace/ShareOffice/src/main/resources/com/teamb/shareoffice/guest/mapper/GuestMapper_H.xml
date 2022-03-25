@@ -38,6 +38,20 @@ where cate.facility_no = offi.facility_no and offi.office_no=#{office_no}
 </select>
 
 
+<!-- 리뷰 리스트 -->
+<select id="getReviewByOffiNo" resultType="com.teamb.shareoffice.vo.ReviewVo">
+select rev.*
+from so_review as rev, so_order as ord
+where rev.order_no= ord.order_no and office_no=#{office_no}
+order by rev.review_no desc 
+</select>
+
+<select id="getOrderByNo" resultType="com.teamb.shareoffice.vo.OrderVo">
+select *from SO_Order
+where order_no=#{order_no}
+</select>
+
+
 
 <!-- 호스트 신청 페이지 -->
 <insert id="insertApplyHostInfo">

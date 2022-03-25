@@ -12,7 +12,7 @@ public class MessageVo {
 	public MessageVo() {
 		super();
 	}
-	public MessageVo(int message_no, int sender_no, int receive_no, String text, Date read_date) {
+	public MessageVo(int message_no, int sender_no, int receive_no, String txt, Date read_date) {
 		super();
 		this.message_no = message_no;
 		this.sender_no = sender_no;
@@ -38,11 +38,11 @@ public class MessageVo {
 	public void setReceive_no(int receive_no) {
 		this.receive_no = receive_no;
 	}
-	public String getText() {
+	public String getTxt() {
 		return txt;
 	}
-	public void setText(String text) {
-		this.txt = text;
+	public void setTxt(String txt) {
+		this.txt = txt;
 	}
 	public Date getRead_date() {
 		return read_date;

@@ -8,12 +8,6 @@ public class MemberVo {
 
 	private int member_no;
 	private String member_id;
-	public String getMember_id() {
-		return member_id;
-	}
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
-	}
 	private String member_nick;
 	private String member_gender;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -42,6 +36,14 @@ public class MemberVo {
 	public void setMember_no(int member_no) {
 		this.member_no = member_no;
 	}
+	
+	public String getMember_id() {
+		return member_id;
+	}
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}	
+	
 	public String getMember_nick() {
 		return member_nick;
 	}

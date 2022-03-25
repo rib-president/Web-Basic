@@ -1,5 +1,7 @@
 package com.teamb.shareoffice.host.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,10 +12,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamb.shareoffice.host.service.HostService;
+import com.teamb.shareoffice.vo.FacilityCategoryVo;
 import com.teamb.shareoffice.vo.ImageDetailVo;
 import com.teamb.shareoffice.vo.MemberVo;
 import com.teamb.shareoffice.vo.OfficeInfoVo;
@@ -27,14 +31,19 @@ public class HostController {
 	
 	
 	@RequestMapping("registerOfficePage")
-	public String registerOfficePage() {
+	public String registerOfficePage(Model model) {
 		
 		System.out.println("오피스등록 페이지 실행중입니다.");
+		
+		ArrayList<FacilityCategoryVo> list = hostService.getFacilityCategoryList();
+		model.addAttribute("facilityCategoryList", list);
+		
 		return "host/registerOfficePage";
 	}
 	
 	@RequestMapping("registerOfficeProcess")
-	public String registerOfficeProcess(OfficeInfoVo ovo, MemberVo mvo, HttpSession session, MultipartFile mainFiles, MultipartFile [] subFiles) {
+	public String registerOfficeProcess(OfficeInfoVo ovo, MemberVo mvo, HttpSession session, MultipartFile mainFiles, MultipartFile [] subFiles, 
+			 int [] facility_no) {
 		
 		System.out.println("오피스등록 프로세스 실행");
 		
@@ -123,15 +132,17 @@ public class HostController {
 			
 		}
 		
+		System.out.println("오피스명" + ovo.getOffice_name());
+		
 		//HostVo sessionHost = (HostVO)session.getAttribute("sessionUser");  
 		//int memberNo = sessionHost.getMember_no();
 		//ovo.setMember_no(memberNo);
 		
-		MemberVo sessionHost = (MemberVo)session.getAttribute("sessionHost");
-		int memberNo = sessionHost.getMember_no();
-		ovo.setMember_no(memberNo);
+//		MemberVo sessionHost = (MemberVo)session.getAttribute("sessionHost");
+//		int memberNo = sessionHost.getMember_no();
+//		ovo.setMember_no(memberNo);
 		
-		hostService.registerOffice(ovo, imageDetailVoList);
+		hostService.registerOffice(ovo, imageDetailVoList, facility_no );
 		return "redirect:./mainPage";
 	}
 

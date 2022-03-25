@@ -25,6 +25,10 @@ import com.teamb.freenext.vo.ProjectBoardVo;
 @Service
 public class ScrapingService {
 
+	
+	/*@Autowired
+	private KakaoKeyManager kakaoKeyManager;*/
+	
 	@Autowired
 	private ScrapingMapper scrapingMapper;
 		
@@ -33,6 +37,22 @@ public class ScrapingService {
 	
 	@Scheduled(fixedDelay = 600000)		// 10분 : 600000
 	public void getDesignGroupNine() {
+		
+
+		/*
+		//new DesignGroupNineCrawler(kakaoKeyManager.getKakaoKey());
+		DesignGroupNineCrawler.asKakaoKey("").crawl();
+		
+		//new Rename(kakaoKeyManager.getKakaoKey()).crawl();
+		
+		ArrayList<String> arr = null;
+		arr.contains("");
+		*/
+		
+		
+		
+		//////////////////////////////////////////////
+		
 		String kakaoKey = getKakaoKey();
 
 		if(kakaoKey != null) {

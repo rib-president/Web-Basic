@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +15,7 @@
 <link href="../resources/css/commons.css" rel="stylesheet">
 <style type="text/css">
  a {text-decoration: none; color:#3ad0ab;}
+ i {text-decoration: none; color:#3ad0ab;}
 </style>
 </head>
 <body>
@@ -93,7 +93,7 @@
 					</div>
 					<div class="row ">
 						<div class="col d-grid">
-							<a href="" class="btn btn-outline-secondary">예약 하러 가기</a>
+							<a href="./orderPage" class="btn btn-outline-secondary">예약 하러 가기</a>
 						</div>
 					</div>
 					
@@ -147,8 +147,7 @@
 									</tr>
 								</thead>
 
-								<c:forEach items="${office.businessDayList }"
-									var="businessDayVo">
+								<c:forEach items="${office.businessDayList }" var="businessDayVo">
 									<tbody>
 										<tr class="table-light">
 											<td>${businessDayVo.business_day}</td>
@@ -164,14 +163,74 @@
 					   <ul class="nav nav-tabs"></ul>
 					</div>
 					<!-- 리뷰보러가기 -->
+				
 					<div class="row mt-2 ">
-						<div class="col" style="">
-						  <a href="">이용 후기    <i class="bi bi-chevron-right"></i></a>  
+						<div class="col" >
+						   <div class="row">
+						     <div class="col-9"> <a href="./officeReviewPage?office_no=${office.officeVo.office_no }">이용 후기</a>  </div>
+						     				  
+						   </div>
+							<div class="card" style="">
+								<div class="row">									
+									<div class="col">
+										<div class="card-body">
+										 <div class="row">
+											<div class="col-8">
+											   <i class="bi bi-star-fill"></i>
+											   <i class="bi bi-star-fill"></i>
+											   <i class="bi bi-star-fill"></i>
+											   <i class="bi bi-star-fill"></i>
+											   <i class="bi bi-star"></i> 
+											</div> 
+											<div class="col">
+											  <p class="card-text"><small class="text-muted">리뷰 작성일</small></p>
+											</div>
+											
+										 </div>	
+										 <div class="row">  
+										   <div class="col">
+										      <img src="https://via.placeholder.com/70" class="img-fluid rounded-start" >
+									       </div>
+										   <div class="col-8 text-left">
+										      <p class="card-text">디자인만 봐주세요</p>
+											  <p class="card-text">출력 아직 못했습니다,,,</p>
+										   </div>
+										    <div class="col">
+										      <i class="bi bi-chevron-right"></i>
+										    </div>
+										</div>	
+										</div>
+									</div>
+									
+								</div>
+							</div>
+
+
+
+
+
+
+
+
+
+							<div class="card">
+						    <ul class="list-group list-group-flush">
+								<c:forEach  items="${reviewList}" >
+									<li class="list-group-item d-flex justify-content-between">
+									    <div>${review.reviewVo.review_title }</div>
+										<div>${review.reviewVo.review_content }</div>
+
+									</li>
+								</c:forEach>
+							</ul>
+						
+						 </div>   
 					     </div>
 					</div>
+                   
 
 
-
+                    <!-- Top 위로 스크롤 -->
 					<div class="row">
 						<div class="col" style="">
 							<div style="position: fixed; bottom: 1.5em; right: 1.5em;">

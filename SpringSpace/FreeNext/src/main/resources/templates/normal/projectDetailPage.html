@@ -284,16 +284,16 @@
     	
     	for(var i=0;i<dataList.length;i++) {
     		var box = document.createElement("span");
-    		box.setAttribute("class", "col px-0 inline-block cursor-pointer");
+    		box.setAttribute("class", "col-4 px-0 inline-block cursor-pointer");
     		box.setAttribute("onclick", "location.href='../normal/projectDetailPage?project_no=" + dataList[i].projectVo.project_no + "'");
     		
     		var card = document.createElement("span");
     		card.setAttribute("class", "card h-full inline-block");
-    		card.setAttribute("style", "width: 20rem;");
+    		card.setAttribute("style", "width: 17.75rem;");
     		
     		var relative = document.createElement("span");
     		relative.setAttribute("class", "relative inline-block");
-    		relative.setAttribute("style", "width:318px; height:200px;")
+    		relative.setAttribute("style", "width:282px; height:200px;")
     		var img = document.createElement("img");    		
     		var coono = dataList[i].projectVo.cooperation_no;
     		if(coono == 1) {
@@ -330,10 +330,10 @@
     		relative.appendChild(iTag);
     		
     		var body = document.createElement("span");
-    		body.setAttribute("class", "card-body inline-block");
+    		body.setAttribute("class", "card-body block");
     		var title = document.createElement("span");
-    		title.setAttribute("class", "card-title h-18 inline-block bold");
-    		title.innerText = dataList[i].projectVo.project_name;
+    		title.setAttribute("class", "card-title h-18 block bold text-fs-17");
+    		title.innerText = dataList[i].projectVo.project_name;    		
     		var badgeBox = document.createElement("span");
     		badgeBox.setAttribute("class", "card-text h-18 block");
     		var badge1 = document.createElement("span");
@@ -349,7 +349,11 @@
     		badgeBox.appendChild(badge1);
     		var badge2 = document.createElement("span");
     		badge2.setAttribute("class", "badge bg-secondary me-1");
-    		badge2.innerText = dataList[i].projectVo.project_price;
+    		var price = dataList[i].projectVo.project_price;
+    		if(price.length > 33) {
+    			price = price.slice(0, 33) + "...";
+    		}
+    		badge2.innerText = price;
     		badgeBox.appendChild(badge2);
     		if(dataList[i].projectVo.recruitType_no == 1) {
     			var badge3 = document.createElement("span");
@@ -367,7 +371,7 @@
     		badgeBox.appendChild(badge4);
     		
     		var botBox = document.createElement("span");
-    		botBox.setAttribute("class", "mt-2 h-9 card-text text-fs-15 block");
+    		botBox.setAttribute("class", "mt-2 h-9 card-text text-fs-13 block");
     		var span1 = document.createElement("span");
     		span1.innerText = dataList[i].projectVo.project_period;
     		var span2 = document.createElement("span");
@@ -445,8 +449,8 @@
             		var project = seenProjectList.shift();
             		col.setAttribute("onclick", "location.href='../normal/projectDetailPage?project_no=" + project.project_no + "'");            		
             		var project_name = project.project_name;
-            		if(project_name.length < 48) {
-            			project_name = project_name.slice(0, 48);
+            		if(project_name.length > 48) {
+            			project_name = project_name.slice(0, 48) + "...";
             		}
             		col.innerText = project_name;
         		}
@@ -567,12 +571,12 @@
 	
     
     window.addEventListener('scroll', function() {
-    	var banner = document.querySelector(".ad");
+    	/*var banner = document.querySelector(".ad");
     	if(document.querySelector('html').scrollTop > banner.offsetTop) {
     		banner.classList.add("topFixBannerFixed");
     	} else {
     		banner.classList.remove("topFixBannerFixed");
-    	}
+    	}*/
     	
     	var seenProject = document.querySelector(".seenProject");
     	if(document.querySelector('html').scrollTop > seenProject.offsetTop) {
@@ -593,9 +597,9 @@
   <th:block th:include="commons/normal_navbar"></th:block>
 
     <div class="row mt-5 relative">
-    	<div class="col-1">
-    		<div class="row">
-    			<img class="ad" src="../img/iu_banner.jpg">
+    	<div class="col-2">
+    		<div class="row sticky-top me-3">
+    			<img src="../img/iu_banner_long2.jpg">
     		</div>
     	</div>
         <div class="col">

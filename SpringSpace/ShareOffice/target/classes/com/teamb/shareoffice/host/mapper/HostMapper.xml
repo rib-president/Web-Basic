@@ -4,11 +4,13 @@
 
 <mapper namespace="com.teamb.shareoffice.host.mapper.HostMapper">
 
+<!-- 오피스 등록  -->
 	<insert id="insertOffice">
 		INSERT INTO SO_OfficeInfo
-		(office_name, office_simpleContent, office_detailContent, office_personnel, office_tags, office_address,
+		(member_no, office_name, office_simpleContent, office_detailContent, office_personnel, office_tags, office_address,
 		office_adrress_detail, office_managerPhone, office_changedPhone, office_thumbnail, office_min_booking_day, office_approve, office_approve_comment,
 		office_approve_date) VALUES(
+			2,
 			#{office_name}, 
 			#{office_simpleContent}, 
 			#{office_detailContent}, 
@@ -20,14 +22,29 @@
 			#{office_changedPhone}, 
 			#{office_thumbnail}, 
 			#{office_min_booking_day}, 
-			#{office_approve}, 
-			#{office_approve_comment}, 
+			'P', 
+			NULL, 
 			NULL );	
 	</insert>
 	
-	<select id="getLastPK" resultType="int">
-		SELECT last_insert_id()
+	<select id="getLastOfficeInfoPK" resultType="int">
+		SELECT MAX(office_no) FROM SO_OfficeInfo
 	</select>
+	
+<!-- 편의시설 카테고리 -->
+	<select id="getFacilityCategoryList" resultType="com.teamb.shareoffice.vo.FacilityCategoryVo">
+		SELECT * FROM SO_FacilityCategory ORDER BY facility_no ASC
+	</select>
+	
+	<insert id="insertOfficeFacilityCategory">
+		INSERT INTO SO_OfficeFacilityCategory
+		(office_no, facility_no) VALUES(
+		#{office_no},
+		#{facility_no}
+		)
+	</insert>
+	
+	
 	
 <!-- 오피스 상세이미지 업로드 관련 -->
 	<insert id="registerImage">

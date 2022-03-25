@@ -40,10 +40,25 @@ public class GuestController_H {
 	public String officeDetailPage(int office_no,Model model) {
 		HashMap<String, Object>map = guestService_H.getOfficeDetail(office_no);
 		
+		ArrayList<HashMap<String, Object>> reviewList = guestService_H.reviewList(office_no);
+		
+		model.addAttribute("reviewList",reviewList);
+		
 		model.addAttribute("office",map);
 		
 		return "guest/officeDetailPage";
 	}
+	@RequestMapping("officeReviewPage")
+	public String officeReviewPage(Model model,int office_no) {
+		
+        ArrayList<HashMap<String, Object>> reviewList = guestService_H.reviewList(office_no);
+		
+	    model.addAttribute("reviewList",reviewList);
+		return "guest/officeReviewPage";
+	}
+	
+	
+	
 	@RequestMapping("officeMapPage")
 	public String officeMapPage() {
 		return "guest/officeMapPage";
@@ -55,7 +70,8 @@ public class GuestController_H {
 	}
 	@RequestMapping("applyHostProcess")
 	public String applyHostProcess (HostVo hvo,MultipartFile license_img) {
-		
+	
+		System.out.println("파라미터 넘어오는지"+hvo.getHost_name());
 		
       String uploadFolder = "C:/freeNext/licenseImg/";
 		
@@ -91,8 +107,8 @@ public class GuestController_H {
 				e.printStackTrace();
 			}
 		hvo.setHost_license_img(folderPath+fileName);
+		
 		}
-
 		
 		guestService_H.applyHost(hvo);
 		
