@@ -3,12 +3,16 @@ package com.teamb.freenext.member.mapper;
 import java.util.*;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.teamb.freenext.vo.*;
 
 
 @Mapper
 public interface MemberMapper {
+	// 회원정보 가져오기
+	public MemberVo selectMemberByNo(int member_no);
+	
 	//insert MemberVo
 	public void insertMember(MemberVo vo);
 	//get last Pk
@@ -42,6 +46,25 @@ public interface MemberMapper {
 	
 	//메일인증 확인
 	public int checkMailAuthByMemberNo(int member_no);
+
+	// 비밀번호 변경
+	public void updatePw(MemberVo memberVo);
+	
+	// 회원정보 수정
+	public void updateMemberInfo(MemberVo memberVo);
+	public void updateCustomerInfo(MemberCustomerVo customerVo);
+	
+	
+	// 희망지역/직종 변경
+	public int selectCustomerNo(int member_no);
+	public void deleteDesiredJob(@Param("customer_no") int customer_no, @Param("job_no") int job_no);
+	public void deleteDesiredJobAll(int customer_no);
+	public void deleteDesiredLocal(@Param("customer_no") int customer_no, @Param("local_no") int local_no);
+	public void deleteDesiredLocalAll(int customer_no);
+	public void deleteJobAlarm(@Param("member_no") int member_no, @Param("job_no") int job_no);
+	public void deleteJobAlarmAll(int member_no);
+	public void deleteLocalAlarm(@Param("member_no") int member_no, @Param("local_no") int local_no);
+	public void deleteLocalAlarmAll(int member_no);
 	
 	//ID찾기
 	public MemberVo findIdByNameAndPhone(MemberVo vo);

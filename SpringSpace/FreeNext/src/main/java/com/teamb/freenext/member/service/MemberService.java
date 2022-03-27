@@ -2,6 +2,7 @@ package com.teamb.freenext.member.service;
 
 import java.security.MessageDigest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 //import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.teamb.freenext.member.mapper.MemberMapper;
+import com.teamb.freenext.normal.mapper.NormalMapper;
 import com.teamb.freenext.vo.*;
 
 @Service
@@ -20,7 +22,15 @@ public class MemberService {
 	private MemberMapper memberMapper;
 	
 	@Autowired
+	private NormalMapper normalMapper;
+	
+	@Autowired
 	private JavaMailSender javaMailSender;
+	
+	// 멤버번호로 멤버 가져오기
+	public MemberVo getMemberByNo(int member_no) {
+		return memberMapper.selectMemberByNo(member_no);
+	}
 	
 	// 아이디로 멤버 찾기
 	public MemberVo isExist(String member_id) {
@@ -118,6 +128,86 @@ public class MemberService {
 			return false;
 		}
 		
+	}
+	
+	// 비밀번호 변경
+	public void changePassword(HashMap<String, String> receivedData) {
+		MemberVo memberVo = new MemberVo();
+		memberVo.setMember_no(Integer.valueOf(receivedData.get("member_no")));
+		memberVo.setMember_pw(receivedData.get("member_pw"));
+		
+		memberMapper.updatePw(memberVo);
+	}
+	
+	public void modifyCustomerProcess(MemberVo memberVo, MemberCustomerVo customerVo, int[] job_no_list,
+									int[] local_no_list) {
+		memberMapper.updateMemberInfo(memberVo);
+		int member_no = memberVo.getMember_no();
+		customerVo.setMember_no(member_no);
+		memberMapper.updateCustomerInfo(customerVo);
+		int customer_no = memberMapper.selectCustomerNo(member_no);		
+		
+		
+		
+		if(job_no_list.length != 0) {
+			ArrayList<Integer> desiredJobList = normalMapper.selectDesiredJob(member_no).stream()
+												.mapToInt(JobCategoryVo :: getJob_no)
+												.collect(ArrayList::new, List::add, List::addAll);
+			ArrayList<Integer> jobNoArray = (ArrayList<Integer>) Arrays.stream(job_no_list).boxed()
+												.collect(Collectors.toList());
+			
+			ArrayList<Integer> delList = (ArrayList<Integer>) desiredJobList.clone();
+			delList.removeAll(jobNoArray);
+			
+			for(int del_no : delList) {
+				
+				memberMapper.deleteDesiredJob(customer_no, del_no);
+				memberMapper.deleteJobAlarm(member_no, del_no);	
+			}
+			
+			ArrayList<Integer> addList = (ArrayList<Integer>) jobNoArray.clone();
+			addList.removeAll(desiredJobList);
+			
+			for(int add_no : addList) {
+				CustomerJobVo customerJobVo = new CustomerJobVo();			
+				customerJobVo.setCustomer_no(customer_no);
+				customerJobVo.setJob_no(add_no);
+				memberMapper.insertCustomerJob(customerJobVo);	
+			}
+					
+		} else {
+			memberMapper.deleteDesiredJobAll(customer_no);
+			memberMapper.deleteJobAlarmAll(member_no);
+		}
+		
+		if(local_no_list.length != 0) {
+			ArrayList<Integer> desiredLocalList = normalMapper.selectDesiredLocal(member_no).stream()
+													.mapToInt(LocalCategoryVo :: getLocal_no)
+													.collect(ArrayList::new, List::add, List::addAll);
+			ArrayList<Integer> localNoArray = (ArrayList<Integer>) Arrays.stream(local_no_list).boxed()
+													.collect(Collectors.toList());
+			
+			ArrayList<Integer> delList = (ArrayList<Integer>) desiredLocalList.clone();
+			delList.removeAll(localNoArray);
+			
+			for(int del_no : delList) {
+				memberMapper.deleteDesiredLocal(customer_no, del_no);
+				memberMapper.deleteLocalAlarm(member_no, del_no);
+			}
+			
+			ArrayList<Integer> addList = (ArrayList<Integer>) localNoArray.clone();
+			addList.removeAll(desiredLocalList);
+			
+			for(int add_no : addList) {
+				CustomerLocalVo customerLocalVo = new CustomerLocalVo();			
+				customerLocalVo.setCustomer_no(customer_no);
+				customerLocalVo.setLocal_no(add_no);
+				memberMapper.insertCustomerLocal(customerLocalVo);	
+			}							
+		} else {
+			memberMapper.deleteDesiredLocalAll(customer_no);
+			memberMapper.deleteLocalAlarmAll(member_no);
+		}
 	}
 	
 	//아이디찾기

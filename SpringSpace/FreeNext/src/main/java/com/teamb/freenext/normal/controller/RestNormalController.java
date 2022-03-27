@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.teamb.freenext.member.service.MemberService;
 import com.teamb.freenext.normal.service.NormalService;
 import com.teamb.freenext.vo.MemberVo;
 import com.teamb.freenext.vo.MyScrapVo;
@@ -21,6 +22,9 @@ public class RestNormalController {
 
 	@Autowired
 	private NormalService normalService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping("getMainData")
 	public HashMap<String, Object> getMainData(HttpSession session) {
@@ -206,7 +210,7 @@ public class RestNormalController {
 	}
 	
 	@RequestMapping("getAlarmList")
-	public HashMap<String, Object> getAlarmList(String category, int tag_no, int member_no, int pageNum) {
+	public HashMap<String, Object> getAlarmList(String category, int tag_no, int member_no, int pageNum, HttpSession session) {
 		HashMap<String, Object> data = new HashMap<>();
 		
 		HashMap<String, Object> searchData = new HashMap<>();
@@ -215,6 +219,7 @@ public class RestNormalController {
 		searchData.put("member_no", member_no);
 		searchData.put("startNum", (pageNum-1)*12);		
 		
+		data.put("adData", normalService.getHotProjectShuffle(3, (MemberVo) session.getAttribute("sessionUser")));
 		data.put("alarmData", normalService.getAlarmData(searchData));
 		data.put("totalPage", (int)Math.ceil(normalService.getAlarmDataCount(searchData)/12.0));
 		
@@ -253,6 +258,72 @@ public class RestNormalController {
 		normalService.unScrap(vo);
 		
 		data.put("result", "success");
+		
+		return data;
+	}
+	
+	@RequestMapping("getProfile")
+	public HashMap<String, Object> getProfile(int member_no, String member_type) {
+		HashMap<String, Object> data = new HashMap<>();
+		
+		data.put("memberInfo", normalService.getMemberInfo(member_no, member_type));
+		data.put("desiredData", normalService.getDesired(member_no));
+		data.put("jobList", memberService.getJobCategoryList());
+		data.put("localList", memberService.getLocalCategoryList());
+		
+		return data;
+	}
+	
+	@RequestMapping("getMyProjectList")
+	public HashMap<String, Object> getMyProjectList(int member_no, int pageNum, String searchKeyword, String project_state) {
+		HashMap<String, Object> data = new HashMap<>();		
+		
+		HashMap<String, Object> searchData = new HashMap<>();
+		searchData.put("member_no", member_no);
+		searchData.put("searchKeyword", searchKeyword);
+		searchData.put("project_state", project_state);
+		
+		int startNum = (pageNum-1) * 5;
+		
+		int totalCount = normalService.getMyProjectListCount(searchData);
+		
+		int totalPage = (int)Math.ceil(totalCount/5.0);
+		
+		int startPage = ((pageNum-1)/5)*5 + 1;
+		int endPage = ((pageNum-1)/5 + 1)*(5);
+		
+		if(totalCount == 0) {
+			endPage = startPage;
+		} else if(endPage > totalPage) {
+			endPage = totalPage;
+		}		
+		
+		if(searchKeyword.equals("null") || searchKeyword.equals("")) {
+			searchData.put("searchKeyword", null);
+		};		
+		
+		searchData.put("startNum", startNum);
+		
+		for(String key : searchData.keySet()) {
+			System.out.println("key : " + key + ", value : " + searchData.get(key));
+		}
+		
+		
+		data.put("projectList", normalService.getMyProjectList(searchData));
+		data.put("totalCount", totalCount);
+		data.put("startPage", startPage);
+		data.put("endPage", endPage);
+		data.put("currentPage", pageNum);
+		data.put("totalPage", totalPage);
+		
+		return data;
+	}
+	
+	@RequestMapping("modifyProjectState")
+	public HashMap<String, Object> modifyProjectState(int project_no, String project_state) {
+		HashMap<String, Object> data = new HashMap<>();
+		
+		normalService.modifyProjectState(project_no, project_state);
 		
 		return data;
 	}

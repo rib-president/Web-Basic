@@ -15,6 +15,7 @@ import com.teamb.freenext.vo.MyScrapVo;
 import com.teamb.freenext.vo.ProjectBoardVo;
 import com.teamb.freenext.vo.RecruitTypeCategoryVo;
 import com.teamb.freenext.vo.WorkTypeCategoryVo;
+import com.zaxxer.hikari.util.SuspendResumeLock;
 
 @Service
 public class NormalService {
@@ -177,6 +178,10 @@ public class NormalService {
 		return map;
 	}	
 	
+	public void increaseReadCount(int project_no) {
+		normalMapper.updateProjectReadCount(project_no);
+	}
+	
 	public ArrayList<HashMap<String, Object>> getRelativeProjectList(int[] job_no_list, MemberVo sessionUser) {
 		ArrayList<HashMap<String, Object>> dataList = new ArrayList<>();
 		
@@ -284,6 +289,38 @@ public class NormalService {
 	
 	public void unScrap(MyScrapVo vo) {
 		normalMapper.deleteScrap(vo);
+	}
+	
+	public HashMap<String, Object> getMemberInfo(int member_no, String member_type) {
+		return normalMapper.selectMemberInfo(member_no, member_type);
+	}
+	
+	public ArrayList<HashMap<String, Object>> getMyProjectList(HashMap<String, Object> searchData) {
+		ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
+		
+		for(ProjectBoardVo projectVo : normalMapper.selectMyProjectList(searchData)) {
+			HashMap<String, Object> map = new HashMap<>();
+			int project_no = projectVo.getProject_no();
+
+			map.put("projectVo", projectVo);
+			map.put("jobVoList", normalMapper.selectJobCategoryByProjectNo(project_no));
+			map.put("localVo", normalMapper.getLocalByNo(project_no));
+			map.put("scrapCount", normalMapper.getTotalScrapCount(project_no));
+			map.put("isAd", ((normalMapper.isAdProject(project_no)) > 0 ? true : false));
+			
+			resultList.add(map);
+		}
+		
+		return resultList;
+	}
+	
+	public int getMyProjectListCount(HashMap<String, Object> searchData) {
+		return normalMapper.selectMyProjectListCount(searchData);
+	}
+	
+	public void modifyProjectState(int project_no, String project_state) {
+		
+		normalMapper.updateProjectState(project_no, project_state);
 	}
 	
 	/*===================================================================================================*/

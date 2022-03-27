@@ -69,7 +69,7 @@
 	window.addEventListener("DOMContentLoaded" , function(){
 		if(sessionUser != null) {
 			pollUnRead();
-		}
-		
-        setInterval(pollUnRead, 600000);
+			
+			setInterval(pollUnRead, 600000);
+		}		        
 	});

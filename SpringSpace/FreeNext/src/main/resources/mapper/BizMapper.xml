@@ -18,7 +18,7 @@
 		insert into FN_ProjectBoard
 			(member_no, workType_no, recruitType_no, cooperation_no, project_name,
 			project_period, project_price, project_state, project_content, project_url,
-			project_date, project_key)
+			project_date, project_key, project_readCount)
 		values (
 			#{member_no},
 			#{workType_no},
@@ -31,7 +31,8 @@
 			#{project_content},
 			#{project_url},
 			NOW(),
-			#{project_key}
+			#{project_key},
+			0
 		)
 	</insert>	
 	
@@ -148,7 +149,7 @@
 		from FN_Ad
 		where project_no = #{project_no}
 		<![CDATA[ 
-		and DATEDIFF(now(), ad_endDate) > 0
+		and DATEDIFF(ad_endDate, now()) > 0
 		]]>	
 	</select>
 	

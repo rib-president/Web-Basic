@@ -104,9 +104,20 @@
 	and fcl.local_no = #{local_no}
 </select>
 
-<insert id="insertAlarm">
-	insert into FN_Alarm (member_no, project_no, alarm_read, alarm_date)
-	values (#{member_no}, #{project_no}, 'N', now()) 
-</insert>
+<select id="countDesiredLocalOfMember" resultType="int">
+	select count(*)
+	from fn_member fm, fn_member_customer fmc, fn_customer_local fcl 
+	where fm.member_no = fmc.member_no 
+	and fmc.customer_no = fcl.customer_no 
+	and fm.member_no = #{member_no}
+</select>
+
+<select id="countDesiredJobOfMember" resultType="int">
+	select count(*)
+	from fn_member fm, fn_member_customer fmc, fn_customer_job cj
+	where fm.member_no = fmc.member_no 
+	and fmc.customer_no = cj.customer_no 
+	and fm.member_no = #{member_no}
+</select>
 
 </mapper>

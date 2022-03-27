@@ -230,7 +230,7 @@
 			</when>			
 		</choose>		
 		order by t1.project_date desc
-		limit #{startNum}, 12
+		limit #{startNum}, 9
 	</select>
 	
 	<!-- 알람 리스트 개수 가져오기 -->	
@@ -330,6 +330,40 @@
 		FROM FN_MyScrap 
 		WHERE project_no =#{project_no} AND member_no = #{member_no}
 	</select>
+	
+	<!-- 내 프로젝트 리스트 가져오기 -->
+	<select id="selectMyProjectList" resultType="com.teamb.freenext.vo.ProjectBoardVo">
+		select *
+		from fn_projectboard
+		where member_no = #{member_no}
+		<if test="searcyKeyword != null">
+			and (project_name like CONCAT('%',#{searchKeyword},'%') or project_content like CONCAT('%',#{searchKeyword},'%'))
+		</if>
+		<if test='project_state == "Y"'>
+			and project_state = "Y"
+		</if>
+		order by project_no desc
+		limit #{startNum}, 5
+	</select>
+	
+	<select id="selectMyProjectListCount" resultType="int">
+		select count(*)
+		from fn_projectboard
+		where member_no = #{member_no}
+		<if test="searcyKeyword != null">
+			and (project_name like CONCAT('%',#{searchKeyword},'%') or project_content like CONCAT('%',#{searchKeyword},'%'))
+		</if>
+		<if test='project_state == "Y"'>
+			and project_state = "Y"
+		</if>
+	</select>	
+	
+	<!-- 프로젝트 상태 변경 -->
+	<update id="updateProjectState">
+		update fn_projectboard
+		set project_state = #{project_state}
+		where project_no = #{project_no}		
+	</update>
 
 	<!-- 프로젝트의 잡카테고리(ex.프로그래머, 디자인, 기획,..) 가져오기 -->	
 	<select id="selectJobCategoryByProjectNo" resultType="com.teamb.freenext.vo.JobCategoryVo">
@@ -354,6 +388,22 @@
 		where project_no=#{project_no}	
 	</select>
 	
+	<!-- 조회수 증가 -->
+	<update id="updateProjectReadCount">
+		update FN_ProjectBoard
+		set project_readCount = project_readCount + 1
+		where project_no = #{project_no}		
+	</update>
+	
+	<!-- 광고 사용여부 -->
+	<select id="isAdProject" resultType="int">
+		select count(*)
+		from fn_ad
+		where project_no = #{project_no}
+		<![CDATA[ 
+		and DATEDIFF(ad_endDate, now()) > 0
+		]]>	
+	</select>		
 		
 	<select id="getMyScrapListOrderByRegistDate" resultType="com.teamb.freenext.vo.MyScrapVo">
 		select *
@@ -380,6 +430,20 @@
 		select lc.*
 		from FN_Local_Category as lc, FN_Project_Local as pl
 		where  pl.project_no =#{project_no} and lc.local_no = pl.local_no
+	</select>
+	
+	<!-- 멤버 정보 가져오기(customer/company) -->
+	<select id="selectMemberInfo" resultType="map">
+		select *
+		<choose>
+			<when test='member_type == "N"'>
+				from fn_member_customer
+			</when>
+			<when test='member_type == "B"'>
+				from fn_member_company
+			</when>
+		</choose>
+		where member_no = #{member_no}
 	</select>
 	
 	<!-- 회원 정보 가져오기 -->
@@ -508,7 +572,7 @@
 		select pb.*
 		from FN_ProjectBoard pb, FN_Ad ad
 		where pb.project_no = ad.project_no
-		and datediff(now(), ad.ad_endDate) > 0
+		and datediff(ad.ad_endDate, now()) > 0
 	</select>
 	
 	<!--  <select id="getProjectBoardCount" resultType="int">

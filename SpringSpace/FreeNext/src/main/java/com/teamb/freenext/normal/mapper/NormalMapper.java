@@ -63,17 +63,35 @@ public interface NormalMapper {
     //프리랜서 매칭, IT아웃소싱 상세 페이지 페이지 가져오기
 	public ProjectBoardVo getProjectDetailPageByNo(int project_no) ;
 	
+	// 조회수 증가
+	public void updateProjectReadCount(int project_no);
+	
+	// 광고 사용 여부
+	public int isAdProject(int project_no);
+	
 	public ArrayList<MyScrapVo> getMyScrapListOrderByRegistDate(int member_no);
 	
 	//스크랩 하기
 	public void doScrap(MyScrapVo vo);
 	public void deleteScrap(MyScrapVo vo);
 	public int getTotalScrapCount(int project_no);
-	public int getMyScrapCount(MyScrapVo vo);	
+	public int getMyScrapCount(MyScrapVo vo);
+	
 	// 프로젝트 리스트에서 스크랩 삭제
 	public void deleteMyScrapByList(int scrap_no);
+	
+	// 내 프로젝트 리스트 가져오기
+	public ArrayList<ProjectBoardVo> selectMyProjectList(HashMap<String, Object> searchData);
+	public int selectMyProjectListCount(HashMap<String, Object> searchData);
+	
+	// 프로젝트 상태 변경
+	public void updateProjectState(@Param("project_no") int project_no, @Param("project_state") String project_state);
+	
 	//지역 가져오기
 	public LocalCategoryVo getLocalByNo(int project_no);
+
+	// 멤버정보 가져오기(customer/company)
+	public HashMap<String, Object> selectMemberInfo(@Param("member_no") int member_no, @Param("member_type") String member_type);
 	
 	//회원정보 가져오기
 	public MemberVo getMemberByNo(int member_no);

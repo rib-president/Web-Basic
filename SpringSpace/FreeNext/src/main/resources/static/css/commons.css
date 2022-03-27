@@ -21,12 +21,17 @@
     
     .cursor-pointer{cursor:pointer} 
 
+	.font-slim{font-weight:100}
     .font-light{font-weight:300}
     .font-medium{font-weight:500}
+    .font-medium2{font-weight:600}
     .font-normal{font-weight:400}
     .font-bold{font-weight:700}
     .font-extrabold{font-weight:800}
 
+	.text-h2{ font-size: 1.25rem; font-weight: 600;}
+
+	.text-fs-8{font-size:.5rem}
     .text-fs-10{font-size:.625rem}
     .text-fs-11{font-size:.688rem}
     .text-fs-12{font-size:.75rem}
@@ -64,7 +69,9 @@
     .text-blue{color:rgb(21, 168, 253)}
     .text-blue-light{color:rgb(66, 157, 209)}
     .text-red-soft {color:rgba(202, 77, 77, 0.89);}
-
+    .text-green-soft{color:rgba(96, 173, 89, 0.781)}
+	.text-green-dsoft{color:rgba(61, 179, 50, 0.959)}
+	
     .sticky {position:sticky}
     .fixed {position:fixed}
     .static{position:static}
@@ -151,6 +158,8 @@
     .m-1{margin:.25rem}
     .m-2{margin:.5rem}
 
+	.mt-1{margin-top:.25rem}
+	.mt-2{margin-top:.5rem}
     .mt-8{margin-top:2rem}
     .mt-10{margin-top:2.5rem}
     .mt-14{margin-top:3.5rem}
@@ -161,6 +170,19 @@
 
 	.my-1{margin-bottom:.25rem;margin-top:.25rem}
     
+    
+	.ml-4{margin-left:1rem}
+	.ml-5{margin-left:1.25rem}
+	.ml-6{margin-left:1.5rem}
+	.ml-7{margin-left:1.75rem}
+	.ml-8{margin-left:2rem}
+	.ml-9{margin-left:2.25rem}
+	.ml-10{margin-left:2.5rem}
+	.ml-12{margin-left:3rem}
+	.ml-13{margin-left:3.25rem}
+	.ml-15{margin-left:3.75rem}
+	.ml-16{margin-left:4rem}
+	.ml-17{margin-left:4.25rem}    
   	.ml-20{margin-left:5rem}    
     
     .mr-2{margin-right:.5rem}
@@ -182,6 +204,9 @@
     .pt-2{padding-top:.5rem}
     .pt-3{padding-top:.75rem}
     .pt-6{padding-top:1.5rem}
+	.pt-7{padding-top:1.75rem}
+	.pt-8{padding-top:2rem}
+	.pt-9{padding-top:2.25rem}    
     .pt-10 {padding-top: 2.5rem;}
     .pt-12{padding-top:3rem}
 	.pt-20 {padding-top: 5rem;}    
@@ -191,12 +216,16 @@
 	.pl-0{padding-left:0;}
 	.pl-4 {padding-left: 1rem;}
 	.pl-5 {padding-left: 1.25rem;}
+	.pl-8{padding-left:2rem;}
+	.pl-9{padding-left:2.25rem;}
     .pl-10{padding-left:2.5rem;}
     .pl-12{padding-left:3rem;}
     .pl-13{padding-left:3.25rem;}
     .pl-14{padding-left:3.5rem;}
     .pl-15{padding-left:3.75rem;}
     .pl-16{padding-left:4rem;}
+    .pl-17{padding-left:4.25rem;}
+	.pl-18{padding-left:4.5rem;}	
     .pl-20 {padding-left: 5rem;}
     .pl-18{padding-left:4.5rem;}
     .pl-20{padding-left:5rem;}
@@ -355,3 +384,17 @@
         border:none;
         background-color:transparent;        
     }
+
+	.btn-small{
+	  display: inline-block;
+	  text-align: center;
+	  margin:1px;
+	  border-radius: 5px;
+	  font-weight: 400;
+	  font-size: 0.625rem;
+	  padding-top: 0.25rem;
+	  padding-bottom: 0.25rem;
+	  padding-left: 0.375rem;
+	  padding-right: 0.375rem;  
+	}
+	.btn-cf-blue{  background-color: rgba(107, 155, 255, 1);  border-color: rgba(107, 155, 255, 1); border-width: 1px;  color: rgba(255, 255, 255, 1); }    

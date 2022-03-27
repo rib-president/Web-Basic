@@ -19,5 +19,6 @@ public interface ScrapingMapper {
 	public String selectKakaoKey();
 	public ArrayList<Integer> selectJobAlarmMember(int job_no);
 	public ArrayList<Integer> selectLocalAlarmMember(int local_no);
-	public void insertAlarm(int member_no, int project_no);
+	public int countDesiredLocalOfMember(int member_no);
+	public int countDesiredJobOfMember(int member_no);
 }

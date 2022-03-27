@@ -12,9 +12,7 @@
 	<link th:href="@{/css/toggle.css}" rel="stylesheet">
 	
 	<style>
-	a {text-decoration:underline;}
-	a:hover {color: #808080;}
-	.info-border-l{border-left:2px solid #444; padding-left:1rem; padding-top:0; padding-bottom: 0;}
+	.info-border-l{border-left:2px solid #444; padding-left:1rem; padding-top:0; padding-bottom: 0; margin-top:.5rem}
 	.job-btn-round {
 	      display: inline-block;
 	      cursor: pointer;
@@ -303,7 +301,7 @@
 			idConfirmBox.setAttribute("class", "col-7");
 			var idConfirm = document.createElement("div");
 			idConfirm.setAttribute("id", "confirmIdAlertBox");
-			idConfirm.setAttribute("style", "font-size: small;");
+			idConfirm.setAttribute("class", "text-fs-12");
 			idConfirmBox.appendChild(idConfirm);
 			id2.appendChild(idBlank);
 			id2.appendChild(idConfirmBox);
@@ -311,7 +309,8 @@
 			idCol.appendChild(id2);			
 		} else {
 			var kakaoId = document.createElement("div");
-			kakaoId.innerText = "아이디 미입력 (카카오 연동)";									
+			kakaoId.innerText = "아이디 미입력 (카카오 연동)";
+			kakaoId.setAttribute("style", "margin-top:.5rem;")
 			idInput.setAttribute("type", "hidden");
 			idInput.value = customer_kakao_id;		
 			idInputBox.appendChild(kakaoId);
@@ -348,37 +347,49 @@
 		var star = document.createElement("span");
 		star.setAttribute("class", "text-red-soft p-1");
 		star.innerText = "*";
+		pwP.appendChild(star);
+		pwText.appendChild(pwP);			
+		pw1.appendChild(pwText);		
 		
-		var pwInputBox = document.createElement("div");
+		var pwInputBox = document.createElement("div");	
 		pwInputBox.setAttribute("class", "col-7");
 		var pwInput = document.createElement("input");
-		pwInput.setAttribute("class", "form-control");
 		pwInput.setAttribute("name", "member_pw");
 		pwInput.setAttribute("id", "inputPw");
-		pwInput.setAttribute("type", "password");
-		pwInput.setAttribute("placeholder", "비밀번호를 입력해주세요");
-		pwInput.setAttribute("onblur", "confirmPw()");
-		
-		var pw2 = document.createElement("div");
-		pw2.setAttribute("class", "row");
-		var pwBlank = document.createElement("div");
-		pwBlank.setAttribute("class", "col-3");	
-		var pwConfirmBox = document.createElement("div");
-		pwConfirmBox.setAttribute("class", "col-7");
-		var pwConfirm = document.createElement("div");
-		pwConfirm.setAttribute("id", "confirmPwAlertBox");
-		pwConfirm.setAttribute("style", "font-size: small;");
-		
-		pwP.appendChild(star);
-		pwText.appendChild(pwP);
-		pwInputBox.appendChild(pwInput);		
-		pw1.appendChild(pwText);
-		pw1.appendChild(pwInputBox);
-		pwConfirmBox.appendChild(pwConfirm);
-		pw2.appendChild(pwBlank);
-		pw2.appendChild(pwConfirmBox);
-		pwCol.appendChild(pw1);
-		pwCol.appendChild(pw2);
+		if(customer_kakao != "Y") {						
+			pwInput.setAttribute("class", "form-control");			
+			pwInput.setAttribute("type", "password");
+			pwInput.setAttribute("placeholder", "비밀번호를 입력해주세요");
+			pwInput.setAttribute("onblur", "confirmPw()");
+			pwInputBox.appendChild(pwInput);
+			pw1.appendChild(pwInputBox);
+			
+			var pw2 = document.createElement("div");
+			pw2.setAttribute("class", "row");
+			var pwBlank = document.createElement("div");
+			pwBlank.setAttribute("class", "col-3");	
+			var pwConfirmBox = document.createElement("div");
+			pwConfirmBox.setAttribute("class", "col-7");
+			var pwConfirm = document.createElement("div");
+			pwConfirm.setAttribute("id", "confirmPwAlertBox");
+			pwConfirm.setAttribute("class", "text-fs-12");			
+			pwConfirmBox.appendChild(pwConfirm);
+			pw2.appendChild(pwBlank);
+			pw2.appendChild(pwConfirmBox);
+			
+			pwCol.appendChild(pw1);
+			pwCol.appendChild(pw2);
+			
+		} else {
+			pwInputBox.setAttribute("style", "margin-top:.5rem;")
+			pwInputBox.innerText = "❓ ❔ ❓ ";
+			pwInput.setAttribute("type", "hidden");
+			pwInput.value = "";
+			pwInputBox.appendChild(pwInput);
+			pw1.appendChild(pwInputBox);
+			pwCol.appendChild(pw1);
+		}				
+				
 		pwContainer.appendChild(pwCol);
 		frame1_col1.appendChild(pwContainer);		
 		
@@ -397,36 +408,46 @@
 		var star = document.createElement("span");
 		star.setAttribute("class", "text-red-soft");
 		star.innerText = " *";
+		repwP.appendChild(star);
+		repwText.appendChild(repwP);
+		repw1.appendChild(repwText);
 		
 		var repwInputBox = document.createElement("div");
 		repwInputBox.setAttribute("class", "col-7");
 		var repwInput = document.createElement("input");
-		repwInput.setAttribute("class", "form-control");		
 		repwInput.setAttribute("id", "inputPwConfirm");
-		repwInput.setAttribute("type", "password");
-		repwInput.setAttribute("placeholder", "비밀번호를 재입력해주세요");
-		repwInput.setAttribute("onblur", "reConfirmPw()");
-		
-		var repw2 = document.createElement("div");
-		repw2.setAttribute("class", "row");
-		var repwBlank = document.createElement("div");
-		repwBlank.setAttribute("class", "col-3");	
-		var repwConfirmBox = document.createElement("div");
-		repwConfirmBox.setAttribute("class", "col-7");
-		var repwConfirm = document.createElement("div");
-		repwConfirm.setAttribute("id", "reConfirmPwAlertBox");
-		repwConfirm.setAttribute("style", "font-size: small;");
-		
-		repwP.appendChild(star);
-		repwText.appendChild(repwP);
-		repwInputBox.appendChild(repwInput);		
-		repw1.appendChild(repwText);
-		repw1.appendChild(repwInputBox);
-		repwConfirmBox.appendChild(repwConfirm);
-		repw2.appendChild(repwBlank);
-		repw2.appendChild(repwConfirmBox);
-		repwCol.appendChild(repw1);
-		repwCol.appendChild(repw2);
+		if(customer_kakao != "Y") {			
+			repwInput.setAttribute("class", "form-control");					
+			repwInput.setAttribute("type", "password");
+			repwInput.setAttribute("placeholder", "비밀번호를 재입력해주세요");
+			repwInput.setAttribute("onblur", "reConfirmPw()");
+			repwInputBox.appendChild(repwInput);
+			repw1.appendChild(repwInputBox);
+			
+			var repw2 = document.createElement("div");
+			repw2.setAttribute("class", "row");
+			var repwBlank = document.createElement("div");
+			repwBlank.setAttribute("class", "col-3");	
+			var repwConfirmBox = document.createElement("div");
+			repwConfirmBox.setAttribute("class", "col-7");
+			var repwConfirm = document.createElement("div");
+			repwConfirm.setAttribute("id", "reConfirmPwAlertBox");
+			repwConfirm.setAttribute("class", "text-fs-12");	
+			repwConfirmBox.appendChild(repwConfirm);
+			repw2.appendChild(repwBlank);
+			repw2.appendChild(repwConfirmBox);
+			
+			repwCol.appendChild(repw1);
+			repwCol.appendChild(repw2);
+		} else {
+			repwInput.setAttribute("type", "hidden");
+			repwInput.value = "";
+			repwInputBox.setAttribute("style", "margin-top:.5rem;")
+			repwInputBox.innerText = "🔥 🌙  ⭐   🌎  ";
+			repw1.appendChild(repwInputBox);
+			repwCol.appendChild(repw1);
+		}
+
 		repwContainer.appendChild(repwCol);
 		frame1_col1.appendChild(repwContainer);			
 		
@@ -648,7 +669,7 @@
 			emailConfirmBox.setAttribute("class", "col");
 			var emailConfirm = document.createElement("div");
 			emailConfirm.setAttribute("id", "emailConfirmPwAlertBox");
-			emailConfirm.setAttribute("style", "font-size: small;");		
+			emailConfirm.setAttribute("class", "text-fs-12");		
 			
 
 			emailId.appendChild(inputEmailId);
@@ -669,6 +690,7 @@
 		} else {
 			var kakaoEmail = document.createElement("div");
 			kakaoEmail.setAttribute("class", "col-8");
+			kakaoEmail.setAttribute("style", "margin-top:.5rem;");
 			kakaoEmail.innerText = customer_kakao_email;
 			
 			var emailInput = document.createElement("input");
@@ -696,7 +718,7 @@
 		
 		if(customer_kakao_profile == null || customer_kakao_profile == "undefined") {
 			var inputProfile = document.createElement("input");
-			inputProfile.setAttribute("class", "form-control form-control-sm");		
+			inputProfile.setAttribute("class", "form-control form-control-sm mt-2");		
 			inputProfile.setAttribute("id", "formFileSm");
 			inputProfile.setAttribute("type", "file");
 			inputProfile.setAttribute("name", "uploadFileThumbnail");
@@ -706,8 +728,9 @@
 		} else {
 			var toggelText = document.createElement("span");
 			toggelText.innerText = "카카오프로필 사용하기";
+			toggelText.setAttribute("class", "mt-2")
 			var label = document.createElement("label");
-			label.setAttribute("class", "switch ms-2");
+			label.setAttribute("class", "switch ms-2 mt-2");
 			var toggle = document.createElement("input");
 			toggle.setAttribute("type", "checkbox");
 			toggle.setAttribute("checked", true);
@@ -771,7 +794,7 @@
 		var addrText2 = document.createElement("div");
 		addrText2.setAttribute("class", "col-2");	
 		var addrP2 = document.createElement("p");
-		addrP2.setAttribute("class", "pl-4");
+		addrP2.setAttribute("class", "pl-4 mt-1");
 		addrP2.innerText = "상세주소";
 		var addrInputBox2 = document.createElement("div");
 		addrInputBox2.setAttribute("class", "col-7");	
@@ -1399,7 +1422,7 @@
 		
 
 		var inputProfile = document.createElement("input");
-		inputProfile.setAttribute("class", "form-control form-control-sm");		
+		inputProfile.setAttribute("class", "form-control form-control-sm mt-2");		
 		inputProfile.setAttribute("id", "formFileSm");
 		inputProfile.setAttribute("type", "file");
 		inputProfile.setAttribute("name", "uploadFileThumbnail");
@@ -1451,7 +1474,7 @@
 		var addrText2 = document.createElement("div");
 		addrText2.setAttribute("class", "col-2");	
 		var addrP2 = document.createElement("p");
-		addrP2.setAttribute("class", "pl-4");
+		addrP2.setAttribute("class", "pl-4 mt-1");
 		addrP2.innerText = "상세주소";
 		var addrInputBox2 = document.createElement("div");
 		addrInputBox2.setAttribute("class", "col-7");	
@@ -1538,7 +1561,7 @@
 		
 		if(!idRegExp.test($("#inputId").val())){
 			confirm_id = false;
-			confirmIdAlertBox.innerText = "아이디는 영문소문자 또는 영문소문자, 숫자 조합으로 4~16자로 입력해 주세요.";
+			confirmIdAlertBox.innerText = "영소문자 또는 영소문자+숫자 4~16자로 입력해 주세요.";
 			confirmIdAlertBox.style.color = "red";
 			return;
 		}		
@@ -1578,7 +1601,7 @@
 		
 		if(!pwRegExp.test($("#inputPw").val())){
 			confirm_pw = false;
-			confirmPwAlertBox.innerText = "비밀번호는 문자, 숫자 1개이상 포함하여 8자리 이상이어야 합니다.";
+			confirmPwAlertBox.innerText = "문자/숫자 1개이상 포함 8자리 이상이어야 합니다.";
 			confirmPwAlertBox.style.color = "red";			
 		} else {
 			confirm_pw = true;
@@ -1738,6 +1761,7 @@
 		
 		if(customer_kakao == "Y") {
 			confirm_id = true;
+			confirm_pw = true;
 		}
 		
 		//입력 유무 체크
@@ -1754,16 +1778,18 @@
 			return;
 		}
 		
-		if($("#inputPw").val() == ""){
-			alert("비밀번호를 입력해주세요.");
-			$("#inputPw").focus();
-			return;
-		}
-		
-		if($("#inputPwConfirm").val() == ""){
-			alert("비밀번호를 재확인해주세요.");
-			$("#inputPwConfirm").focus();
-			return;
+		if(customer_kakao != "Y") {
+			if($("#inputPw").val() == ""){
+				alert("비밀번호를 입력해주세요.");
+				$("#inputPw").focus();
+				return;
+			}
+			
+			if($("#inputPwConfirm").val() == ""){
+				alert("비밀번호를 재확인해주세요.");
+				$("#inputPwConfirm").focus();
+				return;
+			}
 		}
 		
 		if(!confirm_pw) {

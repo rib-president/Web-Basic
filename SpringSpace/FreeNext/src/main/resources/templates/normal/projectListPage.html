@@ -488,7 +488,7 @@
 			var row4 = document.createElement("div");
 			row4.setAttribute("class", "row mt-3");
 			var row4_col1 = document.createElement("div");
-			row4_col1.setAttribute("class", "col text-gray-c_25");
+			row4_col1.setAttribute("class", "col text-gray-c_25 relative");
 
 			var row4_col1_span1 = document.createElement("span");
 			row4_col1_span1.setAttribute("class", "bold");
@@ -530,8 +530,8 @@
 			
 			if(isHot) {
 				var row4_col1_span8 = document.createElement("span");
-				row4_col1_span8.setAttribute("class", "badge bg-danger me-2 text-fs-10 mx-2");
-				row4_col1_span8.setAttribute("style", "padding-bottom:.5rem; padding-top:0");
+				row4_col1_span8.setAttribute("class", "badge bg-danger me-2 text-fs-10 mx-2 absolute");
+				row4_col1_span8.setAttribute("style", "padding-bottom:.25rem; padding-top:.25rem; top:10%");
 				row4_col1_span8.innerText = " AD ";
 				row4_col1.appendChild(row4_col1_span8);				
 			}			

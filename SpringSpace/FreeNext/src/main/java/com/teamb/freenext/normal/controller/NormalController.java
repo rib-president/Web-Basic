@@ -109,6 +109,8 @@ public class NormalController {
 					int start = cookieValue.indexOf(str_project_no);
 					int start2 =  cookieValue.indexOf(str_project_no) + str_project_no.length();
 					cookieValue = cookieValue.substring(0, start) + cookieValue.substring(start2, cookieValue.length());
+				} else {
+					normalService.increaseReadCount(project_no);
 				}
 				Cookie newCookie = new Cookie("readProjectNo", cookieValue + str_project_no);
 				response.addCookie(newCookie);					
@@ -119,6 +121,7 @@ public class NormalController {
 		if(cookieFlag == 0) {
 			Cookie newCookie = new Cookie("readProjectNo",str_project_no);
 			response.addCookie(newCookie);
+			normalService.increaseReadCount(project_no);
 		}
 		
 		
@@ -143,12 +146,17 @@ public class NormalController {
 	@RequestMapping("myBoxPage")
 	public String myBoxPage(Model model, HttpSession session) {
 		
-		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
-		if(sessionUser == null) {
-			return "normal/main";
+		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");		
+		if(sessionUser != null) {
+			return "normal/myBoxPage";			
+		}
+		
+		MemberVo sessionBizUser = (MemberVo) session.getAttribute("sessionBizUser");		
+		if(sessionBizUser != null) {
+			return "normal/BizBoxPage";			
 		}		
 		
-		return "normal/myBoxPage";
+		return "normal/main";
 	}
 	
 	/*@RequestMapping("projectListPage")

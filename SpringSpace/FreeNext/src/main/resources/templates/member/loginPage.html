@@ -10,8 +10,8 @@
 	<link th:href="@{/css/style.css}" rel="stylesheet">
 	
 	<style>
-		a {text-decoration:underline;}
-		a:hover {color: #808080;}
+		.grayColor {text-decoration:underline;}
+		.grayColor:hover {color: #808080;}
 	</style>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>	
 	<script th:inline="javascript">
@@ -91,7 +91,7 @@
 								<div class="row mt-2"> <!-- 회원가입 버튼 -->
 									<div class="col">
 										<div class="d-grid">
-											<input type="button" value="회원가입" class="btn btn-light" th:onclick="location.href='./joinMemberPage'">
+											<input type="button" value="회원가입" class="btn btn-outline-dark" th:onclick="location.href='./joinMemberPage'">
 										</div>
 									</div>
 								</div>

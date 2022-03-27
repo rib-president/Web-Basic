@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/nav.js"></script>
+	<link th:href="@{/css/commons.css}" rel="stylesheet">
+
+ 	<style>
+	.dashmenu-content {
+	    
+	    background-color: rgba(255, 255, 255, 1);
+	    font-size: 1.25rem;
+	    width: 100%;
+	  }
+	  
+	  .dashmenu-content .menu-li {
+	    
+	    background-color: rgba(255, 255, 255, 1);
+	    cursor:pointer;
+	  }
+	  
+	  .dashmenu-content .menu-li:hover {
+	    
+	    background-color: rgba(231, 231, 231, 1);
+	  }
+	  
+	  .dashmenu-content .menu-li {
+	    border-radius: 10px;
+	    margin-top: 0.375rem;
+	    margin-bottom: 0.375rem;
+	    padding-top: 1rem;
+	    padding-bottom: 1rem;
+	    padding-left: 1.5rem;
+	    padding-right: 1.5rem;
+	  }
+	  
+	  .dashmenu-content .menu-li.on {
+	    
+	    background-color: rgba(242, 242, 242, 1);
+	  }
+	
+	  .min-w-max{min-width:-webkit-max-content;min-width:-moz-max-content;min-width:max-content}
+	
+	  .w-80{width:20rem}
+	  .min-h-screen{min-height:100vh}
+	
+	  .wp-card{background-color:rgba(242, 242, 242, 0.719);border-radius:10px;display:inline-block;margin-bottom:1.25rem;padding:2rem;position:relative;width:100%}
+	 
+		
+	  /* Toggle Button */
+	.cm-toggle {
+		-webkit-appearance: none;
+		-webkit-tap-highlight-color: transparent;
+		position: relative;
+		border: 0;
+		outline: 0;
+		cursor: pointer;
+		margin: 10px;
+	}
+	
+	/* To create surface of toggle button */
+	.cm-toggle:after {
+		content: '';
+		width: 60px;
+		height: 28px;
+		display: inline-block;
+		background: rgba(196, 195, 195, 0.55);
+		border-radius: 18px;
+		clear: both;
+	}
+	
+	/* Contents before checkbox to create toggle handle */
+	.cm-toggle:before {
+		content: '';
+		width: 32px;
+		height: 32px;
+		display: block;
+		position: absolute;
+		left: 0;
+		top: -3px;
+		border-radius: 50%;
+		background: rgb(255, 255, 255);
+		box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+	}
+	
+	/* Shift the handle to left on check event */
+	.cm-toggle:checked:before {
+		left: 32px;
+		box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6);
+	}
+	/* Background color when toggle button will be active */
+	.cm-toggle:checked:after {
+		background: #45c96670;
+	} 	
+	
+    .pagination > li > a { color: #272727; font-weight: bold;}
+
+    .pagination > li > a:focus,
+    .pagination > li > a:hover,
+    .pagination > li > span:focus,
+    .pagination > li > span:hover
+    { color: #272727; background-color: #eee; border-color: #686868; box-shadow: 0 0 1px #272727 !important;}
+
+    .pagination > .active > a { color: white; background-color: #272727 !Important; border: solid 1px #272727 !Important; box-shadow: 0 0 1px #272727 !important;}
+
+    .pagination > .active > a:hover {background-color: #272727 !Important; border: solid 1px #272727; box-shadow: 0 0 1px #272727 !important;}
+    
+       .searchbar-frame-m {
+        background-image: -moz-linear-gradient(right, #000000cc, #7c23237c); /* FF3.6 */
+        background-image: -webkit-gradient(linear,left top,right bottom,color-stop(0, #000000cc),color-stop(1, #7c23237c)); /* Saf4+, Chrome */
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#7485c9', EndColorStr='#f16300'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#7485c9', EndColorStr='#f16300')"; /* IE8 */
+        background-image: -ms-linear-gradient(right, #000000cc 0%, #7c23237c 100%); /* IE10 */
+
+        border-radius: 9999px;
+        cursor: pointer;
+        padding: 0.2rem;
+        position: static;
+    }
+
+    .searchbar-frame-m:hover {
+        background-image: -moz-linear-gradient(right, #000000f1, #aa0808b6); /* FF3.6 */
+        background-image: -webkit-gradient(linear,left top,right bottom,color-stop(0, #000000f1),color-stop(1, #aa0808b6)); /* Saf4+, Chrome */
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#7485c9', EndColorStr='#f16300'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#7485c9', EndColorStr='#f16300')"; /* IE8 */
+        background-image: -ms-linear-gradient(right, #000000f1 0%, #aa0808b6 100%); /* IE10 */
+
+        border-radius: 9999px;
+        cursor: pointer;
+        padding: 0.2rem;
+        position: static;
+    }
+
+    .searchmain-inner-m {
+        background-color: rgba(255, 255, 255, 1);
+        border-radius: 9999px;
+        cursor: pointer;
+        height: 2.25rem;
+        line-height: 2.5rem;
+        padding: 0.5px;
+        padding-left: 1rem;
+        padding-right: 0.25rem;
+        position: relative;
+        width: 100%;
+    }
+
+    .searchmain-text-m {
+        border-width:0;
+        font-size:1rem;
+        font-weight: bold;
+        line-height:0.5;
+        margin-top:0;
+        margin-left:1rem;
+        padding:0;        
+        }
+        
+	.project-money {
+        font-family: 'Futura', sans-serif;
+        font-weight: 550;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0;
+    }    
+    	    
+    .border-box-top-divider {border-top: 2px solid rgba(138, 137, 137, 0.596);}
+    
+    .group-btns {
+        display: inline-block;
+        margin-bottom: 0.625rem;
+    }    
+    
+    .btn-medium {
+    display: inline-block;
+    text-align: center;
+    margin:3px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    }              
+        
+    .btn-cl-dred{
+        background-color: #ffffff;
+      
+        border-color: #999898;
+        border-width: 2px;
+        border-style: solid;
+        
+        color: #6b6b6b;
+    }
+    
+	.btn-cf-dred{  background-color: rgba(238, 24, 24, 0.815);  color: rgb(255, 255, 255); }    
+    
+    .btn-cf-dpink{  background-color: rgba(243, 220, 11, 0.815);  color: rgb(255, 255, 255); }
+    
+    .etext-h2{ font-size: 1.5rem; font-weight: 600;}
+    .eblank-h2{ margin-top: 5rem; margin-bottom: 0.625rem;}    
+    .etext-p{ font-size: 1rem;}
+    
+    .modal-row {
+    	padding-left: 1rem;
+    	padding-right: 1rem;
+    	height: 100%;
+    }    
+    
+    #modal-dialog {
+    	pointer-events: auto;
+    	overflow-y: auto !important;
+    	overflow-x: hidden;
+    	
+    	border-radius: 5px;
+    	border : 1px solid white;
+    }    
+        	
+ 	</style>
+	
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		const sessionBizUser =  /*[[ ${session.sessionBizUser} ]]*/;
+		/*]]*/
+		const sessionUser = null;
+		
+		var detailtModal = null;
+		
+		var searchKeyword = "";
+		var pageNum = 1;
+		var startPage = 1;
+		var endPage = 1;
+		var currentPage = 1;
+		var totalPage = 1;
+		var project_state = "ALL";				
+				
+		window.addEventListener("DOMContentLoaded" , function(){
+			var modalRoot = document.getElementById('detailModal');
+    		detailModal = new bootstrap.Modal(modalRoot); 
+			
+			loadMyProjectData();			
+		});				
+		
+		
+		function loadMyProjectData(isInit=false) {
+			var xhr = new XMLHttpRequest();
+			
+			if(isInit) {
+				searchKeyword = "";
+				pageNum = 1;
+				startPage = 1;
+				endPage = 1;
+				currentPage = 1;
+				totalPage = 1;
+				project_state = "ALL";					
+			}
+			
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					var data = JSON.parse(xhr.responseText);
+					
+					createProjectBox(data.totalCount, data.projectList);
+					
+					startPage = data.startPage;
+					endPage = data.endPage;
+					pageNum = data.currentPage;
+					totalPage = data.totalPage;
+					
+					createPagination();
+				}
+			};
+			
+			xhr.open("get", "./getMyProjectList?member_no=" + sessionBizUser.member_no + 
+					"&pageNum=" + pageNum + "&searchKeyword=" + searchKeyword + "&project_state=" + project_state, false);
+			xhr.send();
+		}
+		
+		function createProjectBox(totalCount, projectList) {
+			var root = document.querySelector("#rootContainer");
+			root.innerHTML = "";
+			
+			var countRow = document.createElement("div");
+			countRow.setAttribute("class", "row mb-2");
+			var countBlank = document.createElement("div");
+			countBlank.setAttribute("class", "col");
+			var count = document.createElement("div");
+			count.setAttribute("class", "col-3 text-fs-13 pl-8");
+			count.innerText = totalCount + "건이 검색되었습니다";
+			countRow.appendChild(countBlank);
+			countRow.appendChild(count);
+			
+			var searchContinaer = document.createElement("div");
+			searchContinaer.setAttribute("class", "row mb-5");
+			var searchCol = document.createElement("div");
+			searchCol.setAttribute("class", "col");
+			var searchFrame = document.createElement("div");
+			searchFrame.setAttribute("class", "searchbar-frame-m");
+			var searchMain = document.createElement("div");
+			searchMain.setAttribute("class", "searchmain-inner-m");
+			var searchInput = document.createElement("input");
+			searchInput.setAttribute("class", "etext-base searchmain-text-m w-10_12 items-center");
+			searchInput.setAttribute("id", "searchBar");
+			searchInput.setAttribute("type", "text");
+			searchInput.setAttribute("placeholder", "내 프로젝트 간편 검색");
+			searchInput.setAttribute("onKeypress", "javascript:if(event.keyCode==13) {search()}");
+			searchInput.setAttribute("value", searchKeyword);
+			var searchBtn = document.createElement("button");
+			searchBtn.setAttribute("class", "btn-border-none absolute ms-2");
+			searchBtn.setAttribute("onclick", "search()");
+			var searchI = document.createElement("i");
+			searchI.setAttribute("class", "bi bi-search text-fs-20");
+			searchI.setAttribute("style", "color: #291d44;");
+			searchBtn.appendChild(searchI);
+			searchMain.appendChild(searchInput);
+			searchMain.appendChild(searchBtn);
+			searchFrame.appendChild(searchMain);
+			searchCol.appendChild(searchFrame);
+			searchContinaer.appendChild(searchCol);
+			
+			root.appendChild(countRow);
+			root.appendChild(searchContinaer);
+			
+			var stateBox = document.createElement("div");
+			stateBox.setAttribute("class", "row");
+			var stateBlank = document.createElement("div");
+			stateBlank.setAttribute("class", "col");
+			var state = document.createElement("div");
+			state.setAttribute("class", "col-2 text-fs-13 bold text-gray-c_3c ms-3 relative");
+			var stateCheck = document.createElement("input");
+			stateCheck.setAttribute("type", "checkbox");
+			stateCheck.setAttribute("name", "stateBox");
+			stateCheck.setAttribute("onchange", "checkState(this)");
+			if(project_state == "Y") {
+				stateCheck.checked = true;
+			} else {
+				stateCheck.checked = false;
+			}
+			var stateSpan = document.createElement("div");
+			stateSpan.setAttribute("class", "absolute");
+			stateSpan.setAttribute("style", "top:-8%; left:23%");
+			stateSpan.innerText = " 모집마감 제외";
+			state.appendChild(stateCheck);
+			state.appendChild(stateSpan);
+			stateBox.appendChild(stateBlank)
+			stateBox.appendChild(state)
+			root.appendChild(stateBox);
+			
+			for(var project of projectList) {
+				var projectContainer = document.createElement("div");
+				projectContainer.setAttribute("class", "row projectBox cursor-pointer");
+				projectContainer.setAttribute("onclick", "loadModalData(" + project.projectVo.project_no + ")");
+				var wpCard = document.createElement("div");
+				wpCard.setAttribute("class", "col wp-card");
+				
+				var dateBox = document.createElement("div");
+				dateBox.setAttribute("class", "row");
+				var dateBlank = document.createElement("div");
+				dateBlank.setAttribute("class", "col");
+				var date = document.createElement("div");
+				date.setAttribute("class", "col-3 text-fs-13 text-gray-c_8c pl-12");
+				dateBox.appendChild(dateBlank);
+				dateBox.appendChild(date);				
+				wpCard.appendChild(dateBox);
+				
+				var titleBox = document.createElement("div");
+				titleBox.setAttribute("class", "row");
+				var title = document.createElement("div");
+				title.setAttribute("class", "col text-h2 text-gray-c_25");
+				title.innerText = project.projectVo.project_name;
+				var projectNo = document.createElement("input");
+				projectNo.setAttribute("type", "hidden");
+				projectNo.setAttribute("value", project.projectVo.project_no);
+				titleBox.appendChild(title);
+				wpCard.appendChild(titleBox);
+				
+				var badgeBox = document.createElement("div");
+				badgeBox.setAttribute("class", "row");
+				var badgeCol = document.createElement("div");
+				badgeCol.setAttribute("class", "col");
+				for(var job of project.jobVoList) {
+					var jobSpan = document.createElement("span");
+					jobSpan.setAttribute("class", "btn-small btn-cf-blue");
+					jobSpan.innerText = job.job_name;
+					badgeCol.appendChild(jobSpan);
+				}
+				var localSpan = document.createElement("span");
+				localSpan.setAttribute("class", "btn-small btn-cf-blue");
+				localSpan.innerText = project.localVo.local_name;
+				var periodSpan = document.createElement("span");
+				periodSpan.setAttribute("class", "btn-small btn-cf-blue");
+				periodSpan.innerText = project.projectVo.project_period;
+				var priceSpan = document.createElement("span");
+				priceSpan.setAttribute("class", "btn-small btn-cf-blue");
+				priceSpan.innerText = project.projectVo.project_price;
+				badgeCol.appendChild(localSpan);
+				badgeCol.appendChild(periodSpan);
+				badgeCol.appendChild(priceSpan);
+				if(project.isAd) {
+					var adSpan = document.createElement("span");
+					adSpan.setAttribute("class", "btn-small btn-cf-dred bold text-fs-13");
+					adSpan.innerText = "📢광고 사용 중";
+					badgeCol.appendChild(adSpan);
+				}		
+				badgeBox.appendChild(badgeCol);				
+				wpCard.appendChild(badgeBox);
+		
+				var botContainer = document.createElement("div");
+				botContainer.setAttribute("class", "row");
+				
+				var col1 = document.createElement("div");
+				col1.setAttribute("class", "col");
+				var toggleBox = document.createElement("div");
+				toggleBox.setAttribute("class", "row w-full mt-3");
+				var toggleCol = document.createElement("div");
+				toggleCol.setAttribute("class", "col text-fs-13 relative");
+				var completeSpan = document.createElement("span");
+				completeSpan.setAttribute("class", "text-gray-c_3c bold absolute");
+				completeSpan.setAttribute("style", "top:55%");				
+				completeSpan.innerText = "마감";
+				var toggle = document.createElement("input");
+				toggle.setAttribute("class", "cm-toggle absolute");
+				toggle.setAttribute("style", "top:30%; left:6%");
+				toggle.setAttribute("type", "checkbox");
+				toggle.setAttribute("name", "checkbox");
+				toggle.setAttribute("onclick", "modifyProject(event, this, " + project.projectVo.project_no + ")");
+				if(project.projectVo.project_state == "Y") {
+					toggle.checked = true;
+				} else {
+					toggle.checked = false;
+				}
+				var ingSpan = document.createElement("span");
+				ingSpan.setAttribute("class", "text-green-dsoft bold absolute");
+				ingSpan.setAttribute("style", "top:55%; left:27%");				
+				ingSpan.innerText = "진행 중";
+				toggleCol.appendChild(completeSpan);
+				toggleCol.appendChild(toggle);
+				toggleCol.appendChild(ingSpan);
+				toggleBox.appendChild(toggleCol);				
+				col1.appendChild(toggleBox);
+				botContainer.appendChild(col1);
+				
+				var col2 = document.createElement("div");
+				col2.setAttribute("class", "col-4");
+				
+				var readBox = document.createElement("div");
+				readBox.setAttribute("class", "row pt-6");
+				var readCol = document.createElement("div");
+				readCol.setAttribute("class", "col");
+				var read1 = document.createElement("span");
+				read1.setAttribute("class", "float-right bold text-gray-c_3c text-fs-14 me-1");
+				read1.innerText = "💗 총 ";
+				var readCount = document.createElement("span");
+				readCount.setAttribute("class", "float-right bold text-red-soft text-fs-14");
+				readCount.innerText = " " + project.projectVo.project_readCount + "명";
+				var read2 = document.createElement("span");
+				read2.setAttribute("class", "float-right bold text-gray-c_3c text-fs-14");
+				read2.innerText = "이 조회했어요";
+				readCol.appendChild(read2);
+				readCol.appendChild(readCount);
+				readCol.appendChild(read1);				
+				
+				readBox.appendChild(readCol);
+				var scrapBox = document.createElement("div");
+				scrapBox.setAttribute("class", "row");
+				var scrapCol = document.createElement("div");
+				scrapCol.setAttribute("class", "col");
+				var scrap1 = document.createElement("span");
+				scrap1.setAttribute("class", "float-right bold text-gray-c_3c text-fs-14 me-1");
+				scrap1.innerText = "⭐ 총 ";
+				var scrapCount = document.createElement("span");
+				scrapCount.setAttribute("class", "float-right bold text-red-soft text-fs-14");
+				scrapCount.innerText = " " + project.scrapCount + "명";
+				var scrap2 = document.createElement("span");
+				scrap2.setAttribute("class", "float-right bold text-gray-c_3c text-fs-14");
+				scrap2.innerText = "의 관심을 받고 있어요";
+				
+				scrapCol.appendChild(scrap2);
+				scrapCol.appendChild(scrapCount);
+				scrapCol.appendChild(scrap1);
+				
+				scrapBox.appendChild(scrapCol);
+				col2.appendChild(readBox);
+				col2.appendChild(scrapBox);
+				botContainer.appendChild(col2);
+				wpCard.appendChild(botContainer);
+				
+				projectContainer.appendChild(wpCard);
+				root.appendChild(projectContainer);
+			}					
+		}
+		
+		function createPagination() {
+
+			var row = document.createElement("div");
+			row.setAttribute("class", "row");
+			var col = document.createElement("div");
+			col.setAttribute("class", "col");
+			var nav = document.createElement("nav");
+			nav.setAttribute("aria-label", "Page navigation example");
+			
+			var root = document.createElement("ul");
+			root.setAttribute("class", "pagination justify-center")
+			
+			var lt = document.createElement("li");
+			if(startPage <= 1) {
+				lt.setAttribute("class", "page-item disabled");
+			} else {
+				lt.setAttribute("class", "page-item cursor-pointer");
+				lt.setAttribute("onclick", "movePage(this)");
+			}
+			var lt_a = document.createElement("a");
+			lt_a.setAttribute("class", "page-link");
+			lt_a.innerText = "<"
+			lt.appendChild(lt_a);
+			root.appendChild(lt);
+			
+			for(var i=startPage;i<=endPage;i++) {
+				var li = document.createElement("li");
+				li.setAttribute("class", "page-item cursor-pointer")
+				if(i == currentPage) {
+					li.classList.add("active");
+				}
+				li.setAttribute("onclick", "movePage(this)");
+				var a = document.createElement("a");
+				a.setAttribute("class", "page-link");
+				a.innerText = i;
+				
+				li.appendChild(a);
+				root.appendChild(li);
+			}
+			
+			var gt = document.createElement("li");
+			if(endPage >= totalPage) {
+				gt.setAttribute("class", "page-item disabled");
+			} else {
+				gt.setAttribute("class", "page-item cursor-pointer");
+				gt.setAttribute("onclick", "movePage(this)");
+			}
+			var gt_a = document.createElement("a");
+			gt_a.setAttribute("class", "page-link");
+			gt_a.innerText = ">"
+			gt.appendChild(gt_a);
+			root.appendChild(gt);
+			window.scrollTo(0,0);
+
+			nav.appendChild(root);
+			col.appendChild(nav);
+			row.appendChild(col);
+			document.querySelector("#rootContainer").appendChild(row);
+			
+		}
+		
+		function loadModalData(project_no) {
+			
+			var xhr = new XMLHttpRequest();
+			
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					var data = JSON.parse(xhr.responseText);
+					
+					createProjectModal(data);
+					
+					detailModal.show();   
+				}
+			};
+			
+			xhr.open("get", "getProjectDetail?project_no=" + project_no, false);
+			xhr.send();				
+			
+		}
+		
+		function modifyProject(event, obj, project_no) {
+			//event.preventDefault();
+			event.stopImmediatePropagation();
+			
+			//event.stopPropagation();						
+			
+			var newState = (obj.checked) ? "Y" : "N";
+			
+			var xhr = new XMLHttpRequest();
+			
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					var data = JSON.parse(xhr.responseText);
+					
+					if(newState == "N" && project_state == "Y") {
+						obj.closest(".projectBox").remove();
+					}
+				}
+			};
+			
+			xhr.open("get", "modifyProjectState?project_no=" + project_no + "&project_state=" + newState, true);
+			xhr.send();	
+
+		}
+		
+	    function createProjectModal(data) {    	
+	    	var modalRoot = document.querySelector("#detailModal");
+	    	modalRoot.innerHTML = "";    	
+	    	
+			var modal = document.createElement("div");
+			modal.setAttribute("id", "modal-dialog");
+			modal.setAttribute("class", "modal-dialog modal-lg modal-dialog-scrollable");		
+			
+			var row = document.createElement("div");
+			row.setAttribute("class", "modal-row row");
+			row.setAttribute("style", "background-color: white;");			
+			
+			var col = document.createElement("div");
+			col.setAttribute("class", "col");
+			
+			var eframe = document.createElement("div");
+			eframe.setAttribute("class", "eframe-width py-6 mt-4 mx-auto");
+			
+			var scrapCountDiv = document.createElement("div");
+			scrapCountDiv.setAttribute("class", "inline-block float-right text-fs-15 bold text-gray-c_3c pl-15");
+			var scrapCountSpan = document.createElement("span");
+			scrapCountSpan.setAttribute("class", "text-red-soft");
+			scrapCountSpan.innerText = data.scrapCount + "명";
+			var scrapCountSpan2 = document.createElement("span");
+			scrapCountSpan2.innerText = "의 관심을 받고 있어요";
+			scrapCountDiv.appendChild(scrapCountSpan);
+			scrapCountDiv.appendChild(scrapCountSpan2);
+			
+			var projectName = document.createElement("div");
+			projectName.setAttribute("class", "mb-4 text-fs-40 font-extrabold inline-block");
+			projectName.innerText = data.data.projectBoardVo.project_name;
+			
+			var projectMoney = document.createElement("div");
+			projectMoney.setAttribute("class", "project-money");
+			projectMoney.innerText = data.data.projectBoardVo.project_price;
+			
+			var btnGroup1 = document.createElement("span");
+			btnGroup1.setAttribute("class", "group-btns w-full mt-10");
+			var btn1_1 = document.createElement("span");
+			btn1_1.setAttribute("class", "btn-medium btn-cl-dred");
+			btn1_1.innerText = data.data.projectBoardVo.project_period;
+			btnGroup1.appendChild(btn1_1);
+			if(data.data.projectBoardVo.workType_no != 4) {
+				var btn1_2 = document.createElement("span");
+				btn1_2.setAttribute("class", "btn-medium btn-cl-dred");
+				btn1_2.innerText = data.data.localCategoryVo.local_name;
+				btnGroup1.appendChild(btn1_2);
+			}
+			for(var jobVo of data.data.jobCategoryVoList) {
+				var btn1_3 = document.createElement("span");
+				btn1_3.setAttribute("class", "btn-medium btn-cl-dred");
+				btn1_3.innerText = jobVo.job_name;
+				btnGroup1.appendChild(btn1_3);
+			}
+			
+			var btnGroup2 = document.createElement("span");
+			btnGroup1.setAttribute("class", "group-btns w-full");
+			var btn2_1 = document.createElement("span");
+			btn2_1.setAttribute("class", "btn-medium btn-cf-dpink");
+			btn2_1.innerText = data.data.workTypeCategoryVo.workType_name;		
+			var btn2_2 = document.createElement("span");
+			btn2_2.setAttribute("class", "btn-medium btn-cf-dpink");
+			if(data.data.projectBoardVo.cooperation_no == 1) {
+				btn2_2.innerText = data.data.memberVo.member_name;
+			} else {
+				btn2_2.innerText = data.data.cooperationCategoryVo.cooperation_name;
+			}
+			var btn2_3 = document.createElement("span");
+			btn2_3.setAttribute("class", "btn-medium btn-cf-dred");
+			btn2_3.innerText = (data.data.projectBoardVo.project_state == 'Y') ? "접수 중" : "마감";
+			
+			btnGroup2.appendChild(btn2_1);
+			btnGroup2.appendChild(btn2_2);
+			btnGroup2.appendChild(btn2_3);
+			
+			var project_content1 = document.createElement("div");
+			project_content1.setAttribute("class", "etext-h2 eblank-h2 border-box-top-divider mt-4 pt-12");
+			project_content1.innerText = "프로젝트 내용";
+			
+			var project_content2 = document.createElement("div");
+			project_content2.setAttribute("class", "etext-p leading-relaxed bold mt-4 text-gray-c_3c");
+			project_content2.innerText = data.data.projectBoardVo.project_content.replaceAll("<br>", "\n").replaceAll("&nbsp;", " ");
+			
+			var project_more = document.createElement("div");
+			project_more.setAttribute("class", "row mt-3");
+			
+			var botBlank = document.createElement("div");
+			botBlank.setAttribute("class", "col");
+			
+			var botCol = document.createElement("div");
+			botCol.setAttribute("class", "col-3 mt-5");
+			var modifyBtn = document.createElement("button");
+			modifyBtn.setAttribute("class", "btn btn-outline-dark bold text-fs-13 me-3 ms-5");
+			modifyBtn.setAttribute("onclick", "modifyProject(" + data.data.projectBoardVo.project_no + ")");
+			modifyBtn.innerText = "수정";			
+			botCol.appendChild(modifyBtn);
+			var deleteBtn = document.createElement("button");
+			deleteBtn.setAttribute("class", "btn btn-dark bold text-fs-13");
+			deleteBtn.setAttribute("onclick", "deleteProject(" + data.data.projectBoardVo.project_no + ")");
+			deleteBtn.innerText = "삭제";			
+			botCol.appendChild(deleteBtn);
+			
+			project_more.appendChild(botBlank);
+			project_more.appendChild(botCol);
+			
+			eframe.appendChild(scrapCountDiv);
+			eframe.appendChild(projectName);
+			eframe.appendChild(projectMoney);
+			eframe.appendChild(btnGroup1);
+			eframe.appendChild(btnGroup2);
+
+			eframe.appendChild(project_content1);
+			eframe.appendChild(project_content2);
+			eframe.appendChild(project_more);
+			col.appendChild(eframe);
+			row.appendChild(col);
+			modal.appendChild(row);
+			modalRoot.appendChild(modal);
+			
+			detailModal._dialog = modal;		
+
+	    }		
+		
+		function search() {			
+			
+			searchKeyword = document.querySelector("#searchBar").value;
+			pageNum = 1;
+			
+			loadMyProjectData();
+		}		
+		
+		function movePage(obj) {
+			pageNum = obj.innerText;
+			
+			if(pageNum == "<") {
+				pageNum = parseInt(startPage) - 1;
+			} else if(pageNum == ">") {
+				pageNum = parseInt(endPage) + 1;
+			}
+
+			loadMyProjectData();
+		}	
+
+		function checkState(obj) {
+			if(obj.checked) {
+				project_state = "Y";
+				
+			} else {
+				project_state = "ALL";
+			}
+			
+			pageNum = 1;
+			
+			loadMyProjectData();
+		}				
+		
+	</script>
+
+</head>
+<body>
+<div style="width: 1200px; margin:0 auto;">
+  <div class="container-fluid">
+  
+  <th:block th:include="commons/normal_navbar"></th:block>
+
+    <div class="row mt-5">
+        <div class="col">
+            <div id="mainContainer" class="eframe-width w-full mx-auto">
+            	<div class="row relative">
+	            	<div class="col-3 px-0 flex mx-auto bold">
+                        <div class="inline-block stikcy-top min-w-max w-80 min-h-screen">
+                            <div class="dashmenu-content">
+                                <ul>
+                                    <li class="menu-li" onclick="loadMyProjectData(true)">프로젝트 관리</li>
+                                    <li class="menu-li">광고 현황</li>
+                                    <li class="menu-li">회원정보 수정</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="rootContainer" class="col ms-2">
+                    
+                    </div>
+            	</div>				           	            
+            </div>
+        </div>
+    </div>
+
+  </div> 
+</div>
+
+<div id="detailModal" class="modal fade" tabindex="-1" role="dialog">
+	
+</div>
+
+<th:block th:include="commons/footer"></th:block>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

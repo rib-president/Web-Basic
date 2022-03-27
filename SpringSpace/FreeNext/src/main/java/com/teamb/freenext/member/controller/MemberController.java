@@ -225,9 +225,10 @@ public class MemberController {
 									String kakao_profile, int[] job_no_list, int[] local_no_list, 
 									MultipartFile uploadFileThumbnail, MultipartFile uploadFileBizImg) {				
 		
-		String uploadFolder = "C:/freeNext/profileImage/";
-
-		if(uploadFileThumbnail != null || uploadFileBizImg != null || (kakao_profile != null && !kakao_profile.equals(""))) {
+		String uploadFolder = "C:/freeNext/profileImage/";		
+		
+		if((uploadFileThumbnail != null && !uploadFileThumbnail.isEmpty()) || 
+				(uploadFileBizImg != null && !uploadFileBizImg.isEmpty()) || (kakao_profile != null && !kakao_profile.equals(""))) {
 		
 			//날짜별 폴더 생성 2022/01/19/
 			Date today = new Date();
@@ -248,7 +249,7 @@ public class MemberController {
 			long currentTime = System.currentTimeMillis();
 			fileName += "_" + currentTime;			
 			
-			if(uploadFileThumbnail != null) {
+			if(uploadFileThumbnail != null && !uploadFileThumbnail.isEmpty()) {
 				try {
 					//확장자 추가
 					String originalFileName = uploadFileThumbnail.getOriginalFilename();
@@ -271,7 +272,7 @@ public class MemberController {
 				}				
 			}			
 			
-			if(uploadFileBizImg != null) {
+			if(uploadFileBizImg != null && !uploadFileBizImg.isEmpty()) {
 				try {
 					//확장자 추가
 					String originalFileName = uploadFileBizImg.getOriginalFilename();

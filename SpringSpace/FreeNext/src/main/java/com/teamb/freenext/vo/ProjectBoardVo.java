@@ -16,6 +16,7 @@ public class ProjectBoardVo {
 	private String project_url;
 	private Date project_date;
 	private String project_key;
+	private int project_readCount;
 	
 	public ProjectBoardVo() {
 		super();
@@ -23,7 +24,7 @@ public class ProjectBoardVo {
 
 	public ProjectBoardVo(int project_no, int member_no, int workType_no, int recruitType_no, int cooperation_no,
 			String project_name, String project_period, String project_price, String project_state,
-			String project_content, String project_url, Date project_date, String project_key) {
+			String project_content, String project_url, Date project_date, String project_key, int project_readCount) {
 		super();
 		this.project_no = project_no;
 		this.member_no = member_no;
@@ -38,6 +39,7 @@ public class ProjectBoardVo {
 		this.project_url = project_url;
 		this.project_date = project_date;
 		this.project_key = project_key;
+		this.project_readCount = project_readCount;
 	}
 
 	public int getProject_no() {
@@ -143,4 +145,12 @@ public class ProjectBoardVo {
 	public void setProject_key(String project_key) {
 		this.project_key = project_key;
 	}
+
+	public int getProject_readCount() {
+		return project_readCount;
+	}
+
+	public void setProject_readCount(int project_readCount) {
+		this.project_readCount = project_readCount;
+	}		
 }

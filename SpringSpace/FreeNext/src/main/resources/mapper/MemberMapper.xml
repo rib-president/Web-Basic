@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.teamb.freenext.member.mapper.MemberMapper">
+	<select id="selectMemberByNo" resultType="com.teamb.freenext.vo.MemberVo">
+		select *
+		from fn_member
+		where member_no = #{member_no}
+	</select>
+
+
 	<insert id="insertMember">
 		INSERT INTO FN_Member
 		(member_type, member_id, member_pw, member_name,
@@ -104,6 +111,94 @@
 	<select id="getLocalCategoryList" resultType="com.teamb.freenext.vo.LocalCategoryVo">
 		select * from FN_Local_Category order by local_no asc
 	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePw">
+		update FN_Member
+		set member_pw = #{member_pw}
+		where member_no = #{member_no}
+	</update>
+	
+	<!-- 회원정보 수정 -->
+	<update id="updateMemberInfo">
+		update FN_Member
+		set member_name = #{member_name}, member_phone = #{member_phone}, member_email = #{member_email},
+		member_profile = #{member_profile}, member_address = #{member_address}
+		where member_no = #{member_no}
+	</update>
+
+	<update id="updateCustomerInfo">
+		update FN_Member_Customer
+		set customer_birth = #{customer_birth}
+		where member_no = #{member_no}
+	</update>	
+
+	<!-- 희망직종/지역 변경 -->
+	<select id="selectCustomerNo" resultType="int">
+		select customer_no
+		from fn_member_customer
+		where member_no = #{member_no}
+	</select>
+	
+	<delete id="deleteDesiredJob">
+		delete from FN_Customer_Job
+		where customer_no = #{customer_no}
+		and job_no = #{job_no}
+	</delete>
+	
+	<delete id="deleteDesiredJobAll">
+		delete from FN_Customer_Job
+		where customer_no = #{customer_no}
+	</delete>
+	
+	<delete id="deleteJobAlarm">
+		delete from fn_alarm 
+		where member_no = #{member_no}
+		and project_no in (
+			select fp.project_no
+			from fn_projectboard fp, fn_project_job fj
+			where fp.project_no = fj.project_no 
+			and fj.job_no = #{job_no}
+		)	
+	</delete>
+	
+	<delete id="deleteJobAlarmAll">
+		delete from fn_alarm 
+		where member_no = #{member_no}
+	</delete>		
+	
+	<delete id="deleteDesiredLocal">
+		delete from FN_Customer_Local
+		where customer_no = #{customer_no}
+		and local_no = #{local_no}
+	</delete>
+	
+	<delete id="deleteDesiredLocalAll">
+		delete from FN_Customer_Local
+		where customer_no = #{customer_no}
+	</delete>	
+	
+	<delete id="deleteLocalAlarm">
+		delete from fn_alarm 
+		where member_no = #{member_no}
+		and project_no in (
+			select fp.project_no
+			from fn_projectboard fp, fn_project_local fj
+			where fp.project_no = fj.project_no 
+			and fj.local_no = #{local_no}
+		)	
+	</delete>
+	
+	<delete id="deleteLocalAlarmAll">
+		delete from fn_alarm 
+		where member_no = #{member_no}
+		and project_no in (
+			select fp.project_no
+			from fn_projectboard fp, fn_project_local fj
+			where fp.project_no = fj.project_no 
+			and fj.local_no in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+		)	
+	</delete>	
 	
 	<!-- 메일인증 확인 -->
 	<select id="checkMailAuthByMemberNo" resultType="int">

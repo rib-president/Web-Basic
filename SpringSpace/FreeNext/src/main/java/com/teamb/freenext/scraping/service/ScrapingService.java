@@ -758,7 +758,7 @@ public class ScrapingService {
 							scrapingMapper.insertOrUpdate(data);
 							
 							for(String job : job_no.split(",")) {
-								registAlarm(Integer.parseInt(job), 0, (Integer) data.get("pk"));	
+								registAlarm(Integer.parseInt(job), local_no, (Integer) data.get("pk"));	
 							}
 							
 							if(hasEndKey) cnt++;
@@ -862,20 +862,36 @@ public class ScrapingService {
 	}
 	
 	public void registAlarm(int job_no, int local_no, int project_no) {
-		ArrayList<Integer> memberList = scrapingMapper.selectJobAlarmMember(job_no);
+		ArrayList<Integer> jobMemberList = scrapingMapper.selectJobAlarmMember(job_no);
 		ArrayList<Integer> localMemberList = scrapingMapper.selectLocalAlarmMember(local_no);
 
-//		 합집합
-//		Set<Integer> set = new LinkedHashSet<>(memberList);
-//      set.addAll(localMemberList);
-//      ArrayList<Integer> unionMemberList = new ArrayList<>(set);
+		// 차집합(for only local, only job)		
+		ArrayList<Integer> onlyLocalOrJobMemberList = new ArrayList<>();
 		
+		for(int member_no : jobMemberList) {
+			if(scrapingMapper.countDesiredLocalOfMember(member_no) == 0) {
+				onlyLocalOrJobMemberList.add(member_no);
+			}
+		}
+		
+		for(int member_no : localMemberList) {
+			if(scrapingMapper.countDesiredJobOfMember(member_no) == 0) {
+				onlyLocalOrJobMemberList.add(member_no);
+			}
+		}		
+						
 		// 교집합
 		if(local_no != 0) {
-			memberList.retainAll(localMemberList);	
-		}		
+			jobMemberList.retainAll(localMemberList);
+		}
+		
+		// 차집합 + 교집합 (중복제거)
+		Set<Integer> set = new LinkedHashSet<>(jobMemberList);
+        set.addAll(onlyLocalOrJobMemberList);
+        ArrayList<Integer> unionMemberList = new ArrayList<>(set);		
+		
          
-        for(int member_no : memberList) {
+        for(int member_no : unionMemberList) {
         	HashMap<String, Object> data = new HashMap<>();
         	data.put("in_member_no", member_no);
         	data.put("in_project_no", project_no);
