@@ -48,7 +48,8 @@
 	  .min-h-screen{min-height:100vh}
 	
 	  .wp-card{background-color:rgba(242, 242, 242, 0.719);border-radius:10px;display:inline-block;margin-bottom:1.25rem;padding:2rem;position:relative;width:100%}
-	 
+	  	  
+	  .wp-card:hover{background-color:rgba(164, 210, 218, 0.363);}	 
 		
 	  /* Toggle Button */
 	.cm-toggle {
@@ -216,7 +217,24 @@
     	
     	border-radius: 5px;
     	border : 1px solid white;
-    }    
+    }  
+    
+	#load { 
+        width: 100%; 
+        height: 100%; 
+        top: 0; left: 0; 
+        position: fixed; 
+        display:none;
+        opacity: 0.6; 
+        background: white; 
+        z-index: 99999; 
+        text-align: center;
+    }
+    
+     #load.show { display:block }
+    
+    #load > img { position: absolute; top: 35%; left: 45%; z-index: 100; }
+
         	
  	</style>
 	
@@ -240,9 +258,27 @@
 			var modalRoot = document.getElementById('detailModal');
     		detailModal = new bootstrap.Modal(modalRoot); 
 			
-			loadMyProjectData();			
+			loadMyProjectData(true);			
 		});				
 		
+		
+		function selectMenu(obj) {
+			
+			for(var e of document.querySelectorAll("menu-li.on")) {
+				e.classList.remove("on");
+			}
+			
+			obj.classList.add("on");
+			
+			if(obj.id == "manageProject") {								
+				loadMyProjectData(true);
+			} else if(obj.id == "adStatus") {
+				
+			} else if(obj.id == "profile"){
+				
+			}
+			
+		}
 		
 		function loadMyProjectData(isInit=false) {
 			var xhr = new XMLHttpRequest();
@@ -265,7 +301,7 @@
 					
 					startPage = data.startPage;
 					endPage = data.endPage;
-					pageNum = data.currentPage;
+					currentPage = data.currentPage;
 					totalPage = data.totalPage;
 					
 					createPagination();
@@ -350,6 +386,7 @@
 			for(var project of projectList) {
 				var projectContainer = document.createElement("div");
 				projectContainer.setAttribute("class", "row projectBox cursor-pointer");
+				projectContainer.setAttribute("id", "project_" + project.projectVo.project_no);
 				projectContainer.setAttribute("onclick", "loadModalData(" + project.projectVo.project_no + ")");
 				var wpCard = document.createElement("div");
 				wpCard.setAttribute("class", "col wp-card");
@@ -424,7 +461,7 @@
 				toggle.setAttribute("style", "top:30%; left:6%");
 				toggle.setAttribute("type", "checkbox");
 				toggle.setAttribute("name", "checkbox");
-				toggle.setAttribute("onclick", "modifyProject(event, this, " + project.projectVo.project_no + ")");
+				toggle.setAttribute("onclick", "modifyProjectState(event, this, " + project.projectVo.project_no + ")");
 				if(project.projectVo.project_state == "Y") {
 					toggle.checked = true;
 				} else {
@@ -571,11 +608,9 @@
 			
 		}
 		
-		function modifyProject(event, obj, project_no) {
-			//event.preventDefault();
-			event.stopImmediatePropagation();
-			
-			//event.stopPropagation();						
+		function modifyProjectState(event, obj, project_no) {
+		
+			event.stopImmediatePropagation();									
 			
 			var newState = (obj.checked) ? "Y" : "N";
 			
@@ -585,9 +620,16 @@
 				if(xhr.readyState == 4 && xhr.status == 200) {
 					var data = JSON.parse(xhr.responseText);
 					
-					if(newState == "N" && project_state == "Y") {
+					/*if(newState == "N" && project_state == "Y") {
 						obj.closest(".projectBox").remove();
+					}*/
+					
+					if(document.querySelectorAll(".projectBox").length <= 1 && newState == "N" && project_state == "Y") {
+						pageNum--;
 					}
+					
+					loadMyProjectData();
+					
 				}
 			};
 			
@@ -689,7 +731,7 @@
 			botCol.setAttribute("class", "col-3 mt-5");
 			var modifyBtn = document.createElement("button");
 			modifyBtn.setAttribute("class", "btn btn-outline-dark bold text-fs-13 me-3 ms-5");
-			modifyBtn.setAttribute("onclick", "modifyProject(" + data.data.projectBoardVo.project_no + ")");
+			modifyBtn.setAttribute("onclick", "modifyProjectPage(" + data.data.projectBoardVo.project_no + ")");
 			modifyBtn.innerText = "수정";			
 			botCol.appendChild(modifyBtn);
 			var deleteBtn = document.createElement("button");
@@ -743,14 +785,603 @@
 			if(obj.checked) {
 				project_state = "Y";
 				
+				var pBoxes = document.querySelectorAll(".projectBox ");
+				if(pBoxes.length == 1 && !pBoxes[0].getElementsByClassName("cm-toggle")[0].checked) {
+					pageNum--;
+				}
+				
 			} else {
 				project_state = "ALL";
-			}
-			
-			pageNum = 1;
+			}						
 			
 			loadMyProjectData();
-		}				
+		}
+		
+		function deleteProject(project_no) {
+			var xhr = new XMLHttpRequest();
+			
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					var data = JSON.parse(xhr.responseText);
+					
+					detailModal.hide();  
+					
+					var pBoxes = document.querySelectorAll(".projectBox ");
+					if(pBoxes.length == 1) {
+						pageNum--;
+					}
+					
+					loadMyProjectData();
+				}
+			};
+			
+			xhr.open("get", "../biz/deleteProject?project_no=" + project_no, false);
+			xhr.send();				
+		}
+		
+		function modifyProjectPage(project_no) {
+			
+			var xhr = new XMLHttpRequest();
+			
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					var data = JSON.parse(xhr.responseText);
+					
+					createModifyModal(data.data, data.jobCategoryList, data.localCategoryList, data.workTypeCategoryList,
+							data.recruitTypeCategoryList, data.adVo);
+				}
+			};
+			
+			xhr.open("get", "../biz/modifyProjectPage?project_no=" + project_no, true);
+			xhr.send();	
+		}
+		
+		function createModifyModal(data, jobCategoryList, localCategoryList, workTypeCategoryList,
+				recruitTypeCategoryList, adVo) {
+			var modalRoot = document.querySelector("#detailModal");
+	    	modalRoot.innerHTML = "";    	
+	    	
+			var modal = document.createElement("div");
+			modal.setAttribute("id", "modal-dialog");
+			modal.setAttribute("class", "modal-dialog modal-lg modal-dialog-scrollable");		
+			
+			var form = document.createElement("form");
+			form.setAttribute("id", "modifyFrm");
+			var container = document.createElement("div");
+			container.setAttribute("class", "modal-row row");			
+			container.setAttribute("style", "background-color: white;");		
+			
+			var mainCol = document.createElement("div");
+			mainCol.setAttribute("class", "col rounded-10 px-20 pt-10 pb-10");			
+			
+			var titleRow = document.createElement("div");
+			titleRow.setAttribute("class", "row mt-4");
+			var title = document.createElement("div");
+			title.setAttribute("class", "col bold text-fs-30 mb-3 pl-5 text-gray-c_25");
+			title.setAttribute("style", "border-left:3px solid black;");
+			title.innerText = "프로젝트 수정 ✍ ";
+			titleRow.appendChild(title);
+			mainCol.appendChild(titleRow);
+			
+			var contentRow = document.createElement("div");
+			contentRow.setAttribute("class", "row mt-5");
+			var contentCol = document.createElement("div");
+			contentCol.setAttribute("class", "col");
+			
+			var nameRow = document.createElement("div");
+			nameRow.setAttribute("class", "row");
+			var nameCol1 = document.createElement("div");
+			nameCol1.setAttribute("class", "col-2 bold pt-2");
+			nameCol1.innerText = "프로젝트명";
+			var nameCol2 = document.createElement("div");
+			nameCol2.setAttribute("class", "col");
+			var nameInput = document.createElement("input");
+			nameInput.setAttribute("class", "form-control");
+			nameInput.setAttribute("id", "nameBox");
+			nameInput.setAttribute("type", "text");
+			nameInput.setAttribute("name", "project_name");
+			nameInput.value = data.projectBoardVo.project_name;
+			nameCol2.appendChild(nameInput);
+			nameRow.appendChild(nameCol1);
+			nameRow.appendChild(nameCol2);
+			contentCol.appendChild(nameRow);
+			
+			var clsRow = document.createElement("div");
+			clsRow.setAttribute("class", "row mt-3");
+			var clsCol1 = document.createElement("div");
+			clsCol1.setAttribute("class", "col-2 pt-2 bold");
+			clsCol1.innerText = "분야";
+			var clsCol2 = document.createElement("div");
+			clsCol2.setAttribute("class", "col");
+			var recruitSelect = document.createElement("select");
+			recruitSelect.setAttribute("class", "form-control");
+			recruitSelect.setAttribute("name", "recruitType_no");
+			var defaultOption = document.createElement("option");
+			defaultOption.setAttribute("id", "invalidRecruitType");
+			//defaultOption.selected = true;
+			defaultOption.value = 0;
+			defaultOption.innerText = "구분선택";
+			recruitSelect.appendChild(defaultOption);
+			for(var recruitType of recruitTypeCategoryList) {
+				var option = document.createElement("option");			
+				option.value = recruitType.recruitType_no;
+				option.innerText = recruitType.recruitType_name;
+				if(data.projectBoardVo.recruitType_no == recruitType.recruitType_no) {
+					option.selected = true;
+				}
+				recruitSelect.appendChild(option);
+			}
+			clsCol2.appendChild(recruitSelect);
+			var clsCol3 = document.createElement("div");
+			clsCol3.setAttribute("class", "col");
+			var jobSelect = document.createElement("select");
+			jobSelect.setAttribute("class", "form-control");
+			jobSelect.setAttribute("id", "jobCategory");
+			jobSelect.setAttribute("name", "job_no_list");
+			var defaultOption = document.createElement("option");
+			defaultOption.setAttribute("id", "invalidJob");
+			//defaultOption.selected = true;
+			defaultOption.value = 0;
+			defaultOption.innerText = "2차 구분선택";
+			jobSelect.appendChild(defaultOption);
+			for(var job of jobCategoryList) {
+				var option = document.createElement("option");			
+				option.value = job.job_no;
+				option.innerText = job.job_name;
+				if(data.jobCategoryVoList[0].job_no == job.job_no) {
+					option.selected = true;
+				}
+				jobSelect.appendChild(option);
+			}
+			clsCol3.appendChild(jobSelect);
+			clsRow.appendChild(clsCol1);
+			clsRow.appendChild(clsCol2);
+			clsRow.appendChild(clsCol3);
+			contentCol.appendChild(clsRow);
+			
+			var localRow = document.createElement("div");
+			localRow.setAttribute("class", "row mt-3");
+			var localCol1 = document.createElement("div");
+			localCol1.setAttribute("class", "col-2 pt-2 bold");
+			localCol1.innerText = "지역";
+			var localCol2 = document.createElement("div");
+			localCol2.setAttribute("class", "col");
+			var localSelect = document.createElement("select");
+			localSelect.setAttribute("class", "form-control");
+			localSelect.setAttribute("name", "local_no_list");
+			localSelect.setAttribute("id", "localBox");
+			var defaultOption = document.createElement("option");
+			defaultOption.setAttribute("id", "invalidLocalType");
+			//defaultOption.selected = true;
+			defaultOption.value = 0;
+			defaultOption.innerText = "지역선택";
+			localSelect.appendChild(defaultOption);
+			for(var local of localCategoryList) {
+				var option = document.createElement("option");			
+				option.value = local.local_no;
+				option.innerText = local.local_name;
+				if(data.localCategoryVo.local_no == local.local_no) {
+					option.selected = true;
+				}
+				localSelect.appendChild(option);
+			}
+			localCol2.appendChild(localSelect);
+			localRow.appendChild(localCol1);
+			localRow.appendChild(localCol2);
+			contentCol.appendChild(localRow);
+			
+			var periodRow = document.createElement("div");
+			periodRow.setAttribute("class", "row mt-3");
+			var periodCol1 = document.createElement("div");
+			periodCol1.setAttribute("class", "col-2 pt-2 bold");
+			periodCol1.innerText = "기간";
+			var periodCol2 = document.createElement("div");
+			periodCol2.setAttribute("class", "col pr-1");
+			var startInput = document.createElement("input");
+			startInput.setAttribute("class", "form-control");
+			startInput.setAttribute("id", "start_date");
+			startInput.setAttribute("type", "date");
+			var startDate = makeDate(data.projectBoardVo.project_period.split("~")[0]);
+			startInput.value = startDate;
+			periodCol2.appendChild(startInput);									
+			var periodCol3 = document.createElement("div");
+			periodCol3.setAttribute("class", "col-1 pt-2 text-center");
+			periodCol3.setAttribute("style", "width:1px;");
+			periodCol3.innerText = "~";
+			var periodCol4 = document.createElement("div");
+			periodCol4.setAttribute("class", "col");
+			var endInput = document.createElement("input");
+			endInput.setAttribute("class", "form-control");
+			endInput.setAttribute("id", "end_date");
+			endInput.setAttribute("type", "date");
+			var endDate = makeDate(data.projectBoardVo.project_period.split("~")[1]);
+			endInput.value = endDate;
+			periodCol4.appendChild(endInput);
+			var periodCol5 = document.createElement("div");
+			periodCol5.setAttribute("class", "col-1 pt-2 pl-1");
+			periodCol5.innerText = "까지";
+			var periodInput = document.createElement("input");
+			periodInput.setAttribute("type", "hidden");
+			periodInput.setAttribute("id", "period");
+			periodInput.setAttribute("name", "project_period");
+			periodRow.appendChild(periodCol1);
+			periodRow.appendChild(periodCol2);
+			periodRow.appendChild(periodCol3);
+			periodRow.appendChild(periodCol4);
+			periodRow.appendChild(periodCol5);
+			periodRow.appendChild(periodInput);
+			contentCol.appendChild(periodRow);
+			
+			var priceRow = document.createElement("div");
+			priceRow.setAttribute("class", "row mt-3");
+			var priceCol1 = document.createElement("div");
+			priceCol1.setAttribute("class", "col-2 pt-2 bold");
+			priceCol1.innerText = "비용";
+			var priceCol2 = document.createElement("div");
+			priceCol2.setAttribute("class", "col");
+			var priceInput = document.createElement("input");
+			priceInput.setAttribute("class", "form-control");
+			priceInput.setAttribute("id", "priceBox");
+			priceInput.setAttribute("type", "text");
+			priceInput.setAttribute("name", "project_price");
+			priceInput.value = data.projectBoardVo.project_price;
+			priceCol2.appendChild(priceInput);
+			priceRow.appendChild(priceCol1);
+			priceRow.appendChild(priceCol2);
+			contentCol.appendChild(priceRow);
+			
+			var workTypeRow = document.createElement("div");
+			workTypeRow.setAttribute("class", "row mt-3");
+			var workTypeCol1 = document.createElement("div");
+			workTypeCol1.setAttribute("class", "col-2 pt-2 bold");
+			workTypeCol1.innerText = "형태";
+			var workTypeCol2 = document.createElement("div");
+			workTypeCol2.setAttribute("class", "col");
+			var workTypeSelect = document.createElement("select");
+			workTypeSelect.setAttribute("class", "form-control");
+			workTypeSelect.setAttribute("name", "workType_no");
+			workTypeSelect.setAttribute("id", "workTypeBox");
+			var defaultOption = document.createElement("option");
+			defaultOption.setAttribute("id", "invalidWorkType");
+			//defaultOption.selected = true;
+			defaultOption.value = 0;
+			defaultOption.innerText = "구분선택";
+			workTypeSelect.appendChild(defaultOption);
+			for(var workType of workTypeCategoryList) {
+				var option = document.createElement("option");			
+				option.value = workType.workType_no;
+				option.innerText = workType.workType_name;
+				if(data.projectBoardVo.workType_no == workType.workType_no) {
+					option.selected = true;
+				}
+				workTypeSelect.appendChild(option);
+			}
+			workTypeCol2.appendChild(workTypeSelect);
+			workTypeRow.appendChild(workTypeCol1);
+			workTypeRow.appendChild(workTypeCol2);
+			contentCol.appendChild(workTypeRow);
+			
+			var writerStateRow = document.createElement("div");
+			writerStateRow.setAttribute("class", "row mt-3");
+			var writerStateCol1 = document.createElement("div");
+			writerStateCol1.setAttribute("class", "col");
+			var writerRow = document.createElement("div");
+			writerRow.setAttribute("class", "row pt-2");
+			var writerCol1 = document.createElement("div");
+			writerCol1.setAttribute("class", "col-4 bold");			
+			writerCol1.innerText = "작성자";
+			var writerCol2 = document.createElement("div");
+			writerCol2.setAttribute("class", "col pl-4");			
+			writerCol2.innerText = sessionBizUser.member_name;
+			writerRow.appendChild(writerCol1);
+			writerRow.appendChild(writerCol2);
+			writerStateCol1.appendChild(writerRow);
+			var writerStateCol2 = document.createElement("div");
+			writerStateCol2.setAttribute("class", "col");
+			var stateRow = document.createElement("div");
+			stateRow.setAttribute("class", "row pt-2");
+			var stateCol1 = document.createElement("div");
+			stateCol1.setAttribute("class", "col-4 bold");			
+			stateCol1.innerText = "진행상태";
+			var stateCol2 = document.createElement("div");
+			stateCol2.setAttribute("class", "col");
+			var ingInput = document.createElement("input");
+			ingInput.setAttribute("type", "radio");
+			ingInput.setAttribute("name", "project_state");	
+			ingInput.setAttribute("style", "height:48%");
+			ingInput.value = "Y";
+			if(data.projectBoardVo.project_state == "Y") {
+				ingInput.checked = true;
+			}
+			var ingSpan = document.createElement("span");
+			ingSpan.setAttribute("class", "ml-1 mr-4")
+			ingSpan.innerText = "진행 중";
+			var doneInput = document.createElement("input");
+			doneInput.setAttribute("type", "radio");
+			doneInput.setAttribute("name", "project_state");
+			doneInput.setAttribute("style", "height:48%");
+			doneInput.value = "N";
+			if(data.projectBoardVo.project_state == "N") {
+				doneInput.checked = true;
+			}
+			var doneSpan = document.createElement("span");
+			doneSpan.setAttribute("class", "ml-1")			
+			doneSpan.innerText = "마감";
+			stateCol2.appendChild(ingInput);
+			stateCol2.appendChild(ingSpan);
+			stateCol2.appendChild(doneInput);
+			stateCol2.appendChild(doneSpan);
+			stateRow.appendChild(stateCol1);
+			stateRow.appendChild(stateCol2);
+			writerStateCol2.appendChild(stateRow);
+			writerStateRow.appendChild(writerStateCol1);
+			writerStateRow.appendChild(writerStateCol2);
+			contentCol.appendChild(writerStateRow);
+			
+			var adRow = document.createElement("div");
+			adRow.setAttribute("class", "row mt-3 pt-2");
+			var adCol1 = document.createElement("div");
+			adCol1.setAttribute("class", "col-2 bold");
+			adCol1.innerText = "광고신청";
+			var adCol2 = document.createElement("div");
+			adCol2.setAttribute("class", "col");
+			if(adVo == null) {
+				var adInput = document.createElement("input");
+				adInput.setAttribute("type", "checkbox");
+				adInput.setAttribute("name", "subAd"); 
+				adInput.value = "Y";
+				var adSpan = document.createElement("span");
+				adSpan.innerText = " 신청하기";
+				adInput.appendChild(adSpan);
+				var adSpan2 = document.createElement("span");
+				adSpan2.setAttribute("class", "ms-2");
+				var payImg = document.createElement("img");
+				payImg.setAttribute("src", "../img/kakaopay.png");
+				payImg.setAttribute("style", "height:60%");
+				adSpan2.appendChild(payImg);
+				var i = document.createElement("i");
+				i.setAttribute("class", "bi bi-info-circle text-gray-c_8c cursor-pointer ms-1");
+				i.setAttribute("data-bs-toggle", "popover");
+				i.setAttribute("title", "📢 FreeNext 광고(7일, 50,000원)");
+				i.setAttribute("data-bs-content", "광고 기간동안 프로젝트 리스트, 일반회원 추천 알람 공고 페이지에  노출 및 추천 메일에 함께 발송됩니다");
+				adCol2.appendChild(adInput);
+				adCol2.appendChild(adSpan2);
+				adCol2.appendChild(i);
+			} else {
+				var adSpan = document.createElement("span");
+				adSpan.setAttribute("class", "btn-small btn-cf-dred bold text-fs-13");
+				adSpan.innerText = "📢광고 사용 중";
+				var endDateSpan = document.createElement("span");
+				endDateSpan.setAttribute("class", "text-fs-13 ms-2");
+				endDateSpan.innerText = makeDate(adVo.ad_endDate) + " 만료";
+				adCol2.appendChild(adSpan);
+				adCol2.appendChild(endDateSpan);
+			}
+			adRow.appendChild(adCol1);
+			adRow.appendChild(adCol2);
+			contentCol.appendChild(adRow);
+			
+			var contentsRow = document.createElement("div");
+			contentsRow.setAttribute("class", "row mt-3");
+			var contentCol1 = document.createElement("div");
+			contentCol1.setAttribute("class", "col-2 bold");
+			contentCol1.innerText = "내용";
+			var contentCol2 = document.createElement("div");
+			contentCol2.setAttribute("class", "col");
+			var textArea = document.createElement("textarea");
+			textArea.setAttribute("id", "contentBox");
+			textArea.setAttribute("class", "form-control");
+			textArea.setAttribute("rows", 10);
+			textArea.setAttribute("name", "project_content");
+			textArea.value = data.projectBoardVo.project_content;
+			var cooperationInput = document.createElement("input");
+			cooperationInput.setAttribute("type", "hidden");
+			cooperationInput.setAttribute("name", "cooperation_no");
+			cooperationInput.value = 1;
+			var projectNoInput = document.createElement("input");
+			projectNoInput.setAttribute("type", "hidden");
+			projectNoInput.setAttribute("name", "project_no");
+			projectNoInput.value = data.projectBoardVo.project_no;
+			
+			contentCol2.appendChild(textArea);
+			contentCol2.appendChild(cooperationInput);
+			contentCol2.appendChild(projectNoInput);
+			contentsRow.appendChild(contentCol1);
+			contentsRow.appendChild(contentCol2);
+			contentCol.appendChild(contentsRow);
+			
+			contentRow.appendChild(contentCol);
+			mainCol.appendChild(contentRow);
+			
+			var btnRow = document.createElement("div");
+			btnRow.setAttribute("class", "row mt-5 mb-4");
+			var btnCol1 = document.createElement("div");
+			btnCol1.setAttribute("class", "col-8");			
+			var btnCol2 = document.createElement("div");
+			btnCol2.setAttribute("class", "col d-grid");
+			var submitBtn = document.createElement("button");
+			submitBtn.setAttribute("class", "btn btn-dark");
+			submitBtn.setAttribute("type", "button");
+			submitBtn.setAttribute("onclick", "sendData()");
+			submitBtn.innerText = "확인";
+			btnCol2.appendChild(submitBtn);
+
+			btnRow.appendChild(btnCol1);
+			btnRow.appendChild(btnCol2);
+			mainCol.appendChild(btnRow);
+
+			container.appendChild(mainCol);
+			form.appendChild(container);
+
+			modal.appendChild(form);
+			modalRoot.appendChild(modal);
+			
+			detailModal._dialog = modal;		
+			
+		}
+		
+		function makeDate(target) {
+			var date = new Date(target);
+			
+			var yyyy = date.getFullYear();
+			var mm = date.getMonth()+1 > 9 ?(date.getMonth()+1) : '0' + (date.getMonth()+1);
+			var dd = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+ 
+			return yyyy + "-" + mm + "-" + dd;
+		}
+		
+		function sendData() {
+			var frm = document.querySelector("#modifyFrm");			
+			
+			var nameBox = document.querySelector("#nameBox");
+			if(nameBox.value == "") {
+				alert("프로젝트 제목을 입력해주세요");
+				nameBox.focus();
+				return;
+			}
+			
+			var recruitType_box = document.getElementsByName("recruitType_no")[0];
+			
+			if(recruitType_box.value == 0) {
+				alert("프로젝트 분야를 선택해주세요");
+				return;
+			}			
+			
+			if(document.querySelector("#jobCategory").value == 0) {
+				alert("2차 구분을 선택해주세요");
+				return;
+			}
+			
+			var localBox = document.querySelector("#localBox");
+			if(localBox.value == 0) {
+				alert("지역을 선택해주세요");
+				localBox.focus();				
+				return;
+			}
+			
+			var today = new Date();
+			var start_date = document.querySelector("#start_date").value;
+			var end_date = document.querySelector("#end_date").value;			
+			
+			if(new Date(start_date) >  new Date(end_date)) {
+				alert("시작일이 마감일보다 클 수 없습니다")
+				return;
+			}			
+			
+			if(today > new Date(end_date)) {
+				alert("마감일은 오늘 날짜보다 커야합니다");
+				return;
+			}
+			
+			document.querySelector("#period").value = start_date + "~" + end_date;
+			
+			var priceBox = document.querySelector("#priceBox");
+			
+			if(priceBox.value == "") {
+				alert("비용을 입력해주세요(만원 단위)");
+				priceBox.focus();
+				return;
+			}
+			
+			var workTypeBox = document.querySelector("#workTypeBox");
+			if(workTypeBox.value == 0) {
+				alert("근무형태를 선택해주세요");
+				workTypeBox.focus();
+				return;
+			}						
+			
+			 var contentBox = document.querySelector("#contentBox");
+			 if(contentBox.value == "") {
+				 alert("내용을 입력해주세요");
+				 contentBox.focus();
+				 return;
+			 }			
+						
+			var subAdBox = document.getElementsByName("subAd");
+			
+			if(subAdBox.length != 0 && subAdBox[0].checked) {
+				var result = kakaoPay(50000);
+			} else {
+				modifySubmit();	
+			}											
+		}
+		
+		function modifySubmit() {
+			var xhr = new XMLHttpRequest();				
+			
+			var formData = new FormData(document.getElementById("modifyFrm"));
+			var sendData = {
+					"project_name" : formData.get("project_name"),
+					"recruitType_no" : formData.get("recruitType_no"),
+					"job_no_list" : formData.get("job_no_list"),
+					"local_no_list" : formData.get("local_no_list"),
+					"project_period" : formData.get("project_period"),
+					"project_price" : formData.get("project_price"),
+					"workType_no" : formData.get("workType_no"),
+					"project_state" : formData.get("project_state"),
+					"subAd" : formData.get("subAd"),
+					"project_content" : formData.get("project_content"),
+					"cooperation_no" : formData.get("cooperation_no"),
+					"project_no" : formData.get("project_no")
+			};
+			
+			
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					var data = JSON.parse(xhr.responseText);				
+
+					loadMyProjectData();
+					loadModalData(data.project_no);
+					
+				}
+			};
+			
+			xhr.open("post", "../biz/modifyProjectProcess", true);
+			xhr.setRequestHeader("Content-type","application/json");
+			xhr.send(JSON.stringify(sendData));			
+		}
+		
+		function kakaoPay(total_amount) {
+			var xhr = new XMLHttpRequest();	
+			
+			var quantity = 1;			
+			
+			var item_name = "FreeNext 광고(7일)";			
+		
+			var newWindow;
+			
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					var data = JSON.parse(xhr.responseText);				
+
+					newWindow = window.open(data.next_redirect_pc_url, "_blank", "width=500, height=600");
+					document.querySelector("#load").classList.add("show");
+				}
+			};
+			
+			xhr.open("post", "../biz/payToKakao", true);
+			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xhr.send("item_name=" + item_name + "&quantity=" + quantity + "&total_amount=" + total_amount);
+		}		
+		
+		function sendMeData(data) {
+			document.querySelector("#load").classList.remove("show");
+			
+			if(data == 200) {
+				modifySubmit();
+			} else {
+				alert(data);
+				return;
+			}
+		}		 
+		
+		/*window.addEventListener("DOMContentLoaded" , function(){
+			var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+			var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+			  return new bootstrap.Popover(popoverTriggerEl)
+			})
+		});*/
+
 		
 	</script>
 
@@ -766,12 +1397,13 @@
             <div id="mainContainer" class="eframe-width w-full mx-auto">
             	<div class="row relative">
 	            	<div class="col-3 px-0 flex mx-auto bold">
-                        <div class="inline-block stikcy-top min-w-max w-80 min-h-screen">
-                            <div class="dashmenu-content">
-                                <ul>
-                                    <li class="menu-li" onclick="loadMyProjectData(true)">프로젝트 관리</li>
-                                    <li class="menu-li">광고 현황</li>
-                                    <li class="menu-li">회원정보 수정</li>
+                        <div class="row min-w-max w-80 min-h-screen">
+                            <div class="dashmenu-content relative">
+                                <ul class="sticky-top" style="z-index:100">
+                                    <li id="manageProject" class="menu-li on" onclick="selectMenu(this)">프로젝트 관리</li>
+                                    <li id="adStatus" class="menu-li">광고 현황</li>
+                                    <li id= "profile" class="menu-li">회원정보 수정</li>
+                                    <li class="mt-5"><img src="../img/aespa_banner.png" style="width:220px;"></li>
                                 </ul>
                             </div>
                         </div>
@@ -786,7 +1418,7 @@
 
   </div> 
 </div>
-
+<div id="load"><img src="../img/loading.gif" alt="loading"></div>
 <div id="detailModal" class="modal fade" tabindex="-1" role="dialog">
 	
 </div>

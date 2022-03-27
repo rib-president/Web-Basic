@@ -54,8 +54,9 @@ public interface BizMapper {
 	public void deleteProjectLocal(int project_no);
 	public void deleteProjectAd(int project_no);
 	public void deleteProjectScrap(int project_no);
+	public void deleteProjectAlarm(int project_no);
 	
-	public void updateProject(ProjectBoardVo vo);
+	public void updateProject(HashMap<String, Object> receivedData);
 	public void updateProjectJob(ProjectJobVo vo);	
 	public void updateProjectLocal(ProjectLocalVo vo);
 	

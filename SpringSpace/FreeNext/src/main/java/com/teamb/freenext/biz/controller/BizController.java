@@ -57,7 +57,7 @@ public class BizController {
 		
 		int project_no = bizService.registProjectProcess(vo, job_no_list, local_no_list, subAd);		
 		
-		return "redirect:../biz/projectDetailPage?project_no=" + project_no;
+		return "redirect:../normal/projectDetailPage?project_no=" + project_no;
 	}
 	
 	@RequestMapping("projectListPage")
@@ -134,7 +134,7 @@ public class BizController {
 		return "biz/projectDetailPage";
 	}
 	
-	@RequestMapping("modifyProjectPage")
+	/*@RequestMapping("modifyProjectPage")
 	public String modifyProjectPage(int project_no, Model model)
 	{
 		model.addAttribute("data", normalService.getProjectDetailPage(project_no, false));
@@ -145,23 +145,23 @@ public class BizController {
 		model.addAttribute("adVo", bizService.getProjectAd(project_no));
 		
 		return "biz/modifyProjectPage";
-	}
+	}*/
 	
-	@RequestMapping("modifyProjectProcess")
+	/*@RequestMapping("modifyProjectProcess")
 	public String modifyProjectProcess(ProjectBoardVo vo, int[] job_no_list, int[] local_no_list, String subAd, String doJob) {
 		
 		bizService.modifyProjectProcess(vo, job_no_list, local_no_list, subAd, doJob);
 		
 		return "redirect:../biz/projectDetailPage?project_no=" + vo.getProject_no();
-	}
+	}*/
 	
-	@RequestMapping("deleteProject")
+	/*@RequestMapping("deleteProject")
 	public String deleteProject(int project_no)
 	{
 		bizService.deleteBoard(project_no);
 		
 		return "redirect:../biz/projectListPage";
-	}
+	}*/
 	
 	@RequestMapping("kakaoPayApproval")
 	public String kakaoPayApproval(String pg_token, HttpSession session, Model model) {

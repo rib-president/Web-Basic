@@ -105,45 +105,37 @@ public class BizService {
 		return resultList;
 	}
 	
-	public void modifyProjectProcess(ProjectBoardVo vo, int[] job_no_list, int[] local_no_list, String subAd, String doJob)
-	{
-		bizMapper.updateProject(vo);
-		int project_no = vo.getProject_no();
+	public void modifyProjectProcess(HashMap<String, Object> receivedData) {
 		
+		bizMapper.updateProject(receivedData);
+		int project_no = Integer.valueOf(String.valueOf(receivedData.get("project_no")));
 		
-		if(doJob.equals("D")) {
-			bizMapper.deleteProjectJob(project_no);	
-		} else {
-			if(job_no_list != null) {
-				for(int job_no : job_no_list) {
-					if(job_no == 0) continue;
-					ProjectJobVo projectJobVo = new ProjectJobVo();
-					projectJobVo.setProject_no(project_no);
-					projectJobVo.setJob_no(job_no);
-					
-					if(doJob.equals("I")) {
-						bizMapper.insertProjectJob(projectJobVo);
-					} else if(doJob.equals("U")) {
-						bizMapper.updateProjectJob(projectJobVo);				
-					}
-				}			
-			}
-		}
-
+		int job_no = Integer.valueOf(String.valueOf(receivedData.get("job_no_list")));
 		
-		if(local_no_list != null) {
+		if(normalMapper.selectJobCategoryByProjectNo(project_no).get(0).getJob_no() != job_no) {
 			
-			for(int local_no : local_no_list) {
-				if(local_no == 0) continue;
-				ProjectLocalVo projectLocalVo = new ProjectLocalVo();
-				projectLocalVo.setProject_no(project_no);
-				projectLocalVo.setLocal_no(local_no);
-				
-				bizMapper.updateProjectLocal(projectLocalVo);
-			}
+			bizMapper.deleteProjectJob(project_no);
+			
+			ProjectJobVo projectJobVo = new ProjectJobVo();
+			projectJobVo.setProject_no(project_no);
+			projectJobVo.setJob_no(job_no);
+			
+			bizMapper.insertProjectJob(projectJobVo);
 		}
 		
-		if(subAd != null) {			
+		int local_no = Integer.valueOf(String.valueOf(receivedData.get("local_no_list")));
+		if(normalMapper.getLocalByNo(project_no).getLocal_no() != local_no) {
+			
+			bizMapper.deleteProjectLocal(project_no);
+			
+			ProjectLocalVo projectLocalVo = new ProjectLocalVo();
+			projectLocalVo.setProject_no(project_no);
+			projectLocalVo.setLocal_no(local_no);			
+						
+			bizMapper.insertProjectLocal(projectLocalVo);			
+		}
+				
+		if(receivedData.get("subAd") != null) {			
 			subAd(project_no);
 		}		
 	}
@@ -170,6 +162,7 @@ public class BizService {
 		bizMapper.deleteProjectLocal(project_no);
 		bizMapper.deleteProjectAd(project_no);
 		bizMapper.deleteProjectScrap(project_no);
+		bizMapper.deleteProjectAlarm(project_no);
 	}
 	
 	public String getKakaoKey() {

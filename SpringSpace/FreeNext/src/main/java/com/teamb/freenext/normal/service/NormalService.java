@@ -219,8 +219,12 @@ public class NormalService {
 		
 		ArrayList<ProjectBoardVo> seenProjectList = new ArrayList<>();
 		for(int project_no : project_no_list) {
-			seenProjectList.add(normalMapper.selectSeenProject(project_no));	
+			ProjectBoardVo seenProject = normalMapper.selectSeenProject(project_no);
+			if(seenProject != null) {
+				seenProjectList.add(seenProject);	
+			}			
 		}
+
 		return seenProjectList;
 	}
 	

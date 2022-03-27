@@ -144,6 +144,11 @@
 		where project_no = #{project_no}	
 	</delete>
 	
+	<delete id="deleteProjectAlarm">
+		delete from FN_Alarm
+		where project_no = #{project_no}	
+	</delete>	
+	
 	<select id="selectAdByProjectNo" resultType="com.teamb.freenext.vo.AdVo">
 		select *
 		from FN_Ad

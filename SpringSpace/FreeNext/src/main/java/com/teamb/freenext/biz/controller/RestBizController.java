@@ -7,11 +7,14 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teamb.freenext.biz.service.BizService;
 import com.teamb.freenext.commons.KakaoRestAPI;
+import com.teamb.freenext.member.service.MemberService;
+import com.teamb.freenext.normal.service.NormalService;
 import com.teamb.freenext.vo.KakaopayVo;
 import com.teamb.freenext.vo.MemberVo;
 
@@ -22,6 +25,12 @@ public class RestBizController {
 
 	@Autowired
 	private BizService bizService;
+	
+	@Autowired
+	private NormalService normalService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping("payToKakao")
 	public HashMap<String, Object> payToKakao(String item_name, String quantity, int total_amount, HttpSession session) {
@@ -76,4 +85,39 @@ public class RestBizController {
 		
 		return data;
 	}
+	
+	@RequestMapping("deleteProject")
+	public HashMap<String, Object> deleteProject(int project_no) {
+		HashMap<String, Object> data = new HashMap<>();
+		
+		bizService.deleteBoard(project_no);
+		
+		return data;
+	}
+	
+	@RequestMapping("modifyProjectPage")
+	public HashMap<String, Object> modifyProjectPage(int project_no) {
+		
+		HashMap<String, Object> data = new HashMap<>();
+		
+		data.put("data", normalService.getProjectDetailPage(project_no, false));
+		data.put("jobCategoryList", bizService.getJobCategoryList());
+		data.put("workTypeCategoryList", bizService.getWorkTypeCateogoryList());
+		data.put("recruitTypeCategoryList", bizService.getRecruitTypeCategoryList());
+		data.put("localCategoryList", memberService.getLocalCategoryList());
+		data.put("adVo", bizService.getProjectAd(project_no));
+		
+		return data;
+	}
+	
+	@RequestMapping("modifyProjectProcess")
+	public HashMap<String, Object> modifyProjectProcess(@RequestBody HashMap<String, Object> receivedData) {		
+		HashMap<String, Object> data = new HashMap<>();
+		
+		bizService.modifyProjectProcess(receivedData);
+		
+		data.put("project_no", receivedData.get("project_no"));
+		
+		return data;
+	}	
 }

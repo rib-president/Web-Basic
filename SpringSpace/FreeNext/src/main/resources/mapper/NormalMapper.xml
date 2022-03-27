@@ -336,7 +336,7 @@
 		select *
 		from fn_projectboard
 		where member_no = #{member_no}
-		<if test="searcyKeyword != null">
+		<if test="searchKeyword != null">
 			and (project_name like CONCAT('%',#{searchKeyword},'%') or project_content like CONCAT('%',#{searchKeyword},'%'))
 		</if>
 		<if test='project_state == "Y"'>
@@ -350,7 +350,7 @@
 		select count(*)
 		from fn_projectboard
 		where member_no = #{member_no}
-		<if test="searcyKeyword != null">
+		<if test="searchKeyword != null">
 			and (project_name like CONCAT('%',#{searchKeyword},'%') or project_content like CONCAT('%',#{searchKeyword},'%'))
 		</if>
 		<if test='project_state == "Y"'>

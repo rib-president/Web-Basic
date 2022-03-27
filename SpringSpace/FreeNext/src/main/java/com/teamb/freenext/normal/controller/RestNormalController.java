@@ -304,10 +304,6 @@ public class RestNormalController {
 		
 		searchData.put("startNum", startNum);
 		
-		for(String key : searchData.keySet()) {
-			System.out.println("key : " + key + ", value : " + searchData.get(key));
-		}
-		
 		
 		data.put("projectList", normalService.getMyProjectList(searchData));
 		data.put("totalCount", totalCount);
