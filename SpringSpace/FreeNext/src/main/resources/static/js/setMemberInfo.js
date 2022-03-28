@@ -188,3 +188,58 @@
 		}
 		
 	}	
+	
+	
+	//사업자번호
+	function inputBizNumber(obj) {
+
+		obj.value = obj.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+		
+		var number = obj.value.replace(/[^0-9]/g, "");
+		var biz = "";
+		
+		
+		
+		if(number.length < 4) {
+		    return number;
+		} else if(number.length < 5) {
+			biz += number.substr(0, 3);
+			biz += "-";
+			biz += number.substr(3);
+		} else if(number.length < 10) {
+			biz += number.substr(0, 3);
+			biz += "-";
+			biz += number.substr(3, 2);
+			biz += "-";
+			biz += number.substr(5);
+		} else {
+			biz += number.substr(0, 3);
+			biz += "-";
+			biz += number.substr(3, 2);
+			biz += "-";
+			biz += number.substr(5);
+		}
+		obj.value = biz;
+	}		
+	
+	function findAddr(){
+		new daum.Postcode({
+	        oncomplete: function(data) {
+				
+				// 도로명 주소 변수
+				var roadAddr = data.roadAddress;
+				// 지번 주소 변수
+				var jibunAddr = data.jibunAddress;
+				
+	            if(roadAddr !== ''){
+	                document.getElementById("inputAddress").value = roadAddr;
+	            } 
+	            else if(jibunAddr !== ''){
+	                document.getElementById("inputAddress").value = jibunAddr;
+	            }
+	        }
+	    }).open();
+	}	
+ 	
+	
+	

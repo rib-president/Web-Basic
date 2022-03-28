@@ -132,6 +132,7 @@
     .bg-gray-c_e1t{background-color:rgba(238, 237, 237, 0.411)}
     .bg-gray-c_3c{background-color:rgba(60,60,60,1)}
     .bg-lemon {background-color: rgba(228, 243, 162, 0.466)}
+	.bg-gray-c_e2{background-color:rgba(242, 242, 242, 0.719);}
 
     .bg-gradation-10{background-color:rgba(149, 49, 49, 0.685)}
     .bg-gradation-30{background-color:rgba(71, 51, 95, 0.884)}
@@ -172,6 +173,7 @@
     
     
     .ml-1{margin-left:.25rem}
+    .ml-2{margin-left:.5rem}
 	.ml-4{margin-left:1rem}
 	.ml-5{margin-left:1.25rem}
 	.ml-6{margin-left:1.5rem}
@@ -217,6 +219,8 @@
 
 	.pl-0{padding-left:0;}
 	.pl-1{padding-left:.25rem;}
+	.pl-2{padding-left:.5rem;}
+	.pl-3{padding-left:.75rem;}
 	.pl-4 {padding-left: 1rem;}
 	.pl-5 {padding-left: 1.25rem;}
 	.pl-8{padding-left:2rem;}
@@ -237,6 +241,8 @@
     .pr-1{padding-right:.25rem;}
 
     .px-0{padding-left:0;padding-right: 0;}
+    .px-6{padding-left:1.5rem;padding-right: 1.5rem;}
+    .px-8{padding-left:1.5rem;padding-right: 2rem;}
     .px-10{padding-left:2.5rem;padding-right: 2.5rem;}
     .px-20{padding-left:5rem;padding-right: 5rem;}
     .px-22{padding-left:5.5rem;padding-right: 5.5rem;}

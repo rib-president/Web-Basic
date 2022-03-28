@@ -267,10 +267,12 @@ public class RestNormalController {
 		HashMap<String, Object> data = new HashMap<>();
 		
 		data.put("memberInfo", normalService.getMemberInfo(member_no, member_type));
-		data.put("desiredData", normalService.getDesired(member_no));
-		data.put("jobList", memberService.getJobCategoryList());
-		data.put("localList", memberService.getLocalCategoryList());
 		
+		if(member_type.equals("N")) {
+			data.put("desiredData", normalService.getDesired(member_no));
+			data.put("jobList", memberService.getJobCategoryList());
+			data.put("localList", memberService.getLocalCategoryList());			
+		}		
 		return data;
 	}
 	

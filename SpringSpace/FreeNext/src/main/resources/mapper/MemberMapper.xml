@@ -131,7 +131,15 @@
 		update FN_Member_Customer
 		set customer_birth = #{customer_birth}
 		where member_no = #{member_no}
-	</update>	
+	</update>
+	
+	<update id="updateCompanyInfo">
+		update FN_Member_Company
+		set company_manager = #{company_manager},
+		company_license_number = #{company_license_number},
+		company_license_img = #{company_license_img}
+		where member_no = #{member_no}
+	</update>		
 
 	<!-- 희망직종/지역 변경 -->
 	<select id="selectCustomerNo" resultType="int">

@@ -53,6 +53,7 @@ public interface MemberMapper {
 	// 회원정보 수정
 	public void updateMemberInfo(MemberVo memberVo);
 	public void updateCustomerInfo(MemberCustomerVo customerVo);
+	public void updateCompanyInfo(MemberCompanyVo companyVo);
 	
 	
 	// 희망지역/직종 변경

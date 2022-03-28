@@ -9,7 +9,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
-//import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.teamb.freenext.member.mapper.MemberMapper;
 import com.teamb.freenext.normal.mapper.NormalMapper;
@@ -208,6 +207,14 @@ public class MemberService {
 			memberMapper.deleteDesiredLocalAll(customer_no);
 			memberMapper.deleteLocalAlarmAll(member_no);
 		}
+	}
+	
+	public void modifyCompanyProcess(MemberVo memberVo, MemberCompanyVo companyVo) {
+		memberMapper.updateMemberInfo(memberVo);
+		int member_no = memberVo.getMember_no();
+		companyVo.setMember_no(member_no);
+		memberMapper.updateCompanyInfo(companyVo);	
+
 	}
 	
 	//아이디찾기
