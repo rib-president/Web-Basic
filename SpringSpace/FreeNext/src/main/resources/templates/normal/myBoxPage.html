@@ -1924,7 +1924,7 @@
 		inputSecondAddr2.setAttribute("type", "text");
 		inputSecondAddr2.setAttribute("class", "form-control");			
 		
-		if(sessionUser.member_address != null) {
+		if(sessionUser.member_address != null && sessionUser.member_address != "") {
 			var splitAddr = sessionUser.member_address.split(", ");
 			inputFirstAddr.value = splitAddr.shift();
 			if(splitAddr.length != 0) {

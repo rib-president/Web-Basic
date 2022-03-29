@@ -8,6 +8,7 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/js/nav.js"></script>
     <script src="/js/setMemberInfo.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/echarts@5.3.1/dist/echarts.min.js" integrity="sha256-up/VQ00XWfwfCN9hDtxDmZk9PgDVs83dQvTPRnWK0p4=" crossorigin="anonymous"></script>
 	<link th:href="@{/css/commons.css}" rel="stylesheet">
 
  	<style>
@@ -302,8 +303,8 @@
 			
 			if(obj.id == "manageProject") {								
 				loadMyProjectData(true);
-			} else if(obj.id == "adStatus") {
-				
+			} else if(obj.id == "projectStatus") {
+				loadProjectStatus();
 			} else if(obj.id == "profile"){
 				loadProfileData();
 			}
@@ -340,6 +341,21 @@
 			
 			xhr.open("get", "./getMyProjectList?member_no=" + sessionBizUser.member_no + 
 					"&pageNum=" + pageNum + "&searchKeyword=" + searchKeyword + "&project_state=" + project_state, false);
+			xhr.send();
+		}
+		
+		function loadProjectStatus() {
+			var xhr = new XMLHttpRequest();
+			
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					var data = JSON.parse(xhr.responseText);
+
+					createProjectStatusBox(data);
+				}
+			};
+			
+			xhr.open("get", "../biz/getMyProjectStatus?member_no=" + sessionBizUser.member_no, true);
 			xhr.send();
 		}
 		
@@ -632,6 +648,147 @@
 			row.appendChild(col);
 			document.querySelector("#rootContainer").appendChild(row);
 			
+			var blank = document.createElement("div");
+			blank.setAttribute("style", "height: 150px");
+			document.querySelector("#rootContainer").appendChild(blank);
+			
+		}
+		
+		function createProjectStatusBox(data) {
+			var root = document.querySelector("#rootContainer");
+			root.innerHTML = "";
+			
+			var scrapRow = document.createElement("div");
+			scrapRow.setAttribute("class", "row mb-3");
+			var scrapBlank1 = document.createElement("div");
+			scrapBlank1.setAttribute("class", "col-3");
+			var scrapTitle = document.createElement("div");
+			scrapTitle.setAttribute("class", "col rounded-10 bg-gray-c_e1t p-6 text-center bold text-fs-23 py-3 text-gray-c_25");
+			scrapTitle.innerText = "📈 일별 스크랩 수 (최근 일주일)";
+			var scrapBlank2 = document.createElement("div");
+			scrapBlank2.setAttribute("class", "col-3");
+			scrapRow.appendChild(scrapBlank1);
+			scrapRow.appendChild(scrapTitle);
+			scrapRow.appendChild(scrapBlank2);
+			
+			var scrapChartMain = document.createElement("div");
+			scrapChartMain.setAttribute("style", "width: 736px;height:500px;");
+			
+			root.appendChild(scrapRow);
+			root.appendChild(scrapChartMain);
+			
+			var scrapChart = echarts.init(scrapChartMain);
+			var seriesList = [];
+			var legendList = [];
+			for (var scrapCount of data.scrapCountList) {
+				var seriesMap = {};
+				
+				var project_name = scrapCount.project_name;
+				if(project_name.length > 6) {
+					project_name = project_name.slice(0, 6) + "..";
+				}
+				seriesMap["name"] = project_name;
+				seriesMap["type"] = "line";
+				var dataList = [];
+				for(var countMap of scrapCount.scrapCountList) {
+					dataList.push(countMap.cnt);
+				}
+				seriesMap["data"] = dataList;
+				
+				seriesList.push(seriesMap);
+				legendList.push(project_name);				
+			}			
+			
+			option =  {
+				tooltip: { trigger: 'axis'},
+				legend: {data: legendList},
+				grid: {left: '3%', right:'4%', bottom: '3%', containLabel:true},
+				toolbox: {feature: {saveAsImage: {}}},
+				xAxis: {type: 'category', boundaryGap: false, 
+					data: data.weekList},
+				yAxis: {type: 'value'},
+				series: seriesList
+			};
+			
+			scrapChart.setOption(option);
+			
+			var blank = document.createElement("div")
+			blank.setAttribute("style", "height:50px;")
+			root.appendChild(blank);
+			
+			var readCountRow = document.createElement("div");
+			readCountRow.setAttribute("class", "row mt-5 mb-3");
+			var readCountBlank1 = document.createElement("div");
+			readCountBlank1.setAttribute("class", "col-3");
+			var readCountTitle = document.createElement("div");
+			readCountTitle.setAttribute("class", "col rounded-10 bg-gray-c_e1t p-6 text-center bold text-fs-23 py-3 text-gray-c_25");
+			readCountTitle.innerText = "📊 누적 조회수";
+			var readCountBlank2 = document.createElement("div");
+			readCountBlank2.setAttribute("class", "col-3");
+			readCountRow.appendChild(readCountBlank1);
+			readCountRow.appendChild(readCountTitle);
+			readCountRow.appendChild(readCountBlank2);			
+			
+			var readCountChartMain = document.createElement("div");
+			readCountChartMain.setAttribute("style", "width: 736px;height:500px;");
+            
+            root.appendChild(readCountRow);
+            root.appendChild(readCountChartMain);
+			
+            var readCountChart = echarts.init(readCountChartMain);
+            
+            var readCountX = [];
+            var readCountData = [];
+            for(var project of data.projectList) { 
+            	var project_name = project.projectVo.project_name;
+            	if(project_name.length > 6) {
+            		project_name = project_name.slice(0, 6) + "...";
+            	}
+            	readCountX.push(project_name);
+            	if(project.isAd) {
+            		var adMap = {};
+            		adMap["value"] = project.projectVo.project_readCount;
+            		adMap["itemStyle"] = {color: "#a90000"};
+            		readCountData.push(adMap);
+            	} else {
+            		readCountData.push(project.projectVo.project_readCount);	
+            	}            	
+            }                                  
+            
+            option = {
+            	title: {
+                    text: "🟥: 광고신청 프로젝트"
+                },            		
+          		tooltip: {
+          		    trigger: 'axis',
+          			axisPointer: {
+          			    type: 'cross',
+          			    crossStyle: {
+          			        color: '#999'
+          			    }
+          			}
+          		},            		
+          		toolbox: {feature: {saveAsImage: {}}},	
+         		xAxis: {
+         		    type: 'category',
+         		    data: readCountX
+        		},
+         		yAxis: {
+         		    type: 'value'
+         		},
+         		series: [
+         		    {
+         		      data: readCountData,
+         		      type: 'bar'
+         		    }
+         		]
+            };
+
+            readCountChart.setOption(option);
+            
+			var blank2 = document.createElement("div")
+			blank2.setAttribute("style", "height:150px;")
+			root.appendChild(blank2);            
 		}
 		
 		function createProfileBox(memberInfo) {
@@ -880,7 +1037,7 @@
 			bizImgP.setAttribute("class", "info-border-l font-medium2 text-gray-c_25");
 			bizImgP.innerText = "사업자 등록증";		
 			var bizImgInputBox = document.createElement("div");
-			bizImgInputBox.setAttribute("class", "col-4");
+			bizImgInputBox.setAttribute("class", "col-4 pt-1");
 			var star = document.createElement("span");
 			star.setAttribute("class", "text-red-soft");
 			star.innerText = "*";		
@@ -895,6 +1052,7 @@
 				
 			var bizImgPreviewCol = document.createElement("div");
 			bizImgPreviewCol.setAttribute("class", "col mt-1 px-0");
+			bizImgPreviewCol.setAttribute("style", "padding-top:.3rem");
 			var bizImgPreview = document.createElement("a");
 			bizImgPreview.setAttribute("onclick", "openUrl('/profileImage/" + memberInfo.company_license_img + "')");
 			bizImgPreview.setAttribute("style", "text-decoration:underline;");
@@ -1014,7 +1172,7 @@
 			
 
 			var inputProfile = document.createElement("input");
-			inputProfile.setAttribute("class", "form-control form-control-sm mt-2");		
+			inputProfile.setAttribute("class", "form-control form-control-sm mt-1");		
 			inputProfile.setAttribute("id", "formFileSm");
 			inputProfile.setAttribute("type", "file");
 			inputProfile.setAttribute("name", "uploadFileThumbnail");
@@ -1045,13 +1203,13 @@
 			addrP.innerText = "주소";
 			var addrInputBox = document.createElement("div");
 			addrInputBox.setAttribute("class", "col-8");
-			var splitAddr = sessionBizUser.member_address.split(", ");
+			
 			var inputFirstAddr = document.createElement("input");
 			inputFirstAddr.setAttribute("id", "inputAddress");
 			inputFirstAddr.setAttribute("type", "text");
 			inputFirstAddr.setAttribute("class", "form-control text-fs-14");
 			inputFirstAddr.setAttribute("readonly", true);
-			inputFirstAddr.value = splitAddr[0];
+			
 			var inputAddr = document.createElement("input");
 			inputAddr.setAttribute("name", "member_address");
 			inputAddr.setAttribute("type", "hidden");
@@ -1076,7 +1234,14 @@
 			inputSecondAddr2.setAttribute("id", "inputDetailAddress");
 			inputSecondAddr2.setAttribute("type", "text");
 			inputSecondAddr2.setAttribute("class", "form-control text-fs-14");
-			inputSecondAddr2.value = splitAddr[1];
+			
+			if(sessionBizUser.member_address != null && sessionBizUser.member_address != "") {
+				var splitAddr = sessionBizUser.member_address.split(", ");
+				inputFirstAddr.value = splitAddr[0];
+				if(splitAddr[1] != undefined) {
+					inputSecondAddr2.value = splitAddr[1];	
+				}								
+			}
 			
 			addrText.appendChild(addrP);
 			addrInputBox.appendChild(inputFirstAddr);
@@ -2286,7 +2451,7 @@
                             <div class="dashmenu-content relative">
                                 <ul class="sticky-top" style="z-index:100">
                                     <li id="manageProject" class="menu-li on" onclick="selectMenu(this)">프로젝트 관리</li>
-                                    <li id="adStatus" class="menu-li">광고 현황</li>
+                                    <li id="projectStatus" class="menu-li" onclick="selectMenu(this)">프로젝트 현황</li>
                                     <li id= "profile" class="menu-li" onclick="selectMenu(this)">회원정보 수정</li>
                                     <li class="mt-5"><img src="../img/aespa_banner.png" style="width:220px;"></li>
                                 </ul>

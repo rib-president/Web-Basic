@@ -154,7 +154,7 @@
 		from FN_Ad
 		where project_no = #{project_no}
 		<![CDATA[ 
-		and DATEDIFF(ad_endDate, now()) > 0
+		and timestampdiff(hour, now(), ad_endDate) > 0	
 		]]>	
 	</select>
 	
@@ -178,5 +178,31 @@
 	<update id="updateProjectLocal">
 		update fn_project_local set local_no = #{local_no}
 		where project_no = #{project_no}
-	</update>			
+	</update>
+	
+	<!-- 내 프로젝트 중 광고 신청한 프로젝트(만료X) -->
+	<select id="selectMyAdProject" resultType="int">
+		select fp.project_no
+		from fn_projectboard fp, fn_ad fa
+		where fp.project_no = fa.project_no 
+		and fp.member_no = #{member_no}
+		<![CDATA[ 
+		and timestampdiff(hour, now(), fa.ad_endDate) > 0	
+		]]>
+		and fp.project_state = 'Y'	
+	</select>
+	
+	<!-- 최근 일주일안에 스크랩된 나의 프로젝트 -->
+	<select id="selectMyProjectScrapCount" resultType="map">
+		select count(*) as cnt, fp.project_name, date(scrap_date) as scrapDate
+		from fn_myscrap fm, fn_projectboard fp 
+		where fm.project_no = fp.project_no
+		and fm.project_no = #{project_no}
+		<![CDATA[ 
+		and timestampdiff(hour, scrap_date, now()) < 168
+		]]>	
+		group by date(scrapDate)	
+	</select>
+	
+				
 </mapper>

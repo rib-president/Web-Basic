@@ -1,6 +1,8 @@
 package com.teamb.freenext.biz.service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -163,6 +165,88 @@ public class BizService {
 		bizMapper.deleteProjectAd(project_no);
 		bizMapper.deleteProjectScrap(project_no);
 		bizMapper.deleteProjectAlarm(project_no);
+	}
+	
+	public ArrayList<HashMap<String, Object>> getMyProjectScrapCount(int member_no) {
+		ArrayList<Integer> adProjectNoList = bizMapper.selectMyAdProject(member_no);
+		
+		ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
+		
+		ArrayList<String> weekList = getWeekList();
+		
+		for(ProjectBoardVo projectVo : normalMapper.selectMyProjectListAll(member_no)) {
+			HashMap<String, Object> map = new HashMap<>();						
+			
+			int project_no = projectVo.getProject_no();
+			
+			map.put("project_name", projectVo.getProject_name());
+			if(adProjectNoList.contains(project_no)) {
+				map.put("isAd", true);
+			} else {
+				map.put("isAd", false);
+			}
+			
+			ArrayList<HashMap<String, Object>> getCountList = bizMapper.selectMyProjectScrapCount(project_no);
+			List<String> scrapDateList = getCountList.stream().map(e -> e.get("scrapDate").toString()).collect(Collectors.toList());
+			
+			ArrayList<HashMap<String, Object>> scrapCountList = new ArrayList<>();
+			for(String day : weekList) {
+				HashMap<String, Object> addMap = new HashMap<>();					
+				
+				addMap.put("project_name", projectVo.getProject_name());
+				addMap.put("scrapDate", day);
+				
+				if(scrapDateList.contains(day)) {
+					for(HashMap<String, Object> getCountMap : getCountList) {
+						if(getCountMap.get("scrapDate").toString().equals(day.toString())) {
+
+							addMap.put("cnt", getCountMap.get("cnt"));
+							continue;
+						}	
+					}
+				} else {
+					addMap.put("cnt", 0);
+				}
+				scrapCountList.add(addMap);
+			}
+
+			map.put("scrapCountList", scrapCountList);
+			
+			resultList.add(map);
+		}
+		
+		return resultList;
+	}
+	
+	public ArrayList<HashMap<String, Object>> getMyProjectListAll(int member_no) {
+		ArrayList<Integer> adProjectNoList = bizMapper.selectMyAdProject(member_no);
+		
+		ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
+		for(ProjectBoardVo projectBoardVo : normalMapper.selectMyProjectListAll(member_no)) {
+			HashMap<String, Object> map = new HashMap<>();
+			
+			map.put("projectVo", projectBoardVo);
+			if(adProjectNoList.contains(projectBoardVo.getProject_no())) {
+				map.put("isAd", true);
+			} else {
+				map.put("isAd", false);
+			}
+			
+			resultList.add(map);
+		}
+		
+		return resultList;
+	}
+	
+	public ArrayList<String> getWeekList() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		ArrayList<String> weekList = new ArrayList<>();
+		for(int i=6;i>=0;i--) {
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE,  -i);
+			weekList.add(sdf.format(cal.getTime()));
+		}
+		return weekList;
 	}
 	
 	public String getKakaoKey() {

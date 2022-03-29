@@ -61,4 +61,7 @@ public interface BizMapper {
 	public void updateProjectLocal(ProjectLocalVo vo);
 	
 	public AdVo selectAdByProjectNo(int project_no);  
+	
+	public ArrayList<Integer> selectMyAdProject(int member_no);
+	public ArrayList<HashMap<String, Object>> selectMyProjectScrapCount(int project_no);
 }

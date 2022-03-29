@@ -3,6 +3,9 @@ package com.teamb.freenext.normal.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -227,8 +230,39 @@ public class RestNormalController {
 	}
 	
 	@RequestMapping("readAlarm")
-	public HashMap<String, Object> readAllAlarm(int member_no, int project_no) {
+	public HashMap<String, Object> readAllAlarm(int member_no, int project_no, HttpServletRequest request, HttpServletResponse response) {
 		HashMap<String, Object> data = new HashMap<>();
+		
+		int cookieFlag = 0;
+		String cookieValue = null;
+		String str_project_no = "/" + String.valueOf(project_no) + "/";
+		
+		Cookie[] cookies = request.getCookies();
+		for(Cookie cookie : cookies) {
+			String cookieName = cookie.getName();
+
+			if(cookieName.equals("readProjectNo")) {
+				cookieFlag++;
+				cookieValue = cookie.getValue();
+				if(cookieValue.indexOf(str_project_no) != -1) {
+					int start = cookieValue.indexOf(str_project_no);
+					int start2 =  cookieValue.indexOf(str_project_no) + str_project_no.length();
+					cookieValue = cookieValue.substring(0, start) + cookieValue.substring(start2, cookieValue.length());
+				} else {
+					normalService.increaseReadCount(project_no);
+				}
+				Cookie newCookie = new Cookie("readProjectNo", cookieValue + str_project_no);
+				response.addCookie(newCookie);					
+				break;
+			}
+		}
+		
+		if(cookieFlag == 0) {
+			Cookie newCookie = new Cookie("readProjectNo",str_project_no);
+			response.addCookie(newCookie);
+			normalService.increaseReadCount(project_no);
+		}		
+		
 		
 		normalService.readAlarm(member_no, project_no);
 		

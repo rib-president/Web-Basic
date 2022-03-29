@@ -119,5 +119,16 @@ public class RestBizController {
 		data.put("project_no", receivedData.get("project_no"));
 		
 		return data;
-	}	
+	}
+	
+	@RequestMapping("getMyProjectStatus")
+	public HashMap<String, Object> getMyProjectStatus(int member_no) {
+		HashMap<String, Object> data = new HashMap<>();
+		
+		data.put("scrapCountList", bizService.getMyProjectScrapCount(member_no));
+		data.put("weekList", bizService.getWeekList());
+		data.put("projectList", bizService.getMyProjectListAll(member_no));
+		
+		return data;
+	}
 }

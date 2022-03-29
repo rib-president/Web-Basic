@@ -214,7 +214,7 @@
 				from fn_alarm
 				where member_no = #{member_no}
 				<![CDATA[ 
-				and TIMESTAMPDIFF(hour, alarm_date, now()) < 336
+				and TIMESTAMPDIFF(hour, alarm_date, now()) < 168
 				]]> 
 			) fa
 			where fp.project_no = fa_project_no			
@@ -253,7 +253,7 @@
 				from fn_alarm
 				where member_no = #{member_no}
 				<![CDATA[ 
-				and TIMESTAMPDIFF(hour, alarm_date, now()) < 336
+				and TIMESTAMPDIFF(hour, alarm_date, now()) < 168
 				]]> 
 			) fa
 			where fp.project_no = fa_project_no			
@@ -356,6 +356,13 @@
 		<if test='project_state == "Y"'>
 			and project_state = "Y"
 		</if>
+	</select>
+	
+	<select id="selectMyProjectListAll" resultType="com.teamb.freenext.vo.ProjectBoardVo">
+		select *
+		from fn_projectboard
+		where member_no = #{member_no}
+		and project_state = "Y"
 	</select>	
 	
 	<!-- 프로젝트 상태 변경 -->
@@ -401,7 +408,7 @@
 		from fn_ad
 		where project_no = #{project_no}
 		<![CDATA[ 
-		and DATEDIFF(ad_endDate, now()) > 0
+		and timestampdiff(hour, now(), ad_endDate) > 0
 		]]>	
 	</select>		
 		
@@ -572,7 +579,7 @@
 		select pb.*
 		from FN_ProjectBoard pb, FN_Ad ad
 		where pb.project_no = ad.project_no
-		and datediff(ad.ad_endDate, now()) > 0
+		and timestampdiff(hour, now(), ad_endDate) > 0	
 	</select>
 	
 	<!--  <select id="getProjectBoardCount" resultType="int">

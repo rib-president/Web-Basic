@@ -83,6 +83,7 @@ public interface NormalMapper {
 	// 내 프로젝트 리스트 가져오기
 	public ArrayList<ProjectBoardVo> selectMyProjectList(HashMap<String, Object> searchData);
 	public int selectMyProjectListCount(HashMap<String, Object> searchData);
+	public ArrayList<ProjectBoardVo> selectMyProjectListAll(int member_no);
 	
 	// 프로젝트 상태 변경
 	public void updateProjectState(@Param("project_no") int project_no, @Param("project_state") String project_state);
