@@ -430,11 +430,11 @@
 			var row2_col = document.createElement("div");
 			row2_col.setAttribute("class", "col text-blue");
 			var row2_col_span1 = document.createElement("span");
-			row2_col_span1.setAttribute("class", "bold");	
+			row2_col_span1.setAttribute("class", "bold");			
 			if(isHot) {
-				row2_col_span1.innerText = data.projectVo.project_price;
+				row2_col_span1.innerText = "￦ " + data.projectVo.project_price;
 			} else {
-				row2_col_span1.innerText = data.project_price;	
+				row2_col_span1.innerText = "￦ " + data.project_price;	
 			}
 					
 			var row2_col_span2 = document.createElement("span");

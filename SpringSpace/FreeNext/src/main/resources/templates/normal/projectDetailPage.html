@@ -50,7 +50,7 @@
         
         color: #6b6b6b;
     }
-
+	.btn-cf-sky{  background-color: rgba(77, 165, 248, 0.699);  color: rgba(245, 245, 245, 0.918); }
 
     .etext-h2{ font-size: 1.5rem; font-weight: 600;}
     .eblank-h2{ margin-top: 5rem; margin-bottom: 0.625rem;}
@@ -606,16 +606,26 @@
             <div class="eframe-width py-11 mx-auto border-box" style="padding-left: 2.5rem; padding-right:2.5rem;">	
                 <div class="inline-block float-right text-fs-15 font-extrabold text-gray-c_3c pl-15"><span class="text-red-soft" th:text="${scrapCount} + '명'"></span>의 관심을 받고 있어요</div>
                 <div class="mb-4 text-fs-40 font-extrabold inline-block" th:text="${data.projectBoardVo.project_name}"></div>
-                <div class="project-money" th:text="${data.projectBoardVo.project_price}"></div>
+                <div class="project-money" th:text="'￦ ' + ${data.projectBoardVo.project_price}"></div>
                 <span class="group-btns w-full mt-10">
-                    <span class="btn-medium btn-cl-dred" th:text="${data.projectBoardVo.project_period}"></span>
+                    <span class="btn-medium btn-cl-dred" th:text="'⏱ '  + ${data.projectBoardVo.project_period}"></span>
                     <span th:if="${data.projectBoardVo.workType_no != 4}" class="btn-medium btn-cl-dred" th:text="${data.localCategoryVo.local_name}"></span>
-                    <span class="btn-medium btn-cl-dred" th:each="jobCategoryVo : ${data.jobCategoryVoList}" th:text="${jobCategoryVo.job_name}"></span>                    
+                    <th:block th:each="jobCategoryVo : ${data.jobCategoryVoList}">
+                    	<span class="btn-medium btn-cl-dred" th:if="${jobCategoryVo.job_no == 1}" th:text="'🎨 ' + ${jobCategoryVo.job_name}"></span>
+                    	<span class="btn-medium btn-cl-dred" th:if="${jobCategoryVo.job_no == 2}" th:text="'💻 ' + ${jobCategoryVo.job_name}"></span>
+                    	<span class="btn-medium btn-cl-dred" th:if="${jobCategoryVo.job_no == 3}" th:text="'📃 ' + ${jobCategoryVo.job_name}"></span>
+                    	<span class="btn-medium btn-cl-dred" th:if="${jobCategoryVo.job_no == 4}" th:text="'📢 ' + ${jobCategoryVo.job_name}"></span>
+                    	<span class="btn-medium btn-cl-dred" th:if="${jobCategoryVo.job_no == 5}" th:text="'🚀 ' + ${jobCategoryVo.job_name}"></span>
+                    	<span class="btn-medium btn-cl-dred" th:if="${jobCategoryVo.job_no == 6}" th:text="'🛒 ' + ${jobCategoryVo.job_name}"></span>
+                    	<span class="btn-medium btn-cl-dred" th:if="${jobCategoryVo.job_no == 7}" th:text="'💭 ' + ${jobCategoryVo.job_name}"></span>
+                    	
+                    	
+                    </th:block>                                        
                 </span>
                 <span class="group-btns w-full">
-                    <span class='btn-medium btn-cf-dpink' th:text="${data.workTypeCategoryVo.workType_name}"></span>
-                    <span th:if="${data.projectBoardVo.cooperation_no == 1}" class='btn-medium btn-cf-dpink' th:text="${data.memberVo.member_name}"></span>
-                    <span th:unless="${data.projectBoardVo.cooperation_no == 1}" class='btn-medium btn-cf-dpink' th:text="${data.cooperationCategoryVo.cooperation_name}"></span>
+                    <span class='btn-medium btn-cf-sky' th:text="${data.workTypeCategoryVo.workType_name}"></span>
+                    <span th:if="${data.projectBoardVo.cooperation_no == 1}" class='btn-medium btn-cf-sky' th:text="${data.memberVo.member_name}"></span>
+                    <span th:unless="${data.projectBoardVo.cooperation_no == 1}" class='btn-medium btn-cf-sky' th:text="${data.cooperationCategoryVo.cooperation_name}"></span>
                     <span class="float-right border rounded-full me-3 pt-1">
                     	<i th:if="${myScrap > 0}" class="cursor-pointer bi bi-star-fill text-fs-24 px-2" th:attr="onclick=|doScrap(event, this, '${data.projectBoardVo.project_no}')|" style="color:rgb(255, 219, 17);"></i>
                     	<i th:unless="${myScrap > 0}" class="cursor-pointer bi bi-star text-fs-24 px-2" th:attr="onclick=|doScrap(event, this, '${data.projectBoardVo.project_no}')|" style="color:black;"></i>
@@ -623,7 +633,7 @@
                 </span>
                 <!-- <div class="shadow" style="height:3px;"></div>  -->
                 
-                <div class="etext-h2 eblank-h2 border-box-top-divider mt-5 pt-12">프로젝트 내용</div>
+                <div class="etext-h2 eblank-h2 border-box-top-divider mt-5 pt-12">🎯 프로젝트 내용</div>
                 <div class="etext-p leading-relaxed bold mt-4 text-gray-c_3c" th:utext="${data.projectBoardVo.project_content}">
 
                 </div>
