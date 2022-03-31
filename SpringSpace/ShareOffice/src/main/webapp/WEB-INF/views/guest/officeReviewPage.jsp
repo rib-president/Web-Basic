@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +19,9 @@
  a {text-decoration: none; color:#3ad0ab;}
  i {text-decoration: none; color:#3ad0ab;}
 </style>
+<script>
+
+</script>
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
@@ -27,31 +33,51 @@
 			</div>
 			<div class="row mt-2 ">
 				<div class="col">
+				<c:forEach  items="${orderList}" var="review">
 					<div class="card" style="">
 						<div class="row">
 							<div class="col">
 								<div class="card-body">
 									<div class="row">
 										<div class="col-8">
-											<i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i>
+										    <c:forEach var="rating" items="${ ratingOptions }" varStatus="status" 
+										    begin="1" end="${ review.rating }">★</c:forEach> 
+										    <!-- 별점 출력 수정 -->
+<!-- 									<i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i>
 											<i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i>
 											<i class="bi bi-star"></i>
+										
+	-->									
 										</div>
 										<div class="col">
 											<p class="card-text">
-												<small class="text-muted">리뷰 작성일</small>
+												<small class="text-muted"><fmt:formatDate value="${review.reviewVo.review_date}" pattern="yyyy-MM-dd"/></small>
 											</p>
 										</div>
 
 									</div>
 									<div class="row">
 										<div class="col">
-											<img src="https://via.placeholder.com/70"
+											<img src="/soUpload/reviewImage/${review.reviewVo.review_image }"
 												class="img-fluid rounded-start">
 										</div>
 										<div class="col-8 text-left">
-											<p class="card-text">디자인만 봐주세요 </p>
-											<p class="card-text">출력 아직 못했습니다,,,</p>
+											 <c:choose>
+                                                <c:when test="${fn:length(review.reviewVo.review_title) > 15}">
+                                                   <c:out value="${fn:substring(review.reviewVo.review_title,0,4)}"/>....
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:out value="${review.reviewVo.review_title}"/>
+                                                </c:otherwise> 
+                                             </c:choose><br>
+											 <c:choose>
+                                                <c:when test="${fn:length(review.reviewVo.review_content) > 15}">
+                                                   <c:out value="${fn:substring(review.reviewVo.review_content,0,14)}"/>....
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:out value="${review.reviewVo.review_content}"/>
+                                                </c:otherwise> 
+                                              </c:choose>
 										</div>
 										<div class="col">
 											<i class="bi bi-chevron-right"></i>
@@ -62,19 +88,9 @@
 
 						</div>
 					</div>
-					<div class="card">
-						    <ul class="list-group list-group-flush">
-								<c:forEach  items="${reviewList}" >
-									<li class="list-group-item d-flex justify-content-between">
-									    <div>${review.reviewVo.review_title }</div>
-										<div>${review.reviewVo.review_content }</div>
-										
+					</c:forEach>
 
-									</li>
-								</c:forEach>
-							</ul>
-						
-					 </div>   
+					 
 				</div>
 			</div>
 

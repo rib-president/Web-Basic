@@ -12,7 +12,7 @@ public class OfficeInfoVo {
 	private int office_personnel;
 	private String office_tags;
 	private String office_address;
-	private String office_adrress_detail;
+	private String office_address_detail;
 	private String office_managerPhone;
 	private String office_changedPhone;
 	private String office_thumbnail;
@@ -25,7 +25,7 @@ public class OfficeInfoVo {
 		super();
 	}
 	public OfficeInfoVo(int office_no, int member_no, String office_name, String office_simpleContent, String office_detailContent,
-			int office_personnel, String office_tags, String office_address, String office_adrress_detail,
+			int office_personnel, String office_tags, String office_address, String office_address_detail,
 			String office_managerPhone, String office_changedPhone, String office_thumbnail, int office_min_booking_day,
 			String office_approve, String office_approve_comment, Date office_approve_date) {
 		super();
@@ -37,7 +37,7 @@ public class OfficeInfoVo {
 		this.office_personnel = office_personnel;
 		this.office_tags = office_tags;
 		this.office_address = office_address;
-		this.office_adrress_detail = office_adrress_detail;
+		this.office_address_detail = office_address_detail;
 		this.office_managerPhone = office_managerPhone;
 		this.office_changedPhone = office_changedPhone;
 		this.office_thumbnail = office_thumbnail;
@@ -99,11 +99,11 @@ public class OfficeInfoVo {
 	public void setOffice_address(String office_address) {
 		this.office_address = office_address;
 	}
-	public String getOffice_adrress_detail() {
-		return office_adrress_detail;
+	public String getOffice_address_detail() {
+		return office_address_detail;
 	}
-	public void setOffice_adrress_detail(String office_adrress_detail) {
-		this.office_adrress_detail = office_adrress_detail;
+	public void setOffice_address_detail(String office_address_detail) {
+		this.office_address_detail = office_address_detail;
 	}
 	public String getOffice_managerPhone() {
 		return office_managerPhone;

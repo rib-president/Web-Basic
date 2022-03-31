@@ -26,17 +26,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 
+
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 5em;">
 	<div class="col">
 		<button type="button" class="btn btn-secondary" onclick="location.href='hostManagement'">호스트 관리</button>
 		<button type="button" class="btn btn-secondary" onclick="location.href='guestManagement'">게스트 관리</button>
-		
+		<button type="button" class="btn btn-secondary" onclick="location.href='officeManagement'">오피스 관리</button>
+		<button type="button" class="btn btn-secondary" onclick="location.href='../board/QnAPage'">Q&A 관리</button>
+		<button type="button" class="btn btn-secondary" onclick="location.href='../admin/logoutAdmin'">로그아웃</button>
 	</div>
 </div>
+
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

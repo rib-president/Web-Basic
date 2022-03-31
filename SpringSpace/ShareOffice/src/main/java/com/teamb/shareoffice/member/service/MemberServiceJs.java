@@ -16,11 +16,12 @@ public class MemberServiceJs {
 	@Autowired
 	private MemberMapperJs memberMapperJs;
 	
-	public ArrayList<HashMap<String, Object>> getMessageList() {
+	//보낸쪽지함
+	public ArrayList<HashMap<String, Object>> getMessageList(int no) { 
 		
 		ArrayList<HashMap<String, Object>> datalist = new ArrayList<HashMap<String,Object>>();
 		
-		ArrayList<MessageVo> messageVoList = memberMapperJs.getMessageList();
+		ArrayList<MessageVo> messageVoList = memberMapperJs.getMessageList(no);
 		
 		for(MessageVo messageVo : messageVoList) {
 			
@@ -36,12 +37,74 @@ public class MemberServiceJs {
 			datalist.add(map);
 		}
 		
+		memberMapperJs.updateDate(no);
+		
+		
 		return datalist;
 	}
 	
+	//받은쪽지함
+	public ArrayList<HashMap<String, Object>> getSendMessageList(int no) {
+		
+		ArrayList<HashMap<String, Object>> datalist = new ArrayList<HashMap<String,Object>>();
+		
+		ArrayList<MessageVo> messageVoList = memberMapperJs.getSendMessageList(no);
+		
+		for(MessageVo messageVo : messageVoList) {
+			
+			int memberNo = messageVo.getReceive_no();
+			
+			MemberVo memberVo = memberMapperJs.getMemberByNo(memberNo);
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("memberVo", memberVo);
+			map.put("messageVo", messageVo);
+			
+			datalist.add(map);
+		}
+		
+		return datalist;
+	}
+	
+	// 공용 코드
 	public void writeMessage(MessageVo vo) {
 		
 		memberMapperJs.insertMessage(vo);
+	}
+	
+	public HashMap<String, Object> getSender(int sender_no) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		MessageVo messageVo = memberMapperJs.getSenderNo(sender_no);
+		int memberNo = messageVo.getSender_no();
+		MemberVo memberVo = memberMapperJs.getMemberByNo(memberNo);
+		
+		map.put("memberVo", memberVo);
+		map.put("messageVo", messageVo);
+		
+		return map;
+		
+	}
+	
+	public MemberVo getMemberNick(String nick) {
+		
+		MemberVo result = memberMapperJs.getMemberByNick(nick);
+		
+		return result;
+	}
+	// 새로 온 쪽지 확인
+	public void updateDate(int no) {
+		
+		memberMapperJs.updateDate(no);
+	}
+	// 새로 온 쪽지 갯수
+	public int newMessageCount(int no) {
+		
+		memberMapperJs.newMessageCount(no);
+		
+		return memberMapperJs.newMessageCount(no);
 	}
 	
 }

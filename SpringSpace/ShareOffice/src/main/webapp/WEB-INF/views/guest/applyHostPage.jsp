@@ -28,6 +28,27 @@
 <script>
 function applyHost(){
 	
+	if($("#host_owner").val()==""){
+		alert("대표자명을 입력해주세요.");
+		$("#host_owner").focus();
+		return;
+	}
+	if($("#host_name").val()==""){
+		alert("상호명을 입력해주세요.");
+		$("#host_name").focus();
+		return;
+	}
+	if($("#host_license_number").val()==""){
+		alert("사업자 번호를 입력해주세요.");
+		$("#host_license_number").focus();
+		return;
+	}
+	if($("#host_license_img").val()==""){
+		alert("사업자 등록증 파일을 첨부해주세요.");
+		$("#host_license_img").focus();
+		return;
+	}
+	
 
 	var host_owner= document.getElementById("host_owner");
     var host_name= document.getElementById("host_name");
@@ -38,7 +59,8 @@ function applyHost(){
 	var host_license_number3 = document.getElementById("host_license_number3");
 	host_license_number.value = host_license_number.value + "-" + host_license_number2.value + "-" + host_license_number3.value;
 	
-    document.getElementById("apply_form").submit();
+	var apply_form=document.getElementById("apply_form");
+	apply_form.submit();
 	
 }
 
@@ -48,16 +70,16 @@ function applyHost(){
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 5em;">
   <div class="col">
    <div class="row mt-5 text-center"><h4>호스트 등록하기</h4></div>
 
 				<div class="row">
 					<div class="col-md-12 ">
-					   <form id="apply_form" action="./applyHostProcess" method="post" enctype="multipart/form-data">				
-						<div class="card text-dark bg-light mb-3 " style="margin: 20px">
+					   <form id="apply_form" action="applyHostProcess" method="post" enctype="multipart/form-data">				
+						<div class="card text-dark bg-light mb-3 " style="margin: 2em">
 							<div class="card-body">
-								<div class="row mt-2">
+								<div class="row mt-j2">
 									<div class="col">
 										<p class="fw-lighter ">대표자명</p>
 										<input type="text" id="host_owner" name="host_owner" 
@@ -76,15 +98,15 @@ function applyHost(){
 								<div class="row mt-2">
 									<p class="fw-lighter">사업자 등록번호</p>
 									<div class="col">
-										<input id="host_license_number" name="host_license_number" type="text" maxlength="2" 
-											class="form-control form-control-sm"placeholder="00">
+										<input id="host_license_number" name="host_license_number" type="text" maxlength="3" 
+											class="form-control form-control-sm"placeholder="000">
 									</div>-
 									<div class="col">
-										<input id="host_license_number2" name="host_license_number2"type="text" maxlength="3"
-											class="form-control form-control-sm" placeholder="000">
+										<input id="host_license_number2" type="text" maxlength="2"
+											class="form-control form-control-sm" placeholder="00">
 									</div>-
 									<div class="col">
-										<input id="host_license_number3" name="host_license_number3"type="text" maxlength="5"
+										<input id="host_license_number3" type="text" maxlength="5"
 											class="form-control form-control-sm" placeholder="00000">
 									</div>
 								</div>
@@ -92,14 +114,11 @@ function applyHost(){
 									<div class="col">
 										<p class="fw-lighter">사업자 등록증 첨부</p>
 										<input class="form-control form-control-sm" id="host_license_img"
-											type="file" name="host_license_img" accept="image/*" multiple name="license_img">
+											type="file" name="license_img" accept="image/*" multiple>
 									</div>
 								</div>
 							</div>
-						   <input type=hidden name="member_no" value="2" class="form-control">
-						   <input type=hidden name="host_approve" value="P" >
-						   <input type=hidden name="host_approve_comment" value="">
-						   <input type=hidden name="host_approve_date" value="">
+						  
 							<div class="row text-center mt-4" >
 								<div class="col" >
 									<a onclick="location.href = document.referrer;" type="button" class="btn btn-light">cancel</a>

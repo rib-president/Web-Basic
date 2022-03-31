@@ -7,10 +7,19 @@ import com.teamb.shareoffice.vo.MessageVo;
 
 public interface MemberMapperJs {
 
-	public ArrayList<MessageVo> getMessageList();
+	public ArrayList<MessageVo> getMessageList(int no); // 받은 쪽지함
 	
-	public MemberVo getMemberByNo(int no);
+	public ArrayList<MessageVo> getSendMessageList(int no); // 보낸 쪽지함
+	
+	public MemberVo getMemberByNo(int no); 
 	
 	public void insertMessage(MessageVo vo);
 	
+	public MessageVo getSenderNo(int no);
+	
+	public MemberVo getMemberByNick(String nick);
+	
+	public void updateDate(int no);
+	
+	public int newMessageCount(int no);
 }

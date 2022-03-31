@@ -5,9 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<link href="../resources/css/commons.css" rel="stylesheet">
 
 <style>
 	table {
@@ -56,14 +58,14 @@
 					      	 
 					      	${freeBoardList.freeBoardVo.freeboard_title }
 					      	</a>
-					      	 <%--
+					      	 <%-- 고민
 					      	<c:if test="${!empty data.newKeyword }">
 					      		<span class="badge bg-danger">new</span>
 					      	</c:if>
 					      	  --%> 
 					      	  <br>
 				      	<span>작성자 : ${freeBoardList.memberVo.member_nick }</span>
-				      	<span>작성일 : <fmt:formatDate value="${freeBoardList.freeBoardVo.freeboard_writeDate }" pattern="MM월dd일" /></span>
+				      	<span>작성일 : <fmt:formatDate value="${freeBoardList.freeBoardVo.freeboard_writeDate }" pattern="M.dd" /></span>
 				      	<span>조회수 : ${freeBoardList.freeBoardVo.freeboard_readCount }</span>
 				      	</td>
 				    	</tr>
@@ -78,17 +80,17 @@
 </div>
 		<div class="row">
 			<div class="col">
-				<%--
+				<%-- 수정
 				<c:if test="${!empty sessionUser }">
-				 --%>
-					<a href="./freeBoardWritePage" style="background-color: rgb(58,208,171);" class="float-end btn btn-light">글쓰기</a>
-				<%--
 				</c:if>
-				 --%> 
+				 --%>
+					<a href="./freeBoardWritePage" style="background-color: #adb5bd; color: white;" class="float-end btn btn-light">글쓰기</a>
+				
 			</div>
 		</div>
 			
 		<div class="row">
+			<div class="col"></div>
 			<div class="col">
 				
 				<nav aria-label="...">
@@ -128,7 +130,7 @@
 				    	</c:when>
 				    	<c:otherwise>
 						    <li class="page-item">
-						      <a class="page-link" href="./mainPage?pageNum=${endPage+1 }">&gt;</a>
+						      <a class="page-link" href="./freeBoardPage?pageNum=${endPage+1 }">&gt;</a>
 						    </li>
 				    	</c:otherwise>							    
 				    </c:choose>
@@ -137,6 +139,7 @@
 			
 			
 			</div>
+			<div class="col"></div>
 		</div>	
 
 

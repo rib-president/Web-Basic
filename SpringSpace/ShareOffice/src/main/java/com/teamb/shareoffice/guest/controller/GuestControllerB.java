@@ -1,11 +1,13 @@
 package com.teamb.shareoffice.guest.controller;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,12 +16,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.teamb.shareoffice.guest.service.GuestServiceB;
 import com.teamb.shareoffice.vo.BusinessDayVo;
 import com.teamb.shareoffice.vo.MemberVo;
 import com.teamb.shareoffice.vo.OrderVo;
+import com.teamb.shareoffice.vo.RentalVo;
+import com.teamb.shareoffice.vo.ReviewVo;
 
 @Controller
 @RequestMapping("/guest/*")
@@ -29,24 +35,27 @@ public class GuestControllerB {
 	private GuestServiceB guestServiceB;
 	
 	@RequestMapping("orderPage")
-	public String orderPage(Model model) {
+	public String orderPage(int office_no, Model model) {
 		
-		int office_no = 1; //파라미터값 임의 정의 추후 파라미터 추가(detailPage에서 받아와야함)
+		//int office_no = 3; //파라미터값 임의 정의 추후 파라미터 추가(officeDetailPage에서 받아와야함)
 		
-		HashMap<String, Object> officeInfo = guestServiceB.getOfiiceInfo(office_no);
+		HashMap<String, Object> officeInfo = guestServiceB.getOfficeInfo(office_no);
 		ArrayList<HashMap<String, Object>> officeBusinessDayInfo = guestServiceB.getBusinessDayInfo(office_no);
+		ArrayList<RentalVo> officeRentalList = guestServiceB.getOfficeRentalList(office_no);
 		
 		model.addAttribute("officeInfo", officeInfo);
 		model.addAttribute("officeBusinessDayInfo", officeBusinessDayInfo);
+		model.addAttribute("officeRentalList", officeRentalList);
+		
 		
 		return "guest/orderPage";
-	}
+	}	
 	
 	@RequestMapping("paymentPage")
 	public String paymentPage(Model model, HttpSession session, int office_no, OrderVo ovo, BusinessDayVo bdvo, Date [] rental_date) {
 		
 		//orderPage view쪽엔 hidden으로 미리 넘기는 코드 작성
-		HashMap<String, Object> officeInfo = guestServiceB.getOfiiceInfo(office_no);
+		HashMap<String, Object> officeInfo = guestServiceB.getOfficeInfo(office_no);
 		
 		//예약날짜 형식 변경(DateFormat)
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일, E");
@@ -63,14 +72,12 @@ public class GuestControllerB {
 			for(int i=0; i<rental_date.length; i++) {
 				String formatDate = simpleDateFormat.format(rental_date[i]);
 				
-				System.out.println("컨트롤러 : " + formatDate);
 				formatRentalDateList.add(formatDate);
 				
 				String businessDay = formatDate.substring(15);
-				System.out.println("컨트롤러 : " + businessDay);
 				
 				bdvo.setBusiness_day(businessDay);
-				
+
 				BusinessDayVo businessDayVo = guestServiceB.getPriceAndBusunessTime(bdvo);
 				
 				businessDayVoList.add(businessDayVo);
@@ -95,16 +102,95 @@ public class GuestControllerB {
 	@RequestMapping("orderAndPaymentProcess")
 	public String orderAndPaymentProcess(HttpSession session, OrderVo ovo, String [] rental_date, int [] rental_price) {
 		
-//		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
-//		int member_no = sessionUser.getMember_no();
+		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
+		int member_no = sessionUser.getMember_no();
 		
-		int member_no = 1;
+//		int member_no = 1; // memberNo 임의설정
 		
 		ovo.setMember_no(member_no);
 		
 		guestServiceB.guestOrderAndOfficeRental(ovo, rental_date, rental_price);
 		
 		return "guest/rentalCompletePage";
+	}
+	
+	
+	@RequestMapping("officeRentalListPage")
+	public String officeRentalListPage(HttpSession session, Model model) {
+	
+		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
+		int member_no = sessionUser.getMember_no();
+		
+//		int member_no = 1; // memberNo 임의설정
+		
+		ArrayList<HashMap<String, Object>> rentalList = guestServiceB.getGuestRentalList(member_no);
+		
+		model.addAttribute("rentalList", rentalList);
+		
+		
+		return "guest/officeRentalListPage";
+	}
+	
+	
+	@RequestMapping("writeReviewPage")
+	public String writeReviewPage(HttpSession session, Model model, int order_no, int office_no) {
+
+			HashMap<String, Object> officeInfo = guestServiceB.getOfficeInfo(office_no);
+
+			model.addAttribute("officeInfo", officeInfo);
+			model.addAttribute("order_no", order_no);
+
+			return "guest/writeReviewPage";
+	}
+
+	@RequestMapping("writeReviewProcess")
+	public String writeReviewProcess(ReviewVo rvo, MultipartFile uploadReviewImage) {
+
+		System.out.println("uploadReviewImage : " + uploadReviewImage);
+
+	    if(uploadReviewImage.isEmpty()) {
+	    	rvo.setReview_image("imageNone");
+	    } else if(uploadReviewImage != null) {
+	    	String uploadFolder = "C:/shareOffice/reviewImage/";
+
+			//날짜별 폴더 생성
+			Date today = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+			String folderPath = sdf.format(today);
+
+			File todayFolder = new File(uploadFolder + folderPath);
+
+			if(!todayFolder.exists()) {
+				todayFolder.mkdirs();
+			}
+
+			// 중복되지않게 저장
+			String fileName = "";
+			UUID uuid = UUID.randomUUID();
+			fileName += uuid.toString();
+
+			long currentTime = System.currentTimeMillis();
+			fileName += "_" + currentTime;
+
+			//확장자 추가
+			String originalFileName = uploadReviewImage.getOriginalFilename();
+			String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+			fileName += ext;
+
+			try {
+				uploadReviewImage.transferTo(new File(uploadFolder + folderPath + fileName));
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+
+			rvo.setReview_image(folderPath + fileName);
+	    } else {
+			rvo.setReview_image("imageNone");
+		}
+
+		guestServiceB.writeReview(rvo);
+
+		return "redirect:./officeRentalListPage";
 	}
 	
 	

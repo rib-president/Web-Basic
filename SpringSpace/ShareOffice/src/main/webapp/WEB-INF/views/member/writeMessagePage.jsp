@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +11,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
+<link href="https://webfontworld.github.io/naver/NanumSquare.css" rel="stylesheet">
+
+<script>
+
+ function goData() {
+	 var form = document.userInput
+	 form.submit()
+}
+
+</script>
 
 
 </head>
@@ -19,25 +28,27 @@
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 <div class="row" style="padding-top: 70px;">
-	<div class="col">
+	<div class="col"  style="font-family: 'NanumSquare';">
 		<div class="row">
-			<div class="col" style="background-color: #3ad0ab; color: white; text-align: center; font-size: 1.5em; font-weight: bold;">쪽지보내기</div>
+			<div class="col" style="background-color: #3ad0ab; color: white; text-align: center; font-size: 1.5rem;">쪽지보내기</div>
 		</div>
 		
-		<form action="./writeMessageProcess" method="post" class="form" role="form" style="font-size: 1.5em;">
-			<div class="mb-3 row">
-				<div class="col" style="margin-left: 0.5em; margin-top: 0.5em;">작성자 :</div>
+		<form action="./writeMessageProcess" class="form" role="form" style="font-size: 1.3rem;" name="userInput">
+			<div class="row">
+				<div class="col" style="margin-left: 0.5rem; margin-top: 0.5rem; padding-top: 0.4rem;">
+					작성자 : ${sessionUser.member_nick }
+				</div>
+				<div class="col" style="text-align: right; margin-right: 1rem; font-size: 2rem; margin-top: 0.5rem;">
+					<i class="bi bi-send" onclick="goData()"></i>
+				</div>
 			</div>
-			<div class="mb-3 row">
-				<div class="col" style="margin-left: 0.5em;">받는 사람 : </div>
-	    		<div class="col-sm-10"><input type="text" name="receive_no" class="form-control"></div>
-    		</div>
+			<div class="mb-3" style="margin-left: 0.5rem; margin-right: 0.5rem;">
+			  <input type="text" class="form-control" placeholder="받는 사람 닉네임을 입력해 주세요." name="nick" style="font-size: 1.3rem;">
+			</div>
     		<hr>
-    		<div class="row" >
-				<div class="col" style="margin-left: 0.5em;">내용 : </div>
+			<div class="mb-3" style="margin: 0.5rem;">
+			   <textarea class="form-control" id="exampleFormControlTextarea1" rows="18" name="txt" placeholder="내용을 입력해 주세요." style="font-size: 1.3rem;"></textarea>
 			</div>
-			<textarea rows="15" name="txt" class="form-control input-lg"></textarea><br>
-			<button class="btn btn-lg btn-primary btn-block " type="submit">보내기</button>
 		</form>
 	</div>
 </div>

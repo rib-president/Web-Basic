@@ -14,8 +14,11 @@ public class HostVo {
 	private String host_approve;
 	private String host_approve_comment;
 	private Date host_approve_date;
+	private int host_refuse_count;
+	
+	
 	public HostVo(int host_no, int member_no, String host_owner, String host_name, String host_license_number, String host_license_img,
-			Date host_apply_date, String host_approve, String host_approve_comment, Date host_approve_date) {
+			Date host_apply_date, String host_approve, String host_approve_comment, Date host_approve_date, int host_refuse_count) {
 		super();
 		this.host_no = host_no;
 		this.member_no = member_no;
@@ -27,6 +30,7 @@ public class HostVo {
 		this.host_approve = host_approve;
 		this.host_approve_comment = host_approve_comment;
 		this.host_approve_date = host_approve_date;
+		this.host_refuse_count = host_refuse_count;
 	}
 	public HostVo() {
 		super();
@@ -94,6 +98,10 @@ public class HostVo {
 	public void setHost_approve_date(Date host_approve_date) {
 		this.host_approve_date = host_approve_date;
 	}
-	
-	
+	public int getHost_refuse_count() {
+		return host_refuse_count;
+	}
+	public void setHost_refuse_count(int host_refuse_count) {
+		this.host_refuse_count = host_refuse_count;
+	}
 }

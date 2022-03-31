@@ -48,7 +48,8 @@ public class MemberControllerRN {
 		
 		if(vo != null) {
 			session.setAttribute("sessionUser", vo);
-			return "redirect:../guest/officeListPage";
+			return "redirect:../guest/mainPage";		
+			
 		} else {
 			model.addAttribute("member_id", member_id);
 			model.addAttribute("member_email", member_email);

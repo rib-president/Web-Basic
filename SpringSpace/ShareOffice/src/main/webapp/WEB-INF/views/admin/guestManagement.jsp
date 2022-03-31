@@ -30,7 +30,7 @@
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 5em;">
 	<div class="col">
 		<h1>게스트 회원 관리</h1>
 		<table border="1">
@@ -57,10 +57,10 @@
 					<td>${list.memberVo.member_phone }</td>
 					<td>${list.memberVo.member_email }</td>
 					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.memberVo.member_joindate }"/></td>
-					<td><button type="button" class="btn btn-outline-light" onclick="if (confirm('회원탈퇴를 진행하시겠습니까?')) location.href='./deleteGuest?member_no=${list.memberVo.member_no }';">회원탈퇴</button></td>
+					<td><button type="button" class="btn btn-secondary" onclick="if (confirm('회원탈퇴를 진행하시겠습니까?')) location.href='./deleteGuest?member_no=${list.memberVo.member_no }';">회원탈퇴</button></td>
 				</tr>
 				</c:forEach>
-				<button type="button" class="btn btn-outline-light" onclick="location.href='adminPage'">메인 페이지</button></td>
+				<button type="button" class="btn btn-secondary" onclick="location.href='adminPage'">메인 페이지</button></td>
 		</table>
 		
 		<form action="./guestManagement" method="get">
@@ -80,6 +80,7 @@
 			</div>
 		</div>
 		</form>
+		<!-- 
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
 		    <li class="page-item"><a class="page-link">이전</a></li>
@@ -96,6 +97,7 @@
 		    <li class="page-item"><a class="page-link">다음</a></li>
 		  </ul>
 </nav>
+-->
 	</div>
 </div>
 <jsp:include page="../commons/footer.jsp"></jsp:include>

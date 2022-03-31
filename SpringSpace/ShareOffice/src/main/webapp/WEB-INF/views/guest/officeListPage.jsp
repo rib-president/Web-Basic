@@ -23,30 +23,30 @@
 			<c:forEach items="${officelist}" var="office">
 				<div class="card mb-3">
 				<a href="./officeDetailPage?office_no=${office.officeVo.office_no }">
-				    <%-- 임시 이미지 --%>
-					<img src="https://via.placeholder.com/50" class="card-img-top" alt="...">
-					<%-- 이미지 등록시
-					<img src="/upload/${office.officeVo.office_thumbnail }" class="card-img-top" alt="..."> 
-					--%>
+					<img src="/soUpload/officeImage/${office.officeVo.office_thumbnail }" width=100%, height=250em class="card-img-top" alt="..."> 
+					
 					</a>
 					<div class="card-body">
 						<div class="row">
 							<h5 class="card-title">${office.officeVo.office_name }</h5>
 						</div>
-						<div class="row">
-							<div class="col">
+						
+						<div class="row">					
 								<p class="card-text">
 									<small class="text-muted"> 
-									    <i class="bi bi-geo-alt"></i>${office.officeVo.office_address }
-										#${office.officeVo.office_tags }
+									   <i class="bi bi-geo-alt"></i>${office.officeVo.office_address }
 									</small>
 								</p>
-							</div>
-							<div class="col">
-								<h6 class="card-text" style="text-align: right;"> ${office.businessDayVo.business_day_price }원/일
-								</h6>
-							
-							</div>
+						</div>
+						<div class="row">
+						    <p class="card-text">
+									<small class="text-muted"> 
+						                 #${office.officeVo.office_tags }
+						            </small>
+						    </p>             
+						</div>
+						<div class="row">
+						    <h6 class="card-text" style="text-align: right;"> ${office.businessDayList[0].business_day_price }원/일</h6>
 						</div>
 
 					</div>

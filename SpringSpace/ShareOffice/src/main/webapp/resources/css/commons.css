@@ -1,4 +1,3 @@
-    @charset "UTF-8";
     @import url('https://webfontworld.github.io/kopus/KoPubWorldDotum.css');
     
     @font-face {
@@ -7,7 +6,7 @@
     font-weight: normal;
     font-style: normal;
     }
-    * {margin: 0px; padding: 0px;}
+    * {margin: 0px; padding: 0px; overflow-x:hidden;}
     
     body { font-family: 'KoPubWorldDotum', sans-serif; font-weight: 500; color: #000; height: 100%;}
 
@@ -18,12 +17,21 @@
     .KOHIBaeumOTF {font-family: 'KOHIBaeumOTF';}
 
     .bold {font-weight: bold;}
+    .bolder {font-weight: bolder;}
     
     .cursor-pointer{cursor:pointer} 
 
+	.font-slim{font-weight:100}
+    .font-light{font-weight:300}
     .font-medium{font-weight:500}
+    .font-medium2{font-weight:600}
     .font-normal{font-weight:400}
+    .font-bold{font-weight:700}
+    .font-extrabold{font-weight:800}
 
+	.text-h2{ font-size: 1.25rem; font-weight: 600;}
+
+	.text-fs-8{font-size:.5rem}
     .text-fs-10{font-size:.625rem}
     .text-fs-11{font-size:.688rem}
     .text-fs-12{font-size:.75rem}
@@ -47,6 +55,7 @@
     .text-fs-30{font-size:1.875rem}
     .text-fs-32{font-size:2rem}
     .text-fs-40{font-size:2.5rem}
+    .text-fs-50{font-size:3rem}
     .text-fs-60{font-size:3.75rem}
     
     .text-fs-3em {font-size: 3em;}
@@ -58,8 +67,11 @@
     .text-gray-c_b7{color:rgba(183,183,183,1)}
     .text-gray-c_25{color:rgba(37,37,37,1)}
     .text-blue{color:rgb(21, 168, 253)}
+    .text-blue-light{color:rgb(66, 157, 209)}
     .text-red-soft {color:rgba(202, 77, 77, 0.89);}
-
+    .text-green-soft{color:rgba(96, 173, 89, 0.781)}
+	.text-green-dsoft{color:rgba(61, 179, 50, 0.959)}
+	
     .sticky {position:sticky}
     .fixed {position:fixed}
     .static{position:static}
@@ -76,6 +88,9 @@
     .right-1{right:.25rem}
     .right-5{right:1.25rem}
     .right-20{right:5rem}
+    .right-21{right:5.25rem}
+    .right-23{right:5.75rem}
+    .right-25{right:6.25rem}
     .right-27{right:6.75rem}
     .right-28{right:7rem}
     .right-30{right:7.5rem}
@@ -89,6 +104,7 @@
 
     .h-6{height:1.5rem}
     .h-9{height:2.25rem}
+    .h-12{height:3rem}
     .h-14{height:3.5rem}
     .h-16{height:4rem}
     .h-18{height:4.5rem}
@@ -113,12 +129,20 @@
     
     .bg-gray-c_ff{background-color:rgba(255,255,255,1)}
     .bg-gray-c_e1{background-color:rgba(225,225,225,1)}
+    .bg-gray-c_e1t{background-color:rgba(226, 225, 225, 0.349)}
     .bg-gray-c_3c{background-color:rgba(60,60,60,1)}
+    .bg-lemon {background-color: rgba(228, 243, 162, 0.466)}
+	.bg-gray-c_e2{background-color:rgba(242, 242, 242, 0.719);}
 
     .bg-gradation-10{background-color:rgba(149, 49, 49, 0.685)}
     .bg-gradation-30{background-color:rgba(71, 51, 95, 0.884)}
     .bg-gradation-50{background-color:rgba(51, 59, 94, 0.842)}
     .bg-gradation-60{background-color:rgba(187, 177, 42, 0.808)}
+
+    .bg-gradation-10:hover{background-color:rgb(149, 49, 49)}
+    .bg-gradation-30:hover{background-color:rgb(61, 31, 97)}
+    .bg-gradation-50:hover{background-color:rgb(36, 48, 99)}
+    .bg-gradation-60:hover{background-color:rgb(187, 177, 42)}  
 
     .mode_white {background-color:rgba(255,255,255,1);border-color:rgba(225,225,225,1)}
 
@@ -135,6 +159,8 @@
     .m-1{margin:.25rem}
     .m-2{margin:.5rem}
 
+	.mt-1{margin-top:.25rem}
+	.mt-2{margin-top:.5rem}
     .mt-8{margin-top:2rem}
     .mt-10{margin-top:2.5rem}
     .mt-14{margin-top:3.5rem}
@@ -142,37 +168,90 @@
 
     .mb-8{margin-bottom:2rem}
     .mb-10{margin-bottom:2.5rem}
+    .mb-20{margin-bottom:5rem}
+    .mb-30{margin-bottom:7.5rem}
+    .mb-40{margin-bottom:9rem}
+    .mb-50{margin-bottom:11.5rem}
 
 	.my-1{margin-bottom:.25rem;margin-top:.25rem}
-
-    .mr-3_5{margin-right:.875rem}
+    
+    
+    .ml-1{margin-left:.25rem}
+    .ml-2{margin-left:.5rem}
+	.ml-4{margin-left:1rem}
+	.ml-5{margin-left:1.25rem}
+	.ml-6{margin-left:1.5rem}
+	.ml-7{margin-left:1.75rem}
+	.ml-8{margin-left:2rem}
+	.ml-9{margin-left:2.25rem}
+	.ml-10{margin-left:2.5rem}
+	.ml-12{margin-left:3rem}
+	.ml-13{margin-left:3.25rem}
+	.ml-15{margin-left:3.75rem}
+	.ml-16{margin-left:4rem}
+	.ml-17{margin-left:4.25rem}    
+  	.ml-20{margin-left:5rem}    
+    
     .mr-2{margin-right:.5rem}
+    .mr-3_5{margin-right:.875rem}
+    .mr-4{margin-right:1rem}
+    .mr-10{margin-right:2.5rem;}
+    .mr-20{margin-right:5rem;}
+    .mr-30{margin-right:7.5rem;}       
 
+	.mx-2 {margin-left:.5rem; margin-right: .5rem;}
     .mx-5{margin-left:1.25rem;margin-right:1.25rem}
     .mx-auto{margin-left:auto;margin-right:auto}
+	
+	.p-0 {padding: 0};
+	.p-1 {padding:.25rem;}
+	.p-10 {padding: 2.5rem;}
+    .p-20 {padding: 5rem;}
 
-	.p-6{padding: 1.5rem}
-
+    .pt-1{padding-top:.25rem}
     .pt-2{padding-top:.5rem}
     .pt-3{padding-top:.75rem}
     .pt-6{padding-top:1.5rem}
+	.pt-7{padding-top:1.75rem}
+	.pt-8{padding-top:2rem}
+	.pt-9{padding-top:2.25rem}    
+    .pt-10 {padding-top: 2.5rem;}
+    .pt-12{padding-top:3rem}
+	.pt-20 {padding-top: 5rem;}    
 
-	.pr-0{padding-right:.0}
-	.pr-1{padding-right:.25rem}
-	.pr-2{padding-right:.5rem}
+	.pb-10 {padding-bottom: 2.5rem;}
 
-	.pl-0{padding-left:0}
-	.pl-2{padding-left:.5rem}
+	.pl-0{padding-left:0;}
+	.pl-1{padding-left:.25rem;}
+	.pl-2{padding-left:.5rem;}
+	.pl-3{padding-left:.75rem;}
+	.pl-4 {padding-left: 1rem;}
+	.pl-5 {padding-left: 1.25rem;}
+	.pl-8{padding-left:2rem;}
+	.pl-9{padding-left:2.25rem;}
     .pl-10{padding-left:2.5rem;}
     .pl-12{padding-left:3rem;}
     .pl-13{padding-left:3.25rem;}
     .pl-14{padding-left:3.5rem;}
     .pl-15{padding-left:3.75rem;}
     .pl-16{padding-left:4rem;}
+    .pl-17{padding-left:4.25rem;}
+	.pl-18{padding-left:4.5rem;}	
+    .pl-20 {padding-left: 5rem;}
+    .pl-18{padding-left:4.5rem;}
+    .pl-20{padding-left:5rem;}
+    
+    .pr-0{padding-right:0;}
+    .pr-1{padding-right:.25rem;}
 
     .px-0{padding-left:0;padding-right: 0;}
-    .px-0{padding-left:.25rem;padding-right: .25rem;}
-    .px-2{padding-left:.5rem;padding-right: .5rem;}
+    .px-6{padding-left:1.5rem;padding-right: 1.5rem;}
+    .px-8{padding-left:1.5rem;padding-right: 2rem;}
+    .px-10{padding-left:2.5rem;padding-right: 2.5rem;}
+    .px-20{padding-left:5rem;padding-right: 5rem;}
+    .px-22{padding-left:5.5rem;padding-right: 5.5rem;}
+    .px-25{padding-left:6.25rem;padding-right: 6.25rem;}
+    .px-30{padding-left:7.5rem;padding-right: 7.5rem;} 
 
     .py-0{padding-bottom:0;padding-top:0}
     .py-1{padding-bottom:.25rem;padding-top:.25rem}
@@ -196,9 +275,14 @@
 
     .rounded-full{border-radius:9999px}
     .rounded-10{border-radius:10px}
-
-    .leading-normal{line-height:1.5}
+      
     .leading-tight{line-height:1.25}
+    .leading-normal{line-height:1.5}
+	.leading-relaxed{line-height:1.625}
+
+	.op-7 {opacity:0.7;}
+	.op-8 {opacity:0.8;}
+	.op-9 {opacity:0.9;}
 
     .eframe-width {
         padding-left: 0.75rem;
@@ -289,7 +373,7 @@
     }
 
     .modal-container {
-        z-index: 99999;
+        z-index: 999;
         background: rgba(0,0,0,.5);
         display: none;
         /* this is how we cover the entire page */
@@ -314,20 +398,17 @@
         border:none;
         background-color:transparent;        
     }
-    
-    #banner{
-       position: fixed; 
-       /*top: 0;*/ 
-       width: 100%;
-       background-color: #3ad0ab;
-       margin: auto;
-       
-       }
-      #footer {
-       position: fixed; 
-       /*bottom: 0;*/ 
-       width: 100%; 
-       background-color: #f1f3f5;
-       margin: auto;
-       }
 
+	.btn-small{
+	  display: inline-block;
+	  text-align: center;
+	  margin:1px;
+	  border-radius: 5px;
+	  font-weight: 400;
+	  font-size: 0.625rem;
+	  padding-top: 0.25rem;
+	  padding-bottom: 0.25rem;
+	  padding-left: 0.375rem;
+	  padding-right: 0.375rem;  
+	}
+	.btn-cf-blue{  background-color: rgba(107, 155, 255, 1);  border-color: rgba(107, 155, 255, 1); border-width: 1px;  color: rgba(255, 255, 255, 1); }    

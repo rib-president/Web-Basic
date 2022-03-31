@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -13,12 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import com.teamb.shareoffice.guest.service.GuestService_H;
 import com.teamb.shareoffice.vo.HostVo;
 import com.teamb.shareoffice.vo.MemberVo;
+
 
 @Controller
 @RequestMapping("/guest/*")
@@ -27,6 +29,11 @@ public class GuestController_H {
 	@Autowired
 	private GuestService_H guestService_H;
 	
+	
+	@RequestMapping("mainPage")
+	public String mainPage() {
+		return "guest/mainPage";
+	}
 	
 	@RequestMapping("officeListPage")
 	public String officeList(Model model) {
@@ -39,28 +46,33 @@ public class GuestController_H {
 	@RequestMapping("officeDetailPage")
 	public String officeDetailPage(int office_no,Model model) {
 		HashMap<String, Object>map = guestService_H.getOfficeDetail(office_no);
+		 ArrayList<HashMap<String, Object>> orderList = guestService_H.reviewList(office_no);
 		
-		ArrayList<HashMap<String, Object>> reviewList = guestService_H.reviewList(office_no);
+		 int imageCount = guestService_H.getImageCount(office_no);
+		 model.addAttribute("imageCount",imageCount);
+		 
+	     model.addAttribute("orderList",orderList);
 		
-		model.addAttribute("reviewList",reviewList);
+		 model.addAttribute("office",map);
 		
-		model.addAttribute("office",map);
-		
-		return "guest/officeDetailPage";
+		 return "guest/officeDetailPage";
 	}
 	@RequestMapping("officeReviewPage")
 	public String officeReviewPage(Model model,int office_no) {
 		
-        ArrayList<HashMap<String, Object>> reviewList = guestService_H.reviewList(office_no);
-		
-	    model.addAttribute("reviewList",reviewList);
+        ArrayList<HashMap<String, Object>> orderList = guestService_H.reviewList(office_no);
+
+        
+	    model.addAttribute("orderList",orderList);
 		return "guest/officeReviewPage";
 	}
-	
-	
-	
+		
 	@RequestMapping("officeMapPage")
-	public String officeMapPage() {
+	public String officeMapPage(Model model) {
+		
+        ArrayList<HashMap<String, Object>> officelist = guestService_H.getLatestOfficeList();
+		
+		model.addAttribute("officelist",officelist);
 		return "guest/officeMapPage";
 	}
 	
@@ -69,11 +81,14 @@ public class GuestController_H {
 		return "guest/applyHostPage";
 	}
 	@RequestMapping("applyHostProcess")
-	public String applyHostProcess (HostVo hvo,MultipartFile license_img) {
+	public String applyHostProcess (HostVo hvo,MultipartFile license_img, HttpSession session) {
 	
 		System.out.println("파라미터 넘어오는지"+hvo.getHost_name());
 		
-      String uploadFolder = "C:/freeNext/licenseImg/";
+		// setMember_no
+		hvo.setMember_no(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
+		
+		String uploadFolder = "C:/shareOffice/licenseImg/";
 		
 		if(license_img != null) {
 			
@@ -107,21 +122,40 @@ public class GuestController_H {
 				e.printStackTrace();
 			}
 		hvo.setHost_license_img(folderPath+fileName);
-		
+		   
 		}
+
 		
 		guestService_H.applyHost(hvo);
 		
-		return "redirect:./applyCheckPage";
+		return "redirect:./applyCompletePage";
 	}
+	// 신청 완료시 페이지
+	@RequestMapping("applyCompletePage")	
+	public String applyCompletePage(HttpSession session) {
 		
+		MemberVo sessionUser = (MemberVo)session.getAttribute("sessionUser");
+		int memberNo = sessionUser.getMember_no();
+	
+		return"guest/applyCompletePage";
+	}
+	//신청현황 보기
 	@RequestMapping("applyCheckPage")
-	public String applyCheckPage(Model model,
-			@RequestParam(value = "host_no" , defaultValue = "5") int host_no) {
-				
-	    HashMap<String, Object> map = guestService_H.getHostApprove(host_no);
+	public String applyCheckPage(Model model,HttpSession session) {
 		
-		model.addAttribute("host",map);
+		MemberVo sessionUser = (MemberVo)session.getAttribute("sessionUser");
+		int memberNo = sessionUser.getMember_no();
+				
+        ArrayList<HashMap<String, Object>> applyList =guestService_H.getHostApprove(memberNo);
+		
+        if(sessionUser !=null) {
+		
+			HostVo hostVo = new HostVo();
+			hostVo.setMember_no(memberNo);
+      
+        
+		model.addAttribute("applyList",applyList);
+       }
 				
 		return "guest/applyCheckPage";
 	}

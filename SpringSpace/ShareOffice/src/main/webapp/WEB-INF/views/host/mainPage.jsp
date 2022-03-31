@@ -11,17 +11,20 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link href="../resources/css/commons.css" rel="stylesheet">
+<link rel="stylesheet" href="../resources/css/commons.css">
 
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 4rem;">
 	<div class="col">
-		<%-- 내용작성 --%>
-			호스트 메인페이지 테스트중...
-		
+		<div class="row" style="padding-top:1.5rem">
+			<div class="col d-grid"><button class="btn btn-dark" onclick="location.href='./registerOfficePage'">오피스 등록</button></div>
+		</div>
+		<div class="row mt-3 mb-3">
+			<div class="col d-grid"><button class="btn btn-outline-dark" onclick="location.href='./officeListPage'">내 오피스 목록</button></div>
+		</div>	
 	</div>
 </div>
 

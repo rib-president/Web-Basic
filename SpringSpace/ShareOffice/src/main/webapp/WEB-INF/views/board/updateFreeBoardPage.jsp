@@ -13,6 +13,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 
+<script>
+	function test1(){
+		alert("글수정이 완료 되었습니다");
+	}
+</script>
+
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
@@ -47,7 +53,11 @@
 				<div class="row">
 					<div class="col">
 						<input type="hidden" name="freeboard_no" value="${data.freeBoardVo.freeboard_no }">
-						<input type="submit" style="background-color: rgb(58,208,171);" class="float-end btn btn-light" value="글수정">						
+						<%-- 수정 (세션정보랑 작성자 닉이랑 같은지 비교 해야함)
+						<c:if test="${!empty sessionUser && sessionUser.member_nick == data.memberVo.member_nick}">
+						</c:if>
+						 --%> 
+						<input type="submit" style="background-color: rgb(58,208,171);" class="float-end btn btn-light" value="글수정" onclick="test1()">						
 					</div>
 				</div>
 			</form>

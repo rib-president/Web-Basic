@@ -49,12 +49,20 @@
 				<div class="col"></div>
 				<div class="col-4">
 					<div class="d-grid">
-						<input type="submit" value="메인페이지로" class="btn btn-light" onClick="window.location.href='../mainPage'">
+						<input type="submit" value="메인페이지로" class="btn btn-light" onClick="window.location.href='../guest/mainPage'">						
 					</div>
 				</div>
 				<div class="col"></div>
 			</div>
-			
+			<div class="row mt-2">
+				<div class="col"></div>
+				<div class="col-4">
+					<div class="d-grid">
+						<input type="submit" value="예약 리스트보기" class="btn btn-light" onClick="window.location.href='../guest/officeRentalListPage'">						
+					</div>
+				</div>
+				<div class="col"></div>
+			</div>			
 			
 			<div class="row" style="padding:100px;"></div>			
 		

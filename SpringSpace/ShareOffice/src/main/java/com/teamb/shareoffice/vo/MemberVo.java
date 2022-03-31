@@ -8,6 +8,7 @@ public class MemberVo {
 
 	private int member_no;
 	private String member_id;
+	private String member_type;
 	private String member_nick;
 	private String member_gender;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -18,11 +19,12 @@ public class MemberVo {
 	public MemberVo() {
 		super();
 	}
-	public MemberVo(int member_no, String member_id, String member_nick, String member_gender, Date member_birth, String member_phone,
+	public MemberVo(int member_no, String member_id, String member_type, String member_nick, String member_gender, Date member_birth, String member_phone,
 			String member_email, Date member_joindate) {
 		super();
 		this.member_no = member_no;
 		this.member_id = member_id;
+		this.member_type = member_type;
 		this.member_nick = member_nick;
 		this.member_gender = member_gender;
 		this.member_birth = member_birth;
@@ -42,8 +44,8 @@ public class MemberVo {
 	}
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
-	}	
-	
+	}
+		
 	public String getMember_nick() {
 		return member_nick;
 	}
@@ -80,6 +82,11 @@ public class MemberVo {
 	public void setMember_joindate(Date member_joindate) {
 		this.member_joindate = member_joindate;
 	}
-	
+	public String getMember_type() {
+		return member_type;
+	}
+	public void setMember_type(String member_type) {
+		this.member_type = member_type;
+	}
 	
 }

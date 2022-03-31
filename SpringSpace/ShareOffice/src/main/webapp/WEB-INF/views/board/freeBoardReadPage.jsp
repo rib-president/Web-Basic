@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page session="false" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,13 +34,13 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 1rem;">
 	<div class="col m-3">
 	<%-- 내용작성 --%>
 		<div class="row">
 			<div class="col">
 				<h4 class="text-center">글읽기 페이지</h4>
-			</div>
+			
 				
 				<div class="row">
 					<div class="col">
@@ -50,7 +50,7 @@
 				
 				<div class="row">
 					<div class="col">
-						제목  : <span>${data.freeBoardVo.freeboard_title }&nbsp&nbsp</span>
+						제목  : <span>${data.freeBoardVo.freeboard_title } &nbsp &nbsp</span>
 						조회수 : <span>${data.freeBoardVo.freeboard_readCount }</span>
 					</div>	
 				</div>	
@@ -64,14 +64,15 @@
 				
 				<div class="row">
 					<div class="col mt-2">
-					<%--
+					<%-- 수정
 				<c:if test="${!empty sessionUser && sessionUser.member_no == data.boardVo.member_no }">
-					 --%>
-					<a style="background-color: rgb(58,208,171);" class="float-end btn btn-light" href="./deleteContentProcess?freeboard_no=${data.freeBoardVo.freeboard_no }">삭제</a>	
-					<a style="background-color: rgb(58,208,171);" class="float-end btn btn-light" href="./updateFreeBoard?freeboard_no=${data.freeBoardVo.freeboard_no }">수정</a> 
-					<%--
 				</c:if>
 					 --%>
+					<a style="background-color: rgb(58,208,171);" class="float-end btn btn-light" href="./deleteContentProcess?freeboard_no=${data.freeBoardVo.freeboard_no }">삭제</a>	
+					<a style="background-color: rgb(58,208,171);" class="float-end btn btn-light" href="./updateFreeBoardPage?freeboard_no=${data.freeBoardVo.freeboard_no }">수정</a> 
+					<a style="background-color: rgb(58,208,171);" class="float-end btn btn-light" href="./freeBoardPage">목록</a>	
+					
+					 
 					</div>
 				</div>
 				<hr class="mt-3">
@@ -80,15 +81,24 @@
 						<form action="./freeBoardCommentWriteProcess" method="get">
 							<p>
 								<label>댓글</label>
-								<!-- 작성자 닉네임 어디서 뜯어올까 일단 위에서 뜯어올까 ? 쩝 ;;;; 수정 -->
-								작성자 : <span>${freeBoardCommentList.memberVo.member_nick }</span>
-								<input type="hidden" name="freeboard_no" value="${freeBoardCommentList.memberVo.member_no }">
+								<%--
+								코멘트리스트는 배열 같은 거라서 인덱스로 뽑아 오는거 아니면 에러남	
+								작성자 : <span>${freeBoardCommentList.get(0).memberVo.member_nick }</span>
+								 --%>
+								작성자 : <span>${sessionUser.member_nick }</span>
+								
+								<input type="hidden" name="freeboard_no" value="${data.freeBoardVo.freeboard_no }">
+								
 							</p>
 							<p>
-								<textarea rows="2" class="form-control" name="freeboard_comment"></textarea>
+								<textarea rows="2" class="form-control" name="comment_content"></textarea>
 							</p>
 							<p>
-								<button type="submit">댓글 작성</button>
+								<%-- 수정
+								<c:if test="${!empty sessionUser }">
+								</c:if>
+								 --%> 
+								<input type="submit" style="background-color: rgb(58,208,171);" class="float-end btn btn-light" value="댓글작성">
 							</p>
 							
 						</form>
@@ -97,9 +107,9 @@
 				<table class="table mt-2">
 				 
 				    <tr>
-				      <th class="text-center">no</th>
 				      <th class="text-center">작성자</th>
 				      <th class="text-center">내용</th>
+				      <th class="text-center">날짜</th>
 				
 				    </tr>
 				 
@@ -112,14 +122,14 @@
 				      		<span>${freeBoardCommentList.freeBoardCommentVo.comment_content }</span>
 				      	</td>
 				      	<td>
-				      		<span><fmt:formatDate value="${freeBoardCommentList.freeBoardVo.freeboard_writeDate }" pattern="MM월dd일" /></span>
+				      		<span><fmt:formatDate value="${freeBoardCommentList.freeBoardCommentVo.comment_writeDate }" pattern="MM월dd일" /></span>
 				      	</td>
 				    	</tr>
 					</c:forEach>
 				
 			</table>	
 				
-			
+			</div>
 		</div>
 	</div>
 </div>

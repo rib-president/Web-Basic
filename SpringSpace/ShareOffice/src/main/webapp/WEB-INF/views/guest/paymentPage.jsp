@@ -41,7 +41,7 @@
 		<div class="col"></div> <!-- 왼쪽 여백 -->
 		
 		<div class="col-10">
-		<form id="frm" action="orderAndPaymentProcess" method="post">
+		<form id="frm" action="./orderAndPaymentProcess" method="post">
 		
 			<div class="row mt-5">
 				<div class="col fs-2 center">결제하기</div>
@@ -128,12 +128,12 @@
 				</div>
 			</div>
 			
-			<div class="row" style="padding:40px;"></div><!-- 여백 -->
+			<div class="row" style="padding:1em;"></div><!-- 여백 -->
 			
 			<div class="row mt-3"> <!-- 결제하기버튼 -->
 				<div class="col">
 					<div class="d-grid">
-						<button class="btn btn-dark" onclick="paymentValidCheck(event)">결제하기</button>
+						<button class="btn buttonColor" onclick="paymentValidCheck(event)">결제하기</button>
 						
 					</div>
 				</div>
@@ -152,7 +152,7 @@
 			
 			</form>
 			
-			<div class="row" style="padding:30px;"></div>
+			<div class="row" style="padding:1em;"></div>
 		
 		</div>
 		
