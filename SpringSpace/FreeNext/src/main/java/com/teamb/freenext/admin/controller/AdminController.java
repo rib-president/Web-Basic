@@ -36,21 +36,17 @@ public class AdminController {
 	private MemberService memberService;
 
 	@RequestMapping("main")
-	public String main() {
+	public String main(HttpSession session) {
 		
 		System.out.println("관리자 메인페이지가 실행되었습니다.");
 		
-		return "admin/main";
-	}
-	
-	
-	// 관리자 회원가입 페이지는 따로 만들지 않고, INSERT로 관리자 한명 생성하기
-	@RequestMapping("joinAdminPage")
-	public String joinAdminPage() {
+		AdminVo sessionAdmin = (AdminVo) session.getAttribute("sessionAdmin");
 		
-		System.out.println("관리자 회원가입페이지가 실행되었습니다.");
+		if(sessionAdmin != null) {
+			return "admin/dashBoard";
+		}
 		
-		return "admin/joinAdminPage";
+		return "admin/loginPage";
 	}
 	
 	
@@ -63,8 +59,8 @@ public class AdminController {
 	}
 	
 	
-	@RequestMapping("adminLoginProcess")
-	public String adminLoginProcess(AdminVo param, HttpSession session) {
+	@RequestMapping("loginProcess")
+	public String loginProcess(AdminVo param, HttpSession session) {
 		
 		System.out.println("관리자 로그인 프로세스가 실행되었습니다.");
 		System.out.println(param.getAdmin_id());
@@ -76,9 +72,9 @@ public class AdminController {
 			session.setAttribute("sessionAdmin", adminSessionUser);
 			
 			System.out.println("관리자로 로그인");
-			return "redirect:./main";
+			return "redirect:../admin/dashBoard";
 			
-		}else {
+		} else {
 			
 			System.out.println("관리자로 로그인 실패");
 			return "admin/loginFail";
@@ -91,9 +87,14 @@ public class AdminController {
 		
 		session.removeAttribute("sessionAdmin");
 		
-		return "redirect:./main";
+		return "redirect:../admin/main";
 	}
 	
+	@RequestMapping("dashBoard")
+	public String dashBoard() {
+		
+		return "admin/dashBoard";
+	}
 	
 	@RequestMapping("manageMemberPage")
 	public String manageMemberPage(Model model, String searchOption, String searchWord, String searchApproval, 
@@ -226,7 +227,7 @@ public class AdminController {
 		
 		String uploadFolder = "C:/freeNext/profileImage/";
 		
-		if(memberProfileImg != null) {
+		if(memberProfileImg != null && !memberProfileImg.isEmpty()) {
 			
 			Date today = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
@@ -263,9 +264,6 @@ public class AdminController {
 		
 		mvo.setMember_no(memberNo);
 		cvo.setMember_no(memberNo);
-		//cvo.setCustomer_agree_email(agreeEmail);
-		//cvo.setCustomer_agree_sns(agreeSNS);
-			
 			
 		adminService.updateMemberN(mvo, cvo);
 		
@@ -281,12 +279,12 @@ public class AdminController {
 	}
 	
 	@RequestMapping("updateMemberProcessB")
-	public String updateMemberProcessB(int memberNo, MemberVo mvo, MemberCompanyVo cvo, MultipartFile licenseImg, Model model,
-										HttpServletRequest request) {
+	public String updateMemberProcessB(int memberNo, MemberVo mvo, MemberCompanyVo cvo, MultipartFile licenseImg, MultipartFile memberProfileImg,
+										Model model, HttpServletRequest request) {
 		
 			String uploadFolder = "C:/freeNext/profileImage/";
 		
-			if(licenseImg != null){
+			if(licenseImg != null && !licenseImg.isEmpty()){
 					
 					Date today = new Date();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/"); 
@@ -316,13 +314,50 @@ public class AdminController {
 					}
 
 					cvo.setCompany_license_img(folderPath + fileName); 
+			} else {				
+				cvo.setCompany_license_img(adminService.getCompanyVo(memberNo).getCompany_license_img());
 			}
+			
+			if(memberProfileImg != null && !memberProfileImg.isEmpty()) {
+				
+				Date today = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+				String folderPath = sdf.format(today);
+				
+				File todayFolder = new File(uploadFolder + folderPath);
+				
+				if(!todayFolder.exists()) {
+					todayFolder.mkdirs();
+				}
+				
+				String fileName = "";
+				UUID uuid = UUID.randomUUID();
+				fileName += uuid.toString();
+				
+				long currentTime = System.currentTimeMillis();
+				fileName += "_" + currentTime;
+				
+				String originalFileName = memberProfileImg.getOriginalFilename();
+				String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+				fileName += ext;
+				
+				System.out.println("original +" + originalFileName);
+				
+				
+				try {
+					memberProfileImg.transferTo(new File(uploadFolder + folderPath + fileName));
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				
+				mvo.setMember_profile(folderPath + fileName);
+			}			
 		
 		mvo.setMember_no(memberNo);
 		cvo.setMember_no(memberNo);
 					
-		mvo.setMember_pw(memberService.getPasswordHashCode(mvo.getMember_pw()));
-		mvo.setMember_profile(((MemberVo) adminService.getMember(memberNo).get("memberVo")).getMember_profile());		
+		//mvo.setMember_pw(memberService.getPasswordHashCode(mvo.getMember_pw()));
+		//mvo.setMember_profile(((MemberVo) adminService.getMember(memberNo).get("memberVo")).getMember_profile());		
 		
 		adminService.updateMemberB(mvo, cvo);
 		

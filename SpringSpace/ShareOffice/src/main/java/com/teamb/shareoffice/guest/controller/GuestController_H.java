@@ -88,7 +88,7 @@ public class GuestController_H {
 		// setMember_no
 		hvo.setMember_no(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
 		
-		String uploadFolder = "C:/shareOffice/licenseImg/";
+		String uploadFolder = "/shareOffice/licenseImg/";
 		
 		if(license_img != null) {
 			

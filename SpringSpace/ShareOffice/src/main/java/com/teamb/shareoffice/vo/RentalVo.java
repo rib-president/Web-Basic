@@ -11,15 +11,17 @@ public class RentalVo {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date rental_date;
 	private int rental_price;
+	private String rental_status;
 	public RentalVo() {
 		super();
 	}
-	public RentalVo(int rental_no, int order_no, Date rental_date, int rental_price) {
+	public RentalVo(int rental_no, int order_no, Date rental_date, int rental_price, String rental_status) {
 		super();
 		this.rental_no = rental_no;
 		this.order_no = order_no;
 		this.rental_date = rental_date;
 		this.rental_price = rental_price;
+		this.rental_status = rental_status;
 	}
 	public int getRental_no() {
 		return rental_no;
@@ -48,6 +50,10 @@ public class RentalVo {
 	public void setRental_price(int rental_price) {
 		this.rental_price = rental_price;
 	}
-
-
+	public String getRental_status() {
+		return rental_status;
+	}
+	public void setRental_status(String rental_status) {
+		this.rental_status = rental_status;
+	}
 }

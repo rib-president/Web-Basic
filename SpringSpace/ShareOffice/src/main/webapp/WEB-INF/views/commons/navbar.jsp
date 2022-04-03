@@ -25,8 +25,19 @@
 			</c:otherwise>
 		</c:choose>
 		
-	</div>  
+	</div>
+
     <div class="row mt-3 mb-3">
+    	<div class="col cursor-pointer" onclick="location.href='../member/testMyPage'">마이페이지</div>
+    </div>
+	<div class="row mt-3 mb-3">
+		<div class="col cursor-pointer" onclick="location.href='../board/freeBoardPage'">자유게시판</div>
+	</div> 
+   <div class="row mt-3 mb-3">
+		<div class="col cursor-pointer" onclick="location.href='../board/QnAPage'">Q&A</div>
+	</div> 
+  
+    <div class="row mt-5 mb-3">
     	<div class="col cursor-pointer" onclick="location.href='../guest/officeListPage'">오피스 목록</div>
     </div>
 	<div class="row mt-3 mb-3">
@@ -49,14 +60,5 @@
 			</div>
 		</c:when>	
 	</c:choose>    
-    <div class="row mt-5 mb-3">
-    	<div class="col cursor-pointer" onclick="location.href='../member/testMyPage'">마이페이지</div>
-    </div>
-	<div class="row mt-3 mb-3">
-		<div class="col cursor-pointer" onclick="location.href='../board/freeBoardPage'">자유게시판</div>
-	</div> 
-   <div class="row mt-3 mb-3">
-		<div class="col cursor-pointer" onclick="location.href='../board/QnAPage'">Q&A</div>
-	</div> 
   </div>
 </div>

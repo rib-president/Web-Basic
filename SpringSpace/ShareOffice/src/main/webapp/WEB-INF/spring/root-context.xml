@@ -16,9 +16,9 @@
  	 <!-- MySQL dataSource -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://localhost:3306/team_b?serverTimezone=Asia/Seoul"></property>
-        <property name="username" value="scott"></property>
-        <property name="password" value="scott"></property>
+        <property name="url" value="jdbc:mysql://13.125.166.120:3306/team_b?serverTimezone=Asia/Seoul"></property>
+        <property name="username" value="jungsugi"></property>
+        <property name="password" value="blacktiger"></property>
     </bean>        
         
  

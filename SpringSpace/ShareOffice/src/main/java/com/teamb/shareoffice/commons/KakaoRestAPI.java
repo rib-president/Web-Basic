@@ -11,10 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teamb.shareoffice.vo.KakaopayVo;
+import com.teamb.shareoffice.vo.MemberVo;
 
 @Service
 public class KakaoRestAPI {
@@ -26,14 +29,15 @@ public class KakaoRestAPI {
 		
 	private static final String PAY_READY_PATH = "/v1/payment/ready";
 	private static final String PAY_APPROVE_PATH = "/v1/payment/approve";
-	private static final String PAY_INFO_PATH = "/v1/payment/order";	
+	private static final String PAY_INFO_PATH = "/v1/payment/order";
+	private static final String PAY_CANCEL_PATH = "/v1/payment/cancel";
 	
 	private static final String LOGIN_GET_TOKEN = "/oauth/token";	
-	
-	private final String domain = "http://localhost:8181/shareoffice/";
+
+	private final String domain = "http://localhost:8181/shareoffice/"; 
 	private final String cid = "TC0ONETIME";
 	
-	/*public Map<String, Object> getLocalInfo(String kakaoKey, String extLoc) {
+	public Map<String, Object> getLocalInfo(String kakaoKey, String extLoc) {
 		
 		String requestUrl  = "https://dapi.kakao.com/v2/local/search/keyword.json?";
 		
@@ -81,7 +85,7 @@ public class KakaoRestAPI {
     	params.put("cid", this.cid);
     	params.put("tid", vo.getTid());
     	params.put("partner_order_id", vo.getPartner_order_id());
-    	params.put("partner_user_id", ((MemberVo) session.getAttribute("sessionBizUser")).getMember_id());
+    	params.put("partner_user_id", ((MemberVo) session.getAttribute("sessionUser")).getMember_id());
     	params.put("pg_token", pg_token);
     	
     	String sendParams = mapToParams(params);
@@ -101,7 +105,24 @@ public class KakaoRestAPI {
     	String sendParams = mapToParams(params);
     	
     	return Request(HttpMethodType.POST, sendParams, requestUrl, kakaoKey);
-    }*/    
+    }
+    
+    public Map<String, Object> payCancel(String tid, String cancel_amount, String kakaoKey) {
+    	
+    	String requestUrl = API_SERVER_HOST + PAY_CANCEL_PATH;
+    	
+    	Map<String, String> params = new HashMap<>();
+    	
+    	params.put("cid", this.cid);
+    	params.put("tid", tid);
+    	params.put("cancel_amount", cancel_amount);
+    	params.put("cancel_tax_free_amount", "0");
+    	
+    	String sendParams = mapToParams(params);
+    	
+    	return Request(HttpMethodType.POST, sendParams,requestUrl, kakaoKey);
+    	
+    }
     
     public Map<String, Object> loginGetToken(String code, String kakaoKey) {
     	String requestUrl = API_SERVER_KAUTH_HOST + LOGIN_GET_TOKEN;
@@ -110,6 +131,7 @@ public class KakaoRestAPI {
     	
     	params.put("grant_type", "authorization_code");
     	params.put("client_id", kakaoKey);
+
     	params.put("redirect_uri", "http://localhost:8181/shareoffice/member/loginGetCode");
     	params.put("code", code);
     	

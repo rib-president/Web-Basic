@@ -211,7 +211,8 @@ public class MemberController {
 	@RequestMapping("logoutProcess")
 	public String logoutProcess(HttpServletRequest request, HttpSession session) {
 		
-		session.invalidate();
+		session.removeAttribute("sessionUser");
+		session.removeAttribute("sessionBizUser");
 		
 		return "redirect:../normal/main";
 	}	

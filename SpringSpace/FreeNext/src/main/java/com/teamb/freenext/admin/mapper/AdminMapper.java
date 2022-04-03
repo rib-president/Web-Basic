@@ -13,7 +13,7 @@ import com.teamb.freenext.vo.MemberVo;
 @Mapper
 public interface AdminMapper {
 	
-	public AdminVo getAdminByIdAndPw(AdminVo abc);
+	public AdminVo getAdminByIdAndPw(AdminVo vo);
 	
 	public ArrayList<MemberVo> getMemberList(HashMap<String, Object> map);	
 
@@ -34,5 +34,7 @@ public interface AdminMapper {
 	public int getTotalMemberTypeNumber(HashMap<String, Object> map);
 	
 	public int getTotalCompany();
+	
+	public MemberCompanyVo selectCompanyVoByMemberNo(int member_no);
 		
 }

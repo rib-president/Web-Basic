@@ -31,12 +31,7 @@ public class AdminService {
 
 		return adminMapper.getMemberList(map);
 		
-	}
-	
-//	public int getMemberCount (String searchOption, String searchWord, String searchApproval, String searchMemberType) {
-//		
-//		return adminMapper.getMemberCount(searchOption, searchWord, searchApproval, searchMemberType);
-//	}	
+	}	
 	
 	public HashMap<String, Object> getMember (int memberNo){
 		
@@ -51,11 +46,14 @@ public class AdminService {
 			MemberCustomerVo memberCustomerVo = adminMapper.getMemberCustomerByNo(memberNo);
 			//int memberCustomerNo = memberCustomerVo.getCustomer_no();
 			map.put("memberCustomerVo", memberCustomerVo);
+			map.put("customer_birth", memberCustomerVo.getCustomer_birth());
+			map.put("memberCompanyVo", null);
 			
 		} else {
 			MemberCompanyVo memberCompanyVo = adminMapper.getMemberCompanyByNo(memberNo);
 			//int memberCompanyNo = memberCompanyVo.getCompany_no();
 			map.put("memberCompanyVo", memberCompanyVo);
+			map.put("customer_birth", null);
 			
 		}
 		
@@ -95,5 +93,9 @@ public class AdminService {
 		int result = adminMapper.getTotalCompany();
 		
 		return result;
+	}
+	
+	public MemberCompanyVo getCompanyVo(int member_no) {
+		return adminMapper.selectCompanyVoByMemberNo(member_no);
 	}
 }

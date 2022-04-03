@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamb.shareoffice.host.mapper.HostMapperRN">
+
+<select id="selectOfficeOrderRental" resultType="map">
+	select *
+	from so_rental sr ,
+	(select so2.*, so.member_no as host_member_no, so.office_name as office_name, so.office_thumbnail as office_thumbnail
+	from so_officeinfo so, so_order so2
+	where so.office_no = so2.office_no 
+	and so.member_no = #{host_member_no}
+	) t1
+	where sr.order_no = t1.order_no
+	and rental_date = #{rental_date}
+</select>
+
+<select id="selectOfficeOrder" resultType="map">
+	select so.*, so2.office_name as office_name, so2.office_thumbnail as office_thumbnail
+	from so_order so, so_officeinfo so2 
+	where so.office_no = so2.office_no
+	and order_no = #{order_no}
+</select>
+
+<select id="selectRentalList" resultType="com.teamb.shareoffice.vo.RentalVo">
+	select sr.*
+	from so_order so , so_rental sr 
+	where so.order_no = sr.order_no 
+	and so.order_no = #{order_no}
+</select>
+
+<update id="updateRentalStatus">
+	update so_rental
+	set rental_status = #{rental_status}
+	where rental_no = #{rental_no}
+</update>
+
+<select id="selectOrderByRentalNo" resultType="com.teamb.shareoffice.vo.OrderVo">
+	select so.*
+	from so_order so , so_rental sr 
+	where so.order_no = sr.order_no 
+	and sr.rental_no = #{rental_no}
+</select>
+
+<select id="selectRental" resultType="com.teamb.shareoffice.vo.RentalVo">
+	select *
+	from so_rental
+	where rental_no = #{rental_no}
+</select>
+
+<select id="selectOrderMember" resultType="map">
+	select *
+	from so_order so, so_member sm 
+	where so.member_no = sm.member_no
+	<choose>
+		<when test="category == 'nick'">
+			and sm.member_nick like CONCAT('%',#{searchKeyword},'%')	
+		</when>
+		<when test="category == 'order_no'">
+			and so.order_no = #{searchKeyword}
+		</when>
+		<when test="category == 'all'">
+			and (sm.member_nick like CONCAT('%',#{searchKeyword},'%') or so.order_no = #{searchKeyword})
+		</when>
+	</choose>
+	order by so.order_no desc 	
+</select>
+
+<select id="selectOfficeByOrderNo" resultType="com.teamb.shareoffice.vo.OfficeInfoVo">
+	select so2.*
+	from so_order so , so_officeinfo so2 
+	where so.office_no = so2.office_no 
+	and so.order_no = #{order_no}
+</select>
+
+<select id="selectRentalByOrderNo" resultType="com.teamb.shareoffice.vo.RentalVo">
+	select sr.*
+	from so_order so , so_rental sr 
+	where so.order_no = sr.order_no 
+	and so.order_no = #{order_no}
+	<if test="onlyCancel == true">
+		and sr.rental_status = "C";
+	</if>
+</select>
+
+</mapper>

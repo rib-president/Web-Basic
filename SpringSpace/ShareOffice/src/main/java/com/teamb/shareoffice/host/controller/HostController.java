@@ -73,7 +73,7 @@ public class HostController {
 		
 		ArrayList<ImageDetailVo> imageDetailVoList = new ArrayList<ImageDetailVo>();
 		
-		String uploadFolder = "C:/shareOffice/officeImage/";
+		String uploadFolder = "/shareOffice/officeImage/";
 		
 		if(subFiles != null) {
 			for(MultipartFile uploadFile : subFiles) {
@@ -239,7 +239,7 @@ public class HostController {
 		
 		ArrayList<ImageDetailVo> imageDetailVoList = new ArrayList<ImageDetailVo>();
 		
-		String uploadFolder = "C:/shareOffice/officeImage/";
+		String uploadFolder = "/shareOffice/officeImage/";
 		
 		if(subFiles != null) {
 			for(MultipartFile uploadFile : subFiles) {

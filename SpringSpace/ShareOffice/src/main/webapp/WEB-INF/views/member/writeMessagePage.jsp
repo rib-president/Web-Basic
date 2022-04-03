@@ -11,15 +11,53 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
-<link href="https://webfontworld.github.io/naver/NanumSquare.css" rel="stylesheet">
 
 <script>
 
+ var isConfirmed = false;
+ 
  function goData() {
+	 
+	 if(isConfirmed == false){
+			alert("존재하지 않는 닉네임 입니다.");
+			$("inputNick").val("");
+			return;
+		}
 	 var form = document.userInput
 	 form.submit()
 }
 
+ function confirmId(){
+
+ 	var idBox = document.getElementById("inputNick");
+ 	var idValue = idBox.value;
+ 	
+ 	var xhr = new XMLHttpRequest();
+ 	
+ 	xhr.onreadystatechange = function(){
+ 		if(xhr.readyState == 4 && xhr.status == 200){
+ 			var data = JSON.parse(xhr.responseText);
+ 			
+ 			var confirmAlertBox = document.getElementById("confirmAlertBox");
+ 			if(data.result == 'notNick'){
+ 				isConfirmed = false;
+ 				confirmAlertBox.innerText = "존재하지 않는 닉네임 입니다.";
+ 				confirmAlertBox.setAttribute("style","margin-left: 1rem; font-size: 0.75rem; color: red; padding-top: 0.5rem;");
+ 			}else{
+ 				isConfirmed = true;
+ 				confirmAlertBox.innerHTML = "";
+ 				confirmAlertBox.setAttribute("style","padding-top: 0rem;");
+ 			}
+ 			
+ 		}
+ 		
+ 	};
+ 	
+ 	
+ 	xhr.open("GET" , "./checkNick?nick=" + idValue , true);
+ 	xhr.send();
+ 	
+ }
 </script>
 
 
@@ -28,7 +66,7 @@
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 <div class="row" style="padding-top: 70px;">
-	<div class="col"  style="font-family: 'NanumSquare';">
+	<div class="col">
 		<div class="row">
 			<div class="col" style="background-color: #3ad0ab; color: white; text-align: center; font-size: 1.5rem;">쪽지보내기</div>
 		</div>
@@ -42,9 +80,10 @@
 					<i class="bi bi-send" onclick="goData()"></i>
 				</div>
 			</div>
-			<div class="mb-3" style="margin-left: 0.5rem; margin-right: 0.5rem;">
-			  <input type="text" class="form-control" placeholder="받는 사람 닉네임을 입력해 주세요." name="nick" style="font-size: 1.3rem;">
+			<div style="margin-left: 0.5rem; margin-right: 0.5rem;">
+			  <input type="text" id="inputNick" onblur="confirmId()" class="form-control" placeholder="받는 사람 닉네임을 입력해 주세요." name="nick" style="font-size: 1.3rem;">
 			</div>
+			<div id="confirmAlertBox"></div>
     		<hr>
 			<div class="mb-3" style="margin: 0.5rem;">
 			   <textarea class="form-control" id="exampleFormControlTextarea1" rows="18" name="txt" placeholder="내용을 입력해 주세요." style="font-size: 1.3rem;"></textarea>
@@ -52,6 +91,7 @@
 		</form>
 	</div>
 </div>
+
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

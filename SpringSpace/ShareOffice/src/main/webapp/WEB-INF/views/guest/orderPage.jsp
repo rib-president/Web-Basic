@@ -62,11 +62,6 @@
 		
 		e.preventDefault();
 		
-		//예약 선택날짜 value 맨앞 , 지우기
-		var chooseDate = document.getElementById("choose-date");
-		chooseDate.value = chooseDate.value.substring(1, chooseDate.length);
-		
-		
 		//최대인원 체크
 		var personnelInput = document.getElementById("personnelInput");
 		
@@ -76,10 +71,14 @@
 	        return;
 		}
 		
+		//예약 선택날짜 value 맨앞 , 지우기
+		var chooseDate = document.getElementById("choose-date");
+		chooseDate.value = chooseDate.value.substring(1, chooseDate.length);
 		
 		//submit 실행
 		var frm = document.getElementById("frm");
 		frm.submit();
+		
 	}
 	
 	

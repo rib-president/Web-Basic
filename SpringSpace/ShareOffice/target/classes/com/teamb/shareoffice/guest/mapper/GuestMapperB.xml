@@ -42,11 +42,13 @@
 		insert into so_rental(
 			order_no, 
 			rental_date, 
-			rental_price)
+			rental_price,
+			rental_status)
 		values(
 			#{order_no}, 
 			#{rental_date}, 
-			#{rental_price} )
+			#{rental_price},
+			'P' )
 	</insert>
 	
 	<!-- 캘린더관련 -->

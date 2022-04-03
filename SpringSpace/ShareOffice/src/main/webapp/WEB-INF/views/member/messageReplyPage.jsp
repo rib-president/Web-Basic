@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
-<link href="https://webfontworld.github.io/naver/NanumSquare.css" rel="stylesheet">
 
 <script>
 
@@ -27,7 +26,7 @@
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 <div class="row" style="padding-top: 70px;">
-	<div class="col" style="font-family: 'NanumSquare';">
+	<div class="col">
 		<div class="row">
 			<div class="col" style="background-color: #3ad0ab; color: white; text-align: center; font-size: 1.5rem;">쪽지보내기</div>
 		</div>

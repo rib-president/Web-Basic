@@ -151,7 +151,7 @@ public class GuestControllerB {
 	    if(uploadReviewImage.isEmpty()) {
 	    	rvo.setReview_image("imageNone");
 	    } else if(uploadReviewImage != null) {
-	    	String uploadFolder = "C:/shareOffice/reviewImage/";
+	    	String uploadFolder = "/shareOffice/reviewImage/";
 
 			//날짜별 폴더 생성
 			Date today = new Date();

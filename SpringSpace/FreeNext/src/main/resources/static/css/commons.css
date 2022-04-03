@@ -69,6 +69,8 @@
     .text-blue{color:rgb(21, 168, 253)}
     .text-blue-light{color:rgb(66, 157, 209)}
     .text-red-soft {color:rgba(202, 77, 77, 0.89);}
+    .text-red-dsoft {color:rgba(224, 32, 32, 0.89);}
+    .text-red {color:rgba(226, 19, 19, 0.89)}
     .text-green-soft{color:rgba(96, 173, 89, 0.781)}
 	.text-green-dsoft{color:rgba(61, 179, 50, 0.959)}
 	
@@ -245,6 +247,7 @@
     .pr-1{padding-right:.25rem;}
 
     .px-0{padding-left:0;padding-right: 0;}
+    .px-3{padding-left:.75rem;padding-right: .75rem;}
     .px-6{padding-left:1.5rem;padding-right: 1.5rem;}
     .px-8{padding-left:1.5rem;padding-right: 2rem;}
     .px-10{padding-left:2.5rem;padding-right: 2.5rem;}

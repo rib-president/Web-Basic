@@ -12,14 +12,15 @@
 <insert id="insertMember">
 	INSERT INTO SO_Member
 	(member_id, member_nick, member_gender, member_birth,
-	member_phone, member_email, member_joindate)values(
+	member_phone, member_email, member_joindate, member_type)values(
 		#{member_id},
 		#{member_nick},
 		#{member_gender},
 		#{member_birth},
 		#{member_phone},
 		#{member_email},
-		NOW()
+		NOW(),
+		'G'
 	)
 </insert>
 

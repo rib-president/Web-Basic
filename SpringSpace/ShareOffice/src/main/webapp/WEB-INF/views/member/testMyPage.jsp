@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
-<link href="https://webfontworld.github.io/naver/NanumSquare.css" rel="stylesheet">
 
 </head>
 
@@ -19,7 +18,7 @@
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 <div class="row" style="padding-top: 1rem;">
-	<div class="col" style="text-align: right; font-family: 'NanumSquare'; margin: 0.5rem; position:relative">
+	<div class="col" style="text-align: right; margin: 0.5rem; position:relative">
 		${sessionUser.member_nick } 님
 		<a href="../member/messageListPage">
 			<i id="alram" class="bi bi-bell" style="color: black; font-size: 2rem;"></i> <!-- 쪽지함 -->
@@ -33,8 +32,8 @@
 </div>
 		<!-- 하단 알림박스 -->
 		<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11;">
-		  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-		    <div id="notification" class="toast-body">
+		  <div id="liveToast" class="toast" style="background: #adb5bd" role="alert" aria-live="assertive" aria-atomic="true" onclick="location.href='../member/messageListPage'">
+		    <div id="notification" class="toast-body" style="color: white;">
 		    </div>
 		  </div>
 		</div>

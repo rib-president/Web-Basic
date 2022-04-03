@@ -90,13 +90,7 @@ public class MemberControllerJs {
 	}
 	
 	@RequestMapping("testMyPage")
-	public String testMainPage(HttpSession session,Model model) {
-		
-		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
-		int no = sessionUser.getMember_no();
-		int count = memberServiceJs.newMessageCount(no);
-		
-		model.addAttribute("newMessageCount", count);
+	public String testMainPage() {
 		
 		return "member/testMyPage";
 	}
@@ -124,6 +118,24 @@ public class MemberControllerJs {
 		} else {
 			data.put("result", "newMessage");
 			data.put("count", count);
+			return data;
+		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("checkNick")
+	public HashMap<String, Object> checkNick(String nick,MessageVo messageVo) {
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		MemberVo getNickInfo = memberServiceJs.getMemberNick(nick);
+		
+		if(getNickInfo == null) {
+			data.put("result", "notNick");
+			return data;
+		} else {
+			int receiveNo = getNickInfo.getMember_no();
+			messageVo.setReceive_no(receiveNo);
+			data.put("result", "success");
 			return data;
 		}
 		

@@ -16,7 +16,7 @@
 <body>
 <jsp:include page="commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 1rem;">
 	<div class="col">
 		<%-- 내용작성 --%>
 		선생님들께서 구현하실 jsp파일에 이 파일(basic_frame) 코드 전체 복붙하시면 됩니다!
