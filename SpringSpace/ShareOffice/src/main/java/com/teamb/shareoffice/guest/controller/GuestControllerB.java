@@ -34,6 +34,9 @@ public class GuestControllerB {
 	@Autowired
 	private GuestServiceB guestServiceB;
 	
+	private final String uploadFolder = "/shareOffice/reviewImage/";
+	//private final String uploadFolder = "C:\shareOffice\licenseImg";
+	
 	@RequestMapping("orderPage")
 	public String orderPage(int office_no, Model model) {
 		
@@ -150,8 +153,7 @@ public class GuestControllerB {
 
 	    if(uploadReviewImage.isEmpty()) {
 	    	rvo.setReview_image("imageNone");
-	    } else if(uploadReviewImage != null) {
-	    	String uploadFolder = "/shareOffice/reviewImage/";
+	    } else if(uploadReviewImage != null) {	    	
 
 			//날짜별 폴더 생성
 			Date today = new Date();

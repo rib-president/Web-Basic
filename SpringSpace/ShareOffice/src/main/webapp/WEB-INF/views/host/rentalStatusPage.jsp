@@ -184,7 +184,8 @@
 					if(data.dataList.length > 0) {
 						for(var d of data.dataList) {
 							createRentalBox(d, true);	
-						}							
+						}
+												
 					} else {
 						createNoResultBox("rentalContainer", "날짜");
 					}
@@ -513,6 +514,51 @@
 	  
 	}
 
+	function getMonthRental() {
+		var xhr = new XMLHttpRequest();
+
+		var year_month = document.querySelector(".year-month").innerText;
+		var year_month_split = year_month.split(".");
+		
+		var month = (year_month_split[1] < 10) ? "0" + year_month_split[1] : year_month_split[1];
+		
+		var rental_date = year_month_split[0] + "-" + year_month_split[1] + "-01";		
+		
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var data = JSON.parse(xhr.responseText);					
+				
+				for(var monthRental of data.monthRentalList) {
+					drawCalendarDot(monthRental);
+				}
+			}
+		};
+		
+		xhr.open("get", "./getMonthRental?rental_date=" + rental_date, true);
+		xhr.send();	
+	}
+	
+	function drawCalendarDot(rental) {
+		var rental_date = new Date(rental.rental_date);
+		
+		/*var year = rental_date.getFullYear();
+		var month = rental_date.getMonth()+1;
+		month = (month < 10) ? "0" + month : month;*/
+		var date = rental_date.getDate();
+		//day = (day < 10) ? "0" + day : day;
+		
+		for(var day of document.querySelectorAll(".day.current")) {
+			if (day.innerText == date) {
+				day.classList.add("relative");
+				var i = document.createElement("i");
+				i.setAttribute("class", "bi bi-dot text-red-soft text-fs-25 bold absolute");
+				i.setAttribute("style", "top:40%");
+				day.appendChild(i);
+			}
+		} 
+		
+	}
+	
 	function calendarInit() {
 
 	    // 날짜 정보 가져오기
@@ -586,12 +632,14 @@
 	    $('.go-prev').on('click', function() {
 	        thisMonth = new Date(currentYear, currentMonth - 1, 1);
 	        renderCalender(thisMonth);
+	        getMonthRental();
 	    });
 
 	    // 다음달로 이동
 	    $('.go-next').on('click', function() {
 	        thisMonth = new Date(currentYear, currentMonth + 1, 1);
-	        renderCalender(thisMonth); 
+	        renderCalender(thisMonth);
+	        getMonthRental();
 	    });
 	}	
 	
@@ -600,6 +648,8 @@
 		createCalendarBox();
 		calendarInit();
 
+		getMonthRental();
+		
 		var rental_date = new Date();
 		var year = rental_date.getFullYear();
 		var month = rental_date.getMonth() + 1;
@@ -607,7 +657,7 @@
 		
 		rental_date = year + "-" + (month >= 10 ? month : '0' + month) + "-" + (date >= 10 ? date : '0' + date);
 		loadCalendarRentalList(rental_date);
-		 
+		
 	});
 	
 </script>
@@ -619,14 +669,17 @@
 
 <div class="row" style="padding-top: 1rem;">
 	<div class="col">
-		<div class="row">
+		<div class="row mt-1 ms-1">
+			<div class="col bold text-fs-20 text-gray-c_25"><i class="bi bi-calendar-week text-gold"></i> 예약 내역</div>
+		</div>
+		<div class="row mt-3">
 			<div class="col"></div>
 			<div id="calendarBtn" class="py-2 ms-3 col-4 cursor-pointer menu on bold" onclick="selectMenu(this)">달력으로 보기</div>
 			<div id="listBtn" class="py-2 ms-3 col-4 cursor-pointer menu bold" onclick="selectMenu(this)">리스트로 보기</div>
 			<div class="col"></div>
 		</div>
 		<div class="row">
-			<div id="rootContainer" class="col">
+			<div id="rootContainer" class="col mb-5">
 			  
 			</div>
 		</div>					

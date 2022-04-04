@@ -84,4 +84,12 @@
 	</if>
 </select>
 
+<select id="selectMonthRental" resultType="com.teamb.shareoffice.vo.RentalVo">
+	select *
+	from so_rental sr 
+	<![CDATA[
+	where rental_date >= #{startDay} and rental_date <= #{endDay};
+	]]>
+</select>
+
 </mapper>

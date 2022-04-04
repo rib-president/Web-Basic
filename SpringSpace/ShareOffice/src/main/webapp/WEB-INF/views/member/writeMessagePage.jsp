@@ -65,10 +65,10 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
+<div class="row"">
 	<div class="col">
 		<div class="row">
-			<div class="col" style="background-color: #3ad0ab; color: white; text-align: center; font-size: 1.5rem;">쪽지보내기</div>
+			<div class="col" style="background-color: #A68A64; color: white; text-align: center; font-size: 1.5rem;">쪽지보내기</div>
 		</div>
 		
 		<form action="./writeMessageProcess" class="form" role="form" style="font-size: 1.3rem;" name="userInput">

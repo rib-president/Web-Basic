@@ -89,4 +89,17 @@ public class HostServiceRN {
 		return resultList;
 	}
 	
+	public ArrayList<RentalVo> getMonthRental(String rental_date) {
+		
+		String[] splitRentalDate = rental_date.split("-");
+		
+		String year = splitRentalDate[0];
+		String month = splitRentalDate[1];
+		
+		String startDay = year + "-" + month + "-01";
+		String endDay = year + "-" + month + "-31";
+		
+		return hostMapper.selectMonthRental(startDay, endDay);
+	}
+	
 }

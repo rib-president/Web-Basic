@@ -35,46 +35,20 @@
 		Kakao.init(jsKey);
 		
 		Kakao.Auth.authorize({
-			  redirectUri: 'http://localhost:8181/shareoffice/member/loginGetCode'
+			redirectUri: 'http://localhost:8181/shareoffice/member/loginGetCode'
+			//redirectUri: 'http://13.125.166.120:8080/shareoffice/member/loginGetCode'
 		});
-	}		
+	}
+	
+	window.addEventListener("DOMContentLoaded", function() {
+		kakaoLogin();
+	});
 		
 		
 	</script>
 </head>
 <body>
-<jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
-	<div class="col">
-			<div class="row" style="padding:20px;"><!-- 여백 --></div>
-		
-			<div class="row mt-5">
-				<div class="col">
-						<div class="row">
-						 <div class="col text-center fs-3 fw-bold">로그인</div>
-						</div>
-						<div class="row mt-5">
-							<div class="col"></div>
-							<div class="col">								
-								<div class="row mt-1"> <!-- 카카오 로그인 버튼 -->
-									<div class="col d-grid">
-										<img class="cursor-pointer" src="../resources/img/4.png" onclick="kakaoLogin()">										
-									</div>
-								</div>								
-							</div>
-							<div class="col"></div>
-						</div>
-				</div>
-			</div>
-			
-			
-			<div class="row" style="padding:5rem;"><!-- 여백 --></div>
-			
-	</div>
-</div>
-
-<jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -141,8 +141,7 @@ function cancelRental(obj, rental_no) {
 					<div class="col text-fs-20 bold text-gray-c_25">${resultMap.orderInfo.office_name }</div>
 				</div>
 				<div class="row mt-4">
-					<div class="col text-fs-11"><i class="bi bi-person text-gold"></i> 예약자: ${resultMap.guestVo.member_nick }</div>
-					<div class="col text-fs-11"> ${resultMap.guestVo.member_phone }</div>
+					<div class="col text-fs-11"><i class="bi bi-person text-gold"></i> 예약자: ${resultMap.guestVo.member_nick }, ${resultMap.guestVo.member_phone }</div>
 				</div>
 				<div class="row text-fs-11 mt-1">
 					<div class="col"><i class="bi bi-calendar-check text-gold"></i> 예약일: 

@@ -6,7 +6,7 @@
     font-weight: normal;
     font-style: normal;
     }
-    * {margin: 0px; padding: 0px; overflow-x:hidden;}
+    * {margin: 0px; padding: 0px;}
     
     body { font-family: 'KoPubWorldDotum', sans-serif; font-weight: 500; color: #000; height: 100%;}
 
@@ -28,6 +28,8 @@
     .font-normal{font-weight:400}
     .font-bold{font-weight:700}
     .font-extrabold{font-weight:800}
+
+
 
 	.text-h2{ font-size: 1.25rem; font-weight: 600;}
 
@@ -231,6 +233,7 @@
 	.pl-3{padding-left:.75rem;}
 	.pl-4 {padding-left: 1rem;}
 	.pl-5 {padding-left: 1.25rem;}
+	.pl-7 {padding-left: 1.75rem;}
 	.pl-8{padding-left:2rem;}
 	.pl-9{padding-left:2.25rem;}
     .pl-10{padding-left:2.5rem;}

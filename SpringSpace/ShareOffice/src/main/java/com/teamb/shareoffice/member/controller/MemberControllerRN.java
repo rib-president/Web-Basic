@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.teamb.shareoffice.commons.KakaoRestAPI;
+import com.teamb.shareoffice.guest.service.GuestService_H;
 import com.teamb.shareoffice.member.service.MemberServiceRN;
+import com.teamb.shareoffice.vo.HostVo;
 import com.teamb.shareoffice.vo.MemberVo;
 
 @Controller
@@ -48,6 +50,14 @@ public class MemberControllerRN {
 		
 		if(vo != null) {
 			session.setAttribute("sessionUser", vo);
+			if(vo.getMember_type().equals("G")) {
+				for(HostVo hostVo : memberService.getHostVoList(vo.getMember_no())) {
+					if(hostVo.getHost_approve().equals("P")) {
+						session.setAttribute("applyHost", "Y");
+					}
+				}
+				
+			}
 			return "redirect:../guest/mainPage";		
 			
 		} else {

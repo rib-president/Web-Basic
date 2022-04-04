@@ -29,6 +29,8 @@ public class GuestController_H {
 	@Autowired
 	private GuestService_H guestService_H;
 	
+	private final String uploadFolder = "/shareOffice/licenseImg/";
+	//private final String uploadFolder = "C:\shareOffice\licenseImg";
 	
 	@RequestMapping("mainPage")
 	public String mainPage() {
@@ -87,8 +89,6 @@ public class GuestController_H {
 		
 		// setMember_no
 		hvo.setMember_no(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
-		
-		String uploadFolder = "/shareOffice/licenseImg/";
 		
 		if(license_img != null) {
 			

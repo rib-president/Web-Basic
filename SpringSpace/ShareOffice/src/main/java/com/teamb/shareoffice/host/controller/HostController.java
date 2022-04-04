@@ -29,6 +29,8 @@ public class HostController {
 	@Autowired
 	private HostService hostService;
 	
+	private final String uploadFolder = "/shareOffice/officeImage/";
+	//private final String uploadFolder = "C:\shareOffice\licenseImg";
 	
 	@RequestMapping("mainPage")
 	public String mainPage() {
@@ -72,8 +74,7 @@ public class HostController {
 		System.out.println("오피스등록 프로세스 실행");
 		
 		ArrayList<ImageDetailVo> imageDetailVoList = new ArrayList<ImageDetailVo>();
-		
-		String uploadFolder = "/shareOffice/officeImage/";
+				
 		
 		if(subFiles != null) {
 			for(MultipartFile uploadFile : subFiles) {
@@ -238,8 +239,6 @@ public class HostController {
 			
 		
 		ArrayList<ImageDetailVo> imageDetailVoList = new ArrayList<ImageDetailVo>();
-		
-		String uploadFolder = "/shareOffice/officeImage/";
 		
 		if(subFiles != null) {
 			for(MultipartFile uploadFile : subFiles) {

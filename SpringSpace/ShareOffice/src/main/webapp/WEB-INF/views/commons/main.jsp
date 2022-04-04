@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<div class="row" style="background-color: #22223B; margin: auto;" id="banner">
-   <div class="col-2 pt-2"><i id="menu" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" class="bi bi-list cursor-pointer text-fs-40" style="color:white;"></i></div>
-   <div class="col-8 pt-1 pb-1 pl-4 text-center" onclick="location.href='../guest/mainPage'">
-      <img alt="logo" src="../resources/img/RealLogo.png" class="img-fluid">
+<div class="row" style="margin: auto;">
+   <div class="col pt-2" style="background-image: url('../resources/img/mainLogo.jpg'); background-position: center; height: 31.25rem; background-size: cover;">
+   		<i id="menu" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" class="bi bi-list cursor-pointer text-fs-40" style="color:white;"></i>
    </div>
-   <div class="col-2"></div>
 </div>
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" style="background-color: #e0e0e0">
@@ -23,7 +21,7 @@
 	<div class="row">
 		<c:choose>
 			<c:when test="${empty sessionUser }">
-				<div class="col cursor-pointer" onclick="location.href='../member/loginPage'"><img class="img-fluid" src="../resources/img/4.png"></div>
+				<div class="col cursor-pointer" onclick="location.href='../member/loginPage'"><img class="img-fluid" src="../resources/img/4.png" style="width:100%"></div>
 			</c:when>
 			<c:otherwise>
 				<div class="col text-gray-c_25" style="font-weight: bold; margin-left: .5rem; font-size: 1.5rem;">❤ ${sessionUser.member_nick } 님</div>

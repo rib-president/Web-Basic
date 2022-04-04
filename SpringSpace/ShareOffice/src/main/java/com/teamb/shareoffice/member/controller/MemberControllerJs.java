@@ -99,6 +99,7 @@ public class MemberControllerJs {
 	public String logoutProcess(HttpSession session) {
 		
 		session.removeAttribute("sessionUser");
+		session.removeAttribute("applyHost");
 		
 		return "redirect:../guest/mainPage";
 	}

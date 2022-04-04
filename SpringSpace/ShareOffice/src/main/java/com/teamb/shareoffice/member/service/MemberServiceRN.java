@@ -9,7 +9,9 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.teamb.shareoffice.guest.mapper.GuestMapper_H;
 import com.teamb.shareoffice.member.mapper.MemberMapperRN;
+import com.teamb.shareoffice.vo.HostVo;
 import com.teamb.shareoffice.vo.MemberVo;
 
 @Service
@@ -17,6 +19,9 @@ public class MemberServiceRN {
 	
 	@Autowired
 	private MemberMapperRN memberMapper;
+	
+	@Autowired
+	private GuestMapper_H guestMapperH;
 
 	public String getJSKey() {
 		try {
@@ -79,5 +84,9 @@ public class MemberServiceRN {
 	public MemberVo isExist(String member_id) {
 		
 		return memberMapper.selectMemberById(member_id);
+	}
+	
+	public ArrayList<HostVo> getHostVoList(int member_no) {
+		return guestMapperH.getHostApproveCheck(member_no);
 	}
 }

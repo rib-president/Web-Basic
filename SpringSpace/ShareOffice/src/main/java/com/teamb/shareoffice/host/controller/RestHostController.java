@@ -101,4 +101,13 @@ public class RestHostController {
 		return data;
 	}
 	
+	@RequestMapping("getMonthRental")
+	public HashMap<String, Object> getMonthRental(String rental_date) {
+		HashMap<String, Object> data = new HashMap<>();
+		
+		data.put("monthRentalList", hostServiceRN.getMonthRental(rental_date));
+		
+		return data;
+	}
+	
 }

@@ -11,37 +11,7 @@
 <link href="../resources/css/commons.css" rel="stylesheet">
     <meta charset="utf-8">
     <title>주소로 장소 표시하기</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">    
-</head>
-<body>
-<jsp:include page="../commons/navbar.jsp"></jsp:include>
-<div class="row " style="padding-top: 5em;">
-   <div class="col" style="margin:1em">
-      <div class="row mt-3">      
-           <div class="col-9">           
-           <input  type="text"  id="host_name" name="host_name" 
-			 class="form-control form-control-sm"placeholder="검색할 지역명을 입력해주세요.">		    
-		   </div>  
-		   <div class="col"><button type="button" onclick="getLocationList()" class="btn btn-lg default"><i class="bi bi-search"></i></button>
-		   </div>
-		   
-      </div>
-
-      <div class="row">
-         <div class="col">
-			<p style="margin-top: -0.75em">
-				<em class="link"> <a href="javascript:void(0);"
-					onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
-
-				</a>
-				</em>
-			</p>
-			<div id="map" style="width:100%;height:21em;"></div>
-		</div>			
-	 </div>		
-  </div>
-</div>
-<jsp:include page="../commons/footer.jsp"></jsp:include>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a89f71e1f43b65b9072477b5fb3f976&libraries=services"></script>
 <script>
 var address_list = new Array();
@@ -79,8 +49,10 @@ function getLocationList(){
 				
 				// 정상적으로 검색이 완료됐으면 
 				 if (status === kakao.maps.services.Status.OK) {
-					  var imageSize = new kakao.maps.Size(24, 35); 
+					  var imageSize = new kakao.maps.Size(24, 35);
+					  map.relayout();
 					  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+					  map.relayout();
 				      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 				
 				    // 결과값으로 받은 위치를 마커로 표시합니다
@@ -90,18 +62,19 @@ function getLocationList(){
 				        image : markerImage
 				    });
 
-				    var iwContent = '<div style="padding:0.5em;">' + officeInfoVo.office_name + '<br><a href="https://map.kakao.com/link/map/' + officeInfoVo.office_name + '!,' + result[0].y + "," + result[0].x + '" style="color:#415a77" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/${officeInfoVo.office_name}!,' + result[0].y + "," + result[0].x + '" style="color:#415a77" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+				    var iwContent = '<div style="padding:0.5em;">' + officeInfoVo.office_name + '<br><a href="https://map.kakao.com/link/map/' + officeInfoVo.office_name + '!,' + result[0].y + "," + result[0].x + '" style="color:#415a77" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/${officeInfoVo.office_name}!,' + result[0].y + "," + result[0].x + '" style="color:#415a77" target="_blank">길찾기</a></div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		            iwPosition = new kakao.maps.LatLng(geocoder); //인포윈도우 표시 위치입니다				    
-				    
+		            map.relayout();
 				    var infowindow = new kakao.maps.InfoWindow({
 			             position : iwPosition, 
 			             content : iwContent 
 			            });
-			        			        			        
-			        infowindow.open(map, marker);				    
+			        
 				    
+			        infowindow.open(map, marker);				    
+			        map.relayout();
 				    map.setCenter(coords);
-				   
+				    
 				} 
 				
 									
@@ -113,14 +86,44 @@ function getLocationList(){
 	};
 	
 	
-	xhr.open("GET" , "./getLocationList?searchKeyword=" + document.querySelector("#host_name").value, true);
+	xhr.open("GET" , "./getLocationList?searchKeyword=" + document.querySelector("#host_name").value, false);
     xhr.send();
 	
 }
 
 
 	
-</script>
+</script>    
+</head>
+<body>
+<jsp:include page="../commons/navbar.jsp"></jsp:include>
+<div class="row " style="padding-top: 5em;">
+   <div class="col" style="margin:1em">
+      <div class="row mt-3">      
+           <div class="col-9">           
+           <input  type="text"  id="host_name" name="host_name" 
+			 class="form-control form-control-sm"placeholder="검색할 지역명을 입력해주세요.">		    
+		   </div>  
+		   <div class="col"><button type="button" onclick="getLocationList()" class="btn btn-lg default"><i class="bi bi-search"></i></button>
+		   </div>
+		   
+      </div>
+
+      <div class="row">
+         <div class="col">
+			<p style="margin-top: -0.75em">
+				<em class="link"> <a href="javascript:void(0);"
+					onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
+
+				</a>
+				</em>
+			</p>
+			<div id="map" style="width:23rem;height:21rem;"></div>
+		</div>			
+	 </div>		
+  </div>
+</div>
+<jsp:include page="../commons/footer.jsp"></jsp:include>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

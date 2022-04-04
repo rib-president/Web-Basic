@@ -15,38 +15,33 @@
 
 </head>
 <body>
-<jsp:include page="../commons/navbar.jsp"></jsp:include>
+<jsp:include page="../commons/main.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 4rem;">
-	<div class="col">
-		<div class="row" style="padding-top:1.5rem">
-			<c:choose>
-				<c:when test="${empty sessionUser }">
-					<div class="col d-grid"><button class="btn btn-dark" onclick="location.href='../member/loginPage'">로그인</button></div>	
-				</c:when>
-				<c:otherwise>
-					<div class="col d-grid"><button class="btn btn-dark" onclick="location.href='../member/logoutProcess'">로그아웃</button></div>
-				</c:otherwise>
-			</c:choose>
-			
-		</div>
-		<div class="row mt-3 mb-3">
-			<div class="col d-grid"><button class="btn btn-outline-dark" onclick="location.href='../guest/officeListPage'">오피스 목록</button></div>
-		</div>	
-		<c:choose>
+<div class="row" style="padding-top: 3rem;">
+	<div class="col" style="background-image: url('../resources/img/office.jpg'); background-position: center; height: 14rem; background-size: cover; margin: auto;">
+		<button type="button" class="btn text-white" style="background-color: #A68A64; float: right; margin-top: 11rem; margin-right: 1rem; font-size: 0.8rem;" onclick="location.href='../guest/officeListPage'">오피스 구경하러 가기</button>
+	</div>
+</div>
+
+<div class="row" style="padding-top: 3rem; padding-bottom: 3rem;">
+	<div class="col" style="background-image: url('../resources/img/host.jpg'); background-position: center; height: 14rem; background-size: cover; margin: auto;">
+	<c:choose>
+			<c:when test="${empty sessionUser}">
+				<button type="button" class="btn text-white" style="background-color: #A68A64; margin-top: 11rem; margin-left: 1rem; font-size: 0.8rem;"
+				onclick="location.href='../member/loginPage'">호스트 신청하기</button>
+			</c:when>
 			<c:when test="${!empty sessionUser && sessionUser.member_type == 'G' }">
-				<div class="row mt-3 mb-3">
-					<div class="col d-grid"><button class="btn btn-warning" onclick="location.href='../guest/applyHostPage'">호스트 신청</button></div>
-				</div>		
+				<button type="button" class="btn text-white" style="background-color: #A68A64; margin-top: 11rem; margin-left: 1rem; font-size: 0.8rem;"
+				onclick="location.href='../guest/applyHostPage'">호스트 신청하기</button>
 			</c:when>
 			<c:when test="${!empty sessionUser && sessionUser.member_type == 'H' }">
-				<div class="row mt-3 mb-3">
-					<div class="col d-grid"><button class="btn btn-warning" onclick="location.href='../host/mainPage'">호스트 센터</button></div>
-				</div>
+				<button type="button" class="btn text-white" style="background-color: #A68A64; margin-top: 11rem; margin-left: 1rem; font-size: 0.8rem;"
+				onclick="location.href='../host/mainPage'">호스트 센터</button>
 			</c:when>	
 		</c:choose>
 	</div>
 </div>
+
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

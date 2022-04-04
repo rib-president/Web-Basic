@@ -5,28 +5,23 @@
     <div class="eframe-width mx-auto py-11 relative">
         <div class="w-full inline-block">
             <p class="float-left py-0 m-0">
-                <a href="http://www.ctrl-a.co.kr/" class="KOHIBaeumOTF text-fs-30 text-gray-c_ff">CONTROL-A</a>                              
+                <a href="http://www.ctrl-a.co.kr/" class="KOHIBaeumOTF text-fs-30 text-gold">TEAM-B</a>                              
             </p>
-            <ul class="float-right text-fs-12">
-                <li class="float-left"><a class="text-gray-c_ff bold" href="http://www.ctrl-a.co.kr/" target="_blank">(주)컨트롤에이</a></li>
-                <li class="float-left mx-5"><a class="text-gray-c_ff bold" href="#">이용약관</a></li>
-                <li class="float-left"><a class="text-gray-c_ff bold" href="#">개인정보처리방침</a></li>
+            <ul class="float-right text-fs-10">
+                <li class="float-left"><a class="text-gold bold" href="http://www.ctrl-a.co.kr/" target="_blank">(주)팀 비</a></li>
+                <li class="float-left mx-3"><a class="text-gold bold" href="#">이용약관</a></li>
+                <li class="float-left"><a class="text-gold bold" href="#">개인정보처리방침</a></li>
             </ul> 
-            <span class="inline-block mt-1 text-fs-10 text-gray-c_8c w-full mb-8">COPYRIGHT(c)CONTROL-A. ALL RIGHTS RESERVED.</span>
-            <p class="float-left text-gray-c_b7 text-fs-11 leading-normal w-full">
-            (주)컨트롤에이	<br> 대표이사 | 김김김
+            <span class="inline-block text-fs-8 text-gold w-full mb-8">COPYRIGHT(c)CONTROL-A. ALL RIGHTS RESERVED.</span>
+            <p class="float-left text-gold text-fs-10 leading-normal w-full">
+            (주)팀 비	<br> 대표이사 | 김중수
             </p>
-            <p class="float-left text-gray-c_b7 text-fs-11 leading-normal me-5">
-            주소 | 서울시 강남구 선릉로 663, 506호(논현동, 영창빌딩)<br>
-            고객센터 | 02-6082-8200<br>
-            이메일 | sales@ctrl-a.co.kr
-            </p>
-            <p class="float-left text-gray-c_b7 text-fs-11 leading-normal">
-            사업자번호 | 731-88-00140 <br>
-            컨트롤에이는 프로젝트 정보에 직접관여하지 않으며<br>
-            프로젝트 정보및 참여에 대한 의무와 책임은 각 정보제공업체에 있습니다.
+            <p class="float-left text-gold text-fs-10 leading-normal me-5">
+            주소 | 서울시 강남구 테헤란로7길 7, 7층(역삼동, 에스코빌딩)<br>
+            고객센터 | 02-561-1911<br>
+            이메일 | support@team_b.com
             </p>
         </div>
     </div>
-    <div class="hidden w-full h-16"></div>
+    <div class="hidden w-full h-12"></div>
 </footer>

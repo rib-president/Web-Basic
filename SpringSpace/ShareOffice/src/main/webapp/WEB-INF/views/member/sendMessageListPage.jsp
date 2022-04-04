@@ -21,18 +21,13 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 1rem;">
+<div class="row"">
 	<div class="col">
-		<div class="row mb-2">
-			<div class="col-9"></div>
-			<div class="col me-3 rounded-full" style="background-color: #3ad0ab; color: white; text-align: center; font-size: 1.5rem;">
-			<a href="./writeMessagePage" style="color: white;">쪽지쓰기</a></div>
-		</div>	
 		<div class="row" >
-			<div class="col" style="background-color: #3ad0ab; color: white; text-align: center; font-size: 1.5em;">
-			<a href="./messageListPage" style="color: white;">쪽지보관함</a></div>
-			<div class="col" style="background-color: #3ad0ab; color: white; text-align: center; font-size: 1.5em;">
-			<a href="./sendMessageListPage" style="color: white;">보낸쪽지함</a></div>
+			<div class="col" style="background-color: #A68A64; color: white; text-align: center; font-size: 1.5rem;" onclick="location.href='../member/messageListPage'">
+			쪽지보관함</div>
+			<div class="col" style="background-color: #A68A64; color: white; text-align: center; font-size: 1.5rem;" onclick="location.href='../member/sendMessageListPage'">
+			보낸쪽지함</div>
 		</div>
 			<c:forEach items="${datalist }" var="data">
 					<div class="card" style="width: auto; margin: 0.5rem;">
@@ -43,7 +38,7 @@
 					</div>
 			</c:forEach>
 			<div class="fixed " style="bottom: 3rem; right: 3rem; z-index: 99">
-				<a href="./writeMessagePage"><i class="bi bi-plus-circle-fill" style="font-size: 3rem; color: #3ad0ab"></i></a>
+				<a href="./writeMessagePage"><i class="bi bi-plus-circle-fill" style="font-size: 3rem; color: #22223B"></i></a>
 			</div>
 		<div class="row" style="text-align: center; font-size: 1.3em">
 			<div class="col" style="margin-right: 1em; text-align: center; font-size: 1em;"><a href="./testMyPage">마이 페이지</a></div>

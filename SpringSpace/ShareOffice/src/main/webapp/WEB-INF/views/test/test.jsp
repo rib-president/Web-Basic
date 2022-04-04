@@ -12,11 +12,35 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dcba11bad3364b22a9a962b80ee0acfb&libraries=services"></script>
+
+<script>
+	function drawMap(){
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = { 
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };
+
+		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+	}
+
+	
+	window.addEventListener("DOMContentLoaded" , drawMap);
+
+</script>
+
 
 </head>
 <body>
 <div style="margin: 0 auto">
 	<div class="container-fluid">
+		<div class="row">
+			<div class="col" id="map" style="width:500px;height:500px"></div>
+		</div>
+	
+	
 		<div class="row">
 			<div class="col">
 				<jsp:include page="../commons/navbar.jsp"></jsp:include>
