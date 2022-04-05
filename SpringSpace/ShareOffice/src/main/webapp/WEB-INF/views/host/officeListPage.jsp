@@ -12,7 +12,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 <link href="https://webfontworld.github.io/naver/NanumSquareRound.css" rel="stylesheet">
-
+<style>
+i {text-decoration: none; color:#A68A64;}
+</style>
 <script>
 function getOfficeList(select) {
 	

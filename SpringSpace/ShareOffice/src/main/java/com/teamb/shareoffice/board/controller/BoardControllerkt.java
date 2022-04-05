@@ -333,19 +333,31 @@ public class BoardControllerkt {
 			model.addAttribute("CouponVo", boardServicekt.getCouponList(sessionUser.getMember_no())); 
 		}
 		
-		
-		
 		return "board/couponListPage";
 		
 	}
-	
+	@RequestMapping("getCouponProcess")
 	public String getCouponProcess(AllotCouponVo param) {
 		boardServicekt.insertAllotCoupon(param);
 		
-		
-		
 		return "redirect:./couponListPage";
 	}
+	
+	@RequestMapping("myCouponPage")
+	public String myCouponPage(Model model, HttpSession session) {
+		
+		MemberVo sessionUser = (MemberVo)session.getAttribute("sessionUser");
+		if(sessionUser != null) {
+			int memberNo = sessionUser.getMember_no();
+			model.addAttribute("myCouponList", boardServicekt.getMyCoupon(memberNo));
+		}
+		
+		
+		return "board/myCouponPage";
+	}
+	
+	
+	
 }
 
 

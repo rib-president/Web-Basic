@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teamb.shareoffice.guest.service.GuestServiceB;
+import com.teamb.shareoffice.guest.service.GuestServiceRN;
 import com.teamb.shareoffice.vo.BusinessDayVo;
 import com.teamb.shareoffice.vo.MemberVo;
 import com.teamb.shareoffice.vo.OrderVo;
@@ -33,6 +34,9 @@ public class GuestControllerB {
 	
 	@Autowired
 	private GuestServiceB guestServiceB;
+	
+	@Autowired
+	private GuestServiceRN guestServiceRN;
 	
 	private final String uploadFolder = "/shareOffice/reviewImage/";
 	//private final String uploadFolder = "C:\shareOffice\licenseImg";
@@ -55,10 +59,10 @@ public class GuestControllerB {
 	}	
 	
 	@RequestMapping("paymentPage")
-	public String paymentPage(Model model, HttpSession session, int office_no, OrderVo ovo, BusinessDayVo bdvo, Date [] rental_date) {
+	public String paymentPage(Model model, HttpSession session, int officeNo, OrderVo ovo, BusinessDayVo bdvo, Date [] rental_date) {
 		
 		//orderPage view쪽엔 hidden으로 미리 넘기는 코드 작성
-		HashMap<String, Object> officeInfo = guestServiceB.getOfficeInfo(office_no);
+		HashMap<String, Object> officeInfo = guestServiceB.getOfficeInfo(officeNo);
 		
 		//예약날짜 형식 변경(DateFormat)
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일, E");
@@ -69,7 +73,17 @@ public class GuestControllerB {
 		
 		int totalPayment = 0;
 		
-		bdvo.setOffice_no(office_no); //임의 set
+		bdvo.setOffice_no(officeNo); //임의 set
+		
+		// for mobile
+		HashMap<String, String> weekMap = new HashMap<>();
+		weekMap.put("Mon", "월");
+		weekMap.put("Tue", "화");
+		weekMap.put("Wed", "수");
+		weekMap.put("Thu", "목");
+		weekMap.put("Fri", "금");
+		weekMap.put("Sat", "토");
+		weekMap.put("Sun", "일");
 		
 		if(rental_date != null) {
 			for(int i=0; i<rental_date.length; i++) {
@@ -79,9 +93,13 @@ public class GuestControllerB {
 				
 				String businessDay = formatDate.substring(15);
 				
+				if(weekMap.containsKey(businessDay)) {
+					businessDay = weekMap.get(businessDay);
+				}				
+				
 				bdvo.setBusiness_day(businessDay);
-
-				BusinessDayVo businessDayVo = guestServiceB.getPriceAndBusunessTime(bdvo);
+				
+				BusinessDayVo businessDayVo = guestServiceB.getPriceAndBusiunessTime(bdvo);
 				
 				businessDayVoList.add(businessDayVo);
 				
@@ -90,13 +108,14 @@ public class GuestControllerB {
 		}
 		
 		
+		
 		model.addAttribute("officeInfo", officeInfo); // 오피스정보
 		model.addAttribute("ovo", ovo); 
 		model.addAttribute("rental_date", rental_date); //예약 날짜리스트
 		model.addAttribute("formatRentalDateList", formatRentalDateList); //포맷된 예약날짜 리스트
 		model.addAttribute("totalPayment", totalPayment); // 총결제금액(출력용도)
 		model.addAttribute("businessDayVoList", businessDayVoList);  // businessDayVo 리스트 (OrderAndPaymentProcess로 값 넘기기 위한)
-		
+		model.addAttribute("memberCouponList", guestServiceRN.getMemberCoupon(((MemberVo) session.getAttribute("sessionUser")).getMember_no()));	// 멤버가 발급받은 쿠폰리스트
 		
 		return "guest/paymentPage";
 	}

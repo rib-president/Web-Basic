@@ -88,8 +88,17 @@
 	select *
 	from so_rental sr 
 	<![CDATA[
-	where rental_date >= #{startDay} and rental_date <= #{endDay};
+	where rental_date >= #{startDay} and rental_date <= #{endDay}
 	]]>
+	and order_no in (
+		select order_no
+		from so_order so 
+		where so.office_no in (
+			select office_no
+			from so_officeinfo so2 
+			where so2.member_no = #{member_no}
+		)
+	) 
 </select>
 
 </mapper>

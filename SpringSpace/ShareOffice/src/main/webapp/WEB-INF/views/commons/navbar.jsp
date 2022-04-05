@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<div class="row" style="background-color: #22223B; margin: auto;" id="banner">
+<div class="row bg-gray-c_3c" style=" margin: auto;" id="banner">
    <div class="col-2 pt-2"><i data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" class="bi bi-list cursor-pointer text-fs-40 menu" style="color:white;"></i></div>
    <div class="col-8 pt-1 pb-1 pl-4 text-center" onclick="location.href='../guest/mainPage'">
       <img alt="logo" src="../resources/img/RealLogo.png" class="img-fluid">
@@ -13,7 +13,7 @@
   <div class="offcanvas-header">
     <h5 class="offcanvas-title bold ms-1 text-gray-c_25" id="offcanvasExampleLabel">Menu
     	<a href="../member/messageListPage">
-    		<i class="bi bi-bell-fill menu" style="font-size: 1.7rem; color: #22223B;"></i>
+    		<i class="bi bi-bell-fill menu" style="font-size: 1.7rem; color: #3C3C3C;"></i>
     	</a>
     </h5>
     
@@ -46,11 +46,11 @@
 	    	</div>
 	    	<div class="col pl-1 pr-1">
 	    		<button type="button" class="btn text-white btn-block" style="background-color: #A68A64; width: 100%;"
-				onclick="location.href='#'"><i class="bi bi-ticket-perforated text-white"></i> 쿠폰함</button>
+				onclick="location.href='../board/myCouponPage'"><i class="bi bi-ticket-perforated text-white"></i> 쿠폰함</button>
 	    	</div>
 	    	<div class="col pl-1">
 	    		<button type="button" class="btn text-white btn-block" style="background-color: #A68A64; width: 100%;"
-				onclick="location.href='../member/messageListPage'">쪽지함</button>
+				onclick="location.href='../member/messageListPage'"><i class="bi bi-envelope"></i> 쪽지함</button>
 	    	</div>
 	    </div>
     </c:if>

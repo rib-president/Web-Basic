@@ -37,7 +37,8 @@ public class GuestService_H {
 		for(OfficeInfoVo officeVo:officeVoList ) {
 			
 			ArrayList<BusinessDayVo> businessDayList = guestMapper_H.getBusinessDayPriceByNo(officeVo.getOffice_no()); 
-		    
+			ArrayList<FacilityCategoryVo> facilityCategoryList = guestMapper_H.getFacilityByNo(officeVo.getOffice_no());
+			
 			int officeMinPrice = guestMapper_H.getOfficeMinPrice(officeVo.getOffice_no());
 			
 			HashMap<String, Object> map = new HashMap<String, Object>();	
@@ -47,6 +48,7 @@ public class GuestService_H {
 		    map.put("officeVo", officeVo);
 		    map.put("businessDayList",businessDayList);
 		    map.put("officeMinPrice",officeMinPrice);
+		    map.put("facilityCategoryList",facilityCategoryList);
 		
 		  
 		
@@ -75,12 +77,13 @@ public class GuestService_H {
 		
 		ArrayList<ImageDetailVo> officeImageList = guestMapper_H.getImageDetailByNo(office_no);
 		ArrayList<FacilityCategoryVo> facilityCategoryList = guestMapper_H.getFacilityByNo(office_no);
-		
+		ArrayList<ReviewVo> reviewListThree = guestMapper_H.getReviewListOnlyThree(office_no);
 		
 		map.put("officeVo",officeVo);
 		map.put("facilityCategoryList",facilityCategoryList);
 		map.put("officeImageList",officeImageList);
 		map.put("businessDayList",businessDayList);
+		map.put("reviewListThree", reviewListThree);
 		
 		return map;
 	}
@@ -97,33 +100,28 @@ public class GuestService_H {
 	// 오피스 이용후기리스트 페이지
 	public ArrayList<HashMap<String, Object>> reviewList(int office_no) {
 
-		ArrayList<HashMap<String, Object>> orderList = new ArrayList<HashMap<String, Object>>();
-		ArrayList<OrderVo> orderVoList = guestMapper_H.getOrderByNo(office_no);
+		ArrayList<HashMap<String, Object>> reviewList = new ArrayList<HashMap<String, Object>>();
+		ArrayList<ReviewVo> reviewVoList = guestMapper_H.getReviewListByNo(office_no);
 
 		
-		for (OrderVo orderVo : orderVoList) {
-			
-            int orderNo = orderVo.getOrder_no();
-			ReviewVo reviewVo = guestMapper_H.getReviewByOrderNo(orderNo);		
-			OfficeInfoVo officeInfoVo = guestMapper_H.getOfficeByNo(office_no);
-
+		for (ReviewVo reviewVo : reviewVoList) {
+					
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("officeInfoVo", officeInfoVo);
-			map.put("reviewVo",reviewVo);
-			map.put("orderVo",orderVo);
 			
-			orderList.add(map);
+			map.put("reviewVo",reviewVo);
+			
+			
+			reviewList.add(map);
 
-		}
-		
-		return orderList;
+		}		
+		return reviewList;
 	}
-	public HashMap<String, Object> getReviewDetail (int order_no){
+	public HashMap<String, Object> getReviewDetail (int review_no){
 		
 		HashMap<String, Object>map = new HashMap<String, Object>();
 				
-		ReviewVo reviewVo = guestMapper_H.getReviewByOrderNo(order_no);
-		MemberVo memberVo = guestMapper_H.getMemberNickByOrderNo(order_no);		
+		ReviewVo reviewVo = guestMapper_H.getReviewByReviewNo(review_no);
+		MemberVo memberVo = guestMapper_H.getMemberNickByOrderNo(reviewVo.getOrder_no());		
 		
 		map.put("reviewVo", reviewVo);
 		map.put("memberVo",memberVo);
@@ -149,6 +147,7 @@ public class GuestService_H {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			
 			map.put("hostVo",hostVo);
+			map.put("memberVo", memberVo);
 			
 			applyList.add(map);
 		}

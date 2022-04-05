@@ -15,6 +15,7 @@ public interface GuestMapperB {
 	public OfficeInfoVo getOfficeInfoByOfficeNo(int office_no);
 	public ArrayList<BusinessDayVo> getBusinessDayInfoByOfficeNo(int office_no);
 	
+	
 	// order, rental 테이블 insert
 	public void guestOrder(OrderVo ovo);
 	public void officeRental(RentalVo rvo);
@@ -32,6 +33,11 @@ public interface GuestMapperB {
 	//리뷰관련
 	public void writeReview(ReviewVo rvo);
 	public int reviewExistCheck(int order_no);
+	
+	//리뷰 예외처리 관련 (오피스 예약후 이용완료시 리뷰 작성 가능)
+	public int getRentalCount(int order_no);
+	public int getRentalUseCount(int order_no);
+	public int getRentalUseAndCancelCount(int order_no);
 	
 	
 

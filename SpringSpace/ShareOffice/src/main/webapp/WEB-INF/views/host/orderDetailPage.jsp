@@ -31,7 +31,7 @@ function useRental(obj, rental_no) {
 			
 			if(data.result == "success") {
 				var li = obj.closest(".rental-li");
-				li.querySelector(".useBtn").remove();
+				li.querySelector(".canBtn").remove();
 				obj.remove();
 				
 				var bigSpan = document.createElement("span");
@@ -54,36 +54,6 @@ function useRental(obj, rental_no) {
 	xhr.send();
 }
 
-/*function cancelRental(obj, rental_no) {
-
-	var xhr = new XMLHttpRequest();
-
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4 && xhr.status == 200){
-			var data = JSON.parse(xhr.responseText);
-			
-			var li = obj.closest(".rental-li");
-			li.querySelector(".canBtn").remove();
-			obj.remove();
-			
-			var bigSpan = document.createElement("span");
-			bigSpan.setAttribute("class", "ms-5")
-			var i = document.createElement("i");
-			i.setAttribute("class", "bi bi-x-octagon text-red-soft btn-medium2");
-			i.setAttribute("style", "padding-right:.2rem");
-			var textSpan = document.createElement("span");
-			textSpan.setAttribute("class", "btn-medium2 text-gray-c_25 px-0");
-			textSpan.innerText = " 취소 완료";
-			bigSpan.appendChild(i);
-			bigSpan.appendChild(textSpan);
-			li.appendChild(bigSpan);		
-		}
-		
-	};	
-	
-	xhr.open("get" , "./cancelRental?rental_no=" + rental_no , true);
-	xhr.send();	
-}*/
 
 function cancelRental(obj, rental_no) {
 
@@ -93,21 +63,23 @@ function cancelRental(obj, rental_no) {
 		if(xhr.readyState == 4 && xhr.status == 200){
 			var data = JSON.parse(xhr.responseText);
 			
-			var li = obj.closest(".rental-li");
-			li.querySelector(".useBtn").remove();
-			obj.remove();
-			
-			var bigSpan = document.createElement("span");
-			bigSpan.setAttribute("class", "ms-5")
-			var i = document.createElement("i");
-			i.setAttribute("class", "bi bi-x-octagon text-red-soft btn-medium2");
-			i.setAttribute("style", "padding-right:.2rem");
-			var textSpan = document.createElement("span");
-			textSpan.setAttribute("class", "btn-medium2 text-gray-c_25 px-0");
-			textSpan.innerText = " 취소 완료";
-			bigSpan.appendChild(i);
-			bigSpan.appendChild(textSpan);
-			li.appendChild(bigSpan);		
+			if(data.result == 'success') {
+				var li = obj.closest(".rental-li");
+				li.querySelector(".useBtn").remove();
+				obj.remove();
+				
+				var bigSpan = document.createElement("span");
+				bigSpan.setAttribute("class", "ms-5")
+				var i = document.createElement("i");
+				i.setAttribute("class", "bi bi-x-octagon text-red-soft btn-medium2");
+				i.setAttribute("style", "padding-right:.2rem");
+				var textSpan = document.createElement("span");
+				textSpan.setAttribute("class", "btn-medium2 text-gray-c_25 px-0");
+				textSpan.innerText = " 취소 완료";
+				bigSpan.appendChild(i);
+				bigSpan.appendChild(textSpan);
+				li.appendChild(bigSpan);	
+			}
 		}
 		
 	};	

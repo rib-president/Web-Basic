@@ -53,7 +53,7 @@ public class GuestServiceB {
 		
 	}
 	
-	public BusinessDayVo getPriceAndBusunessTime(BusinessDayVo bdvo) {
+	public BusinessDayVo getPriceAndBusiunessTime(BusinessDayVo bdvo) {
 		
 		return guestMapperB.getPriceAndBusinessTimeByDay(bdvo);
 		
@@ -101,12 +101,24 @@ public class GuestServiceB {
 		ArrayList<HashMap<String, Object>> rentalList = new ArrayList<HashMap<String, Object>>();
 		ArrayList<OrderVo> guestOrderList = guestMapperB.getOrderListByMemberNo(member_no);
 		
+		
 		for(OrderVo orderVo : guestOrderList)  {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			
 			int order_no = orderVo.getOrder_no();
 			int office_no = orderVo.getOffice_no();
+			
 			int totalPayment = 0;
+			
+			int rentalCount = guestMapperB.getRentalCount(order_no);
+			int rentalUseCount = guestMapperB.getRentalUseCount(order_no);
+			int rentalUseAndCancelCount = guestMapperB.getRentalUseAndCancelCount(order_no);
+			
+			boolean officeUseWhether = false;
+			
+			if (rentalCount <= rentalUseAndCancelCount) {
+				officeUseWhether = true;
+			}
 			
 			OfficeInfoVo officeInfoVo = guestMapperB.getOfficeInfoByOfficeNo(office_no);
 			ArrayList<RentalVo> rentalVoList = guestMapperB.getRentalListByOrderNo(order_no);
@@ -122,6 +134,8 @@ public class GuestServiceB {
 			map.put("rentalVoList", rentalVoList);
 			map.put("totalPayment", totalPayment);
 			map.put("reviewExist", reviewExist); //리뷰존재여부 체크후 작성버튼 출력여부용
+			map.put("officeUseWhether", officeUseWhether); // 예약한 오피스 사용여부 체크후 작성버튼 출력여부용
+			map.put("rentalUseCount", rentalUseCount);
 			
 			rentalList.add(map);
 		}
@@ -129,19 +143,13 @@ public class GuestServiceB {
 		return rentalList;
 	}
 	
-	
 	public void writeReview(ReviewVo rvo) {
-		
 		guestMapperB.writeReview(rvo);
 	}
 	
 	public int reviewExistCheck(int order_no) {
-		
 		return guestMapperB.reviewExistCheck(order_no);
 	}
-	
-	
-	
 	
 	
 }

@@ -31,9 +31,6 @@ public class RestHostController {
 	@Autowired
 	private MemberServiceRN memberService;
 	
-	//@Autowired
-	//private KakaoRestAPI kakaoRestAPI;
-	
 	@RequestMapping("getBusinessDayData")
 	public HashMap<String, Object> getBusinessDayData(int office_no) {
 		
@@ -64,6 +61,7 @@ public class RestHostController {
 	public HashMap<String, Object> useRental(int rental_no) {
 		HashMap<String, Object> data = new HashMap<>();
 		
+		data.put("result", "success");
 		hostServiceRN.modifyRentalStatus(rental_no, "U");
 		
 		return data;
@@ -73,21 +71,23 @@ public class RestHostController {
 	public HashMap<String, Object> cancelRental(int rental_no) {
 		HashMap<String, Object> data = new HashMap<>();
 		
-		/*OrderVo orderVo = hostServiceRN.getOrderByRentalNo(rental_no);
+		OrderVo orderVo = hostServiceRN.getOrderByRentalNo(rental_no);
 		
 		RentalVo rentalVo = hostServiceRN.getRental(rental_no);
+		
+		KakaoRestAPI kakaoRestAPI = new KakaoRestAPI();
 		
 		Map<String, Object> resultMap = kakaoRestAPI.payCancel(orderVo.getOrder_tid(), String.valueOf(rentalVo.getRental_price()), memberService.getKakaoKey());
 		
 		if(resultMap.get("tid").toString().equals(orderVo.getOrder_tid())) {
 			hostServiceRN.modifyRentalStatus(rental_no, "C");
 			data.put("result", "success");
+			
+			hostServiceRN.modifyRentalStatus(rental_no, "C");
 		} else {
 			data.put("result", "error");
 			data.put("message", "취소 실패");
-		}*/
-		
-		hostServiceRN.modifyRentalStatus(rental_no, "C");
+		}				
 		
 		return data;
 	}
@@ -102,10 +102,10 @@ public class RestHostController {
 	}
 	
 	@RequestMapping("getMonthRental")
-	public HashMap<String, Object> getMonthRental(String rental_date) {
+	public HashMap<String, Object> getMonthRental(String rental_date, HttpSession session) {
 		HashMap<String, Object> data = new HashMap<>();
 		
-		data.put("monthRentalList", hostServiceRN.getMonthRental(rental_date));
+		data.put("monthRentalList", hostServiceRN.getMonthRental(((MemberVo) session.getAttribute("sessionUser")).getMember_no(), rental_date));
 		
 		return data;
 	}

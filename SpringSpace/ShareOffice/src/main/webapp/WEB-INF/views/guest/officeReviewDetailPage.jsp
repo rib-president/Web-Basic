@@ -30,15 +30,18 @@ $(function() {
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="margin: 1em;">
+<div class="row" style="padding-top: 2em;">
 	<div class="col">
-		<%-- 내용작성 --%>
-		<div class="row mt-2">	
+	
+		<div class="row mt-3">	
 			 <div class="col"><a href="javascript:history.back();"class="btn" style="color: #A68A64"><i class="bi bi-arrow-left"></i></a></div>
 		     <div class="col text-center"><h3>이용 후기</h3></div>
 		     <div class="col"></div>
-		</div>		
-		<div class="card" style="width: 20rem;">
+		</div>
+
+		<div class="row mt-2">
+		   <div class="col-md-12">	
+		<div class="card " style=" width: auto;margin: 1em;">
 			<div class="row mt-2">
 			  <div class="col text-center">
 			    <!-- 별점 출력 수정 -->
@@ -50,24 +53,25 @@ $(function() {
                   </div>
 			 </div>
 		  <div class="card-body">		
-			     <div class="row">	    
+			     <div class="row mt-2">	    
 			         <div class="col"><p class="card-text muted"> 작성자:${review.memberVo.member_nick }</p></div>	  	     
 			         <div class="col"> <p class="card-text muted"> <fmt:formatDate value="${review.reviewVo.review_date}" pattern="yyyy-MM-dd"/></p></div>	
 			     </div>	
-				 <div class="row">	
+				 <div class="row mt-2">	
 				      <img src="/soUpload/reviewImage/${review.reviewVo.review_image }" class="card-img-top" alt="..." width=100%, height=250em>
-				  </div>	
-                  <div class="row">
+				 </div>	
+                 <div class="row mt-2">
 					   <h5 class="card-title">제목:${review.reviewVo.review_title }</h5>
-				   </div>
-				   <div class="row">
+				 </div>
+				 <div class="row mt-2">
 					   <p class="card-text">내용:${review.reviewVo.review_content }</p>
-				   </div>				
-					<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+				 </div>				
+					
 		    </div>
 				
 			</div>
-		
+		 </div>
+		</div>	
 
 
 

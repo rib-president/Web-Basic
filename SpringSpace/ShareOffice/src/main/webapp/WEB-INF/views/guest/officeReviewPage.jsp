@@ -43,15 +43,25 @@ $(function() {
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 2em;">
 	<div class="col">
-			<div class="row mt-3 text-center" style="">
+			<div class="row mt-2 text-center" style="">
 				<h3>이용후기</h3>
 			</div>
-			<div class="row mt-2 ">
+			<div class="row mt-3 " style="margin:1em">
 				<div class="col">
-				<c:forEach  items="${orderList}" var="review">
-						<c:if test="${!empty review.reviewVo.review_no }">
+				    <c:choose>
+				        <c:when test="${reviewList.size() <= 0 }">
+                              <div class="row mt-5">
+							        <div class="col text-center"><h5>등록된 이용 후기가 없습니다.</h5></div>
+							  </div>
+							  <div class="row mt-5 mb-5">
+						             <div class="col text-center"><a href="javascript:history.back();"class="btn" style="background-color: #A68A64; color: #ffffff;">이전으로</a></div>			     				  
+						      </div>
+							
+				        </c:when>
+				        <c:otherwise>
+				              <c:forEach  items="${reviewList}" var="review">
 					      <div class="card" style="">
 						     <div class="row">
 							    <div class="col">
@@ -98,7 +108,7 @@ $(function() {
                                               </c:choose>
 										</div>
 										<div class="col">
-											<a href="./officeReviewDetailPage?order_no=${review.reviewVo.order_no }"><i class="bi bi-chevron-right"></i></a>
+											<a href="./officeReviewDetailPage?review_no=${review.reviewVo.review_no }"><i class="bi bi-chevron-right"></i></a>
 										</div>
 									</div>
 								</div>
@@ -107,22 +117,10 @@ $(function() {
 							</div>
 
 						</div>
-					</div>
-					
-					</c:if>
-							     <c:if test="${empty review.reviewVo.review_no }">
-							       <div class="row mt-5">
-							             <div class="col text-center"><h5>등록된 이용 후기가 없습니다.</h5></div>
-							       </div>
-							        <div class="row mt-5 mb-5">
-						               <div class="col text-center"><a href="javascript:history.back();"class="btn" style="background-color: #A68A64; color: #ffffff;">이전으로</a></div>			     				  
-						           </div>
-							
-							     </c:if>
-							  
-								
-					
-					</c:forEach>
+					</div>				              
+				              </c:forEach>
+				        </c:otherwise>
+				    </c:choose>
 
 					 
 				</div>

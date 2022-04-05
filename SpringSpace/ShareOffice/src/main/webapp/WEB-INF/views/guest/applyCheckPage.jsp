@@ -26,7 +26,7 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 5em;">
+<div class="row" style="padding-top: 2em;">
 	<div class="col">
 	    <div class="row mt-3">
 	       <div class="col">

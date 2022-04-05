@@ -57,15 +57,28 @@ where cate.facility_no = offi.facility_no and offi.office_no=#{office_no}
 
 
 
-<!-- 리뷰 리스트 -->
-<select id="getOrderByNo" resultType="com.teamb.shareoffice.vo.OrderVo">
-select *from SO_Order
-where office_no=#{office_no}
+<!-- 리뷰 전체 리스트 -->
+<select id="getReviewListByNo" resultType="com.teamb.shareoffice.vo.ReviewVo">
+select sr.* from so_review sr , so_order so 
+where sr.order_no = so.order_no 
+and so.office_no = #{office_no}
+order by sr.review_no desc
 </select>
+
+<!-- 리뷰 3개만 출력 -->
+<select id="getReviewListOnlyThree" resultType="com.teamb.shareoffice.vo.ReviewVo">
+select sr.* from so_review sr , so_order so 
+where sr.order_no = so.order_no 
+and so.office_no = #{office_no}
+order by sr.review_no desc 
+limit 3
+</select>
+
+
 <!-- 리뷰 상세보기 -->
-<select id="getReviewByOrderNo" resultType="com.teamb.shareoffice.vo.ReviewVo">
+<select id="getReviewByReviewNo" resultType="com.teamb.shareoffice.vo.ReviewVo">
 select *from so_review
-where order_no =#{order_no}
+where review_no =#{review_no}
 </select>
 <select id="getMemberNickByOrderNo" resultType="com.teamb.shareoffice.vo.MemberVo">
 select sm.member_nick 

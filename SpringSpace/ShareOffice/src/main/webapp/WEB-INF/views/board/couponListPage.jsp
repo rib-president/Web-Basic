@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="now" value="<%=new java.util.Date()%>" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +14,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 
-<!-- 
- 
+
+<%--
 <script>
 	function check(this){
 		
@@ -24,7 +25,7 @@
 		if(count.value == 0){
 			alert("남은 수량을 확인해주세요");
 			return false;
-		}else if(${coupon.CouponVoList.coupon_useDate } < today){
+		}else if(${coupon.CouponVoList.coupon_useDate } < today) {
 			alert("기간이 만료된 쿠폰입니다.");
 			return false;
 		}else{
@@ -33,8 +34,24 @@
 		}
 	}			
 </script>
+ --%> 
+<%-- 
+<script>
+	function check(this) {
+	
+		
+		if(true){
+			alert("hi")
+			retrun false;
+		}
+		
+	}
+</script>
+--%>
 
- -->
+<script>
+
+</script>
 
 </head>
 <body>
@@ -67,10 +84,27 @@
 						<c:choose>
 							<c:when test="${coupon.myReserveCouponCount eq 1 }">
 							  	<c:if test="${!empty sessionUser }">
-								<input type="submit" class="btn btn-primary float-end me-3" disabled value="발급불가">
+								<input type="button" class="btn btn-secondary float-end me-3" disabled value="발급완료">
 							  	</c:if>
 							
 							</c:when>
+							<c:when test="${coupon.CouponVoList.coupon_count - coupon.waste <= 0 }">
+							  	<c:if test="${!empty sessionUser }">
+								<input type="submit" class="btn btn-secondary float-end me-3" disabled value="쿠폰소진">
+							  	<!-- 
+									<input type="button" onclick="alert('쿠폰이 소진 되었습니다.')" class="btn btn-primary float-end me-3" value="쿠폰발급">
+								 -->
+							  	</c:if>
+							
+							</c:when>
+							
+							<c:when test="${coupon.CouponVoList.coupon_useDate < now }">
+							  	<c:if test="${!empty sessionUser }">
+								<input type="button" class="btn btn-secondary float-end me-3" disabled value="기한만료">
+							  	</c:if>
+							
+							</c:when>
+							
 							<c:otherwise>
 								<c:if test="${!empty sessionUser }">
 								<input type="submit" class="btn btn-primary float-end me-3" value="쿠폰발급">

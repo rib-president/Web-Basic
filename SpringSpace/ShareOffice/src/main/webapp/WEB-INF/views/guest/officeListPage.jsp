@@ -13,12 +13,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
-
+<style>
+i {text-decoration: none; color:#A68A64;}
+</style>
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 2em;width: auto; margin: 0.5em;">
 	<div class="col">
 			<%-- 내용작성 --%>
 			<c:forEach items="${officelist}" var="office">
@@ -28,26 +30,63 @@
 					
 					</a>
 					<div class="card-body">
-						<div class="row">
-							<h5 class="card-title">${office.officeVo.office_name }</h5>
+						<div class="row text-fs-23 font-medium2">
+							<p class="card-title ">${office.officeVo.office_name }</p>
 						</div>
 						
-						<div class="row">					
+						<div class="row text-fs-16">					
 								<p class="card-text">
-									<small class="text-muted"> 
+									<small > 
 									   <i class="bi bi-geo-alt"></i>${office.officeVo.office_address }
 									</small>
 								</p>
 						</div>
-						<div class="row">
+						<div class="row text-fs-13">
 						    <p class="card-text">
 									<small class="text-muted"> 
 						                 #${office.officeVo.office_tags }
 						            </small>
 						    </p>             
 						</div>
-						<div class="row">
-						    <h6 class="card-text" style="text-align: right;"> <fmt:formatNumber value="${office.officeMinPrice}" pattern="#,###"/>~ <small class="text-muted"> 원/일</small></h6>
+						<div class="row ms-1" >	
+						      
+						    <c:forEach items="${office.facilityCategoryList }" var="facilityVo" end="4">						   					        					          
+							       <c:if test="${facilityVo.facility_no eq '1'  }">	
+							         <div class="col" style="padding:0rem"><img src="../resources/img/wifi (1).png" width=20em, height=20em></div>						         			   	
+							       </c:if>			     										             
+							        <c:if test="${facilityVo.facility_no eq '2'  }">								      
+							           <div class="col" style="padding:0rem"> <img src="../resources/img/desktop.png" width=20em, height=20em></div>  		   								   													   	       
+							        </c:if>					     							     
+							         <c:if test="${facilityVo.facility_no eq '3'  }">							         
+							           <div class="col"style="padding:0rem"> <img src="../resources/img/fax.png" width=20em, height=20em></div>		   								   	                                      				   	       
+							        </c:if>		      
+							         <c:if test="${facilityVo.facility_no eq '4'  }">								          								          
+							           <div class="col"style="padding:0rem"> <img src="../resources/img/printer.png" width=20em, height=20em></div>		   								   	                                 				   	       
+							        </c:if> 
+							         <c:if test="${facilityVo.facility_no eq '5'  }">							          								         
+							           <div class="col"style="padding:0rem"> <img src="../resources/img/whiteBoard.png" width=20em, height=20em></div>		   								   	                                   				   	       
+							        </c:if>					      							     
+							         <c:if test="${facilityVo.facility_no eq '6'  }">	
+							           <div class="col"style="padding:0rem"> <img src="../resources/img/projector (1).png" width=25em, height=25em></div>		   								   	                                      				   	       
+							        </c:if>							      						 
+							         <c:if test="${facilityVo.facility_no eq '7'  }">	
+							           <div class="col"style="padding:0rem"> <img src="../resources/img/air-purifier.png" width=25em, height=25em></div>		   								   	    				   	       
+							        </c:if>		      
+							         <c:if test="${facilityVo.facility_no eq '8'  }">	
+							           <div class="col"style="padding:0rem"> <img src="../resources/img/lockers.png" width=25em, height=25em></div>		   								   	                                   				   	       
+							        </c:if>					       
+							         <c:if test="${facilityVo.facility_no eq '9'  }">	
+							           <div class="col"style="padding:0rem"> <img src="../resources/img/kitchen.png" width=25em, height=25em></div>		   								   	                                 				   	       
+							        </c:if>	     
+							         <c:if test="${facilityVo.facility_no eq '10'  }">	
+                                       <div class="col"> <img src="../resources/img/parking.png" width=25em, height=25em></div>		 			   	       
+							        </c:if>				             
+						    </c:forEach>	
+						        <div class="col"></div>					       						    					   
+						        <div class="col-6 text-fs-16">
+						            <p class="card-text" style="text-align: right;"> <fmt:formatNumber value="${office.officeMinPrice}" pattern="#,###"/>~ <small class="text-muted text-fs-13"> 원/일</small></p>
+						       </div>
+						    					
 						</div>
 
 					</div>

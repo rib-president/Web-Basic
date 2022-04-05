@@ -73,11 +73,10 @@ public interface BoardMapperkt {
 	public void insertAllotCoupon(AllotCouponVo vo);
 	//보유한 쿠폰정보
 	public ArrayList<AllotCouponVo> memberReserveCoupon(int member_no);
-	
-	
-	
+	//회원이 발급한 쿠폰정보
 	public int memberReserveCoupon2(AllotCouponVo vo);
-	
+	//내 쿠폰 정보
+	public ArrayList<CouponVo> getMyCoupon(int member_no);
 	
 	
 }

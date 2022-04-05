@@ -24,5 +24,5 @@ public interface HostMapperRN {
 	public OfficeInfoVo selectOfficeByOrderNo(int order_no);
 	public ArrayList<RentalVo> selectRentalByOrderNo(@Param("order_no") int order_no, @Param("onlyCancel") boolean onlyCancel);
 	
-	public ArrayList<RentalVo> selectMonthRental(@Param("startDay") String startDay, @Param("endDay") String endDay);
+	public ArrayList<RentalVo> selectMonthRental(@Param("member_no") int member_no, @Param("startDay") String startDay, @Param("endDay") String endDay);
 } 

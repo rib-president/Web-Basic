@@ -145,15 +145,15 @@
     
 	<div class="container">
 	    <div class="py-4 text-center">
-	      <h2>환영합니다!</h2>
-	      <p class="lead">지금 MZ세대들을 위한 공간비즈니스를 시작해보세요!</p>
+	      <div class="text-fs-23">환영합니다!</div>
+	      <p class="lead text-fs-16">지금 MZ세대들을 위한 공간비즈니스를 시작해보세요!</p>
 	    </div>
 		<hr class="my-4">
 	    
-	    <div class="row g-5">
+	    <div class="row g-5 text-fs-16">
 
 	      <div class="col-md-7 col-lg-8">
-	        <h4 class="mb-3">오피스 등록하기</h4>
+	        <div class="mb-3 text-fs-23">오피스 등록하기</div>
 	          <div class="row g-3">
 	            <div class="col-sm-6">
 	            	  오피스명
@@ -199,7 +199,7 @@
 	            <div class="col-sm-6">
 	              <label for="office_min_booking_day" class="form-label">최소예약일</label>
 	              <input type="number" class="form-control" name="office_min_booking_day" id="personnelInput" min="1" max="1000" value="1" required/>
-	              <small class="text-muted">최소예약 가능일은 1일부터 입니다.</small>
+	              <small class="text-muted text-fs-13">최소예약 가능일은 1일부터 입니다.</small>
 	              <div class="invalid-feedback">
 	                	최소예약일을 선택하세요.
 	              </div>
@@ -263,16 +263,16 @@
 	              </div>
 	            </div>						 -->
 							
-			   <div class="col-sm-6" id="day-root-box">
+			   <div class="col-sm-6 ms-3  text-fs-15" id="day-root-box">
 			   	<div class="row">
-			   		<div class="col-2 px-0">
-			          <div class="form-check">
+			   		<div class="col-1 px-0" >
+			          <div class="form-check" style="width: 0.5rem;">
 			            <input type="checkbox" class="form-check-input" name="business_day" value="월" onchange="checkDay(this)">
-			            <label class="form-check-label">월</label>
+			            <label class="form-check-label" >월</label>
 			          </div>
 								   			
 			   		</div>
-			   		<div class="col px-0">
+			   		<div class="col-3" style="margin-left: 0.6rem;">
 			   			<select class="form-control start-time" onchange="checkStartTime(this)">
 			   				<option value="0">00:00</option>
 			   				<option value="1">01:00</option>
@@ -285,7 +285,7 @@
 			   				<option value="8">08:00</option>
 			   				<option value="9">09:00</option>
 			   				<option value="10">10:00</option>
-			   				<option value="11">11:00</option>
+			   				<option value="11">11:00</ption>
 			   				<option value="12">12:00</option>
 			   				<option value="13">13:00</option>
 			   				<option value="14">14:00</option>
@@ -301,8 +301,8 @@
 			   				<option value="24">24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1 px-0">~</div>
-			   		<div class="col px-0">
+			   		<div class="col-1" style="padding:0rem;">~</div>
+			   		<div class="col-3">
 			   			<select class="form-control end-time">
 			   				<option value="0">00:00</option>
 			   				<option value="1">01:00</option>
@@ -331,8 +331,8 @@
 			   				<option value="24">24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1 px-0">가격</div>
-			   		<div class="col px-0">
+			   		<div class="col-1 px-0">₩</div>
+			   		<div class="col px-0 me-2">
 						<input type="number" class="form-control price">
 			   		</div>
 			   	</div>
@@ -404,7 +404,7 @@
 			   				<option value="24">24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1 px-0">가격</div>
+			   		<div class="col-1 px-0">₩</div>
 			   		<div class="col px-0">
 						<input type="number" class="form-control price">
 			   		</div>
@@ -478,7 +478,7 @@
 			   				<option value="24">24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1 px-0">가격</div>
+			   		<div class="col-1 px-0">₩</div>
 			   		<div class="col px-0">
 						<input type="number" class="form-control price">
 			   		</div>
@@ -551,7 +551,7 @@
 			   				<option value="24">24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1 px-0">가격</div>
+			   		<div class="col-1 px-0">₩</div>
 			   		<div class="col px-0">
 						<input type="number" class="form-control price">
 			   		</div>
@@ -624,7 +624,7 @@
 			   				<option value="24">24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1 px-0">가격</div>
+			   		<div class="col-1 px-0">₩</div>
 			   		<div class="col px-0">
 						<input type="number" class="form-control price">
 			   		</div>
@@ -697,7 +697,7 @@
 			   				<option value="24">24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1 px-0">가격</div>
+			   		<div class="col-1 px-0">₩</div>
 			   		<div class="col px-0">
 						<input type="number" class="form-control price">
 			   		</div>
@@ -770,7 +770,7 @@
 			   				<option value="24">24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1 px-0">가격</div>
+			   		<div class="col-1 px-0">₩</div>
 			   		<div class="col px-0">
 						<input type="number" class="form-control price">
 			   		</div>
@@ -797,14 +797,14 @@
 	  </div>
 	
 	          <!-- <button class="w-100 btn btn-primary btn-lg" type="submit">등록하기</button> -->
-	          <input type="button" class="w-100 btn btn-primary btn-lg" value="등록하기" onclick="submitForm()">
+	          <input type="button" class="w-100 btn btn-lg mb-2" style="background-color: #A68A64;" value="등록하기" onclick="submitForm()">
 	        </form>
 	      </div>
 	    </div>
 			
 		
 
-
+<jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

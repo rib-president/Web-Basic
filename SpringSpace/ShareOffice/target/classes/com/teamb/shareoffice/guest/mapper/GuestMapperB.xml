@@ -108,6 +108,26 @@
 		from so_review
 		where order_no = #{order_no}
   	 </select>
+  	 
+  	 <!-- 리뷰 예외처리 관련 (오피스 예약후 이용완료시 리뷰 작성 가능) -->
+  	 
+  	 <select id="getRentalCount" resultType="int">
+  	 	select count(*)
+		from so_rental
+		where order_no = #{order_no}
+  	 </select>
+  	 
+  	 <select id="getRentalUseCount" resultType="int">
+  	 	select count(*)
+		from so_rental
+		where order_no = #{order_no} and rental_status in ('U');
+  	 </select>
+  	 
+  	 <select id="getRentalUseAndCancelCount" resultType="int">
+  	 	select count(*)
+		from so_rental
+		where order_no = #{order_no} and rental_status in ('U', 'C')
+  	 </select>
 
 
 

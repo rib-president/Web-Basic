@@ -19,13 +19,13 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: ;">
+<div class="row" style="padding-top:2rem ;">
 	<div class="col">
 				<div class="card text-dark bg-light mb-3" style="margin: 1em;margin-top:2em">			  
 					 <div class="card-body text-center">	
 					 
 					      <div class="row mt-5"> 
-						     <p class="card-text fs-4">호스트 신청이<br> 완료되었습니다.</p> 	
+						     <p class="card-text-fs-23">호스트 신청이<br> 완료되었습니다.</p> 	
 						   </div>  	
 						   <div class="row mt-5">
 						      <div class="col d-grid" style="margin: 1em"><a href="./applyCheckPage" class="btn btn-outline-secondary">호스트 신청 현황 보러가기</a></div>

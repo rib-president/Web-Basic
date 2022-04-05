@@ -5,10 +5,10 @@
     <div class="eframe-width mx-auto py-11 relative">
         <div class="w-full inline-block">
             <p class="float-left py-0 m-0">
-                <a href="http://www.ctrl-a.co.kr/" class="KOHIBaeumOTF text-fs-30 text-gold">TEAM-B</a>                              
+                <a href="#" class="KOHIBaeumOTF text-fs-30 text-gold">TEAM-B</a>                              
             </p>
-            <ul class="float-right text-fs-10">
-                <li class="float-left"><a class="text-gold bold" href="http://www.ctrl-a.co.kr/" target="_blank">(주)팀 비</a></li>
+            <ul class="float-right text-fs-10" style="padding-top:0.75rem">
+                <li class="float-left"><a class="text-gold bold" href="#" target="_blank">(주)팀 비</a></li>
                 <li class="float-left mx-3"><a class="text-gold bold" href="#">이용약관</a></li>
                 <li class="float-left"><a class="text-gold bold" href="#">개인정보처리방침</a></li>
             </ul> 

@@ -16,10 +16,10 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-		<div class="row" style="padding-top: 4rem;">
+		<div class="row" style="padding-top: 1rem;">
 			<div class="col">
 			
-				<div class="row" style="padding-top: 4rem";>
+				<div class="row" style="padding-top: 0.5rem";>
 					<div class="col">
 						
 						<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -29,12 +29,12 @@
 							  	<c:choose>
 							  		<c:when test="${sttttttttt.index == 0 }">
 							    <div class="carousel-item active">
-							      <img src="/soUpload/officeImage/${image.image_url}" class="d-block w-100" alt="...">
+							      <img src="/soUpload/officeImage/${image.image_url}" width=100%, height=220rem class="d-block w-100" alt="...">
 							    </div>
 							  		</c:when>
 							  		<c:otherwise>
 							    <div class="carousel-item">
-							      <img src="/soUpload/officeImage/${image.image_url}" class="d-block w-100" alt="...">
+							      <img src="/soUpload/officeImage/${image.image_url}" width=100%, height=220rem class="d-block w-100" alt="...">
 							    </div>
 							  		</c:otherwise>
 							  	</c:choose>
@@ -56,10 +56,7 @@
 					<!-- <div class="row"></div>  -->
 					<!-- <div class="col"></div>  -->
 					
-				<div class="row" style="padding-top: 4rem;">
-					<div class="col">
-					<div class="card" style="width: 17.5rem;">
-				 	<div class="card-body">
+				<div class="row mt-3" style="margin: 1rem;">
 				 	
 				 	<div class="row mt-3">
 				 	<div class="col">
@@ -157,9 +154,6 @@
 				  	</div>
 					</div>
 					</div>
-				</div>
-			</div>
-		</div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

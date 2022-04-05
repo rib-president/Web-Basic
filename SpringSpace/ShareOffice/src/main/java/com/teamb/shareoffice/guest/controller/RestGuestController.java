@@ -48,7 +48,15 @@ public class RestGuestController {
 		
 	}
 	
-
+	
+	@RequestMapping("getDayPrice")
+	public HashMap<String, Object> getDayPrice(BusinessDayVo bdvo){
+		HashMap<String, Object> responseData = new HashMap<String, Object>();
+		
+		responseData.put("businessDayVo", guestServiceB.getPriceAndBusiunessTime(bdvo));
+		
+		return responseData;
+	}
 	
 	
 	

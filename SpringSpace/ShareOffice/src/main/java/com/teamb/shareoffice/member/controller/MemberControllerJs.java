@@ -26,24 +26,33 @@ public class MemberControllerJs {
 	public String messageListPage(Model model,HttpSession session) {
 		
 		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
-		int rNo = sessionUser.getMember_no();
 		
-		ArrayList<HashMap<String, Object>> datalist = memberServiceJs.getMessageList(rNo);
-		model.addAttribute("datalist", datalist);
+		if(sessionUser != null) {
+			int rNo = sessionUser.getMember_no();
+			ArrayList<HashMap<String, Object>> datalist = memberServiceJs.getMessageList(rNo);
+			model.addAttribute("datalist", datalist);
+			return "member/messageListPage";
+		}else {
+			return "guest/loginPage";
+		}
 		
-		return "member/messageListPage";
 	}
 	
 	@RequestMapping("sendMessageListPage") // 보낸쪽지함
 	public String sendMessageListPage(Model model,HttpSession session) {
 		
 		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
-		int sNo = sessionUser.getMember_no();
 		
-		ArrayList<HashMap<String, Object>> datalist = memberServiceJs.getSendMessageList(sNo);
-		model.addAttribute("datalist", datalist);
+		if(sessionUser != null) {
+			int sNo = sessionUser.getMember_no();
+			ArrayList<HashMap<String, Object>> datalist = memberServiceJs.getSendMessageList(sNo);
+			model.addAttribute("datalist", datalist);
+			
+			return "member/sendMessageListPage";
+		} else {
+			return "guest/loginPage";
+		}
 		
-		return "member/sendMessageListPage";
 	}
 	
 	
@@ -57,15 +66,19 @@ public class MemberControllerJs {
 	public String writeMessageProcess(MemberVo mVo, MessageVo sVo, HttpSession session, String nick) {
 		
 		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
-		int senderNo = sessionUser.getMember_no();
-		sVo.setSender_no(senderNo);
 		
-		MemberVo getNickInfo = memberServiceJs.getMemberNick(nick);
-		int receiveNo = getNickInfo.getMember_no();
-		sVo.setReceive_no(receiveNo);
-		
-		memberServiceJs.writeMessage(sVo);
-		return "redirect:./messageListPage";
+		if(sessionUser != null) {
+			int senderNo = sessionUser.getMember_no();
+			sVo.setSender_no(senderNo);
+			MemberVo getNickInfo = memberServiceJs.getMemberNick(nick);
+			int receiveNo = getNickInfo.getMember_no();
+			sVo.setReceive_no(receiveNo);
+			
+			memberServiceJs.writeMessage(sVo);
+			return "redirect:./messageListPage";
+		} else {
+			return "guest/loginPage";
+		}
 	}
 	
 	@RequestMapping("messageReplyPage") // 답장

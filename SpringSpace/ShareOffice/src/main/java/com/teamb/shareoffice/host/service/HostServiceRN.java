@@ -89,7 +89,7 @@ public class HostServiceRN {
 		return resultList;
 	}
 	
-	public ArrayList<RentalVo> getMonthRental(String rental_date) {
+	public ArrayList<RentalVo> getMonthRental(int member_no, String rental_date) {
 		
 		String[] splitRentalDate = rental_date.split("-");
 		
@@ -99,7 +99,7 @@ public class HostServiceRN {
 		String startDay = year + "-" + month + "-01";
 		String endDay = year + "-" + month + "-31";
 		
-		return hostMapper.selectMonthRental(startDay, endDay);
+		return hostMapper.selectMonthRental(member_no, startDay, endDay);
 	}
 	
 }

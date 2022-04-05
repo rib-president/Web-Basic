@@ -48,7 +48,7 @@ public class GuestController_H {
 	@RequestMapping("officeDetailPage")
 	public String officeDetailPage(int office_no,Model model) {
 		HashMap<String, Object>map = guestService_H.getOfficeDetail(office_no);
-		ArrayList<HashMap<String, Object>> orderList = guestService_H.reviewList(office_no);
+		
 				
 		 int imageCount = guestService_H.getImageCount(office_no);
 		 int minOfficePrice = guestService_H.getOfficeMinPrice(office_no);
@@ -57,7 +57,6 @@ public class GuestController_H {
 		 
 		 model.addAttribute("minOfficePrice",minOfficePrice);
 		 
-	     model.addAttribute("orderList",orderList);
 		
 		 model.addAttribute("office",map);
 		
@@ -66,16 +65,18 @@ public class GuestController_H {
 	@RequestMapping("officeReviewPage")
 	public String officeReviewPage(Model model,int office_no) {
 		
-        ArrayList<HashMap<String, Object>> orderList = guestService_H.reviewList(office_no);
+        ArrayList<HashMap<String, Object>> reviewList = guestService_H.reviewList(office_no);
 
         
-	    model.addAttribute("orderList",orderList);
+	    model.addAttribute("reviewList",reviewList);
 		return "guest/officeReviewPage";
 	}
-	@RequestMapping("officeReviewDetailPage")
-	public String officeReviewDetailPage(Model model,int order_no) {
 	
-		HashMap<String, Object>map = guestService_H.getReviewDetail(order_no);
+	@RequestMapping("officeReviewDetailPage")
+	public String officeReviewDetailPage(Model model,int review_no) {
+		
+		
+		HashMap<String, Object>map = guestService_H.getReviewDetail(review_no);
 		
 		model.addAttribute("review",map);
 		
@@ -173,6 +174,11 @@ public class GuestController_H {
        }
 				
 		return "guest/applyCheckPage";
+	}
+	
+	@RequestMapping("test")
+	public void test() {
+		System.out.println("qweqweqeqeqe");
 	}
 	
 }

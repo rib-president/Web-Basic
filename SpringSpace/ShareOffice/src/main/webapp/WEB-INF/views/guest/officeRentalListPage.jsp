@@ -31,7 +31,7 @@
 		
 		<div class="col-10">
 			
-			<div class="row mt-5">
+			<div class="row">
 				<div class="col fs-2 center">오피스 예약 내역</div>
 			</div>
 			
@@ -90,7 +90,7 @@
 						
 						<div class="col-3"> <!-- 리뷰작성페이지 이동버튼(리뷰 존재여부에 따라 출력 or 미출력) -->
 							<c:choose>
-								<c:when test="${rentalList.reviewExist <= 0}">
+								<c:when test="${rentalList.reviewExist <= 0 && rentalList.officeUseWhether == true && rentalList.rentalUseCount >= 1}">
 									<a id="reviewWriteButton" href="./writeReviewPage?order_no=${rentalList.orderVo.order_no }
 									&office_no=${rentalList.officeInfoVo.office_no }">리뷰작성</a>
 								</c:when>

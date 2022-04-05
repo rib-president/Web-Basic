@@ -33,9 +33,11 @@ public interface GuestMapper_H {
 	public ArrayList<FacilityCategoryVo> getFacilityByNo(int office_no);
 	
 	//리뷰목록
-	public ArrayList<OrderVo> getOrderByNo(int office_no);
+	public ArrayList<ReviewVo> getReviewListByNo(int office_no);
+	//상세페이지에서 리뷰 3개만 출력
+	public ArrayList<ReviewVo> getReviewListOnlyThree(int office_no);
 	//리뷰 상세보기
-	public ReviewVo getReviewByOrderNo(int order_no);
+	public ReviewVo getReviewByReviewNo(int review_no);
 	public MemberVo getMemberNickByOrderNo(int order_no);
 	
 	

@@ -218,12 +218,11 @@
 	
 	<insert id="insertAllotCoupon">
 		INSERT INTO SO_AllotCoupon
-		(member_no, admin_no, coupon_no, allot_date)
+		(member_no, coupon_no, allot_date)
 		VALUES(
 		#{member_no},
-		#{admin_no},
 		#{coupon_no},
-		NOW(),
+		NOW()
 		)
 	</insert>
 	
@@ -235,10 +234,19 @@
 	
 	<select id="memberReserveCoupon2" resultType="int">
 		SELECT COUNT(*) 
-		FROM so_allotcoupon sa
-		WHERE sa.member_no = #{member_no}
-		AND sa.coupon_no = #{coupon_no}		
+		FROM so_allotcoupon
+		WHERE member_no = #{member_no}
+		AND coupon_no = #{coupon_no}		
 	</select>
+	
+	<select id="getMyCoupon" resultType="com.teamb.shareoffice.vo.CouponVo">
+		SELECT c.*
+		FROM SO_Coupon c, SO_AllotCoupon a 
+		WHERE c.coupon_no = a.coupon_no 
+		AND member_no = #{member_no}
+		ORDER BY c.coupon_date DESC
+	</select>
+	 
 	
 	
 </mapper>

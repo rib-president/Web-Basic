@@ -276,7 +276,7 @@ public class BoardServicekt {
 		boardMapperkt.insertAllotCoupon(vo);
 		
 	}
-	/*
+	
 	public ArrayList<HashMap<String, Object>> getMemberReserveCoupon(int member_no){
 		ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String,Object>>();
 		
@@ -292,8 +292,23 @@ public class BoardServicekt {
 		
 		return dataList;
 	}
-	*/
 	
+	public ArrayList<HashMap<String, Object>> getMyCoupon(int member_no){
+		 ArrayList<HashMap<String, Object>> dataList = new  ArrayList<HashMap<String, Object>>();
+		 
+		 ArrayList<CouponVo> myCouponVoList = boardMapperkt.getMyCoupon(member_no);
+		 
+		 	for(CouponVo myCoupon : myCouponVoList) {
+		 		HashMap<String, Object> data = new HashMap<String, Object>();
+		 		
+		 		data.put("myCouponVo", myCoupon);
+		 		
+		 		dataList.add(data);
+		 	}
+		 
+		 return dataList;
+		
+	}
 
 	
 }

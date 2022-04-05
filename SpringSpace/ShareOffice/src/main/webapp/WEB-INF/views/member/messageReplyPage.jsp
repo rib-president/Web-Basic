@@ -20,34 +20,47 @@
 }
 
 </script>
-
+	
+	<style>
+	
+		#sendMessage{
+			border-radius: 0.3rem 0.3rem 0.3rem 0.3rem; 
+			background-color:#A68A64; 
+			color: white; 
+			text-align: center; 
+			font-size: 1.1rem; 
+			padding-top: 0.3rem; 
+			padding-bottom: 0.3rem;
+			font-weight: bold;
+		}
+	</style>
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 <div class="row">
 	<div class="col">
-		<div class="row">
-			<div class="col" style="background-color: #A68A64; color: white; text-align: center; font-size: 1.5rem;">쪽지보내기</div>
+		<div class="row mt-4" style="margin: 1rem;">
+			<div class="col" id="sendMessage">답장하기</div>
 		</div>
 		
-		<form action="./replyMessageProcess" class="form" role="form" style="font-size: 1.3rem;" name="userInput">
+		<form action="./replyMessageProcess" class="form" role="form" style="font-size: 1.1rem;" name="userInput">
 			<div class="row">
-				<div class="col" style="margin-left: 0.5rem; margin-top: 0.5rem; padding-top: 0.4rem;">
+				<div class="col" style="margin-left: 1rem; padding-top: 0.5rem;">
 					작성자 : ${sessionUser.member_nick }
 				</div>
-				<div class="col" style="text-align: right; margin-right: 1rem; font-size: 2rem; margin-top: 0.5rem;">
+				<div class="col" style="text-align: right; margin-right: 1rem; font-size: 1.8rem;">
 					<i class="bi bi-send" onclick="goData()"></i>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col" style="margin-left: 0.5rem;">
+				<div class="col" style="margin-left: 1rem;">
 					받는 사람 : ${data.memberVo.member_nick }<input type="hidden" value="${data.messageVo.sender_no }" name="receive_no">
 				</div>
     		</div>
     		<hr>
-    		<div class="mb-3" style="margin: 0.5rem;">
-			   <textarea class="form-control" id="exampleFormControlTextarea1" rows="18" name="txt" placeholder="내용을 입력해 주세요." style="font-size: 1.3rem;"></textarea>
+    		<div class="mb-3" style="margin: 1rem;">
+			   <textarea class="form-control" id="exampleFormControlTextarea1" rows="18" name="txt" placeholder="내용을 입력해 주세요."></textarea>
 			</div>
 		</form>
 	</div>

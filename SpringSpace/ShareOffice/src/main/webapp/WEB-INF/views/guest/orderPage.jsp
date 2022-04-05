@@ -21,24 +21,6 @@
 <link rel="stylesheet" href="../resources/css/style.css">
 <link rel="stylesheet" href="../resources/css/calendarStyle.css">
 
-<style>
-#load { 
-        width: 100%; 
-        height: 100%; 
-        top: 0; left: 0; 
-        position: fixed; 
-        display:none;
-        opacity: 0.6; 
-        background: white; 
-        z-index: 99999; 
-        text-align: center;
-    }
-
-#load.show { display:block }
-    
-#load > img { position: absolute; top: 35%; left: 45%; z-index: 100; }	
-</style>
-
 <script>
 	
 	var officeNo = "${officeInfo.officeInfoVo.office_no }";
@@ -83,7 +65,7 @@
 	function orderValidCheck(e) {
 		
 		e.preventDefault();
-		
+
 		//최대인원 체크
 		var personnelInput = document.getElementById("personnelInput");
 		
@@ -93,10 +75,12 @@
 	        return;
 		}
 		
-		//예약 선택날짜 value 맨앞 , 지우기
-		var chooseDate = document.getElementById("choose-date");
-		chooseDate.value = chooseDate.value.substring(1, chooseDate.length);
 		
+		//예약 선택날짜 value 맨앞 , 지우기	
+		var chooseDate = document.getElementById("choose-date");
+		if(chooseDate.value[0] == ',') {
+			chooseDate.value = chooseDate.value.substring(1, chooseDate.length);	
+		}
 		
 		// 최소예약일 체크
 		var totalResvDay = chooseDate.value.split(",").length;
@@ -104,60 +88,36 @@
 			alert("예약일이 최소 예약일보다 작습니다");
 			return;
 		};
-
+		
+		
 		//submit 실행
-		//var frm = document.getElementById("frm");
-		//frm.submit();
-		
-		kakaoPay(totalResvDay)
+		var frm = document.getElementById("frm");
+		frm.submit();		
 		
 	}
 	
-	function kakaoPay(totalResvDay) {
-		var xhr = new XMLHttpRequest();	
-		
-		var quantity = 1;			
-		
-		var item_name = '${officeInfo.officeInfoVo.office_name}' + "(" + totalResvDay + "일)";			
-		
-		var total_amount = document.querySelector("#totalPrice").innerText.split(",").join("");
-		
-		var newWindow;
-		
-		xhr.onreadystatechange = function() {
-			if(xhr.readyState == 4 && xhr.status == 200) {
-				var data = JSON.parse(xhr.responseText);				
-				
-				document.querySelector("#orderTid").value = data.tid;
-				
-				newWindow = window.open(data.next_redirect_pc_url, "_blank");
-				//newWindow = window.open(data.next_redirect_mobile_url, "_blank");
-												
-				document.querySelector("#load").classList.add("show");
-			}
-		};
-		
-		xhr.open("post", "../guest/payToKakao", false);
-		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		xhr.send("item_name=" + item_name + "&quantity=" + quantity + "&total_amount=" + total_amount);
-	}
-	
-	function sendMeData(data) {
-		document.querySelector("#load").classList.remove("show");
-		var frm = document.querySelector("form");
-		
-		if(data == 200) {
-			frm.submit();
-		} else {
-			alert(data);
-			return;
-		}
-	}		
+
 	
 	function preventMax(input, max) {
 		if(input.value > max) {
 			input.value = max;
 		}
+	}
+	
+	function addTotalReservationDay() {
+		
+		var parseIntText = parseInt(document.getElementById("totalReservationDay").innerText);
+		parseIntText += parseInt(1);
+		document.getElementById("totalReservationDay").innerText = parseIntText;
+		
+	}
+	
+	function removeTotalReservationDay() {
+		
+		var parseIntText = parseInt(document.getElementById("totalReservationDay").innerText);
+		parseIntText -= parseInt(1);
+		document.getElementById("totalReservationDay").innerText = parseIntText;
+		
 	}
 	
 	//calendar script
@@ -174,9 +134,7 @@
 	        alert("지난 달은 예약할 수 없습니다.");
 	        return;
 	    }
-	
-	
-	
+
 	
 	    //맨위...
 	    var prevMonth = selectedMonth - 1;
@@ -282,9 +240,9 @@
 	                attr += " choose-reg";
 	                colDate.setAttribute("class",attr);
 	                
-	                colDate.setAttribute("onclick","cancelReservationDate(this,'"+funcArg+"')");
+	                colDate.setAttribute("onclick","cancelReservationDate(this,'"+funcArg+"'); removeTotalReservationDay();");
 	            }else{
-	                colDate.setAttribute("onclick","chooseReservationDate(this,'"+funcArg+"')");
+	                colDate.setAttribute("onclick","chooseReservationDate(this,'"+funcArg+"'); addTotalReservationDay();");
 	            }
 	
 	
@@ -442,7 +400,7 @@
 	    var attr = e.getAttribute("class");
 	    attr += " choose-reg";
 	    e.setAttribute("class",attr);
-	    e.setAttribute("onclick" , "cancelReservationDate(this,'"+date+"')");
+	    e.setAttribute("onclick" , "cancelReservationDate(this,'"+date+"'); removeTotalReservationDay();");
 	
 	    var totalPrice = document.querySelector("#totalPrice");  	    	    	    
 	    
@@ -463,7 +421,7 @@
 	    var attr = e.getAttribute("class");
 	    attr = attr.replaceAll(" choose-reg","");
 	    e.setAttribute("class",attr);
-	    e.setAttribute("onclick" , "chooseReservationDate(this,'"+date+"')");
+	    e.setAttribute("onclick" , "chooseReservationDate(this,'"+date+"'); addTotalReservationDay();");
 	    
 	    var totalPrice = document.querySelector("#totalPrice");
 	    
@@ -498,7 +456,7 @@
 		<div class="col"></div> <!-- 왼쪽 여백 -->
 		
 		<div class="col-10">
-		<form id="frm" action="orderProcess" method="post">
+		<form id="frm" action="paymentPage" method="post">
 			<div class="row mt-3">
 				<div class="col fs-2 center">예약하기</div>
 			</div>					
@@ -547,6 +505,13 @@
 				</div>
 			</div>
 			<hr>
+			
+			<div class="row mt-2 text-fs-17">
+				<div class="col">
+					<span class="float-right bold">일</span><span id="totalReservationDay" class="float-right bold">0</span><span class="float-right bold">총&nbsp;</span>
+				</div>			
+			</div>
+			
 			<div class="row mt-2 text-fs-17">
 				<div class="col bold">Total<span class="text-fs-11">&nbsp;(최소 ${officeInfo.officeInfoVo.office_min_booking_day }일)</span></div>
 				<div class="col">
@@ -558,20 +523,11 @@
 			
 			<div class="row" style="padding:1em;"></div>
 			
-			
-			<div class="row mt-2 leading-tight">
-				<div class="col text-fs-13">결제수단</div>
-				<div class="col">
-					<img class="ms-1 float-right" src="../resources/img/kakaopay.png" style="height:60%"><input type="radio" class="float-right form-check-input" checked>					
-				</div>
-			</div>
-			
-			
 			<div class="row leading-tight">
 				<div class="col">
 					<div class="d-grid">
-						<button type="button" class="btn buttonColor" onclick="orderValidCheck(event)">결제하기</button>
-						<input type="hidden" name="office_no" value="${officeInfo.officeInfoVo.office_no }">
+						<button type="button" class="btn buttonColor" onclick="orderValidCheck(event)">선택 완료</button>
+						<input type="hidden" name="officeNo" value="${officeInfo.officeInfoVo.office_no }">
 						<input id="orderTid" type="hidden" name="order_tid">
 					</div>
 				</div>
@@ -587,7 +543,6 @@
 			
 	</div>
 
-<div id="load"><img src="../resources/img/loading.gif" alt="loading"></div>
 <jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
