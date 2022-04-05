@@ -34,8 +34,13 @@ public class KakaoRestAPI {
 	
 	private static final String LOGIN_GET_TOKEN = "/oauth/token";	
 
-	//private final String domain = "http://localhost:8181/shareoffice/";
-	private final String domain = "http://13.125.166.120:8080/shareoffice/";
+
+	private final String domain = "http://localhost:8181/shareoffice/";
+	//private final String domain = "http://13.125.166.120:8080/shareoffice/";
+
+	private final String loginGetCode = "http://localhost:8181/shareoffice/member/loginGetCode";
+	//private final String loginGetCode = "http://13.125.166.120:8080/shareoffice/member/loginGetCode";
+	
 	private final String cid = "TC0ONETIME";
 	
 	public Map<String, Object> getLocalInfo(String kakaoKey, String extLoc) {
@@ -53,9 +58,9 @@ public class KakaoRestAPI {
     public Map<String, Object> payReady(String partner_order_id, String partner_user_id,
     		String item_name, String quantity, String total_amount, String kakaoKey) {
     	
-    	String approval_url = this.domain + "biz/kakaoPayApproval";
-    	String cancel_url = this.domain + "biz/kakaoPayCancel";
-    	String fail_url = this.domain + "biz/kakaoPayFail";
+    	String approval_url = this.domain + "guest/kakaoPayApproval";
+    	String cancel_url = this.domain + "guest/kakaoPayCancel";
+    	String fail_url = this.domain + "guest/kakaoPayFail";
     	
     	Map<String, String> params = new HashMap<>();
     	
@@ -133,7 +138,7 @@ public class KakaoRestAPI {
     	params.put("grant_type", "authorization_code");
     	params.put("client_id", kakaoKey);
 
-    	params.put("redirect_uri", "http://localhost:8181/shareoffice/member/loginGetCode");
+    	params.put("redirect_uri", loginGetCode);
     	params.put("code", code);
     	
     	String sendParams = mapToParams(params);

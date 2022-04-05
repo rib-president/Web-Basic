@@ -15,11 +15,28 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
+<!-- star-rating -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="../resources/css/fontawesome-stars.css">
+<script type="text/javascript" src="../resources/js/jquery.barrating.min.js"></script>
 <style type="text/css">
  a {text-decoration: none; color:#3ad0ab;}
  i {text-decoration: none; color:#3ad0ab;}
+ 
 </style>
 <script>
+
+
+
+$(function() {
+      $('.reviewRating').barrating({
+        theme: 'fontawesome-stars',
+        readonly: true,
+      });
+      $('.reviewRating').barrating('set', 5);
+   });
+
+
 
 </script>
 </head>
@@ -34,20 +51,21 @@
 			<div class="row mt-2 ">
 				<div class="col">
 				<c:forEach  items="${orderList}" var="review">
-					<div class="card" style="">
-						<div class="row">
-							<div class="col">
-								<div class="card-body">
+						<c:if test="${!empty review.reviewVo.review_no }">
+					      <div class="card" style="">
+						     <div class="row">
+							    <div class="col">
+							 
+							        
+							    <div class="card-body">
 									<div class="row">
 										<div class="col-8">
-										    <c:forEach var="rating" items="${ ratingOptions }" varStatus="status" 
-										    begin="1" end="${ review.rating }">★</c:forEach> 
-										    <!-- 별점 출력 수정 -->
-<!-- 									<i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i>
-											<i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i>
-											<i class="bi bi-star"></i>
-										
-	-->									
+									      	<!-- 별점 출력 수정 -->
+							                   <select class="reviewRating">
+                                                   <c:forEach begin="1" end="${review.reviewVo.review_rating }">
+                                                      <option value="5">5</option>
+                                                   </c:forEach>
+                                                </select>
 										</div>
 										<div class="col">
 											<p class="card-text">
@@ -80,14 +98,30 @@
                                               </c:choose>
 										</div>
 										<div class="col">
-											<i class="bi bi-chevron-right"></i>
+											<a href="./officeReviewDetailPage?order_no=${review.reviewVo.order_no }"><i class="bi bi-chevron-right"></i></a>
 										</div>
 									</div>
 								</div>
+								
+								
 							</div>
 
 						</div>
 					</div>
+					
+					</c:if>
+							     <c:if test="${empty review.reviewVo.review_no }">
+							       <div class="row mt-5">
+							             <div class="col text-center"><h5>등록된 이용 후기가 없습니다.</h5></div>
+							       </div>
+							        <div class="row mt-5 mb-5">
+						               <div class="col text-center"><a href="javascript:history.back();"class="btn" style="background-color: #A68A64; color: #ffffff;">이전으로</a></div>			     				  
+						           </div>
+							
+							     </c:if>
+							  
+								
+					
 					</c:forEach>
 
 					 

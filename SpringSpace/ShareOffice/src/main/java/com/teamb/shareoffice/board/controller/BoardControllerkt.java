@@ -1,7 +1,11 @@
 package com.teamb.shareoffice.board.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -11,9 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.teamb.shareoffice.board.service.BoardServicekt;
 import com.teamb.shareoffice.vo.AdminVo;
+import com.teamb.shareoffice.vo.AllotCouponVo;
+import com.teamb.shareoffice.vo.CouponVo;
 import com.teamb.shareoffice.vo.FreeBoardCommentVo;
 import com.teamb.shareoffice.vo.FreeBoardVo;
 import com.teamb.shareoffice.vo.MemberVo;
@@ -249,4 +256,96 @@ public class BoardControllerkt {
 		
 		return "redirect:./QnAReadPage?qna_no=" + param.getQna_no();
 	}
+	// 생성된 쿠폰 
+	@RequestMapping("createdCouponListPage")
+	public String createdCouponListPage(Model model) {
+		
+		
+		model.addAttribute("CouponVo", boardServicekt.getCouponList(0)); 
+		
+		
+		return "board/createdCouponListPage";
+		
+	}
+	// 관리자 쿠폰 생성 페이지
+	@RequestMapping("createCouponPage")
+	public String createCouponPage() {
+	
+		return "board/createCouponPage";
+		
+	}
+	
+	
+	@RequestMapping("createCouponProcess") 
+	public String createCouponProcess(CouponVo param, MultipartFile image, HttpSession session) {
+		String uploadFolder = "C:/shareOffice/couponImage/"; 
+			System.out.println("이미지이름" + image.getOriginalFilename());
+			if(!image.isEmpty()) {
+			
+			//날짜별 폴더 생성...
+			Date today = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/"); 
+			String folderPath = sdf.format(today);
+			
+			File todayFolder = new File(uploadFolder + folderPath); 
+			
+			String imgName = "";
+			
+			
+			if(!todayFolder.exists()) {
+				
+				todayFolder.mkdirs();
+			}
+			
+			String oriImgName = image.getOriginalFilename();
+	
+			// random uuid + 현재시간 + 확장자
+			UUID uuid = UUID.randomUUID();
+			uuid = UUID.randomUUID();
+			imgName += (uuid.toString() + oriImgName.substring(oriImgName.lastIndexOf(".")));
+			
+			try {
+				image.transferTo(new File(uploadFolder + folderPath + imgName));
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			param.setCoupon_image(folderPath + imgName);
+		
+		}
+		AdminVo adminVo = (AdminVo)session.getAttribute("AdminUser");
+		if(adminVo != null) {
+			param.setAdmin_no(adminVo.getAdmin_no());
+		}
+		boardServicekt.insertCoupon(param);	
+		
+		return "redirect:./createdCouponListPage";
+	}
+	// 사용자 쿠폰 발급 하는 페이지
+	@RequestMapping("couponListPage")
+	public String couponListPage(Model model, HttpSession session) {
+		MemberVo sessionUser = (MemberVo)session.getAttribute("sessionUser");
+		if(sessionUser != null) {
+//			ArrayList<HashMap<String, Object>> reserveCoupon = boardServicekt.getCouponList(sessionUser.getMember_no());
+			//생성된 유저 쿠폰 정보 
+//			model.addAttribute("reserveCouponList", reserveCoupon);
+			//생성된 쿠폰 리스트
+			model.addAttribute("CouponVo", boardServicekt.getCouponList(sessionUser.getMember_no())); 
+		}
+		
+		
+		
+		return "board/couponListPage";
+		
+	}
+	
+	public String getCouponProcess(AllotCouponVo param) {
+		boardServicekt.insertAllotCoupon(param);
+		
+		
+		
+		return "redirect:./couponListPage";
+	}
 }
+
+

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <%
  String strReferer = request.getHeader("referer");
@@ -30,29 +29,55 @@
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
-<div class="row" style="padding-top: 5em;">
+<div class="row" style="padding-top: 5em; padding-bottom: 5em; padding-left: 5em; padding-right: 5em;">
 	<div class="col">
 		<h1>게스트 회원 관리</h1>
-		<table border="1">
-			<col width="50"><col width="200"><col width="100"><col width="50"><col width="150">
-			<col width="200"><col width="200"><col width="200"><col width="150">
-			<tr>
-				<th>N O</th>
-				<th>I D</th>
-				<th>닉 네 임</th>
-				<th>성 별</th>
-				<th>생 년 월 일</th>
-				<th>연 락 처</th>
-				<th>이 메 일</th>
-				<th>가 입 일 자</th>
-				<th>기 능</th>
-			</tr>
+		<table class="table">
+			<form action="./guestManagement" method="get">
+			<div class="row mb-3">
+				<div class="col">
+					<select name="searchOption" class="form-select">
+						<option value="number">번호</option>
+						<option value="nickname">닉네임</option>
+						<option value="id">아이디</option>
+					</select>
+				</div>
+				<div class="col-8">
+					<input name="searchStr" type="text" class="form-control">
+				</div>
+				<div class="col d-grid">
+					<input type="submit" value="검색" class="btn btn-primary">
+				</div>
+			</div>
+			</form>
+			<button type="button" style="margin-bottom: 2em;" class="btn btn-warning" onclick="location.href='adminPage'">메인 페이지</button>
+			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-primary" onclick="location.href='hostManagement'">호스트 관리</button>
+			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-success" onclick="location.href='officeManagement'">오피스 관리</button>
+			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-danger" onclick="location.href='../board/QnAPage'">Q&A 관리</button>
+			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-dark" onclick="location.href='../admin/logoutAdmin'">로그아웃</button>
+			<col width="50"><col width="200"><col width="100"><col width="50">
+			<col width="150"><col width="200"><col width="200"><col width="200">
+			<col width="150">
+			<thead>
+			    <tr>
+			      <th scope="col">NO</th>
+			      <th scope="col">ID</th>
+			      <th scope="col">닉네임</th>
+			      <th scope="col">성별</th>
+			      <th scope="col">생년월일</th>
+			      <th scope="col">연락처</th>
+			      <th scope="col">이메일</th>
+			      <th scope="col">가입일자</th>
+			      <th scope="col">기능</th>
+			    </tr>
+			 </thead>
+			 <tbody>
 				<c:forEach items="${guestList }" var="list">
 				<tr>
-					<td>${list.memberVo.member_no }</td>
-					<td>${list.memberVo.member_id }</td>
-					<td>${list.memberVo.member_nick }</td>
-					<td>${list.memberVo.member_gender }</td>
+					<th scope="row">${list.memberVo.member_no }</th>
+				    <td>${list.memberVo.member_id }</td>
+				    <td>${list.memberVo.member_nick }</td>
+				    <td>${list.memberVo.member_gender }</td>
 					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.memberVo.member_birth }"/></td>
 					<td>${list.memberVo.member_phone }</td>
 					<td>${list.memberVo.member_email }</td>
@@ -60,26 +85,9 @@
 					<td><button type="button" class="btn btn-secondary" onclick="if (confirm('회원탈퇴를 진행하시겠습니까?')) location.href='./deleteGuest?member_no=${list.memberVo.member_no }';">회원탈퇴</button></td>
 				</tr>
 				</c:forEach>
-				<button type="button" class="btn btn-secondary" onclick="location.href='adminPage'">메인 페이지</button></td>
+			  </tbody>
 		</table>
-		
-		<form action="./guestManagement" method="get">
-		<div class="row mb-3">
-			<div class="col">
-				<select name="searchOption" class="form-select">
-					<option value="number">번호</option>
-					<option value="nickname">닉네임</option>
-					<option value="id">아이디</option>
-				</select>
-			</div>
-			<div class="col-8">
-				<input name="searchStr" type="text" class="form-control">
-			</div>
-			<div class="col d-grid">
-				<input type="submit" value="검색" class="btn btn-primary">
-			</div>
-		</div>
-		</form>
+
 		<!-- 
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
@@ -103,4 +111,3 @@
 <jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
-</html>

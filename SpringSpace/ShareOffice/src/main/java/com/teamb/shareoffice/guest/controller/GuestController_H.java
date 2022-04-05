@@ -29,8 +29,6 @@ public class GuestController_H {
 	@Autowired
 	private GuestService_H guestService_H;
 	
-	private final String uploadFolder = "/shareOffice/licenseImg/";
-	//private final String uploadFolder = "C:\shareOffice\licenseImg";
 	
 	@RequestMapping("mainPage")
 	public String mainPage() {
@@ -40,18 +38,24 @@ public class GuestController_H {
 	@RequestMapping("officeListPage")
 	public String officeList(Model model) {
 		ArrayList<HashMap<String, Object>> officelist = guestService_H.getLatestOfficeList();
+		//int minOfficePrice = guestService_H.getOfficeMinPrice(office_no);
 		
 		model.addAttribute("officelist",officelist);
+		//model.addAttribute("minOfficePrice",minOfficePrice);
 		
 		return "guest/officeListPage";
 	}
 	@RequestMapping("officeDetailPage")
 	public String officeDetailPage(int office_no,Model model) {
 		HashMap<String, Object>map = guestService_H.getOfficeDetail(office_no);
-		 ArrayList<HashMap<String, Object>> orderList = guestService_H.reviewList(office_no);
-		
+		ArrayList<HashMap<String, Object>> orderList = guestService_H.reviewList(office_no);
+				
 		 int imageCount = guestService_H.getImageCount(office_no);
+		 int minOfficePrice = guestService_H.getOfficeMinPrice(office_no);
+		 
 		 model.addAttribute("imageCount",imageCount);
+		 
+		 model.addAttribute("minOfficePrice",minOfficePrice);
 		 
 	     model.addAttribute("orderList",orderList);
 		
@@ -67,6 +71,15 @@ public class GuestController_H {
         
 	    model.addAttribute("orderList",orderList);
 		return "guest/officeReviewPage";
+	}
+	@RequestMapping("officeReviewDetailPage")
+	public String officeReviewDetailPage(Model model,int order_no) {
+	
+		HashMap<String, Object>map = guestService_H.getReviewDetail(order_no);
+		
+		model.addAttribute("review",map);
+		
+		return "guest/officeReviewDetailPage";
 	}
 		
 	@RequestMapping("officeMapPage")
@@ -89,6 +102,8 @@ public class GuestController_H {
 		
 		// setMember_no
 		hvo.setMember_no(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
+		
+		String uploadFolder = "C:/shareOffice/licenseImg/";
 		
 		if(license_img != null) {
 			
@@ -159,4 +174,5 @@ public class GuestController_H {
 				
 		return "guest/applyCheckPage";
 	}
+	
 }

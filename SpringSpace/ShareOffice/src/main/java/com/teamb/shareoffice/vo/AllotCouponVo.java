@@ -2,7 +2,7 @@ package com.teamb.shareoffice.vo;
 
 import java.util.Date;
 
-public class AllotCoupon {
+public class AllotCouponVo {
 
 	private int allot_no;
 	private int member_no;
@@ -10,11 +10,11 @@ public class AllotCoupon {
 	private Date allot_date;
 	private String allot_useOrUnuse;
 	
-	public AllotCoupon() {
+	public AllotCouponVo() {
 		super();
 	}
 
-	public AllotCoupon(int allot_no, int member_no, int coupon_no, Date allot_date, String allot_useOrUnuse) {
+	public AllotCouponVo(int allot_no, int member_no, int coupon_no, Date allot_date, String allot_useOrUnuse) {
 		super();
 		this.allot_no = allot_no;
 		this.member_no = member_no;

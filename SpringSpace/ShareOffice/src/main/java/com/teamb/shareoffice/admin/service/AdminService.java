@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teamb.shareoffice.admin.mapper.AdminMapper;
+import com.teamb.shareoffice.guest.mapper.GuestMapper_H;
 import com.teamb.shareoffice.vo.AdminVo;
 import com.teamb.shareoffice.vo.HostVo;
+import com.teamb.shareoffice.vo.ImageDetailVo;
 import com.teamb.shareoffice.vo.MemberVo;
 import com.teamb.shareoffice.vo.OfficeInfoVo;
 
@@ -64,23 +66,6 @@ public class AdminService
 		return hostList;
 	}
 	
-	public ArrayList<HashMap<String, Object>> applyHostCheckList()
-	{
-		ArrayList<HashMap<String, Object>> getHostCheckList = new ArrayList<HashMap<String, Object>>();
-		
-		ArrayList<HostVo> hostVoCheckList = adminMapper.getCheckApplyHostList();
-	
-		for(HostVo hostVo : hostVoCheckList)
-		{
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("checkHost", hostVo);
-			
-			getHostCheckList.add(map);
-		}
-		
-		return getHostCheckList;
-	}
-	
 	public void hostApplyGuest(int member_no, int host_no)
 	{
 		adminMapper.hostApplyGuest(host_no);
@@ -90,7 +75,7 @@ public class AdminService
 	
 	public void hostRefuseGuest(String host_no, String refuseReason, String member_no)
 	{
-		System.out.println("멤버 번호 : " + member_no);
+		System.out.println("硫ㅻ� 踰��� : " + member_no);
 		adminMapper.hostRefuseGuest(host_no, refuseReason, member_no);
 		if(member_no != null) {
 			adminMapper.updateMemberType(member_no, "G");
@@ -115,23 +100,7 @@ public class AdminService
 		
 		return getOfficeList;
 	}
-	
-	public ArrayList<HashMap<String, Object>> officeDetailInformation()
-	{
-		ArrayList<HashMap<String, Object>> getOfficeDetail = new ArrayList<HashMap<String, Object>>();
-		
-		ArrayList<OfficeInfoVo> officeVoList = adminMapper.officeDetail();
-	
-		for(OfficeInfoVo officeInfoVo : officeVoList)
-		{
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("getOfficeVo", officeInfoVo);
-			
-			getOfficeDetail.add(map);
-		}
-		
-		return getOfficeDetail;
-	}
+
 	
 	public void officeApply(int office_no)
 	{

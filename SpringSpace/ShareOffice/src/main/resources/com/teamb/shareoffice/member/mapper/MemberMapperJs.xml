@@ -5,10 +5,17 @@
 <mapper namespace="com.teamb.shareoffice.member.mapper.MemberMapperJs">
 
 	<select id="getMessageList" resultType="com.teamb.shareoffice.vo.MessageVo">
+	
+		select sms.* 
+		from  SO_Message sms
+		where  sms.receive_no = #{no}
+		order by message_no desc	
+<!-- 	
 		select smb.member_nick,sms.* 
 		from  so_member smb, SO_Message sms
 		where smb.member_no = sms.sender_no and sms.receive_no = #{no}
 		order by message_no desc
+ -->		
 	</select>
 	
 	<select id="getSendMessageList" resultType="com.teamb.shareoffice.vo.MessageVo">
@@ -63,5 +70,17 @@
 		FROM so_message 
 		WHERE read_date IS null and receive_no = #{no}
 	</select>
+	
+	<delete id="deleteReceiveMessage">
+		DELETE FROM so_message 
+		WHERE receive_no = #{receive_no} 
+		and message_no = #{message_no}
+	</delete>
+	
+	<delete id="deleteSendMessage">
+		DELETE FROM so_message 
+		WHERE sender_no = #{sender_no} 
+		and message_no = #{message_no}
+	</delete>
 	
 </mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +42,7 @@
 	<script type="text/javascript">
 		function checkDay(e){
 			
+			
 			var priceBox = e.parentElement.parentElement.parentElement.querySelector('.price');
 			var startTimeBox = e.parentElement.parentElement.parentElement.querySelector('.start-time');
 			var endTimeBox = e.parentElement.parentElement.parentElement.querySelector('.end-time');
@@ -55,18 +57,91 @@
 				startTimeBox.removeAttribute("name");				
 				endTimeBox.removeAttribute("name");				
 			}
+			
+			enableDayBoxes();
 		}
 	
+		function enableDayBoxes(){
+			
+			var arrCheckBoxes = document.querySelectorAll("#day-root-box .form-check-input"); //
+			
+			for(checkBox of arrCheckBoxes){
+				
+				var rowParent = checkBox.closest(".row");
+				var inputBoxes = rowParent.querySelectorAll("input");
+				var selectBoxes = rowParent.querySelectorAll("select");
+				
+				
+				if(checkBox.checked == true){
+					inputBoxes[1].disabled = false;
+					selectBoxes[0].disabled = false;
+					selectBoxes[1].disabled = false;
+				}else{
+					inputBoxes[1].disabled = true;
+					selectBoxes[0].disabled = true;
+					selectBoxes[1].disabled = true;
+				}
+			}
+			
+		}
+		
+		
+		function submitForm(){
+			//var frm = document.getElementById("frm");
+			var frm = document.querySelector("#frm");
+			
+			var office_nameBox = document.getElementById("office_name");
+			
+			if(office_nameBox.value == ""){
+				alert("오피스 이름을 정해주셔야됩니다.");
+				office_nameBox.focus();
+				return;
+			}
+			
+			
+			frm.submit();
+		}
+		
+		function checkStartTime(startSelectBox){
+			
+			var startSelectedIndex = startSelectBox.selectedIndex;
+			
+			var parentRow = startSelectBox.closest(".row");
+			var endSelectBox = parentRow.querySelector(".end-time");
+
+			if(startSelectedIndex >= endSelectBox.selectedIndex){
+				endSelectBox.selectedIndex = startSelectedIndex + 1;
+			}
+
+			for(var i = 0 ; i < endSelectBox.options.length ; i++){
+				if(startSelectedIndex >= i){
+					endSelectBox.options[i].disabled = true;
+					
+				}	
+			}
+			
+			
+			
+		}
+		
+		
+		
+		
+		window.addEventListener("DOMContentLoaded" , function (){
+			enableDayBoxes();
+		});
+		
+		
 	</script>
     
 </head>
 <body class="bg-light">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 4rem;">
+<div class="row" style="padding-top: 2rem;">
 	<div class="col">
 		<%-- 내용작성 --%>
-	<form action="./registerOfficeProcess" method="post" enctype="multipart/form-data">
+	<form id="frm" action="./registerOfficeProcess" method="post" enctype="multipart/form-data">
     
 	<div class="container">
 	    <div class="py-4 text-center">
@@ -82,7 +157,7 @@
 	          <div class="row g-3">
 	            <div class="col-sm-6">
 	            	  오피스명
-	              <input type="text" class="form-control" name="office_name" placeholder="오피스명을 입력하세요." required >
+	              <input type="text" id="office_name" class="form-control" name="office_name" placeholder="오피스명을 입력하세요." required >
 	              <div class="invalid-feedback">
 	                	공간명을 입력하세요.
 	              </div>
@@ -188,7 +263,7 @@
 	              </div>
 	            </div>						 -->
 							
-			   <div class="col-sm-6">
+			   <div class="col-sm-6" id="day-root-box">
 			   	<div class="row">
 			   		<div class="col-2 px-0">
 			          <div class="form-check">
@@ -198,7 +273,7 @@
 								   			
 			   		</div>
 			   		<div class="col px-0">
-			   			<select class="form-control start-time">
+			   			<select class="form-control start-time" onchange="checkStartTime(this)">
 			   				<option value="0">00:00</option>
 			   				<option value="1">01:00</option>
 			   				<option value="2">02:00</option>
@@ -271,7 +346,7 @@
 								   			
 			   		</div>
 			   		<div class="col px-0">
-			   			<select class="form-control start-time">
+			   			<select class="form-control start-time" onchange="checkStartTime(this)">
 			   				<option value="0">00:00</option>
 			   				<option value="1">01:00</option>
 			   				<option value="2">02:00</option>
@@ -345,7 +420,7 @@
 								   			
 			   		</div>
 			   		<div class="col px-0">
-			   			<select class="form-control start-time">
+			   			<select class="form-control start-time" onchange="checkStartTime(this)">
 			   				<option value="0">00:00</option>
 			   				<option value="1">01:00</option>
 			   				<option value="2">02:00</option>
@@ -418,7 +493,7 @@
 								   			
 			   		</div>
 			   		<div class="col px-0">
-			   			<select class="form-control start-time">
+			   			<select class="form-control start-time" onchange="checkStartTime(this)">
 			   				<option value="0">00:00</option>
 			   				<option value="1">01:00</option>
 			   				<option value="2">02:00</option>
@@ -491,7 +566,7 @@
 								   			
 			   		</div>
 			   		<div class="col px-0">
-			   			<select class="form-control start-time">
+			   			<select class="form-control start-time" onchange="checkStartTime(this)">
 			   				<option value="0">00:00</option>
 			   				<option value="1">01:00</option>
 			   				<option value="2">02:00</option>
@@ -564,7 +639,7 @@
 								   			
 			   		</div>
 			   		<div class="col px-0">
-			   			<select class="form-control start-time">
+			   			<select class="form-control start-time" onchange="checkStartTime(this)">
 			   				<option value="0">00:00</option>
 			   				<option value="1">01:00</option>
 			   				<option value="2">02:00</option>
@@ -637,7 +712,7 @@
 								   			
 			   		</div>
 			   		<div class="col px-0">
-			   			<select class="form-control start-time">
+			   			<select class="form-control start-time" onchange="checkStartTime(this)">
 			   				<option value="0">00:00</option>
 			   				<option value="1">01:00</option>
 			   				<option value="2">02:00</option>
@@ -709,8 +784,8 @@
 		
 	          
 	          <c:forEach items="${facilityCategoryList }" var="abc">
-	          <div class="form-check">
-	            <input type="checkbox" class="form-check-input" name="facility_no" value="${abc.facility_no }">${abc.facility_name }
+	          <div class="form-check" style="font-size:1.25rem">
+	            <input type="checkbox" class="form-check-input"  name="facility_no" value="${abc.facility_no }">${abc.facility_name } 
 	          </div>
 			  </c:forEach>			 			 
 
@@ -722,7 +797,7 @@
 	  </div>
 	
 	          <!-- <button class="w-100 btn btn-primary btn-lg" type="submit">등록하기</button> -->
-	          <button class="w-100 btn btn-primary btn-lg" type="submit">등록하기</button>
+	          <input type="button" class="w-100 btn btn-primary btn-lg" value="등록하기" onclick="submitForm()">
 	        </form>
 	      </div>
 	    </div>

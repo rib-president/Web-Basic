@@ -166,12 +166,18 @@ public class HostController {
 	}
 	
 	@RequestMapping("officeListPage")
-	public String officeListPage(HttpSession session, Model model) {
-		
-		System.out.println("오피스 리스트 페이지가 실행되었습니다.");
+	public String officeListPage(HttpSession session, Model model, String office_approve) {
+
+		System.out.println("오피스 리스트 페이지가 실행되었습니다. " + office_approve);
 		 
-		ArrayList<OfficeInfoVo> officeList = hostService.getMyOfficeList(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
+		ArrayList<OfficeInfoVo> officeList = hostService.getMyOfficeList(((MemberVo) session.getAttribute("sessionUser")).getMember_no(), office_approve);
 		model.addAttribute("officeList", officeList);
+		if(office_approve != null) {
+			model.addAttribute("office_approve", office_approve);
+		} else {
+			model.addAttribute("office_approve", "all");
+		}
+
 		
 		return "host/officeListPage";
 	}

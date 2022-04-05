@@ -188,6 +188,57 @@
 		FROM SO_QnA
 		WHERE qna_no = #{qna_no} 
 	</select>
+	<!-- 쿠폰 생성 -->
+	<insert id="insertCoupon">
+		INSERT INTO SO_Coupon
+		(coupon_name, admin_no, coupon_discount, coupon_count, coupon_image, coupon_useDate, coupon_date)
+		VALUES(
+		#{coupon_name},
+		#{admin_no},
+		#{coupon_discount},
+		#{coupon_count},
+		#{coupon_image},
+		#{coupon_useDate},
+		NOW()
+		)
+	</insert>
+	<select id="getCouponList" resultType="com.teamb.shareoffice.vo.CouponVo">
+		SELECT * 
+		FROM SO_Coupon
+		ORDER BY coupon_no DESC
+	</select>
+
+	<!-- 소비된 쿠폰 -->
+	<select id="consumptionCoupon" resultType="int">
+		SELECT COUNT(coupon_no) FROM SO_AllotCoupon
+		WHERE coupon_no = #{coupon_no};
+		
+		
+	</select>
+	
+	<insert id="insertAllotCoupon">
+		INSERT INTO SO_AllotCoupon
+		(member_no, admin_no, coupon_no, allot_date)
+		VALUES(
+		#{member_no},
+		#{admin_no},
+		#{coupon_no},
+		NOW(),
+		)
+	</insert>
+	
+	<select id="memberReserveCoupon" resultType="com.teamb.shareoffice.vo.AllotCouponVo">
+		SELECT * 
+		FROM SO_AllotCoupon 
+		WHERE member_no = #{member_no}
+	</select>
+	
+	<select id="memberReserveCoupon2" resultType="int">
+		SELECT COUNT(*) 
+		FROM so_allotcoupon sa
+		WHERE sa.member_no = #{member_no}
+		AND sa.coupon_no = #{coupon_no}		
+	</select>
 	
 	
 </mapper>

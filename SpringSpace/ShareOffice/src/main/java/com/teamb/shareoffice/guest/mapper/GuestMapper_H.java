@@ -7,6 +7,7 @@ import com.teamb.shareoffice.vo.BusinessDayVo;
 import com.teamb.shareoffice.vo.FacilityCategoryVo;
 import com.teamb.shareoffice.vo.HostVo;
 import com.teamb.shareoffice.vo.ImageDetailVo;
+import com.teamb.shareoffice.vo.MemberVo;
 import com.teamb.shareoffice.vo.OfficeInfoVo;
 import com.teamb.shareoffice.vo.OrderVo;
 import com.teamb.shareoffice.vo.ReviewVo;
@@ -16,8 +17,11 @@ public interface GuestMapper_H {
 	public ArrayList<OfficeInfoVo> getLatestOfficeList ();
 	//지도에 오피스 위치 전체 출력
 	public ArrayList<OfficeInfoVo> getLocationList(String searchKeyword);
+	
 	//오피스 상세보기 페이지
 	public OfficeInfoVo getOfficeByNo(int office_no);	
+	//오피스 최소금액 출력
+	public int getOfficeMinPrice(int office_no);
 	//운영시간 및 가격 가져오기
 	public ArrayList<BusinessDayVo> getBusinessDayPriceByNo(int office_no);
 	//이미지 가져오기
@@ -29,8 +33,11 @@ public interface GuestMapper_H {
 	public ArrayList<FacilityCategoryVo> getFacilityByNo(int office_no);
 	
 	//리뷰목록
-	public ReviewVo getReviewByOrderNo(int order_no);
 	public ArrayList<OrderVo> getOrderByNo(int office_no);
+	//리뷰 상세보기
+	public ReviewVo getReviewByOrderNo(int order_no);
+	public MemberVo getMemberNickByOrderNo(int order_no);
+	
 	
 	//호스트 신청하기
 	public void insertApplyHostInfo(HostVo hvo);

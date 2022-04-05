@@ -15,6 +15,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 
+<!-- star-rating -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="../resources/css/fontawesome-stars.css">
+<script type="text/javascript" src="../resources/js/jquery.barrating.min.js"></script>
+
 <style type="text/css">
  a {text-decoration: none; color:#A68A64;}
  a:link {
@@ -28,55 +33,19 @@ a:hover {
 }
 i {text-decoration: none; color:#A68A64;}
 
- 
 </style>
-
-
-<%--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a89f71e1f43b65b9072477b5fb3f976&libraries=services"></script>--%>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dcba11bad3364b22a9a962b80ee0acfb&libraries=services"></script>
 <script>
+var priceArray =[];
+var min = Math.min.apply(null,priceArray);
 
-window.addEventListener("DOMContentLoaded", function() {
+$(function() {
+    $('.reviewRating').barrating({
+      theme: 'fontawesome-stars',
+      readonly: true,
+    });
+    $('.reviewRating').barrating('set', 5);
+ });
 
-	var mapContainer = document.getElementById("map"), // 지도를 표시할 div 
-	mapOption = {
-	    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	    level: 3 // 지도의 확대 레벨
-	};  
-	
-	//지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
-	
-	//주소-좌표 변환 객체를 생성합니다
-	var geocoder = new kakao.maps.services.Geocoder();
-	
-	//주소로 좌표를 검색합니다
-	geocoder.addressSearch('${office.officeVo.office_address }', function(result, status) {
-	
-	// 정상적으로 검색이 완료됐으면 
-	 if (status === kakao.maps.services.Status.OK) {
-		
-	    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	
-	    // 결과값으로 받은 위치를 마커로 표시합니다
-	    var marker = new kakao.maps.Marker({
-	        map: map,
-	        position: coords
-	    });
-	
-	    // 인포윈도우로 장소에 대한 설명을 표시합니다
-	    var infowindow = new kakao.maps.InfoWindow({
-	        content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ '${office.officeVo.office_name}' + '</div>'
-	    });
-	    infowindow.open(map, marker);
-	
-	    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	    map.setCenter(coords);
-	} 
-	});
-	
-});	
-   
 
 
 </script>
@@ -84,7 +53,7 @@ window.addEventListener("DOMContentLoaded", function() {
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-	<div class="row" style="padding-top: 5em;">
+	<div class="row" style="padding-top: 2em;">
 		<div class="col">
 		
 			<!-- 이미지 -->
@@ -95,13 +64,25 @@ window.addEventListener("DOMContentLoaded", function() {
 							varStatus="image">
 							<c:choose>
 								<c:when test="${image.index == 0 }">
-									<div class="carousel-item active" data-bs-interval="10000">
-										<img src="/soUpload/officeImage/${imageVo.image_url }" width=100%, height=300em class="d-block w-100" alt="">
+									<div class="carousel-item active" data-bs-interval="10000">									  
+									   <div class="row">
+									      <img src="/soUpload/officeImage/${imageVo.image_url }" width=100%, height=300em class="d-block w-100" alt="">
+									 	</div> 	
+									 	<div class="row">
+									 	  <div class="col text-center"> <span class="badge rounded-pill text-center" style="background-color:#A68A64;">${image.count} / ${imageCount}</span> 
+									 	  </div>
+									 	</div>							    
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div class="carousel-item">
-										<img src="/soUpload/officeImage/${imageVo.image_url}" width=100%, height=300em class="d-block w-100" alt="...">
+									     <div class="row">
+									          <img src="/soUpload/officeImage/${imageVo.image_url }" width=100%, height=300em class="d-block w-100" alt="">
+									 	</div> 	
+									 	<div class="row">
+									 	       <div class="col text-center"> <span class="badge rounded-pill text-center" style="background-color:#A68A64;">${image.count} / ${imageCount}</span> 
+									 	  </div>
+									 	</div>				
 									</div>
 								</c:otherwise>
 							</c:choose>
@@ -119,7 +100,7 @@ window.addEventListener("DOMContentLoaded", function() {
 						<span class="carousel-control-next-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Next</span>
 					</button>
-					<span class="badge rounded-pill" style="background-color:#A68A64">${imageCount}</span>
+					
 				</div>
 			</div>
 			
@@ -137,11 +118,15 @@ window.addEventListener("DOMContentLoaded", function() {
 						<p class="fs-7 text-muted">#${office.officeVo.office_tags }</p>
 					</div>
 					<div class="row">
-					    <div class="col-7">공간 이용료</div>
-                        <div class="col text-right"><p class="fw-bold">${office.businessDayList[0].business_day_price }~</p></div>	
-                        <div class="col text-right">원/일</div>				
+					    <div class="col-6">공간 이용료</div>
+                        <div class="col text-right">                      
+                           <h5 class="card-text fw-bold" style="text-align: right;"> <fmt:formatNumber value="${minOfficePrice}" pattern="#,###"/> ~</h5> 
+                       </div>	
+                       <div class="col-2">  
+                           <small class="text-muted"> 원/일</small>
+                       </div>		
 					</div>
-					<div class="row ">
+					<div class="row mt-3 ">
 						<div class="col d-grid">
 							<a href="./orderPage?office_no=${office.officeVo.office_no }" class="btn" style="background-color: #A68A64; color: #ffffff;">예약 하러 가기</a>
 						</div>
@@ -162,10 +147,81 @@ window.addEventListener("DOMContentLoaded", function() {
 					</div>
 					<div class="row mt-3">
 					    <div class="col">
-						     <p class="fs-6 fw-bold">편의시설</p>						
-						<c:forEach items="${office.facilityCategoryList }" var="facilityVo">
-							    <p>${facilityVo.facility_name }</p><br>
-						</c:forEach>						     
+					      <div class="row">
+						     <p class="fs-6 fw-bold">편의시설</p>		
+						  </div>
+						 
+						  			
+						   <c:forEach items="${office.facilityCategoryList }" var="facilityVo">							  
+							    <div class="row">   
+							      <c:if test="${facilityVo.facility_no eq '1'  }">	
+							         <div class="col-1"><i class="bi bi-plus-circle"></i></div>	
+							         <div class="col-1"><img src="../resources/img/wifi (1).png" width=25em, height=25em></div>
+							   	     <div class="col"> <p>${facilityVo.facility_name }</p></div>							         			   	
+							       </c:if>	
+							     </div> 
+							     <div class="row">										             
+							        <c:if test="${facilityVo.facility_no eq '2'  }">	
+							           <div class="col-1"><i class="bi bi-plus-circle"></i></div>	
+							           <div class="col-1"> <img src="../resources/img/desktop.png" width=25em, height=25em></div>  		   								   	
+							   	       <div class="col"> <p>${facilityVo.facility_name }</p></div>								   	       
+							        </c:if>
+							      </div>   
+							      <div class="row">
+							         <c:if test="${facilityVo.facility_no eq '3'  }">
+							           <div class="col-1"><i class="bi bi-plus-circle"></i></div>		
+							           <div class="col-1"> <img src="../resources/img/fax.png" width=25em, height=25em></div>		   								   	
+                                       <div class="col"> <p>${facilityVo.facility_name }</p></div>				   	       
+							        </c:if>
+							       </div>
+							       <div class="row">
+							         <c:if test="${facilityVo.facility_no eq '4'  }">	
+							           <div class="col-1"><i class="bi bi-plus-circle"></i></div>								          
+							           <div class="col-1"> <img src="../resources/img/printer.png" width=25em, height=25em></div>		   								   	
+                                       <div class="col"> <p>${facilityVo.facility_name }</p></div>				   	       
+							        </c:if>
+							       </div>
+							       <div class="row">
+							         <c:if test="${facilityVo.facility_no eq '5'  }">	
+							           <div class="col-1"><i class="bi bi-plus-circle"></i></div>								         
+							           <div class="col-1"> <img src="../resources/img/whiteBoard.png" width=25em, height=25em></div>		   								   	
+                                       <div class="col"> <p>${facilityVo.facility_name }</p></div>				   	       
+							        </c:if>
+							       </div>
+							       <div class="row">
+							         <c:if test="${facilityVo.facility_no eq '6'  }">	
+							           <div class="col-2"> <img src="../resources/img/projector (1).png" width=25em, height=25em></div>		   								   	
+                                       <div class="col"> <p>${facilityVo.facility_name }</p></div>				   	       
+							        </c:if>
+							       </div>
+							       <div class="row">
+							         <c:if test="${facilityVo.facility_no eq '7'  }">	
+							           <div class="col-2"> <img src="../resources/img/air-purifier.png" width=25em, height=25em></div>		   								   	
+                                       <div class="col"> <p>${facilityVo.facility_name }</p></div>				   	       
+							        </c:if>
+							       </div>
+							       <div class="row">
+							         <c:if test="${facilityVo.facility_no eq '8'  }">	
+							           <div class="col-2"> <img src="../resources/img/lockers.png" width=25em, height=25em></div>		   								   	
+                                       <div class="col"> <p>${facilityVo.facility_name }</p></div>				   	       
+							        </c:if>
+							       </div>
+							       <div class="row">
+							         <c:if test="${facilityVo.facility_no eq '9'  }">	
+							           <div class="col-2"> <img src="../resources/img/kitchen.png" width=25em, height=25em></div>		   								   	
+                                       <div class="col"> <p>${facilityVo.facility_name }</p></div>				   	       
+							        </c:if>
+							       </div>
+							       <div class="row">
+							         <c:if test="${facilityVo.facility_no eq '10'  }">	
+							           <div class="col-2"> <img src="../resources/img/parking.png" width=25em, height=25em></div>		   								   	
+                                       <div class="col"> <p>${facilityVo.facility_name }</p></div>				   	       
+							        </c:if>
+							       </div>
+							 
+				
+						   </c:forEach>	
+						 				     
 						</div>
 					</div>
 					
@@ -198,7 +254,7 @@ window.addEventListener("DOMContentLoaded", function() {
 					    <div class="col"> 
 						      <p class="fs-6 fw-bold">추가 정보</p>
 						</div>
-						<p><i class="bi bi-people"></i> 최소 가능 인원: ${office.officeVo.office_personnel } 명</p>
+						<p><i class="bi bi-people"></i> 최대 가능 인원: ${office.officeVo.office_personnel } 명</p>
 						<p><i class="bi bi-calendar-check"></i> 최소 예약 일수: ${office.officeVo.office_min_booking_day } 일</p>
 						<p><i class="bi bi-telephone"></i> 오피스 전화번호: ${office.officeVo.office_changedPhone }</p>			
 					</div>
@@ -210,8 +266,8 @@ window.addEventListener("DOMContentLoaded", function() {
 							<div class="row"><p><i class="bi bi-geo-alt"></i>${office.officeVo.office_address }, ${office.officeVo.office_address_detail }</p></div>
 					   </div>					   					 
 					</div>
-					<%-- <div id="map" style="width:100%;height:21em;"></div>--%>
-					<div id="map" style="width:100%;height:350px;"></div>
+					<div id="map" style="width:100%;height:21em;"></div>
+					
 					<div class="row mt-3">
 					   <ul class="nav nav-tabs"></ul>
 					</div>
@@ -224,15 +280,18 @@ window.addEventListener("DOMContentLoaded", function() {
 							<div class="row mt-3">
 								<div class="col">
 									<c:forEach items="${orderList}" var="review" end="2">
+									  <c:if test="${!empty review.reviewVo.review_no }">
 										<div class="card" style="">
 											<div class="row">
 												<div class="col">
 													<div class="card-body">
 														<div class="row">
 															<div class="col-8">
-																<i class="bi bi-star-fill"></i> <i
-																	class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i>
-																<i class="bi bi-star-fill"></i> <i class="bi bi-star"></i>
+																<select class="reviewRating">
+                                                                 <c:forEach begin="1" end="${review.reviewVo.review_rating }">
+                                                                        <option value="5">5</option>
+                                                                 </c:forEach>
+                                                                 </select>
 															</div>
 															<div class="col">
 																<p class="card-text">
@@ -244,7 +303,7 @@ window.addEventListener("DOMContentLoaded", function() {
 														<div class="row">
 															<div class="col">
 																<img src="/soUpload/reviewImage/${review.reviewVo.review_image }"
-																	class="img-fluid rounded-start">																	
+																	class="img-fluid rounded-start">
 															</div>
 															<div class="col-8 text-left">
 																<c:choose>
@@ -271,7 +330,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
 															</div>
 															<div class="col">
-																<i class="bi bi-chevron-right"></i>
+																<a href="./officeReviewDetailPage?order_no=${review.reviewVo.order_no }"><i class="bi bi-chevron-right"></i></a>
 															</div>
 														</div>
 													</div>
@@ -279,6 +338,13 @@ window.addEventListener("DOMContentLoaded", function() {
 
 											</div>
 										</div>
+										</c:if>
+										 <c:if test="${empty review.reviewVo.review_no }">
+							                 <div class="row mt-2">
+							                     <div class="col text-center"><p class="fs-7 text-muted">등록된 이용 후기가 없습니다.</p></div>
+							                 </div>
+							             </c:if>
+							
 									</c:forEach>
 								</div>
 							</div>
@@ -301,7 +367,60 @@ window.addEventListener("DOMContentLoaded", function() {
 		</div>
 	</div>
 	
+<%--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a89f71e1f43b65b9072477b5fb3f976&libraries=services"></script> --%>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a89f71e1f43b65b9072477b5fb3f976&libraries=services"></script>
+<script>
+var mapContainer = document.getElementById("map"), // 지도를 표시할 div 
+mapOption = {
+    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+};  
 
+//지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch('${office.officeVo.office_address}', function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+ 
+        
+        //마커가 지도 위에 표시되도록 설정합니다.
+       marker.setMap(map);
+       
+        // 링크 바꿈 
+        var iwContent = '<div style="padding:0.5em;">${office.officeVo.office_name}<br><a href="https://map.kakao.com/link/map/${office.officeVo.office_name}!,' + result[0].y + "," + result[0].x + '" style="color:#A68A64" target="_blank">큰지도보기 |</a> <a href="https://map.kakao.com/link/to/${office.officeVo.office_name}!,' + result[0].y + "," + result[0].x + '" style="color:#A68A64" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            iwPosition = new kakao.maps.LatLng(geocoder); //인포윈도우 표시 위치입니다
+        
+         // 인포윈도우로 장소에 대한 설명을 표시합니다
+         var infowindow = new kakao.maps.InfoWindow({
+             position : iwPosition, 
+             content : iwContent 
+            });
+        
+        
+        
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+});    
+
+
+</script>
 <jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

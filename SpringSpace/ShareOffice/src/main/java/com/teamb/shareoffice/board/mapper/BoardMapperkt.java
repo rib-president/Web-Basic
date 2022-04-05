@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.teamb.shareoffice.vo.AllotCouponVo;
+import com.teamb.shareoffice.vo.CouponVo;
 import com.teamb.shareoffice.vo.FreeBoardCommentVo;
 import com.teamb.shareoffice.vo.FreeBoardVo;
 import com.teamb.shareoffice.vo.QnAAnswerVo;
@@ -61,5 +63,21 @@ public interface BoardMapperkt {
 	public int getTotalCountLike(int qna_no);
 	//특정 멤버가 좋아요를 햇는가?
 	public int getMyCountLike(QnALikeVo vo);
+	//쿠폰 생성 
+	public void insertCoupon(CouponVo vo);
+	//쿠폰리스트
+	public ArrayList<CouponVo> getCouponList();
+	//발급된 쿠폰수
+	public int consumptionCoupon(int coupon_no);
+	//쿠폰 발급
+	public void insertAllotCoupon(AllotCouponVo vo);
+	//보유한 쿠폰정보
+	public ArrayList<AllotCouponVo> memberReserveCoupon(int member_no);
+	
+	
+	
+	public int memberReserveCoupon2(AllotCouponVo vo);
+	
+	
 	
 }

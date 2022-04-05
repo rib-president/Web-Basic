@@ -28,25 +28,29 @@
 			order_personnel, 
 			order_refuse_check, 
 			order_refuse_comment, 
-			order_date)
+			order_date,
+			order_tid)
 		values(
 			#{office_no}, 
 			#{member_no}, 
 			#{order_personnel}, 
 			'N', 
 			'', 
-			NOW() )
+			NOW(),
+			#{order_tid} )
 	</insert>
 	
 	<insert id="officeRental">
 		insert into so_rental(
 			order_no, 
 			rental_date, 
-			rental_price)
+			rental_price,
+			rental_status)
 		values(
 			#{order_no}, 
 			#{rental_date}, 
-			#{rental_price} )
+			#{rental_price},
+			'P' )
 	</insert>
 	
 	<!-- 캘린더관련 -->

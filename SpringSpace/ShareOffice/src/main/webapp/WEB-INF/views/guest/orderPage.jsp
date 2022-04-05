@@ -21,11 +21,31 @@
 <link rel="stylesheet" href="../resources/css/style.css">
 <link rel="stylesheet" href="../resources/css/calendarStyle.css">
 
+<style>
+#load { 
+        width: 100%; 
+        height: 100%; 
+        top: 0; left: 0; 
+        position: fixed; 
+        display:none;
+        opacity: 0.6; 
+        background: white; 
+        z-index: 99999; 
+        text-align: center;
+    }
+
+#load.show { display:block }
+    
+#load > img { position: absolute; top: 35%; left: 45%; z-index: 100; }	
+</style>
+
 <script>
 	
 	var officeNo = "${officeInfo.officeInfoVo.office_no }";
 	var reservationCompleteDate = new Array();
 	var businessDay = new Array();
+	var businessDayMap = {};
+	var tid = null;
 	
 	function getOfficeReservedDateAndBusinessDay(){
 		var xhr = new XMLHttpRequest();
@@ -37,6 +57,8 @@
 				//오피스 운영일 및 예약완료된 날짜 배열에 넣기
 				for(e of data.officeBusinessDayInfo){
 					businessDay.push(e.businessDayVo.business_day);
+					//businessDayPrice.push(e.businessDayVo.business_day_price);
+					businessDayMap[e.businessDayVo.business_day] = e.businessDayVo.business_day_price;
 				}
 				
 				for(e of data.officeRentalList){
@@ -75,12 +97,68 @@
 		var chooseDate = document.getElementById("choose-date");
 		chooseDate.value = chooseDate.value.substring(1, chooseDate.length);
 		
+		
+		// 최소예약일 체크
+		var totalResvDay = chooseDate.value.split(",").length;
+		if(totalResvDay < parseInt('${officeInfo.officeInfoVo.office_min_booking_day}')) {
+			alert("예약일이 최소 예약일보다 작습니다");
+			return;
+		};
+
 		//submit 실행
-		var frm = document.getElementById("frm");
-		frm.submit();
+		//var frm = document.getElementById("frm");
+		//frm.submit();
+		
+		kakaoPay(totalResvDay)
 		
 	}
 	
+	function kakaoPay(totalResvDay) {
+		var xhr = new XMLHttpRequest();	
+		
+		var quantity = 1;			
+		
+		var item_name = '${officeInfo.officeInfoVo.office_name}' + "(" + totalResvDay + "일)";			
+		
+		var total_amount = document.querySelector("#totalPrice").innerText.split(",").join("");
+		
+		var newWindow;
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+				var data = JSON.parse(xhr.responseText);				
+				
+				document.querySelector("#orderTid").value = data.tid;
+				
+				newWindow = window.open(data.next_redirect_pc_url, "_blank");
+				//newWindow = window.open(data.next_redirect_mobile_url, "_blank");
+												
+				document.querySelector("#load").classList.add("show");
+			}
+		};
+		
+		xhr.open("post", "../guest/payToKakao", false);
+		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xhr.send("item_name=" + item_name + "&quantity=" + quantity + "&total_amount=" + total_amount);
+	}
+	
+	function sendMeData(data) {
+		document.querySelector("#load").classList.remove("show");
+		var frm = document.querySelector("form");
+		
+		if(data == 200) {
+			frm.submit();
+		} else {
+			alert(data);
+			return;
+		}
+	}		
+	
+	function preventMax(input, max) {
+		if(input.value > max) {
+			input.value = max;
+		}
+	}
 	
 	//calendar script
 	
@@ -173,7 +251,7 @@
 	        //확인하다...!! 이미 예약이 되어 있는 지... 오픈하지 않은 날...
 	        var tempAttr = colDate.getAttribute("class");
 	
-	        var status = confirmPossibleStatus(tempDate);
+	        var status = confirmPossibleStatus(tempDate);	        
 	        
 	        if(status == 2){
 	            tempAttr = tempAttr + " impossible-reg";
@@ -241,7 +319,7 @@
 	    var today = new Date();
 		today = new Date(today.getFullYear() , today.getMonth(), today.getDate());
 		
-		if(date < today) {
+		if(date <= today) {
 			return 2;
 		} 
 		
@@ -366,6 +444,14 @@
 	    e.setAttribute("class",attr);
 	    e.setAttribute("onclick" , "cancelReservationDate(this,'"+date+"')");
 	
+	    var totalPrice = document.querySelector("#totalPrice");  	    	    	    
+	    
+	    var dayList = ['일', '월', '화', '수', '목', '금', '토'];	    
+	    var day = dayList[new Date(date).getDay()];
+	    
+	    var total = (parseInt(totalPrice.innerText.split(",").join("")) + parseInt(businessDayMap[day]));
+	    totalPrice.innerText = total.toLocaleString();
+	    
 	}
 	
 	function cancelReservationDate(e,date){
@@ -378,6 +464,14 @@
 	    attr = attr.replaceAll(" choose-reg","");
 	    e.setAttribute("class",attr);
 	    e.setAttribute("onclick" , "chooseReservationDate(this,'"+date+"')");
+	    
+	    var totalPrice = document.querySelector("#totalPrice");
+	    
+	    var dayList = ['일', '월', '화', '수', '목', '금', '토'];	    
+	    var day = dayList[new Date(date).getDay()];
+	    
+	    var total = (parseInt(totalPrice.innerText.split(",").join("")) - parseInt(businessDayMap[day]));
+	    totalPrice.innerText = total.toLocaleString();
 	}
 	
 	
@@ -387,119 +481,32 @@
 	    
 	});
 	
+	document.addEventListener('keydown', function(event) {
+	  if (event.keyCode === 13) {
+	    event.preventDefault();
+	  };
+	}, true);	
+	
 </script>
 
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-	<div class="row" style="padding-top: 70px;">
+	<div class="row" style="padding-top: 1rem;">
 	
 		<div class="col"></div> <!-- 왼쪽 여백 -->
 		
 		<div class="col-10">
-		<form id="frm" action="./paymentPage" method="post">
-			<div class="row mt-5">
+		<form id="frm" action="orderProcess" method="post">
+			<div class="row mt-3">
 				<div class="col fs-2 center">예약하기</div>
-			</div>
-			
-			<div class="row mt-5">
-				<div class="col fs-5">예약 공간</div>
-			</div>
-			
-			<div class="row"><div class="col"><hr></div></div> <!-- 구분선 -->
-		
-			<div class="row"> <!-- 예약오피스 썸네일 -->
-			
-				<div class="col"> 
-					<%-- <img src="../resources/img/testImage.jpg" width="100%" height="170em"> --%>
-			   		<img src="/soUpload/officeImage/${officeInfo.officeInfoVo.office_thumbnail }" width="100%" height="100%">
-				</div>
-			
-			</div>
-			
-			<div class="row mt-4"> <!-- 예약 오피스 정보 -->
-				<div class="col">
-				
-					<div class="row">
-						<div class="col fs-5">
-							<p>${officeInfo.officeInfoVo.office_name }</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<p class="grayColor">${officeInfo.officeInfoVo.office_simpleContent }</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<p class="grayColor">${officeInfo.officeInfoVo.office_detailContent }</p>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-			
-			<div class="row mt-5">
-				<div class="col">
-				
-					<div class="row mt-5">
-						<div class="col">오피스 운영 요일, 시간 및 가격</div>
-					</div>
-					
-					<c:forEach items="${officeBusinessDayInfo }" var="obdi">
-					<div class="row">
-						<div class="col fw-light">
-							<span>${obdi.businessDayVo.business_day }
-							&#40;${obdi.businessDayVo.business_time_start}:00 ~ ${obdi.businessDayVo.business_time_finish}:00&#41; / 
-							<fmt:formatNumber value="${obdi.businessDayVo.business_day_price }"/>원</span>
-						</div>
-					</div>
-					</c:forEach>
-					
-				</div>
-			</div>
-			
-			<div class="row mt-2">
-				<div class="col">
-					최소 예약일수 : <span class="fw-light">${officeInfo.officeInfoVo.office_min_booking_day }일</span>
-				</div>
-			</div>
-			
-			<div class="row mt-2">
-				<div class="col">
-					최대 예약가능 인원 : <span class="fw-light">${officeInfo.officeInfoVo.office_personnel }명</span>
-				</div>
-			</div>
-			
-			
-			<div class="row mt-5">
-				<div class="col fs-5">예약 날짜 및 인원</div>
-			</div>
-			
-			<div class="row"><div class="col"><hr></div></div> <!-- 구분선 -->
-			
-			<div class="row mt-4">
-				<div class="col">인원 선택</div>
-			</div>
-			
-			<div class="row mt-2"> <!-- 인원체크 -->
-			
-				<div class="col">
-					 <input id="personnelInput" type="number" name="order_personnel" class="form-control" min="1" max="30" value="1"/>
-				</div>
-				<div class="col-9"></div>
-			</div>
+			</div>					
 			
 			<div class="row mt-3">
 				<div class="col">
 					<div class="row">
-						<div class="col">
-							<p style="margin-bottom : 10px;">날짜 선택</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
+						<div class="col text-fs-13">
 							<i class="bi bi-square-fill impossible-reg-icon"></i>
 							<span class="grayColor" style="margin-bottom : 0;">예약 불가능</span>
 						</div>
@@ -533,21 +540,46 @@
 			
 			</div>
 			
+			<div class="row mt-4 text-fs-13 mb-2"> <!-- 인원체크 -->
+				<div class="col pt-1">예약 인원(최대 ${officeInfo.officeInfoVo.office_personnel}명)</div>
+				<div class="col-3">
+					 <input id="personnelInput" type="number" name="order_personnel" class="form-control form-control-sm" onblur="preventMax(this, ${officeInfo.officeInfoVo.office_personnel })" min="1" max="${officeInfo.officeInfoVo.office_personnel }" value="1" />
+				</div>
+			</div>
+			<hr>
+			<div class="row mt-2 text-fs-17">
+				<div class="col bold">Total<span class="text-fs-11">&nbsp;(최소 ${officeInfo.officeInfoVo.office_min_booking_day }일)</span></div>
+				<div class="col">
+					<span class="float-right bold">원</span><span id="totalPrice" class="float-right bold">0</span><span class="float-right bold">￦&nbsp;</span>
+				</div>			
+			</div>
+			
+						
+			
 			<div class="row" style="padding:1em;"></div>
 			
 			
-			<div class="row mt-3">
+			<div class="row mt-2 leading-tight">
+				<div class="col text-fs-13">결제수단</div>
+				<div class="col">
+					<img class="ms-1 float-right" src="../resources/img/kakaopay.png" style="height:60%"><input type="radio" class="float-right form-check-input" checked>					
+				</div>
+			</div>
+			
+			
+			<div class="row leading-tight">
 				<div class="col">
 					<div class="d-grid">
-						<button class="btn buttonColor" onclick="orderValidCheck(event)">결제하기</button>
+						<button type="button" class="btn buttonColor" onclick="orderValidCheck(event)">결제하기</button>
 						<input type="hidden" name="office_no" value="${officeInfo.officeInfoVo.office_no }">
+						<input id="orderTid" type="hidden" name="order_tid">
 					</div>
 				</div>
 			</div>
 			
 			</form>
 			
-			<div class="row" style="padding:1em;"></div>
+			<div class="row" style="padding:1.5em;"></div>
 		
 		</div>
 		
@@ -555,6 +587,7 @@
 			
 	</div>
 
+<div id="load"><img src="../resources/img/loading.gif" alt="loading"></div>
 <jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

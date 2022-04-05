@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false" %>
 <!DOCTYPE html>
 <html>
@@ -46,7 +47,7 @@
 						    </p>             
 						</div>
 						<div class="row">
-						    <h6 class="card-text" style="text-align: right;"> ${office.businessDayList[0].business_day_price }원/일</h6>
+						    <h6 class="card-text" style="text-align: right;"> <fmt:formatNumber value="${office.officeMinPrice}" pattern="#,###"/>~ <small class="text-muted"> 원/일</small></h6>
 						</div>
 
 					</div>

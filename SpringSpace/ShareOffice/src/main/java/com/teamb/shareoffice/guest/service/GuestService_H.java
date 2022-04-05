@@ -37,13 +37,16 @@ public class GuestService_H {
 		for(OfficeInfoVo officeVo:officeVoList ) {
 			
 			ArrayList<BusinessDayVo> businessDayList = guestMapper_H.getBusinessDayPriceByNo(officeVo.getOffice_no()); 
-		
+		    
+			int officeMinPrice = guestMapper_H.getOfficeMinPrice(officeVo.getOffice_no());
+			
 			HashMap<String, Object> map = new HashMap<String, Object>();	
 			//운영시간 및 가격 가져오기(수정 필요)
 		
 			
 		    map.put("officeVo", officeVo);
 		    map.put("businessDayList",businessDayList);
+		    map.put("officeMinPrice",officeMinPrice);
 		
 		  
 		
@@ -55,6 +58,8 @@ public class GuestService_H {
 	}	
 	//오피스 위치 전체 출력
     public ArrayList<OfficeInfoVo> getLocationList(String searchKeyword){
+    	
+    	//System.out.println("@@@@$@#$@#$ :" + searchKeyword + "qqqqqqqqqqqqq");
     	
     	ArrayList<OfficeInfoVo> list = guestMapper_H.getLocationList(searchKeyword);
 
@@ -79,11 +84,17 @@ public class GuestService_H {
 		
 		return map;
 	}
-	
+	//오피스 최소수량 출력
+	public int getOfficeMinPrice(int office_no) {
+		return guestMapper_H.getOfficeMinPrice(office_no);
+	}
+
+	//이미지 총수량
 	public int getImageCount(int office_no) {
 		return guestMapper_H.getImageCount(office_no);
 	}
-	// 오피스 이용후기 페이지
+	
+	// 오피스 이용후기리스트 페이지
 	public ArrayList<HashMap<String, Object>> reviewList(int office_no) {
 
 		ArrayList<HashMap<String, Object>> orderList = new ArrayList<HashMap<String, Object>>();
@@ -107,7 +118,17 @@ public class GuestService_H {
 		
 		return orderList;
 	}
-
+	public HashMap<String, Object> getReviewDetail (int order_no){
+		
+		HashMap<String, Object>map = new HashMap<String, Object>();
+				
+		ReviewVo reviewVo = guestMapper_H.getReviewByOrderNo(order_no);
+		MemberVo memberVo = guestMapper_H.getMemberNickByOrderNo(order_no);		
+		
+		map.put("reviewVo", reviewVo);
+		map.put("memberVo",memberVo);
+		return map;
+	}
 	
 	
 	public void applyHost(HostVo hvo) {

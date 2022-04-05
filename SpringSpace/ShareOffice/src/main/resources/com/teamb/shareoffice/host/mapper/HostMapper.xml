@@ -82,7 +82,20 @@
 	</select>
 	
 	<select id="getMyOfficeList" resultType="com.teamb.shareoffice.vo.OfficeInfoVo">
-		SELECT * FROM so_officeinfo WHERE member_no = #{no}
+		SELECT * FROM so_officeinfo WHERE member_no = #{member_no}
+		<choose>
+			<when test='office_approve == "Y"'>
+				and office_approve = 'Y'
+			</when>
+			<when test='office_approve == "N"'>
+				and office_approve = 'N'
+			</when>
+			<when test='office_approve == "P"'>
+				and office_approve = 'P'
+			</when>
+		</choose>
+		
+		order by office_no desc
 	</select>
 	
 	<select id="getOfficeByNo" resultType="com.teamb.shareoffice.vo.OfficeInfoVo">

@@ -99,7 +99,6 @@ public class MemberControllerJs {
 	public String logoutProcess(HttpSession session) {
 		
 		session.removeAttribute("sessionUser");
-		session.removeAttribute("applyHost");
 		
 		return "redirect:../guest/mainPage";
 	}
@@ -108,20 +107,27 @@ public class MemberControllerJs {
 	@RequestMapping("newMessage")
 	public HashMap<String, Object> newMessage(HttpSession session) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
-		
+
 		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
-		int no = sessionUser.getMember_no();
-		int count = memberServiceJs.newMessageCount(no);
-		
-		if(count == 0) {
+
+		if(sessionUser != null) {
+			int no = sessionUser.getMember_no();
+			int count = memberServiceJs.newMessageCount(no);
+			
+			if(count == 0) {
+				data.put("result", "notMessage");
+				return data;
+			} else {
+				data.put("result", "newMessage");
+				data.put("count", count);
+				return data;
+			}
+		}else {
+			
 			data.put("result", "notMessage");
-			return data;
-		} else {
-			data.put("result", "newMessage");
-			data.put("count", count);
+			
 			return data;
 		}
-		
 	}
 	
 	@ResponseBody
@@ -140,5 +146,27 @@ public class MemberControllerJs {
 			return data;
 		}
 		
+	}
+	
+	@RequestMapping("deleteReceiveMessage")
+	public String deleteReceiveMessage(HttpSession session,MessageVo vo) {
+		
+		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
+		int no = sessionUser.getMember_no();
+		vo.setReceive_no(no);
+		memberServiceJs.deleteReceiveMessage(vo);
+		
+		return "redirect:../member/messageListPage";
+	}
+	
+	@RequestMapping("deleteSendMessage")
+	public String deleteSendMessage(HttpSession session,MessageVo vo) {
+		
+		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
+		int no = sessionUser.getMember_no();
+		vo.setSender_no(no);
+		memberServiceJs.deleteSendMessage(vo);
+		
+		return "redirect:../member/sendMessageListPage";
 	}
 }

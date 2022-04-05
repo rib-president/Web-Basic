@@ -2,6 +2,8 @@ package com.teamb.shareoffice.host.mapper;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.teamb.shareoffice.vo.BusinessDayVo;
 import com.teamb.shareoffice.vo.FacilityCategoryVo;
 import com.teamb.shareoffice.vo.ImageDetailVo;
@@ -29,7 +31,7 @@ public interface HostMapper {
 	
 	// 오피스 목록 조회
 	public ArrayList<OfficeInfoVo> getOfficeList();
-	public ArrayList<OfficeInfoVo> getMyOfficeList(int no);
+	public ArrayList<OfficeInfoVo> getMyOfficeList(@Param("member_no") int member_no, @Param("office_approve") String office_approve);
 	public OfficeInfoVo getOfficeByNo(int no);
 	
 	public ArrayList<ImageDetailVo> getImageList(int no);

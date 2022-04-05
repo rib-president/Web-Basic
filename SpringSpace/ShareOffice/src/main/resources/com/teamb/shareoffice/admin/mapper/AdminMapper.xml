@@ -83,10 +83,11 @@
 	WHERE member_no = #{member_no}
 </update>
 
-<delete id="deleteOfficeByHostRefuse">
-	delete from so_officeinfo
+<update id="deleteOfficeByHostRefuse">
+	update so_officeinfo
+	SET office_approve = 'N', office_approve_comment = '호스트 권한 해제', office_approve_date = now()
 	where member_no = #{member_no}
-</delete>
+</update>
 
 <select id="getOfficeInformation" resultType="com.teamb.shareoffice.vo.OfficeInfoVo">
 	SELECT * FROM SO_OfficeInfo

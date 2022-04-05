@@ -22,9 +22,15 @@ where office_address like CONCAT('%',#{searchKeyword},'%')
 select * from SO_OfficeInfo
 where office_no = #{office_no}
 </select>
+<!-- 오피스 최소금액 출력 -->
+<select id="getOfficeMinPrice" resultType="int">
+select MIN(business_day_price) 
+from SO_BusinessDay
+where office_no=#{office_no}
+</select>
 
 
-<!-- 운영시간 정보 가져오기 -->
+<!-- 운영시간,가격 정보 가져오기 -->
 <select id="getBusinessDayPriceByNo" resultType="com.teamb.shareoffice.vo.BusinessDayVo">
 select * from SO_BusinessDay
 where office_no=#{office_no}
@@ -47,29 +53,24 @@ select cate.*
 from SO_FacilityCategory as cate, SO_OfficeFacility as offi
 where cate.facility_no = offi.facility_no and offi.office_no=#{office_no}
 </select>
-<!-- 리뷰 작성 페이지 -->
-<insert id="">
-insert into SO_Review (order_no,review_title,review_content,review_rating,review_image,review_date)
-values(
-#{order_no},
-#{review_title},
-#{review_content},
-#{review_rating},
-#{review_image},
-#{review_date}
-)
 
-</insert>
+
+
 
 <!-- 리뷰 리스트 -->
+<select id="getOrderByNo" resultType="com.teamb.shareoffice.vo.OrderVo">
+select *from SO_Order
+where office_no=#{office_no}
+</select>
+<!-- 리뷰 상세보기 -->
 <select id="getReviewByOrderNo" resultType="com.teamb.shareoffice.vo.ReviewVo">
 select *from so_review
 where order_no =#{order_no}
 </select>
-
-<select id="getOrderByNo" resultType="com.teamb.shareoffice.vo.OrderVo">
-select *from SO_Order
-where office_no=#{office_no}
+<select id="getMemberNickByOrderNo" resultType="com.teamb.shareoffice.vo.MemberVo">
+select sm.member_nick 
+from SO_Order sor, so_member sm 
+where sor.member_no = sm.member_no and order_no=#{order_no}
 </select>
 
 
@@ -90,14 +91,7 @@ NOW(),
 )
 </insert>
 
-<!-- 호스트 승인  -->
-<update id="updateHostApprove">
-update SO_Host set 
-host_approve=#{host_approve} ,
-host_approve_comment=#{host_approve_comment}, 
-host_approve_date=NOW() 
-where host_no=#{host_no}
-</update>
+
 
 <!-- 호스트 신청 현황 리스트 출력 -->
 <select id="getHostApproveCheck" resultType="com.teamb.shareoffice.vo.HostVo">

@@ -26,8 +26,14 @@
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
-<div class="col" style="padding-top:10%">
+<div class="col" style="padding-top:1%">
 	<div class="row">
+		<c:if test="${!empty adminUser }">
+			<button type="button" class="btn btn-primary" onclick="location.href='../admin/hostManagement'">호스트 관리</button>
+			<button type="button" class="btn btn-secondary" onclick="location.href='../admin/guestManagement'">게스트 관리</button>
+			<button type="button" class="btn btn-success" onclick="location.href='../admin/officeManagement'">오피스 관리</button>
+			<button type="button" class="btn btn-dark" onclick="location.href='../admin/logoutAdmin'">로그아웃</button>
+		</c:if>
 		<div class="col-1"></div>
 		<div class="col-10 text-center">
 		<label>추천 상위 top3</label>

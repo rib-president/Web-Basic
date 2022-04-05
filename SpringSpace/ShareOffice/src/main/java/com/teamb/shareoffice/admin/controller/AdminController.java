@@ -27,7 +27,6 @@ public class AdminController
 	@RequestMapping("loginAdmin")
 	public String loginAdmin()
 	{
-		System.out.println("Log] �α��� ������ ����");
 		
 		return "admin/loginAdmin";
 	}
@@ -43,23 +42,17 @@ public class AdminController
 	
 	@RequestMapping("adminLoginProcess")
 	public String adminLoginProcess(AdminVo param, HttpSession session)
-	{
-		System.out.println("Log] �α��� ����");
-		
+	{	
 		AdminVo adminUser = adminService.loginAdmin(param);
 		
 		if(adminUser != null)
 		{
 			session.setAttribute("adminUser", adminUser);
 			
-			System.out.println("Log] �α��� ����");
-			
 			return "redirect:../admin/adminPage";
 		}
 		else
 		{
-			System.out.println("Log] �α��� ����");
-			
 			return "redirect:../admin/loginAdmin";
 		}
 			
@@ -67,17 +60,13 @@ public class AdminController
 	
 	@RequestMapping("adminPage")
 	public String adminPage()
-	{
-		System.out.println("Log] ������ ������ ����");
-		
+	{		
 		return "admin/adminPage";
 	}
 	
 	@RequestMapping("guestManagement")
 	public String guestManagement(Model model, String searchOption, String searchStr, @RequestParam(value="pageNum", defaultValue="1") int pageNum)
-	{
-		System.out.println("Log] �Խ�Ʈ ���� ������");
-		
+	{		
 		ArrayList<HashMap<String, Object>> guestList = adminService.guestManagement(searchOption, searchStr, pageNum);
 		
 		model.addAttribute("guestList", guestList);
@@ -95,9 +84,7 @@ public class AdminController
 	
 	@RequestMapping("hostManagement")
 	public String hostManagement(Model model, String searchOption, String searchStr, @RequestParam(value="pageNum", defaultValue="1") int pageNum)
-	{
-		System.out.println("Log] ȣ��Ʈ ���� ������");
-		
+	{	
 		ArrayList<HashMap<String, Object>> hostList = adminService.hostManagement(searchOption, searchStr, pageNum);
 		
 		model.addAttribute("hostList", hostList);
@@ -105,24 +92,12 @@ public class AdminController
 		return "admin/hostManagement";
 	}
 	
-	@RequestMapping("applyHostCheckList")
-	public String applyHostCheckList(Model model)
-	{
-		System.out.println("Log] ȣ��Ʈ ��û�� ��� ������");
-		
-		ArrayList<HashMap<String, Object>> hostCheckList = adminService.applyHostCheckList();
-		
-		model.addAttribute("hostCheckList", hostCheckList);
-		
-		return "admin/applyHostCheckList";
-	}
-	
 	@RequestMapping("hostApplyGuest")
 	public String hostApplyGuest(int member_no, int host_no)
 	{
 		adminService.hostApplyGuest(member_no, host_no);
 		
-		return "redirect:../admin/applyHostCheckList";
+		return "redirect:../admin/hostManagement";
 	}
 	
 	@RequestMapping("hostRefuseGuest")
@@ -152,9 +127,7 @@ public class AdminController
 	
 	@RequestMapping("officeManagement")
 	public String officeManagement(Model model, String searchOption, String searchStr, @RequestParam(value="pageNum", defaultValue="1") int pageNum)
-	{
-		System.out.println("Log] ���ǽ� ���� ������");
-		
+	{		
 		ArrayList<HashMap<String, Object>> officeList = adminService.getOfficeInformation(searchOption, searchStr, pageNum);
 		
 		model.addAttribute("officeList", officeList);
@@ -162,24 +135,12 @@ public class AdminController
 		return "admin/officeManagement";
 	}
 	
-	@RequestMapping("adminOfficeDetail")
-	public String adminOfficeDetail(Model model)
-	{
-		System.out.println("Log] ���ǽ� �� ������");
-		
-		ArrayList<HashMap<String, Object>> officeDetailList = adminService.officeDetailInformation();
-		
-		model.addAttribute("officeDetailList", officeDetailList);
-		
-		return "admin/adminOfficeDetail";
-	}
-	
 	@RequestMapping("officeApply")
 	public String officeApply(int office_no)
 	{
 		adminService.officeApply(office_no);
 		
-		return "redirect:../admin/adminOfficeDetail";
+		return "redirect:../admin/officeManagement";
 	}
 	
 	@RequestMapping("officeRefuse")
@@ -187,6 +148,6 @@ public class AdminController
 	{	
 		adminService.officeRefuse(office_no, refuseReason);
 		
-		return "redirect:../admin/adminOfficeDetail";
+		return "redirect:../admin/officeManagement";
 	}	
 }

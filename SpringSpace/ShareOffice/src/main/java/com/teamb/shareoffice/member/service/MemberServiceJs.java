@@ -27,7 +27,15 @@ public class MemberServiceJs {
 			
 			int memberNo = messageVo.getSender_no();
 			
-			MemberVo memberVo = memberMapperJs.getMemberByNo(memberNo);
+			MemberVo memberVo = null; 
+					
+			if(memberNo == 0) {
+				memberVo = new MemberVo();
+				memberVo.setMember_nick("Share Office");
+			}else {
+				memberVo = memberMapperJs.getMemberByNo(memberNo);
+			}
+			
 			
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			
@@ -70,6 +78,18 @@ public class MemberServiceJs {
 	// 공용 코드
 	public void writeMessage(MessageVo vo) {
 		
+/*		
+		@Autowired
+		private MemberMapperJs memberMapperJs;
+
+		MessageVo ttt = new MessageVo();
+		ttt.setSender_no(0);
+		ttt.setReceive_no(6); //여긴 세팅...
+		ttt.setTxt("신청하신 오피스가 승인/거절 되었습니다.");
+		
+		memberMapperJs.insertMessage(vo);
+*/		
+		
 		memberMapperJs.insertMessage(vo);
 	}
 	
@@ -107,4 +127,13 @@ public class MemberServiceJs {
 		return memberMapperJs.newMessageCount(no);
 	}
 	
+	public void deleteReceiveMessage(MessageVo vo) {
+		
+		memberMapperJs.deleteReceiveMessage(vo);
+	}
+	
+	public void deleteSendMessage(MessageVo vo) {
+		
+		memberMapperJs.deleteSendMessage(vo);
+	}
 }

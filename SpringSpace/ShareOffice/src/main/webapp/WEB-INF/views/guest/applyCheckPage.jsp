@@ -50,17 +50,18 @@
 						   <p class="card-text ">호스트 승인이 완료되었습니다.</p>
 						  <div class="col d-grid"> <a href="../host/mainPage" class="btn btn-outline-secondary">호스트 페이지로 가기</a></div>	
 					    </c:if>
-					    <c:if test="${apply.hostVo.host_approve eq 'N' }">  
+					    <c:if test="${apply.hostVo.host_approve eq 'N'|| apply.hostVo.member_no == null }">  
 						   <p class="card-text" style="color:red">호스트 승인이 거절되었습니다.<br>
 						      거절 사유:${apply.hostVo.host_approve_comment }</p>
+						   <div class="col d-grid"> <a href="../guest/applyHostPage" class="btn btn-outline-secondary">호스트 재신청 하기</a></div>	
 					    </c:if>
 					  
 					</div>
 								
 				</div>
 			</c:forEach>	
-				 <div class="col d-grid" style="margin: 1em"><a href="./applyHostPage" class="btn btn-outline-secondary">호스트 신청하러 가기</a></div>
-			     <div class="col d-grid" style="margin: 1em"><a href="./mainPage" class="btn btn-outline-secondary">메인으로</a></div>
+				
+			     <div class="col d-grid" style="margin: 1em"><a href="./mainPage" class="btn buttonColor">메인으로</a></div>
 			  </div>	
 			</div>
 

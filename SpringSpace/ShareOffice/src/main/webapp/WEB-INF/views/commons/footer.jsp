@@ -12,7 +12,7 @@
                 <li class="float-left mx-3"><a class="text-gold bold" href="#">이용약관</a></li>
                 <li class="float-left"><a class="text-gold bold" href="#">개인정보처리방침</a></li>
             </ul> 
-            <span class="inline-block text-fs-8 text-gold w-full mb-8">COPYRIGHT(c)CONTROL-A. ALL RIGHTS RESERVED.</span>
+            <span class="inline-block text-fs-8 text-gold w-full mb-8">COPYRIGHT(c)TEAM-B. ALL RIGHTS RESERVED.</span>
             <p class="float-left text-gold text-fs-10 leading-normal w-full">
             (주)팀 비	<br> 대표이사 | 김중수
             </p>

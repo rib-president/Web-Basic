@@ -10,6 +10,8 @@ import com.teamb.shareoffice.admin.mapper.AdminMapper;
 import com.teamb.shareoffice.board.mapper.BoardMapperkt;
 import com.teamb.shareoffice.member.mapper.MemberMapperkt;
 import com.teamb.shareoffice.vo.AdminVo;
+import com.teamb.shareoffice.vo.AllotCouponVo;
+import com.teamb.shareoffice.vo.CouponVo;
 import com.teamb.shareoffice.vo.FreeBoardCommentVo;
 import com.teamb.shareoffice.vo.FreeBoardVo;
 import com.teamb.shareoffice.vo.MemberVo;
@@ -20,6 +22,7 @@ import com.teamb.shareoffice.vo.QnAVo;
 @Service
 public class BoardServicekt {
 	
+	private static final int HashMap = 0;
 	@Autowired
 	private BoardMapperkt boardMapperkt;
 	@Autowired
@@ -131,23 +134,7 @@ public class BoardServicekt {
 			
 			dataList.add(addList);
 		}
-		/*
-		int [] hotQnAList = boardMapperkt.getQnALimitNo();
-		for(int hotqnaList : hotQnAList) {
-			
-			ArrayList<QnAVo> qnAVo = boardMapperkt.getHotQnA(hotqnaList);
-			QnAVo qnAVo = boardMapperkt.getHotQnA(hotqnaList);
-			for(QnAVo qnAVoList : qnAVo) {
-			
-			HashMap<String, Object> data = new HashMap<String, Object>();
-				
-				data.put("hotQnAVo", qnAVoList);
-				data.put("hotQnAVo", qnAVo);
-				dataList.add(data);
-				
-			}
-		}
-		*/
+
 		return dataList;
 	}
 
@@ -255,6 +242,58 @@ public class BoardServicekt {
 		return boardMapperkt.getMyCountLike(vo);
 	}
 	
+	public void insertCoupon(CouponVo vo) {
+		boardMapperkt.insertCoupon(vo);
+	}
+	public ArrayList<HashMap<String, Object>> getCouponList(int member_no) {
+		ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String,Object>>();
+		
+		ArrayList<CouponVo> CouponVoList = boardMapperkt.getCouponList();
+		for(CouponVo couponVo : CouponVoList) {
+			
+			
+			int count = boardMapperkt.consumptionCoupon(couponVo.getCoupon_no());
+			
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			
+			
+			
+			AllotCouponVo allotCouponVo = new AllotCouponVo();
+			allotCouponVo.setMember_no(member_no);
+			allotCouponVo.setCoupon_no(couponVo.getCoupon_no());
+			int myReserveCouponCount = boardMapperkt.memberReserveCoupon2(allotCouponVo);
+			
+			
+			data.put("myReserveCouponCount", myReserveCouponCount);
+			data.put("CouponVoList", couponVo);
+			data.put("waste",count);
+			dataList.add(data);
+		}
+		return dataList;
+	}
 	
+	public void insertAllotCoupon(AllotCouponVo vo) {
+		boardMapperkt.insertAllotCoupon(vo);
+		
+	}
+	/*
+	public ArrayList<HashMap<String, Object>> getMemberReserveCoupon(int member_no){
+		ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String,Object>>();
+		
+		ArrayList<AllotCouponVo> allotCouponVoList = boardMapperkt.memberReserveCoupon(member_no); 
+		for(AllotCouponVo allotCouponVo : allotCouponVoList) {
+			
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			
+			data.put("AllotCouponVo", allotCouponVo);
+			dataList.add(data);
+		}
+		
+		
+		return dataList;
+	}
+	*/
+	
+
 	
 }

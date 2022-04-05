@@ -13,32 +13,121 @@
 <link href="../resources/css/commons.css" rel="stylesheet">
 <link href="https://webfontworld.github.io/naver/NanumSquareRound.css" rel="stylesheet">
 
+<script>
+function getOfficeList(select) {
+	
+	var office_approve =  select.value;
+	location.href="./officeListPage?office_approve=" + office_approve;
+}
+
+function createOption() {
+	var root = document.querySelector("#selectContainer");
+
+ 	var select = document.createElement("select");
+ 	select.setAttribute("name", "office_approve");
+ 	select.setAttribute("class", "form-select form-select-sm text-fs-12");
+ 	select.setAttribute("onchange", "getOfficeList(this)");
+	var optionList = [];	
+	var option1 = document.createElement("option");
+	option1.value = "all";
+	option1.innerText = "전체";
+	optionList.push(option1);
+	var option2 = document.createElement("option");
+	option2.value = "Y";
+	option2.innerText = "승인완료";
+	optionList.push(option2);
+	var option3 = document.createElement("option");
+	option3.value = "P";
+	option3.innerText = "승인대기";
+	optionList.push(option3);
+	var option4 = document.createElement("option");
+	option4.value = "N";
+	option4.innerText = "승인거절";
+	optionList.push(option4);
+	
+	var office_approve = '${office_approve}';
+	
+	for(var option of optionList) {
+		if(option.value == office_approve) {
+			option.selected = true;
+		}
+		select.appendChild(option);
+	}
+	
+	root.appendChild(select);
+}
+
+window.addEventListener("DOMContentLoaded", function() {
+	createOption()
+});
+
+</script>
+
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 5rem;">
+<div class="row ms-1" style="padding-top: 2rem;">
 	<div class="col">
 		<%-- 내용작성 --%>
 		<div class="jumbotron" style="font-family: 'NanumSquareRound';">
   			<h1>공유오피스 리스트</h1>
-  			<p>등록하신 공유오피스 목록입니다.</p>
+  			<p class="text-fs-14 text-gray-c_25 leading-tight">등록하신 공유오피스 목록입니다.</p>
  		</div> 
 		
-	<c:forEach items="${officeList }" var="office">	
  		
-			<div class="card" style="width: auto; margin:0.5rem; font-family: 'NanumSquareRound';">
-			  <img src="/soUpload/officeImage/${office.office_thumbnail }" class="card-img-top" >
-			  <div class="card-body">
-			    <h5 class="card-title">${office.office_name}</h5>
-			    <p class="card-text">${office.office_address}</p>
-			    <a href="./officeDetailPage?office_no=${office.office_no }" class="btn btn-outline-info">상세보기</a>
-			  </div>
-			</div>
 			
+ 		
+ 		<div class="row">
+ 			<div class="col"></div>
+ 			<div id="selectContainer" class="col-4 mr-5" >
+ 		
+ 			</div>
+		</div>
 
-			
-	</c:forEach>	
+
+			<div class="row mt-1 mb-5 ms-1 me-1">
+				<div class="col">
+					<c:forEach items="${officeList }" var="office">
+						<div class="row cursor-pointer rounded-10 border py-3 mr-1 mt-2" onclick="location.href='./officeDetailPage?office_no=${office.office_no}'">
+						<div class="col-4">
+						 <img src="/soUpload/officeImage/${office.office_thumbnail }" style="width:100%; height:100%;">
+						</div>
+						
+						<div class="col-8">
+						
+						<div class="row">
+						<div class="col bold">
+						${office.office_name}
+						</div>
+						</div>
+
+						
+						<div class="row mt-2">
+						<div class="col text-fs-13">
+						<c:choose>
+							<c:when test="${office.office_approve eq 'P' }">
+								승인대기중
+							</c:when>
+							
+							<c:when test="${office.office_approve eq 'Y' }">
+								승인완료
+							</c:when>
+							
+							<c:otherwise>
+								<div>승인거절</div> <div class="text-fs-12 text-muted">${office.office_approve_comment }</div> 
+							</c:otherwise>
+						</c:choose>
+						</div>
+						</div>
+						
+						
+						</div>
+						
+						</div>
+					</c:forEach>
+				</div>
+			</div>
 	</div>
 </div>
 

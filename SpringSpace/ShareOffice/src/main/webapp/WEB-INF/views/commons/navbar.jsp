@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="row" style="background-color: #22223B; margin: auto;" id="banner">
-   <div class="col-2 pt-2"><i id="menu" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" class="bi bi-list cursor-pointer text-fs-40" style="color:white;"></i></div>
+   <div class="col-2 pt-2"><i data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" class="bi bi-list cursor-pointer text-fs-40 menu" style="color:white;"></i></div>
    <div class="col-8 pt-1 pb-1 pl-4 text-center" onclick="location.href='../guest/mainPage'">
       <img alt="logo" src="../resources/img/RealLogo.png" class="img-fluid">
    </div>
@@ -13,7 +13,7 @@
   <div class="offcanvas-header">
     <h5 class="offcanvas-title bold ms-1 text-gray-c_25" id="offcanvasExampleLabel">Menu
     	<a href="../member/messageListPage">
-    		<i id="menu1" class="bi bi-bell-fill" style="font-size: 1.7rem; color: white;"></i>
+    		<i class="bi bi-bell-fill menu" style="font-size: 1.7rem; color: #22223B;"></i>
     	</a>
     </h5>
     
@@ -120,45 +120,67 @@
 
 <script>
 	
-	var toastLiveExample = document.getElementById('liveToast')
 	
-	function newMessage(){
-		
-		var xhr = new XMLHttpRequest();
-		
-		xhr.onreadystatechange = function(){
-			if(xhr.readyState == 4 && xhr.status == 200){
-				var data = JSON.parse(xhr.responseText);
-				var toast = new bootstrap.Toast(toastLiveExample);
-				var notification = document.getElementById('notification');
-				
-				var menu = document.getElementById("menu");
-				
-				if(data.result == 'newMessage') {
+var newMessageCount = 0;
+var firstCheckMessage = true;
+
+var toastLiveExample = document.getElementById('liveToast');
+
+function newMessage(){
+
+	var xhr = new XMLHttpRequest();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var data = JSON.parse(xhr.responseText);
+			var toast = new bootstrap.Toast(toastLiveExample);
+			var notification = document.getElementById('notification');
+			
+			var menus = document.getElementsByClassName("menu");
+			
+			
+			if(data.result == 'newMessage') {
+
+
+				if(newMessageCount < data.count){
+
+					for(var menu of menus) {
+						menu.innerHTML = "";
+					}
+					
+    				newMessageCount = data.count;
+
+					for(var menu of menus) {
 					var signal = document.createElement("span");
 					signal.setAttribute("class","translate-middle badge rounded-pill bg-danger");
-					signal.setAttribute("style","position:absolute; font-size: 0.75rem; top: 1rem;");
+					signal.setAttribute("style","position:absolute; font-size: 0.75rem; top: 1.5rem;");
 					signal.textContent = data.count;
 					
 					menu.appendChild(signal);
-					
+					}
 					notification.textContent = "새로운 알림이 " + data.count + "개 있습니다";
 					
-	    			toast.show();
-				} else {
-					menu.innerHTML="";
+					if(!firstCheckMessage){
+						toast.show();	
+					}
+
 				}
-			} 
+				
+			}
 			
-		};
+			firstCheckMessage = false;
+
+		} 
 		
-		xhr.open("GET" , "../member/newMessage", true);
-		xhr.send();
-	}
-	 
-	window.addEventListener("DOMContentLoaded" , function(){
-		newMessage
-		setInterval(newMessage , 4000);
-	});
+	};
+	
+	xhr.open("GET" , "../member/newMessage", true);
+	xhr.send();
+}
+ 
+window.addEventListener("DOMContentLoaded" , function(){
+	newMessage();
+	setInterval(newMessage , 3000);
+});
 
 </script>

@@ -22,4 +22,8 @@ public interface MemberMapperJs {
 	public void updateDate(int no);
 	
 	public int newMessageCount(int no);
+	
+	public void deleteReceiveMessage(MessageVo vo);
+	
+	public void deleteSendMessage(MessageVo vo);
 }

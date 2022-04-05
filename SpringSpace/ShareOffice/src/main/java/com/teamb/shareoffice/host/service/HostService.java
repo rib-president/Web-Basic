@@ -68,8 +68,8 @@ public class HostService {
 		return hostMapper.getOfficeList();
 	}
 	
-	public ArrayList<OfficeInfoVo> getMyOfficeList(int member_no){
-		return hostMapper.getMyOfficeList(member_no);
+	public ArrayList<OfficeInfoVo> getMyOfficeList(int member_no, String office_approve){
+		return hostMapper.getMyOfficeList(member_no, office_approve);
 	}
 	
 	public HashMap<String, Object> getOffice(int office_no){
