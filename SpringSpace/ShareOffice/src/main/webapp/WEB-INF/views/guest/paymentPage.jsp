@@ -28,7 +28,9 @@ body { padding-right: 0 !important }
 
 <script>
 
+	var bsOffcanvas = null;
 	var rental_date_list = [];
+	var isFirstSubmit = true;
 
 	function convertRentalDate(totalResvDay) {
 		var monthMap = new Map();
@@ -46,18 +48,21 @@ body { padding-right: 0 !important }
 		monthMap.set("Nov", "11");
 		monthMap.set("Dec", "12");
 		
-		rental_date_list = [];		
-		
-		for(var rental_date of document.getElementsByName("rental_date")) {
-			var splitDate = rental_date.value.split(" ");
-			var convertedDate = new Date(splitDate[5] + "-" + splitDate[1] + "-" + splitDate[2]);
-			rental_date.value = convertedDate;
+		if(isFirstSubmit) {
+			rental_date_list = [];		
 			
-			var month = splitDate[1];
-			if(monthMap.has(month)) {
-				month = monthMap.get(month);
+			for(var rental_date of document.getElementsByName("rental_date")) {
+				var splitDate = rental_date.value.split(" ");
+				var convertedDate = new Date(splitDate[5] + "-" + splitDate[1] + "-" + splitDate[2]);
+				rental_date.value = convertedDate;
+				
+				var month = splitDate[1];
+				if(monthMap.has(month)) {
+					month = monthMap.get(month);
+				}
+				rental_date_list.push(splitDate[5] + "-" + month + "-" + splitDate[2]);
 			}
-			rental_date_list.push(splitDate[5] + "-" + month + "-" + splitDate[2]);
+			isFirstSubmit = false;
 		}
 
 		kakaoPay(totalResvDay);
@@ -123,11 +128,17 @@ body { padding-right: 0 !important }
 			if(xhr.readyState == 4 && xhr.status == 200) {
 				var data = JSON.parse(xhr.responseText);				
 				
-				var tidInput = document.createElement("input");
-				tidInput.setAttribute("type", "hidden");
-				tidInput.setAttribute("name", "order_tid");
-				tidInput.value = data.tid;
-				document.querySelector("form").appendChild(tidInput);
+				var tidInput = null;
+				if(document.getElementsByName("order_tid").length == 0) {
+					tidInput = document.createElement("input");
+					tidInput.setAttribute("type", "hidden");
+					tidInput.setAttribute("name", "order_tid");
+					tidInput.value = data.tid;
+					document.querySelector("form").appendChild(tidInput);
+				} else {
+					tidInput = document.getElementsByName("order_tid")[0];
+					tidInput.value = data.tid;
+				}				
 				
 				newWindow = window.open(data.next_redirect_pc_url, "_blank");
 			}
@@ -163,21 +174,26 @@ body { padding-right: 0 !important }
 		var originPrice = '${totalPayment }';
 		totalPrice.innerText = (parseInt(originPrice) - couponPrice).toLocaleString();
 		
-		var offCanvasBottom = document.querySelector("#offcanvasBottom");
+		/*var offCanvasBottom = document.querySelector("#offcanvasBottom");
 		offCanvasBottom.classList.remove("show");
 		offCanvasBottom.setAttribute("style", "visibility: hidden");
 		offCanvasBottom.setAttribute("aria-hidden", true);
 		offCanvasBottom.removeAttribute("aria-modal");
 		offCanvasBottom.removeAttribute("role");
 		document.querySelector("body").setAttribute("style","");
-		document.querySelector(".offcanvas-backdrop").classList.remove("show");		
+		document.querySelector(".offcanvas-backdrop").classList.remove("show");	*/
+		bsOffcanvas.hide();
 	}
+	
+	window.addEventListener("DOMContentLoaded", function() {
+		var myOffcanvas = document.getElementById('offcanvasBottom');
+		bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas);
+	});
 	
 </script>
 
 </head>
 <body>
-<div class="container-fluid px-0" style="overflow-x:hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 	<div class="row" style="padding-top: 2em;">
@@ -212,8 +228,8 @@ body { padding-right: 0 !important }
 						<div class="col fw-light">
 							예약인원
 						</div>
-						<div class="col fw-light right">
-							<p name="order_personnel">${ovo.order_personnel }명<p>
+						<div class="col fw-light">
+							<p class="text-right">${ovo.order_personnel }명<p>
 						</div>
 					</div>
 					
@@ -221,15 +237,15 @@ body { padding-right: 0 !important }
 						<div class="col fw-light">
 							예약날짜
 						</div>
-						<div class="col-8 fw-light right">
+						<div class="col-8 fw-light">
 							<c:forEach items="${formatRentalDateList }" var="formatRentalDateList">
-								<p>${formatRentalDateList }</p>
+								<p class="text-right">${formatRentalDateList }</p>
 							</c:forEach>
 						</div>
 					</div>
 					
 					<div class="row"> <!-- 구분선 -->
-						<div class="col divider" style="height:.25rem"></div>
+						<div class="col divider"></div>
 					</div>
 					<div class="row">
 						<div class="col text-fs-16 pt-1">
@@ -329,22 +345,44 @@ body { padding-right: 0 !important }
   </div>
   <div class="offcanvas-body small">
   	<c:forEach items="${memberCouponList }" var="memberCoupon">
-	     <div class="row border rounded-5 mt-2 py-3 px-3" style="margin-right:.8rem; margin-left:0.01rem">
-	    	<div class="col-1 pt-4 me-2">
-	    		<input type="radio" class="allotNo form-check-input" name="allot_no" value="${memberCoupon.allot_no }">
-	    	</div>
-	    	<div class="col">
-	    		<div class="row text-fs-15 bold">
-	    			<div class="couponPrice col"><fmt:formatNumber value="${memberCoupon.coupon_discount }"/> 원</div>
-	    		</div>
-	    		<div class="row mt-2 text-fs-13">
-	    			<div class="col">${memberCoupon.coupon_name }</div>
-	    		</div>
-	    		<div class="row text-fs-11 text-gray-c_3c">
-	    			<div class="col"><i class="bi bi-stopwatch text-gold"></i>&nbsp;<fmt:formatDate value="${memberCoupon.coupon_useDate }" pattern="yyyy년MM월dd일 HH:mm"/>까지</div>
-	    		</div>
-	    	</div>
-	    </div> 	
+  		<c:choose>
+  			<c:when test="${totalPayment < memberCoupon.coupon_discount }">
+			     <div class="row border rounded-5 mt-2 py-3 px-3" style="margin-right:.8rem; margin-left:0.01rem; opacity:0.5">
+			    	<div class="col-1 pt-4 me-2">
+			    		<input disabled type="radio" class="allotNo form-check-input" name="allot_no" value="${memberCoupon.allot_no }">    		
+			    	</div>
+			    	<div class="col">
+			    		<div class="row text-fs-15 bold">
+			    			<div class="couponPrice col"><fmt:formatNumber value="${memberCoupon.coupon_discount }"/> 원</div>
+			    		</div>
+			    		<div class="row mt-2 text-fs-13">
+			    			<div class="col">${memberCoupon.coupon_name }</div>
+			    		</div>
+			    		<div class="row text-fs-11 text-gray-c_3c">
+			    			<div class="col"><i class="bi bi-stopwatch text-gold"></i>&nbsp;<fmt:formatDate value="${memberCoupon.coupon_useDate }" pattern="yyyy년MM월dd일 HH:mm"/>까지</div>
+			    		</div>
+			    	</div>
+			    </div>
+	   		</c:when>
+	   		<c:otherwise>
+			     <div class="row border rounded-5 mt-2 py-3 px-3" style="margin-right:.8rem; margin-left:0.01rem">
+			    	<div class="col-1 pt-4 me-2">
+			    		<input type="radio" class="allotNo form-check-input" name="allot_no" value="${memberCoupon.allot_no }">    		
+			    	</div>
+			    	<div class="col">
+			    		<div class="row text-fs-15 bold">
+			    			<div class="couponPrice col"><fmt:formatNumber value="${memberCoupon.coupon_discount }"/> 원</div>
+			    		</div>
+			    		<div class="row mt-2 text-fs-13">
+			    			<div class="col">${memberCoupon.coupon_name }</div>
+			    		</div>
+			    		<div class="row text-fs-11 text-gray-c_3c">
+			    			<div class="col"><i class="bi bi-stopwatch text-gold"></i>&nbsp;<fmt:formatDate value="${memberCoupon.coupon_useDate }" pattern="yyyy년MM월dd일 HH:mm"/>까지</div>
+			    		</div>
+			    	</div>
+			    </div>	   		
+	   		</c:otherwise>
+	   </c:choose> 	
   	</c:forEach>
 	<div class="row mt-3" style="margin-right:.15rem;">
     	<div class="col d-grid">
@@ -355,7 +393,6 @@ body { padding-right: 0 !important }
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
-</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -35,6 +35,13 @@ public class BoardControllerkt {
 	@Autowired
 	private BoardServicekt boardServicekt;
 	
+	@RequestMapping("test")
+	public String test() {
+		
+		return "board/test";
+	}
+	
+	
 	@RequestMapping("freeBoardPage")
 	public String freeBoardPage(Model model,
 			@RequestParam(value = "pageNum" , defaultValue = "1") int pageNum) {
@@ -345,6 +352,7 @@ public class BoardControllerkt {
 	
 	@RequestMapping("myCouponPage")
 	public String myCouponPage(Model model, HttpSession session) {
+		
 		
 		MemberVo sessionUser = (MemberVo)session.getAttribute("sessionUser");
 		if(sessionUser != null) {

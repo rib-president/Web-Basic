@@ -28,7 +28,7 @@
 <link href="../resources/css/commons.css" rel="stylesheet">
 </head>
 <body>
-<jsp:include page="../commons/navbar.jsp"></jsp:include>
+<jsp:include page="../commons/admin.jsp"></jsp:include>
 <div class="row" style="padding-top: 5em; padding-bottom: 5em; padding-left: 5em; padding-right: 5em;">
 	<div class="col">
 		<h1>게스트 회원 관리</h1>
@@ -50,11 +50,7 @@
 				</div>
 			</div>
 			</form>
-			<button type="button" style="margin-bottom: 2em;" class="btn btn-warning" onclick="location.href='adminPage'">메인 페이지</button>
-			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-primary" onclick="location.href='hostManagement'">호스트 관리</button>
-			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-success" onclick="location.href='officeManagement'">오피스 관리</button>
-			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-danger" onclick="location.href='../board/QnAPage'">Q&A 관리</button>
-			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-dark" onclick="location.href='../admin/logoutAdmin'">로그아웃</button>
+
 			<col width="50"><col width="200"><col width="100"><col width="50">
 			<col width="150"><col width="200"><col width="200"><col width="200">
 			<col width="150">

@@ -75,6 +75,7 @@ limit 3
 </select>
 
 
+
 <!-- 리뷰 상세보기 -->
 <select id="getReviewByReviewNo" resultType="com.teamb.shareoffice.vo.ReviewVo">
 select *from so_review
@@ -84,6 +85,13 @@ where review_no =#{review_no}
 select sm.member_nick 
 from SO_Order sor, so_member sm 
 where sor.member_no = sm.member_no and order_no=#{order_no}
+</select>
+
+<!-- 리뷰 평점 구하기 -->
+<select id="getAvgRating" resultType="Double">
+select ROUND(AVG(sr.review_rating),1 ) from so_review sr, so_order so 
+where sr.order_no = so.order_no 
+and so.office_no = #{office_no}
 </select>
 
 

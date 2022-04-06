@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="now" value="<%=new java.util.Date()%>" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,17 +14,80 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 
+<style>
+	.couponBackground {
+	 background-image:url('../resources/img/tempCoupon.png');
+		background-size: 20.94em;
+	  	height: 11.88em;
+	 	background-repeat: no-repeat;
+		}
+	row{
+	float: auto; 
+	margin 100%;
+	}
+	col{
+	float: auto; 
+	margin 0 auto;
+	}
+		
+		
+		
+</style>
+<%--
+<script>
+	function check(this){
+		
+		var count = document.getElementByID("count");
+		var today = new Date();
+		
+		if(count.value == 0){
+			alert("남은 수량을 확인해주세요");
+			return false;
+		}else if(${coupon.CouponVoList.coupon_useDate } < today) {
+			alert("기간이 만료된 쿠폰입니다.");
+			return false;
+		}else{
+			document.check.submit();
+			return true;
+		}
+	}			
+</script>
+ --%> 
+<%-- 
+<script>
+	function check(this) {
+	
+		
+		if(true){
+			alert("hi")
+			retrun false;
+		}
+		
+	}
+</script>
+--%>
+
+<script>
+
+</script>
+
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
-	<div class="col">
-		<%-- 내용작성 --%>
-		선생님들께서 구현하실 jsp파일에 이 파일(basic_frame) 코드 전체 복붙하시면 됩니다!
-		 다만!! <%--    ../commons/footer.jsp 로 변경바랍니다    --%> 변경해주셔야지 에러 안뜰거에요
-		 여기에 내용작성 하시면 됩니다 화이팅!!
+<div class="row" style="padding-top: 2em;">
+	<div class="col" style="margin:2rem">
 		
+		<div class="row couponBackground">
+	 		<div class="col-3"></div>
+	 		<div class="col-6 text-fs-30 text-center">
+	 			<div class="row">벚꽃 쿠폰</div>
+	 			<div class="row text-fs-40">10000원</div>
+	 			<div class="row text-fs-13"></div>
+	 		</div>
+	 		<div class="col-3"></div>
+		</div>
+			
 	</div>
 </div>
 

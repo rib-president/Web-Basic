@@ -17,9 +17,9 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 2em;">
 	<h1>보유 쿠폰 내역</h1>
-	<div class="col">
+	<div class="col" style="margin:2rem">
 		<%-- 내용작성 --%>
 		<c:forEach items="${myCouponList }" var="myCoupon">
 		<div class="row">

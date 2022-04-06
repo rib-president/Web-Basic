@@ -34,8 +34,8 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 1rem;">
-	<div class="col m-3">
+<div class="row" style="padding-top: 2em;">
+	<div class="col" style="margin:2rem">
 	<%-- 내용작성 --%>
 		<div class="row">
 			<div class="col">

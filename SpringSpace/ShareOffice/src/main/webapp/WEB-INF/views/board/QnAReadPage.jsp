@@ -34,8 +34,8 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 1rem;">
-	<div class="col m-3">
+<div class="row" style="padding-top: 2em;">
+	<div class="col" style="margin:2rem">
 	<%-- 내용작성 --%>
 		<div class="row">
 			<div class="col">
@@ -64,20 +64,27 @@
 				<%-- 수정 로그인 했을때만 쓸수있게 
 					
 				--%>
-				<c:if test="${!empty sessionUser }">
-					<c:choose>
-						<c:when test="${myLikeCount > 0}">
-							<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }"><i class="bi bi-hand-thumbs-up"></i></a>
-						</c:when>
-						<c:otherwise>
-							<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }"><i class="bi bi-hand-thumbs-down"></i></a>
-						</c:otherwise>
-					</c:choose>
-					
-				</c:if>	
-					<br>
-					좋아요 수 : ${totalLikeCount }
-					<br>
+				<div class="row">
+					<div class="col-5"></div>
+					<div class="col-2 text-center pt-2" style="border: 1px solid gold;">
+						<c:if test="${!empty sessionUser }">
+							<c:choose>
+								<c:when test="${myLikeCount > 0}">
+									<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }"><h2><i class="bi bi-hand-thumbs-up"></i></h2></a>
+								</c:when>
+								<c:otherwise>
+									<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }"><h2><i class="bi bi-hand-thumbs-down"></i></h2></a>
+								</c:otherwise>
+							</c:choose>
+						</c:if>	
+					</div>
+					<div class="col-5"></div>
+				</div>
+					<div class="row">
+						<div class="col">
+							<div>좋아요 수 : ${totalLikeCount }</div>
+						</div>
+					</div>
 				</div>
 				
 				<div class="row">

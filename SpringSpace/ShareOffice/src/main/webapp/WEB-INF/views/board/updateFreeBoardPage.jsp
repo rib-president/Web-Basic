@@ -23,8 +23,8 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
-	<div class="col">
+<div class="row" style="padding-top: 2em;">
+	<div class="col" style="margin:2rem">
 		<%-- 내용작성 --%>
 		<div class="row">
 			<form action="./updateFreeBoardProcess" method="get">

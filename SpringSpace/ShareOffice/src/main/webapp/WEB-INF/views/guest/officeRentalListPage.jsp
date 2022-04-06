@@ -23,16 +23,17 @@
 
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x:hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-	<div class="row" style="padding-top: 70px;">
+	<div class="row" style="padding-top: 2rem;">
 	
 		<div class="col"></div> <!-- 왼쪽 여백 -->
 		
 		<div class="col-10">
 			
 			<div class="row">
-				<div class="col fs-2 center">오피스 예약 내역</div>
+				<div class="col center text-fs-23">오피스 예약 내역</div>
 			</div>
 			
 			<div class="row mt-5"> <!-- 오피스 예약정보 -->
@@ -42,7 +43,7 @@
 					
 					<div class="row"> <!-- 예약한날짜 -->
 						<div class="col"> 
-							<p class="fw-bold fs-6" style="margin-bottom: 0px;">
+							<p class="fw-bold text-fs-16" style="margin-bottom: 0px;">
 								<fmt:formatDate value="${rentalList.orderVo.order_date }" pattern="yyyy년MM월dd일 (E)"/>
 							</p> 
 						</div>
@@ -52,28 +53,34 @@
 					
 					<div class="row mt-2"> <!-- 예약 오피스 정보 -->
 						<div class="col-3"> <!-- 오피스 썸네일 -->
-							<%--<img src="../resources/img/testImage.jpg" width="80em" height="84em"> --%>
 							<img src="/soUpload/officeImage/${rentalList.officeInfoVo.office_thumbnail }" width="80em" height="84em">
 						</div>
 						
 						<div class="col"> <!-- 오피스 정보 -->
 							<div class="row"> <!-- 오피스 이름 -->
-								<div class="col">
+								<div class="col text-fs-13">
 									<a style="color:#808080" href="../guest/officeDetailPage?office_no=${rentalList.officeInfoVo.office_no }">${rentalList.officeInfoVo.office_name }</a>
 								</div>
 							</div>
 							
 							
 							<div class="row"> <!-- 빌린 기간 -->
-								<div class="col grayColor" style="font-size: 14px;">
+								<div class="col grayColor text-fs-13">
 									<c:forEach items="${rentalList.rentalVoList}" var="rvl">
-										<p><fmt:formatDate value="${rvl.rental_date}" pattern="yyyy년MM월dd일 (E)"/></p>
+										<c:choose>
+											<c:when test="${rvl.rental_status == 'C' }">
+												<p class="text-gray-c_b7" style="text-decoration:line-through"><fmt:formatDate value="${rvl.rental_date}" pattern="yy년MM월dd일 (E)"/></p>
+											</c:when>
+											<c:otherwise>
+												<p><fmt:formatDate value="${rvl.rental_date}" pattern="yy년MM월dd일 (E)"/></p>
+											</c:otherwise>
+										</c:choose>
 								    </c:forEach>
 								</div>
 							</div>
 							
 							<div class="row"> <!-- 대여 가격 -->
-								<div class="col grayColor" style="font-size: 14px;">
+								<div class="col grayColor text-fs-13">
 									<%-- <fmt:parseNumber value="${rentalList.totalPaymentList.parseTotalPayment}" type="number"/> --%>
 									<fmt:formatNumber value="${rentalList.totalPayment }"/>원</span>
 									
@@ -81,23 +88,33 @@
 							</div>
 							
 							<div class="row mt-3"> <!-- 예약 인원 -->
-								<div class="col grayColor" style="font-size: 14px;">
+								<div class="col grayColor text-fs-13"">
 									${rentalList.orderVo.order_personnel }명
 								</div>
 							</div>
 							
 						</div>
 						
-						<div class="col-3"> <!-- 리뷰작성페이지 이동버튼(리뷰 존재여부에 따라 출력 or 미출력) -->
-							<c:choose>
-								<c:when test="${rentalList.reviewExist <= 0 && rentalList.officeUseWhether == true && rentalList.rentalUseCount >= 1}">
-									<a id="reviewWriteButton" href="./writeReviewPage?order_no=${rentalList.orderVo.order_no }
-									&office_no=${rentalList.officeInfoVo.office_no }">리뷰작성</a>
-								</c:when>
-								<c:otherwise>
-									<a id="reviewWriteButton" href="./officeReviewPage?office_no=${rentalList.officeInfoVo.office_no }">리뷰목록</a>
-								</c:otherwise>
-							</c:choose> 
+						<div class="col-3 text-fs-16" style="padding-right : 0;"> <!-- 리뷰작성페이지 이동버튼(리뷰 존재여부에 따라 출력 or 미출력) -->
+							<div class="row">
+								<div class="col">
+									<a href="./officeRentalDetailPage?order_no=${rentalList.orderVo.order_no }">예약상세</a>
+								</div>
+							</div>
+							<div class="row mt-2">
+								<div class="col">
+									<c:choose>
+										<c:when test="${rentalList.reviewExist <= 0 && rentalList.officeUseWhether == true && rentalList.rentalUseCount >= 1}">
+											<a id="reviewWriteButton" href="./writeReviewPage?order_no=${rentalList.orderVo.order_no }
+											&office_no=${rentalList.officeInfoVo.office_no }">리뷰작성</a>
+										</c:when>
+										<c:otherwise>
+											<a id="reviewWriteButton" href="./officeReviewPage?office_no=${rentalList.officeInfoVo.office_no }">리뷰목록</a>
+										</c:otherwise>
+									</c:choose>	
+								</div>
+							</div>
+							 
 						</div>
 						
 					</div>
@@ -116,6 +133,7 @@
 	</div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

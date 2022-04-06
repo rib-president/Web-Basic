@@ -158,4 +158,59 @@ limit #{startNum}, 10
 	select * from FN_Member_Company where member_no = #{member_no}
 </select>
 
+<!-- 통계 -->
+<!-- 회원 비율 -->
+<select id="selectAllMemberType" resultType="map">
+	select count(*) as cnt, member_type
+	from FN_Member
+	group by member_type
+</select>
+
+<!-- 일별 회원가입(최근 일주일) -->
+<select id="selectJoinDateDuringWeek" resultType="map">
+	select count(*) as cnt, date(member_joindate) as joindate 
+	from fn_member
+	where member_joindate
+	between #{startDate} and #{endDate}
+	group by date(member_joindate)
+</select>
+
+<!-- 일별 프로젝트 등록/스크래핑 수(최근 일주일) -->
+<select id="selectScrapingCntDuringWeek" resultType="map">
+	select count(*) as cnt, date(project_date) as projectDate
+	from FN_ProjectBoard
+	where cooperation_no = #{cooperation_no}
+	and project_date between #{startDate} and #{endDate}
+	group by date(project_date)
+</select>
+
+<!-- 개별등록/스크래핑 비율 -->
+<select id="selectRegistProjectCntDuringWeek" resultType="map">
+	select count(*) as cnt, cooperation_no 
+	from FN_ProjectBoard
+	group by cooperation_no
+</select>
+
+<!-- 잡 카테고리별 프로젝트 비율 -->
+<select id="selectJobCategoryProportion" resultType="map">
+	select count(*) as cnt, fpj.job_no as jobNo
+	from fn_projectboard fp, FN_Project_Job fpj 
+	where fp.project_no = fpj.project_no 
+	group by fpj.job_no
+</select>
+
+<!-- 누적 광고수익 -->
+<select id="selectTotalAdPrice" resultType="int">
+	select (count(*)*50000) as totalAdPrice
+	from FN_Ad fa
+</select>
+
+<!-- 일별 등록 광고(최근 일주일) -->
+<select id="selectAdCountDuringWeek" resultType="map">
+	select count(*) as cnt, date(DATE_ADD(ad_endDate , INTERVAL -6 DAY)) as registDate
+	from FN_Ad
+	where date(DATE_ADD(ad_endDate , INTERVAL -6 DAY)) between #{startDate} and #{endDate}
+	group by date(DATE_ADD(ad_endDate , INTERVAL -6 DAY))
+</select>
+
 </mapper>

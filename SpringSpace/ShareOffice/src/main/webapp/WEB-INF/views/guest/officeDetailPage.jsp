@@ -31,7 +31,10 @@ a:hover {
  a:active {
   color : #A68A64;
 }
-i {text-decoration: none; color:#A68A64;}
+i {text-decoration: none; color:#A68A64;
+   text-bold;
+
+}
 
 
 </style>
@@ -52,6 +55,7 @@ $(function() {
 </script>
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 	<div class="row" style="padding-top:2em;">
@@ -119,11 +123,11 @@ $(function() {
 						<p class="fs-7 text-muted text-fs-13">#${office.officeVo.office_tags }</p>
 					</div>
 					<div class="row">
-					    <div class="col-5">공간 이용료</div>
-                        <div class="col-4 text-right">                      
-                           <p class="card-text font-medium2" style="text-align: right;"> <fmt:formatNumber value="${minOfficePrice}" pattern="#,###"/>~</p> 
+					    <div class="col-6">공간 이용료</div>
+                        <div class="col"style="text-align: right;padding:0">                      
+                           <p class="card-text font-medium2" > <fmt:formatNumber value="${minOfficePrice}" pattern="#,###"/> ~</p> 
                        </div>	
-                       <div class="col-2 text-right">  
+                       <div class="col-2" style="text-align: right;">  
                            <small class="text-muted text-fs-13">원/일</small>
                        </div>		
 					</div>
@@ -133,20 +137,20 @@ $(function() {
 						</div>
 					</div>
 					
-					<div class="row mt-3">
+					<div class="row mt-4">
 					   <ul class="nav nav-tabs"></ul>
 					</div>
 					
 			
                     <!-- 오피스 상세 소개 -->
-					<div class="row mt-3">
+					<div class="row mt-4">
 						<div class="col">
 							<p class="fs-6 font-medium2">오피스 소개</p>
 						</div>
 						<br>
 						<p>${office.officeVo.office_detailContent }</p>
 					</div>
-										<div class="row mt-5">
+					<div class="row mt-4">
 						<div class="col">
 							<p class="fs-6 font-medium2">운영 시간</p>
 							<table class="table table-borderless">
@@ -171,18 +175,18 @@ $(function() {
 							</table>
 						</div>
 					</div>
-					<div class="row mt-5">
+					<div class="row mt-4">
 					    <div class="col"> 
-						      <p class="fs-6 fw-bold">추가 정보</p>
+						      <p class="fs-6 font-medium2">추가 정보</p>
 						</div>
-						<p><i class="bi bi-people"></i> 최대 가능 인원: ${office.officeVo.office_personnel } 명</p>
+						<p><i class="bi bi-people "></i> 최대 가능 인원: ${office.officeVo.office_personnel } 명</p>
 						<p><i class="bi bi-calendar-check"></i> 최소 예약 일수: ${office.officeVo.office_min_booking_day } 일</p>
 						<p><i class="bi bi-telephone"></i> 오피스 전화번호: ${office.officeVo.office_changedPhone }</p>			
 					</div>
-					<div class="row mt-5" >
+					<div class="row mt-4" >
 					    <div class="col">
 					      <div class="row">
-						     <p class="fs-6 fw-bold">편의시설</p>		
+						     <p class="fs-6 font-medium2">편의시설</p>		
 					     </div>
 						 
 						  			
@@ -262,21 +266,21 @@ $(function() {
 	
 					
 					<!-- 지도 출력 -->
-					<div class="row mt-5">
+					<div class="row mt-4">
 					   <div class="col">
-							<div class="row"><p class="fs-6 fw-bold">오피스 위치</p></div>
+							<div class="row"><p class="font-medium2">오피스 위치</p></div>
 							<div class="row"><p><i class="bi bi-geo-alt"></i>${office.officeVo.office_address }, ${office.officeVo.office_address_detail }</p></div>
 					   </div>					   					 
 					</div>
 					<div id="map" style="width:100%;height:21em;"></div>
 					
-					<div class="row mt-3">
+					<div class="row mt-4">
 					   <ul class="nav nav-tabs"></ul>
 					</div>
 					<!-- 리뷰보러가기 -->			
-					<div class="row mt-3 mb-3 ">
+					<div class="row mt-4 mb-4 ">
 						<div class="col" >
-						   <div class="row fw-bold">
+						   <div class="row font-medium2">
 						     <div class="col"> <a href="./officeReviewPage?office_no=${office.officeVo.office_no}">이용 후기</a><i class="bi bi-chevron-right"></i> </div>			     				  
 						   </div>
 							<div class="row mt-3">
@@ -305,7 +309,7 @@ $(function() {
 															</div>
 															<div class="col">
 																<p class="card-text">
-																	<small class="text-muted"><fmt:formatDate value="${review.review_date}" pattern="yyyy-MM-dd"/></small>
+																	<small class="text-muted text-fs-13"><fmt:formatDate value="${review.review_date}" pattern="yyyy-MM-dd"/></small>
 																</p>
 															</div>
 
@@ -313,7 +317,7 @@ $(function() {
 														<div class="row">
 															<div class="col">
 																<img src="/soUpload/reviewImage/${review.review_image }"
-																	class="img-fluid rounded-start">
+																	class="img-fluid rounded-start" width=40rem, height=40rem>
 															</div>
 															<div class="col-8 text-left">
 																<c:choose>
@@ -366,7 +370,7 @@ $(function() {
                     <!-- Top 위로 스크롤 -->
 					<div class="cursor-pointer" onClick="javascript:window.scrollTo(0,0)" style="position: fixed; bottom: 1.5em; right: 1.5em; z-index:99999;">
 						 <i class="bi bi-chevron-double-up pl-2"></i>
-						 <span class="block">TOP</span>
+						 <span class="block font-medium2" style="color : #A68A64">TOP</span>
 					</div>
 
 
@@ -410,7 +414,7 @@ geocoder.addressSearch('${office.officeVo.office_address}', function(result, sta
        marker.setMap(map);
        
         // 링크 바꿈 
-        var iwContent = '<div class="text-fs-13 text-center" style="padding:0.5rem;">${office.officeVo.office_name}<br><a href="https://map.kakao.com/link/map/${office.officeVo.office_name}!,' + result[0].y + "," + result[0].x + '" style="color:#A68A64" target="_blank">큰지도보기 |</a> <a href="https://map.kakao.com/link/to/${office.officeVo.office_name}!,' + result[0].y + "," + result[0].x + '" style="color:#A68A64" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        var iwContent = '<div style="padding:0.6rem;">${office.officeVo.office_name}<br><a class="font-medium2 text-fs-13 text-center" href="https://map.kakao.com/link/map/${office.officeVo.office_name}!,' + result[0].y + "," + result[0].x + '" style="color:#A68A64" target="_blank">큰지도보기  | </a> <a class="font-medium2 text-fs-13 text-center" href="https://map.kakao.com/link/to/${office.officeVo.office_name}!,' + result[0].y + "," + result[0].x + '" style="color:#A68A64" target="_blank">  길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
             iwPosition = new kakao.maps.LatLng(geocoder); //인포윈도우 표시 위치입니다
         
          // 인포윈도우로 장소에 대한 설명을 표시합니다
@@ -431,6 +435,7 @@ geocoder.addressSearch('${office.officeVo.office_address}', function(result, sta
 
 </script>
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

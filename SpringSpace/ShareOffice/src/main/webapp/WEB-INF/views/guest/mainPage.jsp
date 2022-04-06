@@ -13,18 +13,34 @@
 <link rel="stylesheet" href="../resources/css/commons.css">
 <link rel="stylesheet" href="../resources/css/style.css">
 
+<style>
+
+</style>
+
 </head>
 <body>
+
+<div class="container-fluid px-0" style="overflow-x : hidden">
+
+
 <jsp:include page="../commons/main.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 3rem;">
+<%-- <div class="row" style="padding-top: 3rem;">
 	<div class="col" style="background-image: url('../resources/img/office.jpg'); background-position: center; height: 14rem; background-size: cover; margin: auto;">
 		<button type="button" class="btn text-white" style="background-color: #A68A64; float: right; margin-top: 11rem; margin-right: 1rem; font-size: 0.8rem;" onclick="location.href='../guest/officeListPage'">오피스 구경하러 가기</button>
 	</div>
+</div> --%>
+
+<div class="row" style="padding-top: 3rem;">
+	<div class="col relative">
+		<img src="../resources/img/office.jpg" class="img-fluid"> 
+		<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; right:1.5rem" onclick="location.href='../guest/officeListPage'">오피스 구경하러 가기</button>
+	</div>
 </div>
 
-<div class="row" style="padding-top: 3rem; padding-bottom: 3rem;">
-	<div class="col" style="background-image: url('../resources/img/host.jpg'); background-position: center; height: 14rem; background-size: cover; margin: auto;">
+
+<%-- <div class="row" style="padding-top: 3rem; padding-bottom: 3rem;">
+	<div class="col" style="background-image: url('../resources/img/host.jpg'); background-position: center; background-size: cover; margin: auto;">
 	<c:choose>
 			<c:when test="${empty sessionUser}">
 				<button type="button" class="btn text-white" style="background-color: #A68A64; margin-top: 11rem; margin-left: 1rem; font-size: 0.8rem;"
@@ -40,10 +56,34 @@
 			</c:when>	
 		</c:choose>
 	</div>
+	</div>
+--%>
+
+<div class="row" style="padding-top: 3rem; padding-bottom: 3rem;">
+	<div class="col relative">
+		<img class="img-fluid" src="../resources/img/host.jpg">
+	<c:choose>
+			<c:when test="${empty sessionUser}">
+				<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; left:1.5rem;"
+				onclick="location.href='../member/loginPage'">호스트 신청하기</button>
+			</c:when>
+			<c:when test="${!empty sessionUser && sessionUser.member_type == 'G' }">
+				<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; left:1.5rem;"
+				onclick="location.href='../guest/applyHostPage'">호스트 신청하기</button>
+			</c:when>
+			<c:when test="${!empty sessionUser && sessionUser.member_type == 'H' }">
+				<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; left:1.5rem;"
+				onclick="location.href='../host/mainPage'">호스트 센터</button>
+			</c:when>	
+		</c:choose>
+	</div>
 </div>
 
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

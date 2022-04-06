@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Insert title here</title>
+<title>Q&A</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -25,15 +25,45 @@
 
 </head>
 <body>
-<jsp:include page="../commons/navbar.jsp"></jsp:include>
+<c:choose>
+	<c:when test="${!empty adminUser }">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <div class="container-fluid" style="padding-left:550px;">
+		    <a class="navbar-brand">관리자 모드</a>
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		      <span class="navbar-toggler-icon"></span>
+		    </button>
+		    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		        <li class="nav-item">
+		          <a class="nav-link" href="../admin/hostManagement">호스트 관리</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="../admin/guestManagement">게스트 관리</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="../board/QnAPage">Q&A 관리</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="../admin/createCouponPage">쿠폰 발급</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="../admin/createdCouponListPage">발급 쿠폰 목록</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="../admin/logoutAdmin">로그아웃</a>
+		        </li>
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
+	</c:when>
+	<c:otherwise>
+		<jsp:include page="../commons/navbar.jsp"></jsp:include>
+	</c:otherwise>
+</c:choose>
 <div class="col" style="padding-top:1%">
 	<div class="row">
-		<c:if test="${!empty adminUser }">
-			<button type="button" class="btn btn-primary" onclick="location.href='../admin/hostManagement'">호스트 관리</button>
-			<button type="button" class="btn btn-secondary" onclick="location.href='../admin/guestManagement'">게스트 관리</button>
-			<button type="button" class="btn btn-success" onclick="location.href='../admin/officeManagement'">오피스 관리</button>
-			<button type="button" class="btn btn-dark" onclick="location.href='../admin/logoutAdmin'">로그아웃</button>
-		</c:if>
 		<div class="col-1"></div>
 		<div class="col-10 text-center">
 		<label>추천 상위 top3</label>

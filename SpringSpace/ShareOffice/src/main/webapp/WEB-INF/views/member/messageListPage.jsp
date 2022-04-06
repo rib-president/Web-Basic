@@ -20,7 +20,6 @@
 			text-align: center; 
 			padding-top: 0.75rem; 
 			padding-bottom: 0.75rem;
-			font-weight: bold;
 		}
 		
 		#sendMessage{
@@ -29,27 +28,27 @@
 			color: white; text-align: center; 
 			padding-top: 0.75rem; 
 			padding-bottom: 0.75rem;
-			font-weight: bold;
 		}
 		
 	</style>
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 2em;">
+<div class="row" style="padding-top: 2em; padding-bottom: 2em;">
 	<div class="col">
-		<div class="row" style="margin-bottom: 1rem; margin-left: 1rem; margin-right: 1rem;">
-			<div class="col text-fs-16" id="message" onclick="location.href='../member/messageListPage'">
+		<div class="row text-fs-16" style="margin-bottom: 1rem; margin-left: 1rem; margin-right: 1rem;">
+			<div class="col" id="message" onclick="location.href='../member/messageListPage'">
 			쪽지보관함</div>
-			<div class="col text-fs-16" id="sendMessage" onclick="location.href='../member/sendMessageListPage'">
+			<div class="col" id="sendMessage" onclick="location.href='../member/sendMessageListPage'">
 			보낸쪽지함</div>
 		</div>
 		
 			<c:forEach items="${datalist }" var="data">
 			<c:choose>
 				<c:when test="${data.messageVo.read_date eq null && data.messageVo.sender_no eq 0}">
-					<div class="card" style="width: auto; margin: 1rem; background: #FFF0F5">
+					<div class="card" style="width: auto; margin: 1rem; background: #FFF0F5;">
 					  <div class="card-body">
 					    <p class="card-title text-fs-16" style="font-weight: bold;">${data.memberVo.member_nick }
 						    <a href="./deleteReceiveMessage?message_no=${data.messageVo.message_no }" style="color: black;">
@@ -61,7 +60,7 @@
 					</div>
 				</c:when>
 				<c:when test="${data.messageVo.read_date eq null && data.messageVo.sender_no ne 0}">
-					<div class="card" style="width: auto; margin: 1rem; background: #ebfbff">
+					<div class="card" style="width: auto; margin: 1rem; background: #ebfbff;">
 					  <div class="card-body">
 					    <p class="card-title text-fs-16" style="font-weight: bold;">${data.memberVo.member_nick }
 					    <c:if test="${data.messageVo.sender_no ne 0 }">
@@ -78,7 +77,7 @@
 					</div>
 				</c:when>
 				<c:when test="${data.messageVo.read_date ne null}">
-					<div class="card" style="width: auto; margin: 1rem;">
+					<div class="card" style="width: auto; margin: 1rem; background-color: #f8f9fa;">
 					  <div class="card-body">
 					    <p class="card-title text-fs-16" style="font-weight: bold;">${data.memberVo.member_nick }
 					    	<c:if test="${data.messageVo.sender_no ne 0 }">
@@ -97,7 +96,7 @@
 			
 			<c:if test="${empty datalist}">
 				<div class="row">
-					<div class="col text-fs-23"style="text-align: center; padding-top: 18rem; padding-bottom: 18rem;">
+					<div class="col text-fs-23"style="text-align: center; padding-top: 8rem; padding-bottom: 13rem;">
 					<i class="bi bi-envelope-slash"></i><br>
 					받은 쪽지가 없습니다.</div>
 				</div>
@@ -108,8 +107,8 @@
 			</div>
 	</div>
 </div>
-
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

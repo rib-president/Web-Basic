@@ -1,17 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<div class="row" style="margin: auto;">
+<%-- <div class="row" style="margin: auto;">
    <div class="col pt-2" style="background-image: url('../resources/img/RRealLogo.jpg'); background-position: center; height: 31.25rem; background-size: cover;">
    		<i data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" class="bi bi-list cursor-pointer text-fs-40 menu" style="color:white;"></i>
    </div>
+</div> --%>
+
+<div class="row">
+   <div class="col relative">
+   		<img src="../resources/img/RRealLogo.jpg" class="img-fluid">
+   		<i data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" class="bi bi-list cursor-pointer text-fs-40 menu absolute" style="color:white; top:.75rem; left:1.5rem;"></i>
+   </div>
 </div>
+
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" style="background-color: #e0e0e0">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title bold ms-1 text-gray-c_25 text-fs-23" id="offcanvasExampleLabel">Menu
     	<a href="../member/messageListPage">
-    		<i class="bi bi-bell-fill menu" style="font-size: 1.7rem; color: #3C3C3C;"></i>
+    		<i class="bi bi-bell-fill menu" style="font-size: 1.25rem; color: #3C3C3C;"></i>
     	</a>
     </h5>
     
@@ -54,7 +62,7 @@
     </c:if>
     
     <div class="row mt-5 mb-3">
-    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">오피스 <i class="bi bi-building"></i></div>
+    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">오피스 <i class="bi bi-building text-black"></i></div>
     </div>
     <div class="row mt-1 ms-1">
     	<div class="col cursor-pointer text-fs-16" onclick="location.href='../guest/officeListPage'">오피스 목록</div>
@@ -70,7 +78,7 @@
 	
 	<c:if test="${!empty sessionUser }">
 		<div class="row mt-5 mb-3">
-	    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">호스트 <i class="bi bi-person"></i></div>
+	    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">호스트 <i class="bi bi-person text-black"></i></div>
 	    </div>
 		<c:choose>
 			<c:when test="${!empty sessionUser && sessionUser.member_type == 'G' }">
@@ -97,7 +105,7 @@
 	</c:if>
 	
 	<div class="row mt-5 mb-3">
-    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">고객센터 <i class="bi bi-telephone"></i></div>
+    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">고객센터 <i class="bi bi-telephone text-black"></i></div>
     </div>
 	<div class="row mt-1 ms-1">
 		<div class="col cursor-pointer text-fs-16" onclick="location.href='../board/freeBoardPage'">자유게시판</div>
@@ -153,6 +161,10 @@ function newMessage(){
 					signal.setAttribute("class","translate-middle badge rounded-pill bg-danger");
 					signal.setAttribute("style","position:absolute; font-size: 0.75rem; top: 1.5rem;");
 					signal.textContent = data.count;
+					
+					if(!menu.classList.contains("bi-bell-fill")) {
+						signal.style.top = "1.1rem";
+					}
 					
 					menu.appendChild(signal);
 					}

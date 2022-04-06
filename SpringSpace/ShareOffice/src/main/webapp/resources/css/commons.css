@@ -85,6 +85,8 @@
     .text-gray-c_25{color:rgba(37,37,37,1)}
     .text-blue{color:rgb(21, 168, 253)}
     .text-blue-light{color:rgb(66, 157, 209)}
+    .text-red-dsoft {color:rgba(224, 32, 32, 0.89);}
+	.text-red {color:rgba(226, 19, 19, 0.89)}
     .text-red-soft {color:rgba(202, 77, 77, 0.89);}
     .text-green-soft{color:rgba(96, 173, 89, 0.781)}
 	.text-green-dsoft{color:rgba(61, 179, 50, 0.959)}
@@ -144,6 +146,7 @@
     .w-full{width:100%}
     
     .text-center{text-align:center}
+    .text-right{text-align:right}
     .items-center{align-items:center}
     .justify-center{justify-content:center}
     
@@ -467,4 +470,6 @@
 	  padding-right: 0.375rem;  
 	}
 	.btn-cf-blue{  background-color: rgba(107, 155, 255, 1);  border-color: rgba(107, 155, 255, 1); border-width: 1px;  color: rgba(255, 255, 255, 1); }
-	.btn-outline-gold {border:0.063rem solid #A68A64; color: #aa834d}    
+	.btn-outline-gold {border:0.063rem solid #A68A64; color: #aa834d}   
+	
+	.divider {background-color: #cccbcbe5; margin-top:1rem; margin-bottom:1rem; height:.25rem} 

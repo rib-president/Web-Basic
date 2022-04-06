@@ -64,14 +64,14 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-	<div class="row" style="padding-top: 70px;">
+	<div class="row" style="padding-top: 2rem;">
 	
 		<div class="col"></div> <!-- 왼쪽 여백 -->
 		
 		<div class="col-10">
 			
-			<div class="row mt-5">
-				<div class="col fs-2 center">이용 후기 작성</div>
+			<div class="row">
+				<div class="col center text-fs-23">이용 후기 작성</div>
 			</div>
 			
 			<div class="row mt-5">
@@ -79,7 +79,7 @@
 					
 					<div class="row"> <!-- 이용 오피스 이름 -->
 						<div class="col">
-							<p class="grayColor">${officeInfo.officeInfoVo.office_name }</p>
+							<p class="grayColor text-fs-16">${officeInfo.officeInfoVo.office_name }</p>
 						</div>
 					</div>
 					
@@ -101,20 +101,20 @@
 			</div>
 			
 			<div class="row mt-2"> <!-- 리뷰제목 -->
-				<div class="col">
+				<div class="col text-fs-16">
 					<input id="inputTitle" class="form-control" type="text" name="review_title" placeholder="후기 제목">
 				</div>
 			</div>
 			
 			<div class="row mt-2"> <!-- 리뷰 내용 -->
-				<div class="col">
+				<div class="col text-fs-16">
 					<textarea id="inputContent" class="form-control" rows="5" name="review_content" placeholder="후기 내용"></textarea>
 				</div>
 			</div>
 			
 			<div class="row"> <!-- 리뷰 사진 -->
 				<div class="col-4 d-grid">
-				  <label class="file-label" for="inputImage">사진 선택</label>
+				  <label class="file-label text-fs-16" for="inputImage">사진 선택</label>
 				  <input class="file" id="inputImage" type="file" name="uploadReviewImage" accept="image/*">
 				</div>
 				<div class="col"></div>
@@ -122,7 +122,7 @@
 			
 			<div class="row" style="padding:1em;"></div>
 			
-			<div class="row mt-5"> <!-- 리뷰 작성 버튼 -->
+			<div class="row mt-4"> <!-- 리뷰 작성 버튼 -->
 		  		<div class="col">
 					<div class="d-grid">
 						<button class="btn buttonColor" onclick="writeReviewValidCheck(event)">후기 작성</button>

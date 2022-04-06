@@ -51,7 +51,8 @@
 <link href="../resources/css/commons.css" rel="stylesheet">
 </head>
 <body>
-<jsp:include page="../commons/navbar.jsp"></jsp:include>
+<jsp:include page="../commons/admin.jsp"></jsp:include>
+
 <div class="row" style="padding-top: 5em; padding-bottom: 5em; padding-left: 5em; padding-right: 5em;">
 	<div class="col">
 		<h1>호스트 관리</h1>
@@ -74,11 +75,7 @@
 				</div>
 			</div>
 			</form>
-			<button type="button" style="margin-bottom: 2em;" class="btn btn-warning" onclick="location.href='adminPage'">메인 페이지</button>
-			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-secondary" onclick="location.href='guestManagement'">게스트 관리</button>
-			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-success" onclick="location.href='officeManagement'">오피스 관리</button>
-			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-danger" onclick="location.href='../board/QnAPage'">Q&A 관리</button>
-			<button type="button" style="margin-left: 2.5em; margin-bottom: 2em;" class="btn btn-dark" onclick="location.href='../admin/logoutAdmin'">로그아웃</button>
+			
 			<col width="50"><col width="200"><col width="200"><col width="150">
 			<col width="150"><col width="100"><col width="200"><col width="250">
 			<col width="250">
@@ -124,24 +121,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<form action="./hostManagement" method="get">
-		<div class="row mb-3">
-			<div class="col">
-				<select name="searchOption" class="form-select">
-					<option value="number">번호</option>
-					<option value="name">대표자명</option>
-					<option value="id">상호명</option>
-					<option value="approve">승인여부</option>
-				</select>
-			</div>
-			<div class="col-8">
-				<input name="searchStr" type="text" class="form-control">
-			</div>
-			<div class="col d-grid">
-				<input type="submit" value="검색" class="btn btn-primary">
-			</div>
-		</div>
-		</form>
+		
 		<!--  
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">

@@ -38,10 +38,17 @@ public class GuestController_H {
 	@RequestMapping("officeListPage")
 	public String officeList(Model model) {
 		ArrayList<HashMap<String, Object>> officelist = guestService_H.getLatestOfficeList();
-		//int minOfficePrice = guestService_H.getOfficeMinPrice(office_no);
 		
+		for(HashMap<String, Object> office : officelist) {
+			if(office.get("officeAvgRating") == null) {
+				office.put("officeAvgRating", 0.0);
+			}
+			System.out.println("평균 : " + office.get("officeAvgRating"));
+		}
+		
+				
 		model.addAttribute("officelist",officelist);
-		//model.addAttribute("minOfficePrice",minOfficePrice);
+	
 		
 		return "guest/officeListPage";
 	}

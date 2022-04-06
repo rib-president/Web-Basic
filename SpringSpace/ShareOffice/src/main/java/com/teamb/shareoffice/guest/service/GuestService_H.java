@@ -40,6 +40,7 @@ public class GuestService_H {
 			ArrayList<FacilityCategoryVo> facilityCategoryList = guestMapper_H.getFacilityByNo(officeVo.getOffice_no());
 			
 			int officeMinPrice = guestMapper_H.getOfficeMinPrice(officeVo.getOffice_no());
+			Double officeAvgRating = guestMapper_H.getAvgRating(officeVo.getOffice_no());
 			
 			HashMap<String, Object> map = new HashMap<String, Object>();	
 			//운영시간 및 가격 가져오기(수정 필요)
@@ -48,6 +49,7 @@ public class GuestService_H {
 		    map.put("officeVo", officeVo);
 		    map.put("businessDayList",businessDayList);
 		    map.put("officeMinPrice",officeMinPrice);
+		    map.put("officeAvgRating",officeAvgRating);
 		    map.put("facilityCategoryList",facilityCategoryList);
 		
 		  
@@ -58,6 +60,11 @@ public class GuestService_H {
 		
 		return officelist;
 	}	
+	//이용후기 평점 평균
+	public double getOfficeAvgRating(int office_no) {
+		return guestMapper_H.getAvgRating(office_no);
+	};
+	
 	//오피스 위치 전체 출력
     public ArrayList<OfficeInfoVo> getLocationList(String searchKeyword){
     	
@@ -96,6 +103,8 @@ public class GuestService_H {
 	public int getImageCount(int office_no) {
 		return guestMapper_H.getImageCount(office_no);
 	}
+
+
 	
 	// 오피스 이용후기리스트 페이지
 	public ArrayList<HashMap<String, Object>> reviewList(int office_no) {

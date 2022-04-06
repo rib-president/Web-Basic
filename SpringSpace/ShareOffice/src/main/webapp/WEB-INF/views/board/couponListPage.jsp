@@ -14,7 +14,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 
-
+<style>
+	#tiledBackground {
+	  background-image: uri(img/tempCoupon.png);
+	  background-size: 150px;
+	  width: 300px;
+	  height: 300px;
+	  border: 2px solid;
+	  color: wihte;
+		}
+</style>
 <%--
 <script>
 	function check(this){
@@ -57,11 +66,12 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 10px;">
-	<div class="col m-3">
+<div class="row" style="padding-top: 2em;">
+	<div class="col" style="margin:2rem">
 		<div class="row">
 		<%-- 
 			<c:forEach items="${CouponVo }" var="coupon" varStatus="statusCoupon">
+			여기는 완전 갈아엎어야함 ! 
 		--%> 
 			<c:forEach items="${CouponVo }" var="coupon">
 				<form action="./getCouponProcess" method="post" name="check" onsubmit="check(this); return false">

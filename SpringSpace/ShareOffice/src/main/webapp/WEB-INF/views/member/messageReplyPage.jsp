@@ -19,6 +19,13 @@
 	 form.submit()
 }
 
+ function goList() {
+     if (!confirm("목록으로 돌아가시겠습니까?")) {
+         return;
+     } else {
+    	 location.href='../member/messageListPage';
+     }
+ }
 </script>
 	
 	<style>
@@ -30,42 +37,49 @@
 			text-align: center; 
 			padding-top: 0.3rem; 
 			padding-bottom: 0.3rem;
-			font-weight: bold;
 		}
 	</style>
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 2em;">
+<div class="row" style="padding-top: 2em; padding-bottom: 2em;">
 	<div class="col">
-		<div class="row" style="margin-left: 1rem; margin-right: 1rem; margin-bottom: 1rem;">
-			<div class="col text-fs-16" id="sendMessage">답장하기</div>
+		<div class="row">
+			<div class="col text-fs-23" style="text-align: center; margin-bottom: 0.5rem;">답장하기</div>
 		</div>
 		
 		<form action="./replyMessageProcess" class="form text-fs-16" role="form" name="userInput">
 			<div class="row">
-				<div class="col" style="margin-left: 1rem; padding-top: 0.5rem;">
-					작성자 : ${sessionUser.member_nick }
+				<div class="col" style="margin-left: 1rem; margin-bottom: 0.5rem;">
+					<div class="inline-block">작성자</div>
+					<div class="inline-block pl-3 bold">${sessionUser.member_nick }</div>
 				</div>
-				<div class="col" style="text-align: right; margin-right: 1rem; font-size: 1.8rem;">
-					<i class="bi bi-send" onclick="goData()"></i>
+				<div class="col" style="text-align: right; margin-right: 1rem; font-size: 1.4rem;">
+					<i class="bi bi-x-lg" onclick="goList();"></i>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col" style="margin-left: 1rem;">
-					받는 사람 : ${data.memberVo.member_nick }<input type="hidden" value="${data.messageVo.sender_no }" name="receive_no">
+					<div class="inline-block">받는 사람</div>
+					<div class="inline-block pl-3 bold">${data.memberVo.member_nick }</div>
+					<input type="hidden" value="${data.messageVo.sender_no }" name="receive_no">
 				</div>
     		</div>
     		<hr>
     		<div class="mb-3" style="margin: 1rem;">
-			   <textarea class="form-control" id="exampleFormControlTextarea1" rows="18" name="txt" placeholder="내용을 입력해 주세요."></textarea>
+			   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="txt" placeholder="내용을 입력해 주세요."></textarea>
+			</div>
+			<div class="row" style="margin-left: 1rem; margin-right: 1rem; margin-bottom: 1rem;">
+				<div class="col text-fs-16" id="sendMessage" onclick="goData()"><i class="bi bi-send"></i> 답장하기</div>
 			</div>
 		</form>
 	</div>
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

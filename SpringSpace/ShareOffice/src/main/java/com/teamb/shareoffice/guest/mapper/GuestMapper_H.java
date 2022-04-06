@@ -39,7 +39,8 @@ public interface GuestMapper_H {
 	//리뷰 상세보기
 	public ReviewVo getReviewByReviewNo(int review_no);
 	public MemberVo getMemberNickByOrderNo(int order_no);
-	
+	//리뷰 평점 구하기
+	public Double getAvgRating(int office_no);
 	
 	//호스트 신청하기
 	public void insertApplyHostInfo(HostVo hvo);

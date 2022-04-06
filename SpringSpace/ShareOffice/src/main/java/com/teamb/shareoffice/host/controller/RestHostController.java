@@ -1,5 +1,6 @@
 package com.teamb.shareoffice.host.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,16 +75,15 @@ public class RestHostController {
 		OrderVo orderVo = hostServiceRN.getOrderByRentalNo(rental_no);
 		
 		RentalVo rentalVo = hostServiceRN.getRental(rental_no);
-		
+
 		KakaoRestAPI kakaoRestAPI = new KakaoRestAPI();
 		
 		Map<String, Object> resultMap = kakaoRestAPI.payCancel(orderVo.getOrder_tid(), String.valueOf(rentalVo.getRental_price()), memberService.getKakaoKey());
-		
+
 		if(resultMap.get("tid").toString().equals(orderVo.getOrder_tid())) {
 			hostServiceRN.modifyRentalStatus(rental_no, "C");
 			data.put("result", "success");
 			
-			hostServiceRN.modifyRentalStatus(rental_no, "C");
 		} else {
 			data.put("result", "error");
 			data.put("message", "취소 실패");
@@ -91,6 +91,44 @@ public class RestHostController {
 		
 		return data;
 	}
+	
+	@RequestMapping("cancelRentalList")
+	public HashMap<String, Object> cancelRentalList(int[] rental_no_list) {
+		HashMap<String, Object> data = new HashMap<>();
+		
+		String tid = null;
+		int cancelPrice = 0;
+				
+		for(int rental_no : rental_no_list) {
+			OrderVo orderVo = hostServiceRN.getOrderByRentalNo(rental_no);			
+			RentalVo rentalVo = hostServiceRN.getRental(rental_no);
+			
+			tid = orderVo.getOrder_tid();
+			cancelPrice += rentalVo.getRental_price();
+		}
+
+		KakaoRestAPI kakaoRestAPI = new KakaoRestAPI();
+		
+		Map<String, Object> resultMap = kakaoRestAPI.payCancel(tid, String.valueOf(cancelPrice), memberService.getKakaoKey());
+
+		for(String key : resultMap.keySet()) {
+			System.out.println("key : " + key + ", value : " + resultMap.get(key));
+		}
+		
+		
+		if(resultMap.get("tid").toString().equals(tid)) {
+			for(int rental_no : rental_no_list) {
+				hostServiceRN.modifyRentalStatus(rental_no, "C");					
+			}
+			data.put("result", "success");
+			data.put("cancelPrice", cancelPrice);
+		} else {
+			data.put("result", "error");
+			data.put("message", "취소 실패");
+		}				
+		
+		return data;
+	}	
 	
 	@RequestMapping("searchOrder")
 	public HashMap<String, Object> searchOrder(String category, String searchKeyword, boolean onlyCancel) {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a89f71e1f43b65b9072477b5fb3f976&libraries=services"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+<link href="../resources/css/commons.css" rel="stylesheet">
 <script type="text/javascript">
 
 
@@ -150,39 +151,88 @@ window.addEventListener("DOMContentLoaded" , function(){
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">    
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
-<div class="row " style="padding-top: 2em;">
-   <div class="col" style="margin:1em">
-      <div class="row mt">      
-           <div class="col">           
-             <input  type="text"  id="search__address_keyword" 
-			      class="form-control form-control-sm" placeholder="검색할 지역명을 입력해주세요.">			      	    
-		   </div>  
-		   <div class="col-2">
-		          <button type="button" onclick="moveFocus()" class="btn btn-lg default"><i class="bi bi-search"></i></button>
-		   </div>
-		   
-      </div>
+		<div class="row " style="padding-top: 2em;">
+			<div class="col" style="margin: 0.5em">
+				<div class="row" style="">
+					<p class=" text-fs-23 " style="text-align: center;">오피스 찾기</p>
+				</div>
+				<div class="row mt">
+					<div class="col" style="margin: 0; padding-right: 0.5rem">
+						<input type="text" id="search__address_keyword"
+							class="form-control form-control-sm"
+							placeholder="검색할 지역명을 입력해주세요.">
+					</div>
+					<div class="col-1" style="padding: 0; text-align: left;">
+						<button type="button" onclick="moveFocus()"
+							class="btn btn-lg default" style="padding: 0;">
+							<i class="bi bi-search"></i>
+						</button>
+					</div>
 
-      <div class="row">
-         <div class="col">
-			<p style="margin-top: -0.75em">
-				<em class="link"> <a href="javascript:void(0);"
-					onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
+				</div>
+				<!-- 지도 출력 -->
+				<div class="row">
+					<div class="col">
+						<p style="margin-top: -0.75em">
+							<em class="link"> <a href="javascript:void(0);"
+								onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
 
-				</a>
-				</em>
-			</p>
-			<div id="map" style="width:100%;height:21em;"></div>
-		</div>			
-	 </div>	
-	 <div class="row">
-	 	<div class="col" id="selectedOfficeInfoBox"></div>
-	 </div>	
-  </div>
+							</a>
+							</em>
+						</p>
+						<div id="map" style="width: 100%; height: 21em;"></div>
+					</div>
+				</div>
+				<!-- 마커 클릭 시 오피스 정보 -->
+				<div class="row">
+					<div class="col" id="selectedOfficeInfoBox">
+				   <!-- <c:forEach></c:forEach> -->
+						<div class="card" style="padding-top:1rem;padding-bottom:1rem">
+							<div class="row">
+								<div class="col-auto" style="margin-left:0.5rem;padding-right:0">
+									<img src="" width=120rem, height=90em>
+								</div>
+								<div class="col" style="">
+								    <div class="card-body" style="padding:0;margin:0;text-align:left;">
+										<div class="row">
+											<div class="col text-fs-17 font-medium2">오피스 이름</div>
+										</div>
+										<div class="row text-fs-13">
+											<div class="col">
+												<p class="card-text">
+													<small class="text-muted">#태그 삽입 </small>
+												</p>
+											</div>
+										</div>
+										<div class="row mt text-fs-13" style="">
+						 	                 <div class="col ">
+							                	<p style="margin:0"><i class="bi bi-geo-alt"></i>주소 </p>
+							                </div>						 
+						                 </div>		
+						                 <div class="row mt-1 text-fs-16" style="margin:0;">
+											<div class="col-4" style="text-align:left;padding:0;">
+						                       <p style="margin:0" ><i class="bi bi-star-fill"></i>4.0</p>
+						                    </div>						                   
+					                       	<div class="col fw-bold" style="text-align:right;">
+								               <p class="text-muted" style="margin:0">
+									              <fmt:formatNumber value="500000" pattern="#,###"/>~ <span class="font-light text-fs-13 ">원/일</span></p>
+						                    </div>						                     
+						                 </div>	
+						              </div>   
+								</div>
+							
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<jsp:include page="../commons/footer.jsp"></jsp:include>
 </div>
-<jsp:include page="../commons/footer.jsp"></jsp:include>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

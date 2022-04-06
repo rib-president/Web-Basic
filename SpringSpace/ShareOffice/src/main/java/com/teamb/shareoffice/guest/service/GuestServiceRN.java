@@ -41,14 +41,15 @@ public class GuestServiceRN {
 	public void useCoupon(int allot_no) {
 		guestMapperRN.useCoupon(allot_no);
 	}
-	
-	public HashMap<String, Object> getOrderDetailInfo(int member, int order_no) {
-		
+
+	public HashMap<String, Object> getOrderDetailInfo(int member_no, int order_no) {
+
 		HashMap<String, Object> map = new HashMap<>();
-		
+
+		System.out.println("member_no : " + member_no + ", order_no" + order_no);
 		OrderVo orderVo = guestMapperRN.selectOrderByOrderNo(order_no);
 		ArrayList<RentalVo> rentalVoList = guestMapperB.getRentalListByOrderNo(order_no);
-		
+
 
 		Calendar calendar = Calendar.getInstance();
 		String[] weekList = {"일", "월", "화", "수", "목", "금", "토"};
@@ -61,19 +62,21 @@ public class GuestServiceRN {
 			} else {
 				totalPrice += rentalVo.getRental_price();	
 			}
-						
+			
 			calendar.setTime(rentalVo.getRental_date());
+			//calendar.add(Calendar.DATE, 1);
 			originPrice += guestMapperRN.selectBusinessDayPrice(orderVo.getOffice_no(), weekList[calendar.get(Calendar.DAY_OF_WEEK)-1]);
 		}
-		
+
 		map.put("orderVo", orderVo);
 		map.put("rentalVoList", guestMapperB.getRentalListByOrderNo(order_no));
 		map.put("totalPrice", totalPrice);
 		map.put("originPrice", originPrice);
-		map.put("couponPrice", originPrice - totalPrice);
+		map.put("couponPrice", originPrice - totalPrice - cancelPrice);
 		map.put("cancelPrice", cancelPrice);
 		map.put("officeVo", guestMapperB.getOfficeInfoByOfficeNo(orderVo.getOffice_no()));
-		
+
 		return map;
 	}
+	
 }

@@ -32,52 +32,53 @@
 <body>
 	<jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
-	
+<div class="row" style="padding-top: 2em;">
+		<%--
 			<div style="overflow-x:auto;">
-	<div class="col m-3">
-	<%-- 내용작성 --%>
-		<div class="row">
-			<div class="col">
-			
-			
-			<table class="table">
-				 
-				    <tr>
-				      <th class="text-center">no</th>
-				      <th class="text-center">제목</th>
+		 --%>
+				<div class="col" style="margin:2rem">
+				<%-- 내용작성 --%>
+					<div class="row">
+						<div class="col text-center">
+							<div class="text-fs-23">자유게시판</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col text-center">
+							<table class="table">
+							    <tr>
+							    <%-- class="position-absolute top-50 start-50" --%>
+							      <th class="text-center">no</th>
+							      <th class="text-center">title</th>
+							    </tr>
+							  <c:forEach items="${freeBoardList }" var="freeBoardList">
+							    <tr>
+							      	<td class="text-center">${freeBoardList.freeBoardVo.freeboard_no }</td>
+							    	<td>
+								      	<a href="./freeBoardReadPage?freeboard_no=${freeBoardList.freeBoardVo.freeboard_no }">
+								      	${freeBoardList.freeBoardVo.freeboard_title }
+								      	</a>
+								      	 <%-- 새글 뱃지 추가해함
+								      	<c:if test="${!empty data.newKeyword }">
+								      		<span class="badge bg-danger">new</span>
+								      	</c:if>
+								      	  --%> 
+								      	  <br>
+								      	<span>작성자 : ${freeBoardList.memberVo.member_nick }</span>
+								      	<span>작성일 : <fmt:formatDate value="${freeBoardList.freeBoardVo.freeboard_writeDate }" pattern="M.dd" /></span>
+								      	<span>조회수 : ${freeBoardList.freeBoardVo.freeboard_readCount }</span>
+							      	</td>
+							    	</tr>
+								</c:forEach>
+							</table>
+						</div>
+					</div>	
+						
+				</div>
+						
 				
-				    </tr>
-				 
-				  <c:forEach items="${freeBoardList }" var="freeBoardList">
-				    <tr>
-				      	<td class="text-center">${freeBoardList.freeBoardVo.freeboard_no }</td>
-				    	<td>
-					      	
-					      	<a href="./freeBoardReadPage?freeboard_no=${freeBoardList.freeBoardVo.freeboard_no }">
-					      	 
-					      	${freeBoardList.freeBoardVo.freeboard_title }
-					      	</a>
-					      	 <%-- 고민
-					      	<c:if test="${!empty data.newKeyword }">
-					      		<span class="badge bg-danger">new</span>
-					      	</c:if>
-					      	  --%> 
-					      	  <br>
-				      	<span>작성자 : ${freeBoardList.memberVo.member_nick }</span>
-				      	<span>작성일 : <fmt:formatDate value="${freeBoardList.freeBoardVo.freeboard_writeDate }" pattern="M.dd" /></span>
-				      	<span>조회수 : ${freeBoardList.freeBoardVo.freeboard_readCount }</span>
-				      	</td>
-				    	</tr>
-					</c:forEach>
-				
-			</table>	
-			
 			</div>
-			
-		</div>
-	</div>
-</div>
 		<div class="row">
 			<div class="col">
 				<%-- 수정
@@ -142,8 +143,9 @@
 			<div class="col"></div>
 		</div>	
 
-
+<%--
 </div>
+ --%>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
 

@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <!DOCTYPE html>
+
 <%
  String strReferer = request.getHeader("referer");
  
@@ -16,6 +17,7 @@
   return;
  }
 %>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -28,19 +30,8 @@
 
 </head>
 <body>
-<jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 0.5em; padding-bottom: 0.5em; padding-left: 45.6em;">
-	<div class="col">
-		<h1 style="padding-left: 3.5em;">관 리 자 메 뉴</h1>
-		<button type="button" class="btn btn-primary" onclick="location.href='hostManagement'">호스트 관리</button>
-		<button type="button" class="btn btn-secondary" onclick="location.href='guestManagement'">게스트 관리</button>
-		<button type="button" class="btn btn-success" onclick="location.href='officeManagement'">오피스 관리</button>
-		<button type="button" class="btn btn-danger" onclick="location.href='../board/QnAPage'">Q&A 관리</button>
-		<button type="button" class="btn btn-info" onclick="location.href='../board/createCouponPage'">쿠폰 발급</button>
-		<button type="button" class="btn btn-dark" onclick="location.href='../admin/logoutAdmin'">로그아웃</button>
-	</div>
-</div>
+<jsp:include page="../commons/admin.jsp"></jsp:include>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

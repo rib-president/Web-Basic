@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.teamb.freenext.vo.AdminVo;
 import com.teamb.freenext.vo.MemberCompanyVo;
@@ -36,5 +37,12 @@ public interface AdminMapper {
 	public int getTotalCompany();
 	
 	public MemberCompanyVo selectCompanyVoByMemberNo(int member_no);
-		
+	
+	public ArrayList<HashMap<String, String>> selectAllMemberType();
+	public ArrayList<HashMap<String, String>> selectJoinDateDuringWeek(@Param("startDate") String startDate, @Param("endDate") String endDate);
+	public ArrayList<HashMap<String, String>> selectRegistProjectCntDuringWeek(@Param("cooperation_no") int cooperation_no, @Param("startDate") String startDate, @Param("endDate") String endDate);
+	public ArrayList<HashMap<String, String>> selectCountGroupByCooperation();
+	public ArrayList<HashMap<String, String>> selectJobCategoryProportion();
+	public int selectTotalAdPrice();
+	public ArrayList<HashMap<String, String>> selectAdCountDuringWeek(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }

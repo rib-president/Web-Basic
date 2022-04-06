@@ -19,7 +19,7 @@
 	update so_allotcoupon set allot_useOrUnuse = 'Y' where allot_no = #{allot_no};
 </update>
 
-<select id="selectOrderByOrderNo " resultType="com.teamb.shareoffice.vo.OrderVo">
+<select id="selectOrderByOrderNo" resultType="com.teamb.shareoffice.vo.OrderVo">
 	select *
 	from so_order
 	where order_no = #{order_no}
@@ -30,6 +30,6 @@
 	from so_businessday
 	where business_day = #{business_day}
 	and office_no = #{office_no}
-</select>
+</select> 
 
 </mapper>

@@ -56,7 +56,7 @@
     </c:if>
     
     <div class="row mt-5 mb-3">
-    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">오피스 <i class="bi bi-building"></i></div>
+    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">오피스 <i class="bi bi-building text-black"></i></div>
     </div>
     <div class="row mt-1 ms-1">
     	<div class="col cursor-pointer text-fs-16" onclick="location.href='../guest/officeListPage'">오피스 목록</div>
@@ -72,7 +72,7 @@
 	
 	<c:if test="${!empty sessionUser }">
 		<div class="row mt-5 mb-3">
-	    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">호스트 <i class="bi bi-person"></i></div>
+	    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">호스트 <i class="bi bi-person text-black"></i></div>
 	    </div>
 		<c:choose>
 			<c:when test="${!empty sessionUser && sessionUser.member_type == 'G' }">
@@ -99,7 +99,7 @@
 	</c:if>
 	
 	<div class="row mt-5 mb-3">
-    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">고객센터 <i class="bi bi-telephone"></i></div>
+    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">고객센터 <i class="bi bi-telephone text-black"></i></div>
     </div>
 	<div class="row mt-1 ms-1">
 		<div class="col cursor-pointer text-fs-16" onclick="location.href='../board/freeBoardPage'">자유게시판</div>
@@ -138,7 +138,6 @@ function newMessage(){
 			
 			var menus = document.getElementsByClassName("menu");
 			
-			
 			if(data.result == 'newMessage') {
 
 
@@ -154,6 +153,12 @@ function newMessage(){
 					var signal = document.createElement("span");
 					signal.setAttribute("class","translate-middle badge rounded-pill bg-danger");
 					signal.setAttribute("style","position:absolute; font-size: 0.75rem; top: 1.5rem;");
+
+					if(!menu.classList.contains("bi-bell-fill")) {
+						signal.style.left = "3rem";
+					}
+
+					
 					signal.textContent = data.count;
 					
 					menu.appendChild(signal);
@@ -167,6 +172,8 @@ function newMessage(){
 				}
 				
 			}
+			
+			
 			
 			firstCheckMessage = false;
 

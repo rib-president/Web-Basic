@@ -44,7 +44,9 @@
 				}
 				
 				for(e of data.officeRentalList){
-					reservationCompleteDate.push(new Date(e.rental_date));
+					if(e.rental_status != 'C') {
+						reservationCompleteDate.push(new Date(e.rental_date));	
+					}					
 				}
 				
 				
@@ -89,6 +91,9 @@
 			return;
 		};
 		
+		//인원 값 넘기기
+		var orderPersonnel = document.getElementById("personnel");
+		personnelInput.value = parseInt(orderPersonnel.innerText);
 		
 		//submit 실행
 		var frm = document.getElementById("frm");
@@ -117,6 +122,35 @@
 		var parseIntText = parseInt(document.getElementById("totalReservationDay").innerText);
 		parseIntText -= parseInt(1);
 		document.getElementById("totalReservationDay").innerText = parseIntText;
+		
+	}
+	
+	function addPersonnel() {
+		
+		var parseIntText = parseInt(document.getElementById("personnel").innerText);
+		
+		if(parseIntText >= "${officeInfo.officeInfoVo.office_personnel }") {
+			alert("최대 예약가능 인원은 " + "${officeInfo.officeInfoVo.office_personnel }" + "명 입니다.");
+			return;
+		} else {
+			parseIntText += parseInt(1);
+			document.getElementById("personnel").innerText = parseIntText;
+		}
+		
+		
+		
+	}
+	
+	function reducePersonnel() {
+		
+		var parseIntText = parseInt(document.getElementById("personnel").innerText);
+		parseIntText -= parseInt(1);
+		if(parseIntText <= 1) {
+			document.getElementById("personnel").innerText = 1;
+		} else {
+			document.getElementById("personnel").innerText = parseIntText;
+		}
+		
 		
 	}
 	
@@ -458,7 +492,7 @@
 		<div class="col-10">
 		<form id="frm" action="paymentPage" method="post">
 			<div class="row mt-3">
-				<div class="col fs-2 center">예약하기</div>
+				<div class="col center text-fs-23">예약하기</div>
 			</div>					
 			
 			<div class="row mt-3">
@@ -498,11 +532,21 @@
 			
 			</div>
 			
-			<div class="row mt-4 text-fs-13 mb-2"> <!-- 인원체크 -->
-				<div class="col pt-1">예약 인원(최대 ${officeInfo.officeInfoVo.office_personnel}명)</div>
-				<div class="col-3">
+			<div class="row mt-4 mb-2"> <!-- 인원체크 -->
+				<div class="col text-fs-13 bold" style="padding-top:0.75rem;">예약 인원
+				<span class="text-fs-11">(최대 ${officeInfo.officeInfoVo.office_personnel}명)</span>
+				</div>
+				<div class="col-4 right">
+					<span class="text-fs-28" onclick="reducePersonnel();">-&nbsp;</span> 
+					<span class="text-fs-19 bold" id="personnel">1</span> 
+					<span class="text-fs-28" onclick="addPersonnel();">&nbsp;+</span>
+					<input id="personnelInput" type="hidden" name="order_personnel"/>
+				</div>
+				<%--
+				<div class="col-2">
 					 <input id="personnelInput" type="number" name="order_personnel" class="form-control form-control-sm" onblur="preventMax(this, ${officeInfo.officeInfoVo.office_personnel })" min="1" max="${officeInfo.officeInfoVo.office_personnel }" value="1" />
 				</div>
+				 --%>
 			</div>
 			<hr>
 			

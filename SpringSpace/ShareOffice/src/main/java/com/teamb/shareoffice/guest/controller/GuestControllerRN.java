@@ -95,7 +95,7 @@ public class GuestControllerRN {
 		
 		int discountPrice = 0;
 		if(coupon_discount > 0) {
-			discountPrice = coupon_discount / rental_date.length;	
+			discountPrice = (int) (Math.floor((coupon_discount*1.0) / rental_date.length));	
 		}
 		
 		orderVo.setMember_no(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
@@ -106,6 +106,7 @@ public class GuestControllerRN {
 		for(Date rentalDay : rental_date) {
 			RentalVo rentalVo = new RentalVo();
 			
+			System.out.println("처음 rentalDay : " +rentalDay);
 			
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(rentalDay);
@@ -119,7 +120,7 @@ public class GuestControllerRN {
 			businessDayVo.setOffice_no(orderVo.getOffice_no());
 			
 			businessDayVo.setBusiness_day(day);
-			
+						
 			rentalVo.setRental_date(rentalDay);
 			rentalVo.setRental_price(guestServiceB.getPriceAndBusiunessTime(businessDayVo).getBusiness_day_price() - discountPrice);
 			
@@ -149,7 +150,7 @@ public class GuestControllerRN {
 		int coupon_discount = Integer.valueOf(String.valueOf(params.get("coupon_discount")));
 		int discountPrice = 0;
 		if(coupon_discount > 0) {
-			discountPrice = coupon_discount / rental_date.size();	
+			discountPrice = (int) (Math.floor((coupon_discount*1.0) / rental_date.size()));
 		}
 		
 		
@@ -193,7 +194,7 @@ public class GuestControllerRN {
 			}
 		}
 		
-		guestServiceRN.order(orderVo, rentalVoList);
+		int order_no = guestServiceRN.order(orderVo, rentalVoList);
 		
 		if(allot_no > 0) {
 			guestServiceRN.useCoupon(allot_no);
@@ -203,14 +204,15 @@ public class GuestControllerRN {
 		session.removeAttribute("params");
 		session.removeAttribute("tid");
 		
-		return "redirect:../guest/officeRentalDetailPage?office_no=" + orderVo.getOffice_no();
+		return "redirect:../guest/officeRentalDetailPage?order_no=" + order_no;
 	}*/
 	
 	@RequestMapping("officeRentalDetailPage")
 	public String officeRentalDetailPage(int order_no, HttpSession session, Model model) {
 		
+		System.out.println("order_no : " + order_no);
 		model.addAttribute("orderData", guestServiceRN.getOrderDetailInfo(((MemberVo) session.getAttribute("sessionUser")).getMember_no(), order_no));
-		
+
 		return "guest/officeRentalDetailPage";
 	}
 	
