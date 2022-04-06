@@ -4,14 +4,14 @@
 <div class="row bg-gray-c_3c" style=" margin: auto;" id="banner">
    <div class="col-2 pt-2"><i data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" class="bi bi-list cursor-pointer text-fs-40 menu" style="color:white;"></i></div>
    <div class="col-8 pt-1 pb-1 pl-4 text-center" onclick="location.href='../guest/mainPage'">
-      <img alt="logo" src="../resources/img/RealLogo.png" class="img-fluid">
+      <img alt="logo" src="../resources/img/RealLogoNav.png" class="img-fluid">
    </div>
    <div class="col-2"></div>
 </div>
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" style="background-color: #e0e0e0">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title bold ms-1 text-gray-c_25" id="offcanvasExampleLabel">Menu
+    <h5 class="offcanvas-title bold ms-1 text-gray-c_25 text-fs-23" id="offcanvasExampleLabel">Menu
     	<a href="../member/messageListPage">
     		<i class="bi bi-bell-fill menu" style="font-size: 1.7rem; color: #3C3C3C;"></i>
     	</a>
@@ -26,8 +26,8 @@
 				<div class="col cursor-pointer" onclick="location.href='../member/loginPage'"><img class="img-fluid" src="../resources/img/4.png"></div>
 			</c:when>
 			<c:otherwise>
-				<div class="col text-gray-c_25" style="font-weight: bold; margin-left: .5rem; font-size: 1.5rem;">❤ ${sessionUser.member_nick } 님</div>
-				<div class="col cursor-pointer" style="text-align: right; padding-top:.4rem" onclick="location.href='../member/logoutProcess'"><i class="bi bi-unlock text-gold"></i> logout</div>
+				<div class="col text-gray-c_25 text-fs-23" style="font-weight: bold; margin-left: .5rem;">❤ ${sessionUser.member_nick } 님</div>
+				<div class="col cursor-pointer text-fs-16" style="text-align: right; padding-top:.4rem" onclick="location.href='../member/logoutProcess'"><i class="bi bi-unlock text-gold"></i> logout</div>
 			</c:otherwise>
 		</c:choose>
 	</div>
@@ -35,63 +35,63 @@
 	<c:if test="${!empty sessionUser }">
 	    <div class="row mt-3 mb-2">
 	    	<div class="col" style="text-align: center;">
-	    		<button type="button" class="btn text-white btn-block pl-7" style="background-color: #A68A64; width: 100%; text-align: left;"
+	    		<button type="button" class="btn text-white btn-block pl-7 text-fs-16" style="background-color: #A68A64; width: 100%; text-align: left;"
 				onclick="location.href='../member/testMyPage'">마이페이지</button>
 	    	</div>
 	    </div>
 	    <div class="row">
 	    	<div class="col pr-1">
-	    		<button type="button" class="btn text-white btn-block" style="background-color: #A68A64; width: 100%;"
-				onclick="location.href='#'">예약목록</button>
+	    		<button type="button" class="btn text-white btn-block text-fs-16" style="background-color: #A68A64; width: 100%;"
+				onclick="location.href='#'"><i class="bi bi-card-list text-white"></i> 예약목록</button>
 	    	</div>
 	    	<div class="col pl-1 pr-1">
-	    		<button type="button" class="btn text-white btn-block" style="background-color: #A68A64; width: 100%;"
+	    		<button type="button" class="btn text-white btn-block text-fs-16" style="background-color: #A68A64; width: 100%;"
 				onclick="location.href='../board/myCouponPage'"><i class="bi bi-ticket-perforated text-white"></i> 쿠폰함</button>
 	    	</div>
 	    	<div class="col pl-1">
-	    		<button type="button" class="btn text-white btn-block" style="background-color: #A68A64; width: 100%;"
-				onclick="location.href='../member/messageListPage'"><i class="bi bi-envelope"></i> 쪽지함</button>
+	    		<button type="button" class="btn text-white btn-block text-fs-16" style="background-color: #A68A64; width: 100%;"
+				onclick="location.href='../member/messageListPage'"><i class="bi bi-envelope text-white"></i> 쪽지함</button>
 	    	</div>
 	    </div>
     </c:if>
     
     <div class="row mt-5 mb-3">
-    	<div class="col cursor-pointer" style="font-weight: bold;">오피스</div>
+    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">오피스 <i class="bi bi-building"></i></div>
     </div>
     <div class="row mt-1 ms-1">
-    	<div class="col cursor-pointer" onclick="location.href='../guest/officeListPage'">오피스 목록</div>
+    	<div class="col cursor-pointer text-fs-16" onclick="location.href='../guest/officeListPage'">오피스 목록</div>
     </div>
 	<div class="row mt-1 ms-1">
-		<div class="col cursor-pointer" onclick="location.href='../guest/officeMapPage'">오피스 검색</div>
+		<div class="col cursor-pointer text-fs-16" onclick="location.href='../guest/officeMapPage'">오피스 검색</div>
 	</div>
 	<c:if test="${!empty sessionUser }">
 		<div class="row mt-1 ms-1">
-			<div class="col cursor-pointer" onclick="location.href='../guest/officeRentalListPage'">오피스 예약 목록</div>
+			<div class="col cursor-pointer text-fs-16" onclick="location.href='../guest/officeRentalListPage'">오피스 예약 목록</div>
 		</div>			
 	</c:if>
 	
 	<c:if test="${!empty sessionUser }">
 		<div class="row mt-5 mb-3">
-	    	<div class="col cursor-pointer" style="font-weight: bold;">호스트</div>
+	    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">호스트 <i class="bi bi-person"></i></div>
 	    </div>
 		<c:choose>
 			<c:when test="${!empty sessionUser && sessionUser.member_type == 'G' }">
 				<div class="row mt-1 ms-1">
-					<div class="col cursor-pointer" onclick="location.href='../guest/applyHostPage'">호스트 신청하기</div>
+					<div class="col cursor-pointer text-fs-16" onclick="location.href='../guest/applyHostPage'">호스트 신청하기</div>
 				</div>		
 			</c:when>
 			<c:when test="${!empty sessionUser && sessionUser.member_type == 'H' }">
 				<div class="row mt-1 ms-1">
-					<div class="col cursor-pointer" onclick="location.href='../host/mainPage'">호스트 페이지</div>
+					<div class="col cursor-pointer text-fs-16" onclick="location.href='../host/mainPage'">호스트 페이지</div>
 				</div>
 				<div class="row mt-1 ms-1">
-					<div class="col cursor-pointer" onclick="location.href='../host/registerOfficePage'">오피스 등록하기</div>
+					<div class="col cursor-pointer text-fs-16" onclick="location.href='../host/registerOfficePage'">오피스 등록하기</div>
 				</div>
 				<div class="row mt-1 ms-1">
-					<div class="col cursor-pointer" onclick="location.href='../host/officeListPage'">오피스 등록 현황</div>
+					<div class="col cursor-pointer text-fs-16" onclick="location.href='../host/officeListPage'">오피스 등록 현황</div>
 				</div>
 				<div class="row mt-1 ms-1">
-					<div class="col cursor-pointer" onclick="location.href='../host/rentalStatusPage'">오피스 예약 관리</div>
+					<div class="col cursor-pointer text-fs-16" onclick="location.href='../host/rentalStatusPage'">오피스 예약 관리</div>
 				</div>
 			</c:when>
 		</c:choose>
@@ -99,13 +99,13 @@
 	</c:if>
 	
 	<div class="row mt-5 mb-3">
-    	<div class="col cursor-pointer" style="font-weight: bold;">고객센터</div>
+    	<div class="col cursor-pointer text-fs-16" style="font-weight: bold;">고객센터 <i class="bi bi-telephone"></i></div>
     </div>
 	<div class="row mt-1 ms-1">
-		<div class="col cursor-pointer" onclick="location.href='../board/freeBoardPage'">자유게시판</div>
+		<div class="col cursor-pointer text-fs-16" onclick="location.href='../board/freeBoardPage'">자유게시판</div>
 	</div> 
    	<div class="row mt-1 ms-1">
-		<div class="col cursor-pointer" onclick="location.href='../board/QnAPage'">Q&A</div>
+		<div class="col cursor-pointer text-fs-16" onclick="location.href='../board/QnAPage'">Q&A</div>
 	</div> 
   
   </div>

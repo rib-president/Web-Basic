@@ -42,7 +42,7 @@
  			if(data.result == 'notNick'){
  				isConfirmed = false;
  				confirmAlertBox.innerText = "존재하지 않는 닉네임 입니다.";
- 				confirmAlertBox.setAttribute("style","margin-left: 1rem; font-size: 0.75rem; color: red; padding-top: 0.5rem;");
+ 				confirmAlertBox.setAttribute("style","margin-left: 1rem; font-size: 0.813rem; color: red; padding-top: 0.5rem;");
  			}else{
  				isConfirmed = true;
  				confirmAlertBox.innerHTML = "";
@@ -67,7 +67,6 @@
 			background-color:#A68A64; 
 			color: white; 
 			text-align: center; 
-			font-size: 1.1rem; 
 			padding-top: 0.3rem; 
 			padding-bottom: 0.3rem;
 			font-weight: bold;
@@ -79,13 +78,13 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row">
+<div class="row" style="padding-top: 2em;">
 	<div class="col">
-		<div class="row mt-4" style="margin: 1rem;">
-			<div class="col" id="writeMessage">쪽지보내기</div>
+		<div class="row" style="margin-left: 1rem; margin-right: 1rem; margin-bottom: 1rem;">
+			<div class="col text-fs-16" id="writeMessage">쪽지보내기</div>
 		</div>
 		
-		<form action="./writeMessageProcess" class="form" role="form" style="font-size: 1.1rem;" name="userInput">
+		<form action="./writeMessageProcess" class="form text-fs-16" role="form" name="userInput">
 			<div class="row">
 				<div class="col" style="margin-left: 1rem; padding-top: 0.5rem;">
 					작성자 : ${sessionUser.member_nick }

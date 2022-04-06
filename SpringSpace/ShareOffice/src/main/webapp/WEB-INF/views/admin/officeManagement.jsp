@@ -92,7 +92,7 @@ if (strReferer == null) {
 							<button type="button" class="btn btn-secondary" onclick="refuseEvent(${list.getOffice.office_no })">거절</button>
 						</c:when>
 					</c:choose>
-					<img src="/officeImage/${list.getOffice.office_thumbnail }" width=20%, height=300em class="d-block w-100" alt="">
+					<!-- <img src="/officeImage/${list.getOffice.office_thumbnail }" width=20%, height=300em class="d-block w-100" alt=""> -->
 				</div>
 			</c:forEach>
 		</div>

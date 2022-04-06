@@ -18,11 +18,13 @@
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 <div class="row" style="padding-top: 70px;">
+	<h1>보유 쿠폰 내역</h1>
 	<div class="col">
 		<%-- 내용작성 --%>
 		<c:forEach items="${myCouponList }" var="myCoupon">
 		<div class="row">
-			<div>${myCoupon.myCouponVo.coupon_name }</div>	
+			<div>쿠폰 이름 : ${myCoupon.myCouponVo.coupon_name }</div>
+			<div>쿠폰 할인 금액 : ${myCoupon.myCouponVo.coupon_discount }</div>
 		</div>
 		<hr>
 		

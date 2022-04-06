@@ -37,6 +37,7 @@
 		<button type="button" class="btn btn-secondary" onclick="location.href='guestManagement'">게스트 관리</button>
 		<button type="button" class="btn btn-success" onclick="location.href='officeManagement'">오피스 관리</button>
 		<button type="button" class="btn btn-danger" onclick="location.href='../board/QnAPage'">Q&A 관리</button>
+		<button type="button" class="btn btn-info" onclick="location.href='../board/createCouponPage'">쿠폰 발급</button>
 		<button type="button" class="btn btn-dark" onclick="location.href='../admin/logoutAdmin'">로그아웃</button>
 	</div>
 </div>

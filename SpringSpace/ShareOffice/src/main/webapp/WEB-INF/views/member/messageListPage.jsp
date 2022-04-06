@@ -18,7 +18,6 @@
 			background-color:#A68A64; 
 			color: white; 
 			text-align: center; 
-			font-size: 1.1rem; 
 			padding-top: 0.75rem; 
 			padding-bottom: 0.75rem;
 			font-weight: bold;
@@ -28,7 +27,6 @@
 			border-radius: 0rem 0.3rem 0.3rem 0rem; 
 			background-color:#BBA586; 
 			color: white; text-align: center; 
-			font-size: 1.1rem; 
 			padding-top: 0.75rem; 
 			padding-bottom: 0.75rem;
 			font-weight: bold;
@@ -39,12 +37,12 @@
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row">
+<div class="row" style="padding-top: 2em;">
 	<div class="col">
-		<div class="row mt-4" style="margin: 1rem;">
-			<div class="col" id="message" onclick="location.href='../member/messageListPage'">
+		<div class="row" style="margin-bottom: 1rem; margin-left: 1rem; margin-right: 1rem;">
+			<div class="col text-fs-16" id="message" onclick="location.href='../member/messageListPage'">
 			쪽지보관함</div>
-			<div class="col" id="sendMessage" onclick="location.href='../member/sendMessageListPage'">
+			<div class="col text-fs-16" id="sendMessage" onclick="location.href='../member/sendMessageListPage'">
 			보낸쪽지함</div>
 		</div>
 		
@@ -53,27 +51,27 @@
 				<c:when test="${data.messageVo.read_date eq null && data.messageVo.sender_no eq 0}">
 					<div class="card" style="width: auto; margin: 1rem; background: #FFF0F5">
 					  <div class="card-body">
-					    <p class="card-title" style="font-size: 1.1rem; font-weight: bold;">${data.memberVo.member_nick }
+					    <p class="card-title text-fs-16" style="font-weight: bold;">${data.memberVo.member_nick }
 						    <a href="./deleteReceiveMessage?message_no=${data.messageVo.message_no }" style="color: black;">
-								<i class="bi bi-trash3 float-right" style="font-size: 1.3rem;"></i>
+								<i class="bi bi-trash3 float-right" style="font-size: 1.1rem;"></i>
 							</a>
 					    </p>
-					    <p class="card-text">${data.messageVo.txt }</p>
+					    <p class="card-text text-fs-16">${data.messageVo.txt }</p>
 					  </div>
 					</div>
 				</c:when>
 				<c:when test="${data.messageVo.read_date eq null && data.messageVo.sender_no ne 0}">
 					<div class="card" style="width: auto; margin: 1rem; background: #ebfbff">
 					  <div class="card-body">
-					    <p class="card-title" style="font-size: 1.1rem; font-weight: bold;">${data.memberVo.member_nick }
+					    <p class="card-title text-fs-16" style="font-weight: bold;">${data.memberVo.member_nick }
 					    <c:if test="${data.messageVo.sender_no ne 0 }">
 					    <a href="./messageReplyPage?sender_no=${data.messageVo.sender_no }" style="font-size: 1.3rem; color: black;"><i class="bi bi-reply"></i></a>
 					    </c:if>
 					    <a href="./deleteReceiveMessage?message_no=${data.messageVo.message_no }" style="color: black;">
-							<i class="bi bi-trash3 float-right" style="font-size: 1.3rem;"></i>
+							<i class="bi bi-trash3 float-right" style="font-size: 1.1rem;"></i>
 						</a>
 					    </p>
-					    <p class="card-text">
+					    <p class="card-text text-fs-16">
 						    ${data.messageVo.txt }
 					    </p>
 					  </div>
@@ -82,15 +80,15 @@
 				<c:when test="${data.messageVo.read_date ne null}">
 					<div class="card" style="width: auto; margin: 1rem;">
 					  <div class="card-body">
-					    <p class="card-title" style="font-size: 1.1rem; font-weight: bold;">${data.memberVo.member_nick }
+					    <p class="card-title text-fs-16" style="font-weight: bold;">${data.memberVo.member_nick }
 					    	<c:if test="${data.messageVo.sender_no ne 0 }">
 					   			<a href="./messageReplyPage?sender_no=${data.messageVo.sender_no }" style="font-size: 1.3rem; color: black;"><i class="bi bi-reply"></i></a>
 					  		</c:if>
 					    	<a href="./deleteReceiveMessage?message_no=${data.messageVo.message_no }" style="color: black; text-align: ">
-								<i class="bi bi-trash3 float-right" style="font-size: 1.3rem;"></i>
+								<i class="bi bi-trash3 float-right" style="font-size: 1.1rem;"></i>
 							</a>
 					    </p>
-					    <p class="card-text">${data.messageVo.txt }</p>
+					    <p class="card-text text-fs-16">${data.messageVo.txt }</p>
 					  </div>
 					</div>
 				</c:when>
@@ -99,11 +97,13 @@
 			
 			<c:if test="${empty datalist}">
 				<div class="row">
-					<div class="col"style="text-align: center; padding-top: 20rem; padding-bottom: 20rem;">받은 쪽지가 없습니다.</div>
+					<div class="col text-fs-23"style="text-align: center; padding-top: 18rem; padding-bottom: 18rem;">
+					<i class="bi bi-envelope-slash"></i><br>
+					받은 쪽지가 없습니다.</div>
 				</div>
 			</c:if>
 			
-			<div class="fixed " style="bottom: 3rem; right: 3rem; z-index: 99">
+			<div class="fixed " style="bottom: 7rem; right: 3rem; z-index: 99">
 				<a href="./writeMessagePage"><i class="bi bi-plus-circle-fill" style="font-size: 3rem; color: #A68A64;"></i></a>
 			</div>
 	</div>

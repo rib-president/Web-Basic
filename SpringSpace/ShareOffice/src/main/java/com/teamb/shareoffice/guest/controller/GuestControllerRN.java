@@ -127,13 +127,13 @@ public class GuestControllerRN {
 
 		}
 		
-		guestServiceRN.order(orderVo, rentalVoList);
+		int order_no = guestServiceRN.order(orderVo, rentalVoList);
 		
 		if(allot_no > 0) {
 			guestServiceRN.useCoupon(allot_no);
 		}
 		
-		return "redirect:../guest/officeRentalDetailPage?office_no=" + orderVo.getOffice_no();
+		return "redirect:../guest/officeRentalDetailPage?order_no=" + order_no;
 	}
 	
 	
@@ -207,7 +207,9 @@ public class GuestControllerRN {
 	}*/
 	
 	@RequestMapping("officeRentalDetailPage")
-	public String officeRentalDetailPage(int office_no) {
+	public String officeRentalDetailPage(int order_no, HttpSession session, Model model) {
+		
+		model.addAttribute("orderData", guestServiceRN.getOrderDetailInfo(((MemberVo) session.getAttribute("sessionUser")).getMember_no(), order_no));
 		
 		return "guest/officeRentalDetailPage";
 	}
