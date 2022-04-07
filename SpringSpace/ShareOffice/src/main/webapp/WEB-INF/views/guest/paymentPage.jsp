@@ -27,7 +27,8 @@ body { padding-right: 0 !important }
 </style>
 
 <script>
-
+	
+	var officeNo = "${officeInfo.officeInfoVo.office_no }";
 	var bsOffcanvas = null;
 	var rental_date_list = [];
 	var isFirstSubmit = true;
@@ -177,6 +178,38 @@ body { padding-right: 0 !important }
 
 		bsOffcanvas.hide();
 	}
+	
+	<%-- 
+	function rentalWhetherCheck(){
+		
+		var rentalDateArr = new Array();
+		
+		for(var rental_date of document.getElementsByName("rental_date")) {
+			var splitDate = rental_date.value.split(" ");
+			var convertedDate = new Date(splitDate[5] + "-" + splitDate[1] + "-" + splitDate[2]);
+			rentalDateArr.push(convertedDate);
+		}
+		
+		var xhr = new XMLHttpRequest();
+		
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var data = JSON.parse(xhr.responseText);
+				
+				if(data.rentalWhether > 0) {
+					alert("이미 예약완료된 날짜입니다.");
+					return;
+				}
+			}
+			
+		};
+		
+		
+		xhr.open("post" , "./rentalWhetherCheck", true);
+		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xhr.send("office_no=" + officeNo + "&rental_date=" + rentalDateArr);
+	}
+	--%>
 	
 	window.addEventListener("DOMContentLoaded", function() {
 		var myOffcanvas = document.getElementById('offcanvasBottom');

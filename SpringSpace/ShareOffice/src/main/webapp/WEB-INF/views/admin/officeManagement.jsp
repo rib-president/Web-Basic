@@ -18,13 +18,13 @@ if (strReferer == null) {
 %>
 
 <script>
-	function refuseEvent(office_no)
+	function refuseEvent(office_no, member_no)
 	{		
 		var refuseReason = prompt("거절 사유를 입력해주세요.");
 		
 		if(refuseReason != null)
 		{
-			location.href="./officeRefuse?refuseReason=" + refuseReason + "&office_no=" + office_no;
+			location.href="./officeRefuse?refuseReason=" + refuseReason + "&office_no=" + office_no + "&member_no=" + member_no;
 		}
 	}
 
@@ -41,7 +41,7 @@ if (strReferer == null) {
 <link href="../resources/css/commons.css" rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="../commons/navbar.jsp"></jsp:include>
+	<jsp:include page="../commons/admin.jsp"></jsp:include>
 	<div class="row" style="padding-top: 2em;">
 	<div class="col">
 		<form action="./officeManagement" method="get">
@@ -61,14 +61,9 @@ if (strReferer == null) {
 			</div>
 		</div>
 		</form>
-		<button type="button" style="margin-left: 1em; margin-top: 1em;" class="btn btn-warning" onclick="location.href='adminPage'">메인 페이지</button>
-		<button type="button" style="margin-left: 2.5em; margin-top: 1em;" class="btn btn-primary" onclick="location.href='hostManagement'">호스트 관리</button>
-		<button type="button" style="margin-left: 2.5em; margin-top: 1em;" class="btn btn-secondary" onclick="location.href='guestManagement'">게스트 관리</button>
-		<button type="button" style="margin-left: 2.5em; margin-top: 1em;" class="btn btn-danger" onclick="location.href='../board/QnAPage'">Q&A 관리</button>
-		<button type="button" style="margin-left: 2.5em; margin-top: 1em;" class="btn btn-dark" onclick="location.href='../admin/logoutAdmin'">로그아웃</button>
-		<div class="card" style="margin: 1em">
-			<h5 class="card-title text-center mt-4">오피스 현황</h5>
-			<c:forEach items="${officeList }" var="list">
+		<h5 class="card-title text-center mt-4">오피스 현황</h5>
+		<c:forEach items="${officeList }" var="list">
+			<div class="card" style="margin: 1em">
 		    	<div class="card-body text-left">
 					<p class="card-text">오피스 번호 :${list.getOffice.office_no}</p>
 					<p class="card-text">오피스 이름 :${list.getOffice.office_name}</p>
@@ -88,16 +83,17 @@ if (strReferer == null) {
 					</c:if>
 					<c:choose>
 						<c:when test = "${list.getOffice.office_approve == 'P'}">
-							<button type="button" class="btn btn-secondary" onclick="if (confirm('승인하시겠습니까?')) location.href='./officeApply?office_no=${list.getOffice.office_no }';">승인</button>
-							<button type="button" class="btn btn-secondary" onclick="refuseEvent(${list.getOffice.office_no })">거절</button>
+							<button type="button" class="btn btn-secondary" onclick="if (confirm('승인하시겠습니까?')) location.href='./officeApply?office_no=${list.getOffice.office_no }&member_no=${list.getOffice.member_no }';">승인</button>
+							<button type="button" class="btn btn-secondary" onclick="refuseEvent(${list.getOffice.office_no }, ${list.getOffice.member_no })">거절</button>
 						</c:when>
 					</c:choose>
-					<!-- <img src="/officeImage/${list.getOffice.office_thumbnail }" width=20%, height=300em class="d-block w-100" alt=""> -->
+					<img src="/soUpload/officeImage/${list.getOffice.office_thumbnail }" width=100em, height=300em class="d-block w-100" alt="">
+					<img src="/soUpload/officeImage/${list.imageDetail.image_url }" width=100em, height=300em class="d-block w-100" alt="">
 				</div>
-			</c:forEach>
-		</div>
+			</div>
+		</c:forEach>
 	</div>
-	</div>	
+	</div>
 
 	<jsp:include page="../commons/footer.jsp"></jsp:include>
 	<script

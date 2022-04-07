@@ -60,10 +60,7 @@ public class GuestService_H {
 		
 		return officelist;
 	}	
-	//이용후기 평점 평균
-	public double getOfficeAvgRating(int office_no) {
-		return guestMapper_H.getAvgRating(office_no);
-	};
+
 	
 	//오피스 위치 전체 출력
     public ArrayList<OfficeInfoVo> getLocationList(String searchKeyword){
@@ -86,11 +83,13 @@ public class GuestService_H {
 		ArrayList<FacilityCategoryVo> facilityCategoryList = guestMapper_H.getFacilityByNo(office_no);
 		ArrayList<ReviewVo> reviewListThree = guestMapper_H.getReviewListOnlyThree(office_no);
 		
+		
 		map.put("officeVo",officeVo);
 		map.put("facilityCategoryList",facilityCategoryList);
 		map.put("officeImageList",officeImageList);
 		map.put("businessDayList",businessDayList);
 		map.put("reviewListThree", reviewListThree);
+
 		
 		return map;
 	}
@@ -102,6 +101,14 @@ public class GuestService_H {
 	//이미지 총수량
 	public int getImageCount(int office_no) {
 		return guestMapper_H.getImageCount(office_no);
+	}
+	//이용후기 평점 평균
+	public Double getOfficeAvgRating(int office_no) {
+		return guestMapper_H.getAvgRating(office_no);
+	}
+	//오피스별 이용후기 총 갯수
+	public int getReviewCount(int office_no) {
+		return guestMapper_H.getReviewCountByNo(office_no);
 	}
 
 

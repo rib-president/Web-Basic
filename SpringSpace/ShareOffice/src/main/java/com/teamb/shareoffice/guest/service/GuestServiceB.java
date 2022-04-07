@@ -151,5 +151,10 @@ public class GuestServiceB {
 		return guestMapperB.reviewExistCheck(order_no);
 	}
 	
+	public int officeRentalWhetherCheck(int office_no, Date rental_date) {
+		
+		return guestMapperB.officeRentalWhetherCheck(office_no, rental_date);
+	}
+	
 	
 }

@@ -32,10 +32,10 @@ public class HostController {
 	private final String uploadFolder = "/shareOffice/officeImage/";
 	//private final String uploadFolder = "C:\shareOffice\licenseImg";
 	
-	@RequestMapping("mainPage")
+	/*@RequestMapping("mainPage")
 	public String mainPage() {
 		return "host/mainPage";
-	}
+	}*/
 	
 	
 	@RequestMapping("registerOfficePage")
@@ -168,7 +168,7 @@ public class HostController {
 	@RequestMapping("officeListPage")
 	public String officeListPage(HttpSession session, Model model, String office_approve) {
 
-		System.out.println("오피스 리스트 페이지가 실행되었습니다. " + office_approve);
+		System.out.println("오피스 리스트 페이지가 실행되었습니다.");
 		 
 		ArrayList<OfficeInfoVo> officeList = hostService.getMyOfficeList(((MemberVo) session.getAttribute("sessionUser")).getMember_no(), office_approve);
 		model.addAttribute("officeList", officeList);

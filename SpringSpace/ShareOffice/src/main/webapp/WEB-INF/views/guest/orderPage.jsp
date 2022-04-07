@@ -512,7 +512,7 @@
 			<div id="calendar-wrapper" class="col">
 	            <div class="row">
 	                <div id="month-prev" class="col text-center fw-bold fs-2" onclick="renderDate(2)"><i class="bi bi-chevron-left"></i></div>
-	                <div id="month-current" class="col-6 text-center fw-bold fs-2">3월</div>
+	                <div id="month-current" class="col-6 text-center fw-bold fs-2"></div>
 	                <div id="month-next" class="col text-center fw-bold fs-2" onclick="renderDate(4)"><i class="bi bi-chevron-right"></i></div>
 	            </div>
 	            <div class="row my-2">

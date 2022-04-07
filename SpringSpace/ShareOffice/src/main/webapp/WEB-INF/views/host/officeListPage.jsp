@@ -14,6 +14,14 @@
 <link href="https://webfontworld.github.io/naver/NanumSquareRound.css" rel="stylesheet">
 <style>
 i {text-decoration: none; color:#A68A64;}
+	
+	#registerButton{
+			border-radius: 0.3rem 0.3rem 0.3rem 0.3rem; 
+			text-align: center; 
+			padding-top: 0.3rem; 
+			padding-bottom: 0.3rem;
+	}
+
 </style>
 <script>
 function getOfficeList(select) {
@@ -69,7 +77,7 @@ window.addEventListener("DOMContentLoaded", function() {
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row ms-1" style="padding-top: 2rem;">
+<div class="row ms-1" style="padding-top: 2rem; padding-bottom:2.75rem;">
 	<div class="col">
 		<%-- 내용작성 --%>
 		<div class="jumbotron" style="font-family: 'NanumSquareRound';">
@@ -77,9 +85,6 @@ window.addEventListener("DOMContentLoaded", function() {
   			<p class="text-fs-14 text-gray-c_25 leading-tight">등록하신 공유오피스 목록입니다.</p>
  		</div> 
 		
- 		
-			
- 		
  		<div class="row">
  			<div class="col"></div>
  			<div id="selectContainer" class="col-4 mr-5" >
@@ -109,15 +114,15 @@ window.addEventListener("DOMContentLoaded", function() {
 						<div class="col text-fs-13">
 						<c:choose>
 							<c:when test="${office.office_approve eq 'P' }">
-								승인대기중
+								<i class="bi bi-hourglass-split text-gold text-fs-15"></i> 승인대기중
 							</c:when>
 							
 							<c:when test="${office.office_approve eq 'Y' }">
-								승인완료
+								<i class="bi bi-check text-green-soft text-fs-19"></i> 승인완료
 							</c:when>
-							
+							 
 							<c:otherwise>
-								<div>승인거절</div> <div class="text-fs-12 text-muted">${office.office_approve_comment }</div> 
+								<div class="text-red-soft"><i class="bi bi-x-octagon text-red-soft"></i> 승인거절</div> <div class="text-fs-12 text-muted">${office.office_approve_comment }</div> 
 							</c:otherwise>
 						</c:choose>
 						</div>
@@ -130,6 +135,10 @@ window.addEventListener("DOMContentLoaded", function() {
 					</c:forEach>
 				</div>
 			</div>
+			
+				<div class="gap-1 me-4" align="right">
+					  <button type="button" id="registerButton" class="btn btn-outline-gold" onclick="location.href='../host/registerOfficePage'">오피스 등록</button>
+				</div>
 	</div>
 </div>
 

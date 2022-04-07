@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Insert title here</title>
+<title>받은 쪽지함</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -47,8 +47,8 @@
 			보낸쪽지함</div>
 		</div>
 			<c:forEach items="${datalist }" var="data">
-					<div class="card" style="width: auto; margin: 1rem; background-color: #f8f9fa;">
-					  <div class="card-body">
+					<div class="card shadow-sm bg-body rounded" style="width: auto; margin: 1rem;">
+					  <div class="card-body" style="background-color: #f8f9fa;">
 					    <p class="card-title text-fs-16" style="font-weight: bold;">
 					    	${sessionUser.member_nick} <i class="bi bi-caret-right"></i> ${data.memberVo.member_nick }
 					    	<a href="./deleteSendMessage?message_no=${data.messageVo.message_no }" style="color: black;">

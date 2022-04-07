@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,12 +15,13 @@
 
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-		<div class="row" style="padding-top: 1rem;">
+		<div class="row" style="padding-top: 2rem;">
 			<div class="col">
 			
-				<div class="row" style="padding-top: 0.5rem";>
+				<div class="row">
 					<div class="col">
 						
 						<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -56,106 +58,176 @@
 					<!-- <div class="row"></div>  -->
 					<!-- <div class="col"></div>  -->
 					
-				<div class="row mt-3" style="margin: 1rem;">
-				 	
-				 	<div class="row mt-3">
-				 	<div class="col">
-				    <h5 class="card-title">${data.officeInfoVo.office_name }</h5>
+			<div class="row mt-3 text-fs-16" style="margin: 0.5rem;">
+				<div class="col">
+					<div class="row mt-3 font-medium2">
+						<p class="text-fs-23">${data.officeInfoVo.office_name }</p>
 					</div>
-				    <p class="card-subtitle mb-2 text-muted">${data.officeInfoVo.office_address } <br> ${data.officeInfoVo.office_address_detail }</p>
-				    </div>
+					
+					<div class="row mt-4">
+						<div class="col">
+							<p class="fs-6 font-medium2">오피스 정보</p>
+						</div>
+						<br>
+						<p class="mb-2 text-fs-15"><i class="bi bi-geo-alt"></i> 주소 : ${data.officeInfoVo.office_address } ${data.officeInfoVo.office_address_detail }</p>
+						<p class="text-fs-15"><i class="bi bi-telephone"></i> 담당자 전화번호 : ${data.officeInfoVo.office_managerPhone }</p>
+					</div>
+
+					<div class="row mt-5">
+						<div class="col">
+							<p class="fs-6 font-medium2">오피스 설명</p>
+						</div>
+						<br>
+						<p class="mb-2 text-fs-15 font-medium1"><i class="bi bi-pen"></i> 공간간단소개  <div class="text-fs-15">${data.officeInfoVo.office_simpleContent }</div></p>
+						<p class="mb-2 text-fs-15"><i class="bi bi-file-text"></i> 공간상세소개  <div class="text-fs-15">${data.officeInfoVo.office_detailContent }</div></p>
+						<p class="text-fs-15"><i class="bi bi-bookmark"></i> 태그   <div class="text-fs-15">#${data.officeInfoVo.office_tags }</div></p>
+					</div>
+					
+					<div class="row mt-5">
+						<div class="col">
+							<p class="fs-6 font-medium2">예약옵션</p>
+						</div>
+						<br>
+						<p class="mb-2 text-fs-15"><i class="bi bi-people"></i> 사용 가능 인원 : ${data.officeInfoVo.office_personnel } 명</p>
+						<p class="text-fs-15"><i class="bi bi-calendar-check"></i> 최소 예약 일수 : ${data.officeInfoVo.office_min_booking_day } 일</p>
+					</div>
 				    
-				    <hr class="my-4">
+				 	<div class="row mt-5">
+						<div class="col">
+							<p class="fs-6 font-medium2">운영정보</p>
+							<table class="table table-borderless">
+								<thead class="fw-lighter text-muted">
+									<tr class="text-center font-light" >
+										<th scope="col" style="font-weight:500">운영일</th>
+										<th scope="col" style="font-weight:500">운영 시간</th>
+										<th scope="col" style="font-weight:500">이용 가격</th>
+									</tr>
+								</thead>
+
+								<c:forEach items="${data.businessDayVoList }" var="day">
+									<tbody>
+										<tr class="table-light text-center">
+											<td>${day.business_day}</td>
+											<td>${day.business_time_start}-${day.business_time_finish}</td>
+											<td> <fmt:formatNumber value="${day.business_day_price}" pattern="#,###"/> </td>
+											
+										</tr>
+									</tbody>
+								</c:forEach>
+							</table>
+						</div>
+					</div>
 				    
-				    <div class="row mt-3">
+				    <div class="row mt-5">
 				    <div class="col">
-				    <h6>담당자 전화번호</h6>
-				    </div>
-				    <h6 class="card-subtitle mb-2 text-muted">${data.officeInfoVo.office_managerPhone }</h6>
-				    </div>
-				    
-				    <hr class="my-4">
-				    
-				    <div class="row mt-3">
-				    <div class="col">
-				    <h6>대여공간 상세설명</h6>
-				    </div>
-				    <p class="card-subtitle mb-2 text-muted">${data.officeInfoVo.office_detailContent }</p>
-				    </div>
-				    
-				    <hr class="my-4">
-				    
-				    <div class="row mt-3">
-				    <div class="col">
-				    <h6>특징 키워드</h6>
-				    </div>
-				    <p class="card-subtitle mb-2 text-muted">#${data.officeInfoVo.office_tags }</p>
-				    </div>				    
-				    
-				    <hr class="my-4">
-				    
-				    <div class="row mt-3">
-				    <div class="col">
-				    <h6>예약옵션</h6>
-				    </div>
-				    <h6 class="card-subtitle mb-2 text-muted">-사용가능인원 : ${data.officeInfoVo.office_personnel }명</h6>
-				    <h6 class="card-subtitle mb-2 text-muted">-최소예약일 : ${data.officeInfoVo.office_min_booking_day }일</h6>
-				    </div>
-				    
-				    <hr class="my-4">
-				    	
-				    <div class="row mt-3">
-				    <div class="col">
-				   	 <h6>운영요일 및 시간</h6>
-				   	</div> 
-				     <c:forEach items="${data.businessDayVoList }" var="day">
-				    <h6 class="card-subtitle mb-2 text-muted">-${day.business_day }요일 ${day.business_time_start }시 ~ ${day.business_time_finish }시</h6>
-				    </c:forEach>
-				    </div>
-				    
-				    <hr class="my-4">
-				    
-				    <div class="row mt-3">
-				    <div class="col">
-				     <h6>편의시설</h6>
+				     <p class="fs-6 font-medium2">편의시설</p>
 				    </div>
 				     <c:forEach items="${data.facilityCategoryVoList }" var="facility">
-				    <h6 class="card-subtitle mb-2 text-muted">-${facility.facility_name }</h6> 
+				     	<div class="row text-fs-14">
+				     		<c:if test="${facility.facility_no eq '1' }">
+				     			<div class="col-1 me-2"><img src="../resources/img/wifi (1).png" width=25em, height=25em></div>
+				     			<div class="col"> <p>${facility.facility_name }</p></div>
+				     		</c:if>
+				     	</div>
+				     	
+				     	<div class="row text-fs-14">
+				     		<c:if test="${facility.facility_no eq '2' }">
+				     			<div class="col-1 me-2"><img src="../resources/img/desktop.png" width=25em, height=25em></div>
+				     			<div class="col"> <p>${facility.facility_name }</p></div>
+				     		</c:if>
+				     	</div>
+
+				     	<div class="row text-fs-14">
+				     		<c:if test="${facility.facility_no eq '3' }">
+				     			<div class="col-1 me-2"><img src="../resources/img/fax.png" width=25em, height=25em></div>
+				     			<div class="col"> <p>${facility.facility_name }</p></div>
+				     		</c:if>
+				     	</div>
+				     	
+				     	<div class="row text-fs-14">
+				     		<c:if test="${facility.facility_no eq '4' }">
+				     			<div class="col-1 me-2"><img src="../resources/img/printer.png" width=25em, height=25em></div>
+				     			<div class="col"> <p>${facility.facility_name }</p></div>
+				     		</c:if>
+				     	</div>
+				     	
+				     	<div class="row text-fs-14">
+				     		<c:if test="${facility.facility_no eq '5' }">
+				     			<div class="col-1 me-2"><img src="../resources/img/whiteBoard.png" width=25em, height=25em></div>
+				     			<div class="col"> <p>${facility.facility_name }</p></div>
+				     		</c:if>
+				     	</div>
+				     	
+				     	<div class="row text-fs-14">
+				     		<c:if test="${facility.facility_no eq '6' }">
+				     			<div class="col-1 me-2"><img src="../resources/img/projector (1).png" width=25em, height=25em></div>
+				     			<div class="col"> <p>${facility.facility_name }</p></div>
+				     		</c:if>
+				     	</div>
+				     	
+				     	<div class="row text-fs-14">
+				     		<c:if test="${facility.facility_no eq '7' }">
+				     			<div class="col-1 me-2"><img src="../resources/img/air-purifier.png" width=25em, height=25em></div>
+				     			<div class="col"> <p>${facility.facility_name }</p></div>
+				     		</c:if>
+				     	</div>
+				     	
+				     	<div class="row text-fs-14">
+				     		<c:if test="${facility.facility_no eq '8' }">
+				     			<div class="col-1 me-2"><img src="../resources/img/lockers.png" width=25em, height=25em></div>
+				     			<div class="col"> <p>${facility.facility_name }</p></div>
+				     		</c:if>
+				     	</div>
+				     	
+				     	<div class="row text-fs-14">
+				     		<c:if test="${facility.facility_no eq '9' }">
+				     			<div class="col-1 me-2"><img src="../resources/img/kitchen.png" width=25em, height=25em></div>
+				     			<div class="col"> <p>${facility.facility_name }</p></div>
+				     		</c:if>
+				     	</div>
+				     	
+				     	<div class="row text-fs-14">
+				     		<c:if test="${facility.facility_no eq '10' }">
+				     			<div class="col-1 me-2"><img src="../resources/img/parking.png" width=25em, height=25em></div>
+				     			<div class="col"> <p>${facility.facility_name }</p></div>
+				     		</c:if>
+				     	</div>				     					     					     					     	
+				     	
 				     </c:forEach>
 				    </div>
 				    
-				    <hr class="my-4">
 				    
-				    <div class="row mt-3">
+				    <div class="row mt-5 mb-3">
 				    <div class="col">
-				    <h6>승인상태</h6>
+				    <p class="fs-6 font-medium2">승인상태</p>
 				    </div>
 				    <c:if test="${data.officeInfoVo.office_approve eq 'P' }">
-				    	<p class="card-subtitle mb-2 text-muted">승인대기중</p>
+				    	<p class="text-muted text-fs-15"><i class="bi bi-hourglass-split text-gold text-fs-19"></i> 승인대기중</p>
 				    </c:if>
 				    
 				    <c:if test="${data.officeInfoVo.office_approve eq 'Y' }">
-				    	<p class="card-subtitle mb-2 text-muted">승인완료</p>
+				    	<p class="text-muted text-fs-15"><i class="bi bi-check text-green-soft text-fs-19"></i> 승인완료</p>
 				    </c:if>
 				    
 				    <c:if test="${data.officeInfoVo.office_approve eq 'N' }">
-				    	<p class="card-subtitle mb-2 text-muted">승인거절</p>
-				    	<p class="card-subtitle mb-2 text-muted">${data.officeInfoVo.office_approve_comment }</p>
+				    	<p class="text-fs-15"><i class="bi bi-x-circle-fill"></i> 승인거절</p>
+				    	<p class="card-subtitle mb-4 text-muted text-fs-15">${data.officeInfoVo.office_approve_comment }</p>
 				    </c:if>				    				    
 				    </div>	
 				    
-				    <hr class="my-4">
 				    
-					<div class="d-grid gap-2">
-					  <button type="button" class="btn btn-dark" onclick="location.href='./updateOfficePage?office_no=${data.officeInfoVo.office_no }'">수정</button>
+					<div class="d-grid gap-2" style="padding-bottom : 2rem;">
+					  <button type="button" class="btn" style="background-color:#A68A64; color: #ffffff;" onclick="location.href='./updateOfficePage?office_no=${data.officeInfoVo.office_no }'">수정</button>
 					  <button type="button" class="btn btn-outline-dark" onclick="location.href='./deleteOfficeProcess?office_no=${data.officeInfoVo.office_no }'">삭제</button>
 					</div>
 				    
-				  	</div>
-					</div>
-					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -49,10 +49,20 @@
 	where rental_no = #{rental_no}
 </select>
 
+<select id="selectMyOfficeNo" resultType="int">
+	select office_no
+	from so_officeinfo
+	where member_no = #{member_no}
+</select>
+
 <select id="selectOrderMember" resultType="map">
 	select *
 	from so_order so, so_member sm 
 	where so.member_no = sm.member_no
+	and so.office_no in 
+		<foreach collection="office_no_list" item="office_no"  open="(" close=")" separator=",">
+    		#{office_no}
+    	</foreach>
 	<choose>
 		<when test="category == 'nick'">
 			and sm.member_nick like CONCAT('%',#{searchKeyword},'%')	
@@ -102,16 +112,55 @@
 </select>
 
 <!-- 통계/대시보드 -->
-<!-- 오피스별 예약비율 -->
+<!-- 내 오피스 예약비율 -->
 <select id="selectRentalProportion" resultType="map">
-	select count(*) as cnt, so.office_no, sum(sr.rental_price) as totalPrice, so.office_approve_date 
+	select count(*) as cnt, so.office_no, so.office_name, sum(sr.rental_price) as totalPrice, so.office_approve_date 
 	from so_officeinfo so, so_order so2, so_rental sr 
 	where so.office_no = so2.office_no 
 	and so2.order_no = sr.order_no 
 	and so.member_no = #{member_no}
+	<![CDATA[
+	and datediff(#{endDateDate}, sr.rental_date) >= 0
 	group by so.office_no
+	]]>
 </select>
 
+<!-- 최근 부정적인 리뷰 5건 -->
+<select id="selectLatest5NegativeReview" resultType="map">
+	select *
+	from so_review sr ,
+	(select so.office_name, so.office_no, so2.order_no 
+	from so_officeinfo so , so_order so2 
+	where so.office_no = so2.office_no
+	and so.member_no = #{member_no}) t1
+	where sr.order_no = t1.order_no
+	<![CDATA[
+	and sr.review_rating < 3 
+	]]>
+	order by sr.review_no desc
+	limit 5
+</select>
 
+<!-- 내 오피스 리뷰 전체 평균 -->
+<select id="selectMyOfficeReviewAvg" resultType="double">
+	select round(avg(review_rating), 2) as avg
+	from so_review sr,
+	(select so2.order_no 
+	from so_officeinfo so, so_order so2 
+	where so.office_no = so2.office_no 
+	and so.member_no = #{member_no}
+	) t1
+	where sr.order_no = t1.order_no
+</select>
+
+<!-- 특정 오피스 특정 기간 예약비율 -->
+<select id="selectOneOfficeRentalProportion" resultType="map">
+	select count(*) as cnt, so.office_no, so.office_name, sum(sr.rental_price) as totalPrice
+	from so_officeinfo so, so_order so2, so_rental sr 
+	where so.office_no = so2.office_no 
+	and so2.order_no = sr.order_no 
+	and so.office_no = #{office_no}
+	and sr.rental_date between #{startDate} and #{endDate}
+</select>
 
 </mapper>

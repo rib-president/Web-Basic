@@ -66,14 +66,14 @@
 				--%>
 				<div class="row">
 					<div class="col-5"></div>
-					<div class="col-2 text-center pt-2" style="border: 1px solid gold;">
+					<div class="col-2 text-center pt-2">
 						<c:if test="${!empty sessionUser }">
 							<c:choose>
 								<c:when test="${myLikeCount > 0}">
-									<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }"><h2><i class="bi bi-hand-thumbs-up"></i></h2></a>
+									<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }"><h2><i class="bi bi-hand-thumbs-down"></i></h2></a>
 								</c:when>
 								<c:otherwise>
-									<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }"><h2><i class="bi bi-hand-thumbs-down"></i></h2></a>
+									<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }"><h2><i class="bi bi-hand-thumbs-up"></i></h2></a>
 								</c:otherwise>
 							</c:choose>
 						</c:if>	

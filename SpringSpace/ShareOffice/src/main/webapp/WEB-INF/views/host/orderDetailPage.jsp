@@ -94,9 +94,10 @@ function cancelRental(obj, rental_no) {
 
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 1rem;">	
+<div class="row mb-5" style="padding-top: 2rem;">	
 	<div class="col">
 		<div class="row">
 			<div class="col text-center text-fs-25 bold text-gray-c_25"><i class="bi bi-file-earmark-text text-gold"></i> 예약상세</div>
@@ -159,6 +160,7 @@ function cancelRental(obj, rental_no) {
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

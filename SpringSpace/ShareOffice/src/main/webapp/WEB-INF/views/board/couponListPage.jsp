@@ -14,138 +14,93 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 
-<style>
-	#tiledBackground {
-	  background-image: uri(img/tempCoupon.png);
-	  background-size: 150px;
-	  width: 300px;
-	  height: 300px;
-	  border: 2px solid;
-	  color: wihte;
-		}
-</style>
-<%--
-<script>
-	function check(this){
-		
-		var count = document.getElementByID("count");
-		var today = new Date();
-		
-		if(count.value == 0){
-			alert("남은 수량을 확인해주세요");
-			return false;
-		}else if(${coupon.CouponVoList.coupon_useDate } < today) {
-			alert("기간이 만료된 쿠폰입니다.");
-			return false;
-		}else{
-			document.check.submit();
-			return true;
-		}
-	}			
-</script>
- --%> 
-<%-- 
-<script>
-	function check(this) {
-	
-		
-		if(true){
-			alert("hi")
-			retrun false;
-		}
-		
-	}
-</script>
---%>
-
-<script>
-
-</script>
 
 </head>
 <body>
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 2em;">
-	<div class="col" style="margin:2rem">
-		<div class="row">
-		<%-- 
-			<c:forEach items="${CouponVo }" var="coupon" varStatus="statusCoupon">
-			여기는 완전 갈아엎어야함 ! 
-		--%> 
-			<c:forEach items="${CouponVo }" var="coupon">
-				<form action="./getCouponProcess" method="post" name="check" onsubmit="check(this); return false">
-					<div class="card" style="width: 16rem;">
-					   <img src="/soUpload/couponImage/${coupon.CouponVoList.coupon_image }" class="card-img-top" alt="쿠폰이미지">
-					  <div class="card-body">
-					    <h5 class="card-title">${coupon.CouponVoList.coupon_name }</h5>
-					    <p class="card-text">${coupon.CouponVoList.coupon_discount }원</p>
-					  </div>
-					  <ul class="list-group list-group-flush">
-					    <li class="list-group-item">사용기간 및 발급가능일 : <fmt:formatDate value="${coupon.CouponVoList.coupon_useDate }" pattern="yy.MM.dd"/> 까지 </li>
-					    <li class="list-group-item"></li>
-					    <li class="list-group-item" id="count">남은수량 : ${coupon.CouponVoList.coupon_count - coupon.waste }</li>
-					  </ul>
-					  <div class="card-body">
-					  	<input type="hidden" value="${coupon.CouponVoList.coupon_no }" name="coupon_no">
-					  	<input type="hidden" value="${sessionUser.member_no }" name="member_no">
-					  	<input type="hidden" value="Y" name="allot_useOrUnuse">
-						
-						<c:choose>
-							<c:when test="${coupon.myReserveCouponCount eq 1 }">
-							  	<c:if test="${!empty sessionUser }">
-								<input type="button" class="btn btn-secondary float-end me-3" disabled value="발급완료">
-							  	</c:if>
-							
-							</c:when>
-							<c:when test="${coupon.CouponVoList.coupon_count - coupon.waste <= 0 }">
-							  	<c:if test="${!empty sessionUser }">
-								<input type="submit" class="btn btn-secondary float-end me-3" disabled value="쿠폰소진">
-							  	<!-- 
-									<input type="button" onclick="alert('쿠폰이 소진 되었습니다.')" class="btn btn-primary float-end me-3" value="쿠폰발급">
-								 -->
-							  	</c:if>
-							
-							</c:when>
-							
-							<c:when test="${coupon.CouponVoList.coupon_useDate < now }">
-							  	<c:if test="${!empty sessionUser }">
-								<input type="button" class="btn btn-secondary float-end me-3" disabled value="기한만료">
-							  	</c:if>
-							
-							</c:when>
-							
-							<c:otherwise>
-								<c:if test="${!empty sessionUser }">
-								<input type="submit" class="btn btn-primary float-end me-3" value="쿠폰발급">
-							  	</c:if>										
-							</c:otherwise>
-						</c:choose>
-							
-							
-							<%--
-							<c:forEach items="${reserveCouponList[statusCoupon.index] }" var="reserve" varStatus="status">
-							<c:choose>
-								<c:when test="${reserve.reserveCouponList.values eq 1}" >
-								  	<c:if test="${!empty sessionUser }">
-									<input type="submit" class="btn btn-primary float-end me-3" disabled value="발급불가">
-								  	</c:if>
-								</c:when>
-								<c:otherwise>
-									<c:if test="${!empty sessionUser }">
-									<input type="submit" class="btn btn-primary float-end me-3" value="쿠폰발급">
-								  	</c:if>										
-								</c:otherwise>
-							</c:choose>
-							</c:forEach>
-							 --%>
-						
-					  </div>	
+<div class="row" style="padding-top:2em;">
+   <div class="col">
+         <c:forEach items="${CouponVo }" var="coupon">
+      <div class="row">
+       <div class="col" style="margin:0.5rem">
+            <form action="./getCouponProcess" method="post">
+               <div class="card shadow" style="padding:0.5em">
+                  <div class="row">
+					<div class="col" style="margin:1em">
+	                  <img src="/soUpload/couponImage/${coupon.CouponVoList.coupon_image }" style="width:100%;"class="card-img-top" alt="쿠폰이미지">
 					</div>
-				</form>
-			</c:forEach>
-		</div>
-	</div>
+                  </div>
+                 <ul class="list-group list-group-flush">
+                   <li class="list-group-item">사용기간 및 발급가능일 : <fmt:formatDate value="${coupon.CouponVoList.coupon_useDate }" pattern="yy.MM.dd"/> 까지 </li>
+                   <li class="list-group-item" id="count">남은수량 : ${coupon.CouponVoList.coupon_count - coupon.waste }</li>
+                 
+                 </ul>
+                
+                 <div class="row">
+                 	<div class="col">
+                 	
+                    <input type="hidden" value="${coupon.CouponVoList.coupon_no }" name="coupon_no">
+                    <input type="hidden" value="${sessionUser.member_no }" name="member_no">
+                    <input type="hidden" value="Y" name="allot_useOrUnuse">
+                  
+                  <c:choose>
+                     <c:when test="${coupon.myReserveCouponCount eq 1 }">
+                          <c:if test="${!empty sessionUser }">
+                        <input type="button" class="mb-3 btn btn-secondary float-end me-3" disabled value="발급완료">
+                          </c:if>
+                     
+                     </c:when>
+                     <c:when test="${coupon.CouponVoList.coupon_count - coupon.waste <= 0 }">
+                          <c:if test="${!empty sessionUser }">
+                        <input type="submit" class="mb-3 btn btn-secondary float-end me-3" disabled value="쿠폰소진">
+                          <!-- 
+                           <input type="button" onclick="alert('쿠폰이 소진 되었습니다.')" class="btn btn-primary float-end me-3" value="쿠폰발급">
+                         -->
+                          </c:if>
+                     
+                     </c:when>
+                     
+                     <c:when test="${coupon.CouponVoList.coupon_useDate < now }">
+                          <c:if test="${!empty sessionUser }">
+                        <input type="button" class="mb-3 btn btn-secondary float-end me-3" disabled value="기한만료">
+                          </c:if>
+                     
+                     </c:when>
+                     
+                     <c:otherwise>
+                        <c:if test="${!empty sessionUser }">
+                        <input type="submit" class="mb-3 btn btn-primary float-end me-3" value="쿠폰발급">
+                          </c:if>                              
+                     </c:otherwise>
+                  </c:choose>
+                     
+                     
+                     <%--
+                     <c:forEach items="${reserveCouponList[statusCoupon.index] }" var="reserve" varStatus="status">
+                     <c:choose>
+                        <c:when test="${reserve.reserveCouponList.values eq 1}" >
+                             <c:if test="${!empty sessionUser }">
+                           <input type="submit" class="btn btn-primary float-end me-3" disabled value="발급불가">
+                             </c:if>
+                        </c:when>
+                        <c:otherwise>
+                           <c:if test="${!empty sessionUser }">
+                           <input type="submit" class="btn btn-primary float-end me-3" value="쿠폰발급">
+                             </c:if>                              
+                        </c:otherwise>
+                     </c:choose>
+                     </c:forEach>
+                      --%>
+                  
+                 </div>   
+                 </div>
+               </div>
+            </form>
+      </div>
+       </div>
+         </c:forEach>
+   </div>
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>

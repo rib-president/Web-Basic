@@ -43,7 +43,7 @@ public class GuestController_H {
 			if(office.get("officeAvgRating") == null) {
 				office.put("officeAvgRating", 0.0);
 			}
-			System.out.println("평균 : " + office.get("officeAvgRating"));
+			
 		}
 		
 				
@@ -59,23 +59,42 @@ public class GuestController_H {
 				
 		 int imageCount = guestService_H.getImageCount(office_no);
 		 int minOfficePrice = guestService_H.getOfficeMinPrice(office_no);
+		 int reviewCount = guestService_H.getReviewCount(office_no);
+		 Double officeAvgRating= guestService_H.getOfficeAvgRating(office_no);		 
+		 
+		 System.out.println(officeAvgRating);
+		 //널값체크
+		 
+		 if(officeAvgRating == null) {
+			 officeAvgRating=0.0;
+		 }
+		 
+		 
 		 
 		 model.addAttribute("imageCount",imageCount);
 		 
 		 model.addAttribute("minOfficePrice",minOfficePrice);
 		 
-		
+		 model.addAttribute("officeAvgRating",officeAvgRating);
+				 		 
+		 model.addAttribute("reviewCount",reviewCount);
+		 
 		 model.addAttribute("office",map);
 		
 		 return "guest/officeDetailPage";
 	}
+	
 	@RequestMapping("officeReviewPage")
 	public String officeReviewPage(Model model,int office_no) {
 		
         ArrayList<HashMap<String, Object>> reviewList = guestService_H.reviewList(office_no);
-
+        
+        int reviewCount = guestService_H.getReviewCount(office_no);
         
 	    model.addAttribute("reviewList",reviewList);
+	    
+	    model.addAttribute("reviewCount",reviewCount);
+	    
 		return "guest/officeReviewPage";
 	}
 	

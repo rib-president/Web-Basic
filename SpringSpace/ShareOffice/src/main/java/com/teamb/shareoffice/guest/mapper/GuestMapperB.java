@@ -1,6 +1,9 @@
 package com.teamb.shareoffice.guest.mapper;
 
 import java.util.ArrayList;
+import java.util.Date;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.teamb.shareoffice.vo.BusinessDayVo;
 import com.teamb.shareoffice.vo.OfficeInfoVo;
@@ -10,7 +13,6 @@ import com.teamb.shareoffice.vo.ReviewVo;
 
 public interface GuestMapperB {
 	
-	// 코드 합치기전엔 일단 파라미터 값 X
 	// 오피스 상세보기페이지에서 파라미터로 officeNo를 받아와 오피스 정보 출력
 	public OfficeInfoVo getOfficeInfoByOfficeNo(int office_no);
 	public ArrayList<BusinessDayVo> getBusinessDayInfoByOfficeNo(int office_no);
@@ -19,6 +21,9 @@ public interface GuestMapperB {
 	// order, rental 테이블 insert
 	public void guestOrder(OrderVo ovo);
 	public void officeRental(RentalVo rvo);
+	// 오피스 예약, 결제시 누군가가 먼저 예약했는지 확인하는 쿼리
+	public int officeRentalWhetherCheck(@Param("office_no") int office_no, 
+						   @Param("rental_date") Date rental_date);
 	
 	//캘린더 관련
 	public ArrayList<RentalVo> getRentalListByOfficeNo(int office_no);

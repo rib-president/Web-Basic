@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Insert title here</title>
+<title>쪽지 보관함</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -48,8 +48,8 @@
 			<c:forEach items="${datalist }" var="data">
 			<c:choose>
 				<c:when test="${data.messageVo.read_date eq null && data.messageVo.sender_no eq 0}">
-					<div class="card" style="width: auto; margin: 1rem; background: #FFF0F5;">
-					  <div class="card-body">
+					<div class="card shadow-sm bg-body rounded" style="width: auto; margin: 1rem;">
+					  <div class="card-body" style="background-color: #fff0f5;">
 					    <p class="card-title text-fs-16" style="font-weight: bold;">${data.memberVo.member_nick }
 						    <a href="./deleteReceiveMessage?message_no=${data.messageVo.message_no }" style="color: black;">
 								<i class="bi bi-trash3 float-right" style="font-size: 1.1rem;"></i>
@@ -60,8 +60,8 @@
 					</div>
 				</c:when>
 				<c:when test="${data.messageVo.read_date eq null && data.messageVo.sender_no ne 0}">
-					<div class="card" style="width: auto; margin: 1rem; background: #ebfbff;">
-					  <div class="card-body">
+					<div class="card shadow-sm bg-body rounded" style="width: auto; margin: 1rem;">
+					  <div class="card-body" style="background-color: #ebfbff;">
 					    <p class="card-title text-fs-16" style="font-weight: bold;">${data.memberVo.member_nick }
 					    <c:if test="${data.messageVo.sender_no ne 0 }">
 					    <a href="./messageReplyPage?sender_no=${data.messageVo.sender_no }" style="font-size: 1.3rem; color: black;"><i class="bi bi-reply"></i></a>
@@ -77,8 +77,8 @@
 					</div>
 				</c:when>
 				<c:when test="${data.messageVo.read_date ne null}">
-					<div class="card" style="width: auto; margin: 1rem; background-color: #f8f9fa;">
-					  <div class="card-body">
+					<div class="card shadow-sm bg-body rounded" style="width: auto; margin: 1rem;">
+					  <div class="card-body" style="background-color: #f8f9fa;">
 					    <p class="card-title text-fs-16" style="font-weight: bold;">${data.memberVo.member_nick }
 					    	<c:if test="${data.messageVo.sender_no ne 0 }">
 					   			<a href="./messageReplyPage?sender_no=${data.messageVo.sender_no }" style="font-size: 1.3rem; color: black;"><i class="bi bi-reply"></i></a>

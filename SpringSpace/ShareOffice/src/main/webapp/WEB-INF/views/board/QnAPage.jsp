@@ -25,6 +25,8 @@
 
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
+
 <c:choose>
 	<c:when test="${!empty adminUser }">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -62,7 +64,9 @@
 		<jsp:include page="../commons/navbar.jsp"></jsp:include>
 	</c:otherwise>
 </c:choose>
-<div class="col" style="padding-top:1%">
+
+<div class="row" style="padding-top: 2em;">
+<div class="col" style="margin:0.5rem;">
 	<div class="row">
 		<div class="col-1"></div>
 		<div class="col-10 text-center">
@@ -71,7 +75,7 @@
 		<div class="col-1"></div>
 	</div>
 	
-	<div class="row" style="padding-right: 0%;">
+	<div class="row" style="padding:0.5em;">
 			<%-- 내용작성 --%>
 			
 		<div class="col-1">
@@ -86,7 +90,7 @@
 		<div class="col-3">
 			<div class="text-center">작성일</div>			
 		</div>
-	<div class="row text-center" style="padding-right: 0%;margin-right: 0%;margin-left: 0%;padding-left: 0%;">
+	<div class="row text-center" style="margin:0.5em;">
 		<c:forEach items="${hotQnAVoList }" var="hotList">
 		<div class="col-1"></div>	
 		<div class="col-6">
@@ -94,26 +98,21 @@
 			${hotList.QnAVo.qna_title }</a></div>
 		</div>
 		<div class="col-2">
-			
-			<div class="text_center">
-			<%-- 버그 수정 필요 --%>
-				<c:choose>
-					<c:when test="${hotList.getCheckedQnAComment >= 1}">
-						<img src="../resources/img/Answercomplete_img.png"/>
-					</c:when>	
-					<c:otherwise>
-						<img src="../resources/img/Waiting_img.png"/>
-					</c:otherwise>				
-				</c:choose>
-			</div>
-			
-			
-						
+			<c:choose>
+				<c:when test="${hotList.getCheckedQnAComment >= 1}">
+					<div class="text_center text-fs-7">답변 완료</div>
+				</c:when>	
+				<c:otherwise>
+					<div class="text_center text-fs-7">대기중</div>
+				</c:otherwise>				
+			</c:choose>
 		</div>
 		<div class="col-3">
 			<div class="ellipsis"><fmt:formatDate value="${hotList.QnAVo.qna_writeDate }" pattern="M.dd"/></div>
 		</div>
+		
 		</c:forEach>
+		
 	</div>
 	</div>
 	<hr>
@@ -251,7 +250,9 @@
 	
 	
 	</div>		
+</div>
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

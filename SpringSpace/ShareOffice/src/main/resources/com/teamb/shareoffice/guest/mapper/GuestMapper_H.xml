@@ -15,6 +15,7 @@ order by office_approve_date DESC
 <select id="getLocationList" resultType="com.teamb.shareoffice.vo.OfficeInfoVo">
 select * from SO_OfficeInfo
 where office_address like CONCAT('%',#{searchKeyword},'%')
+and office_approve = 'Y'
 </select>
 
 <!-- 오피스 상세보기 페이지 -->
@@ -74,8 +75,6 @@ order by sr.review_no desc
 limit 3
 </select>
 
-
-
 <!-- 리뷰 상세보기 -->
 <select id="getReviewByReviewNo" resultType="com.teamb.shareoffice.vo.ReviewVo">
 select *from so_review
@@ -94,7 +93,12 @@ where sr.order_no = so.order_no
 and so.office_no = #{office_no}
 </select>
 
-
+<!-- 오피스별 리뷰 갯수 구하기 -->
+<select id="getReviewCountByNo" resultType="int">
+select count(*)  from so_review sr , so_order so 
+where sr.order_no = so.order_no 
+and so.office_no = #{office_no}
+</select>
 
 <!-- 호스트 신청 페이지 -->
 <insert id="insertApplyHostInfo">

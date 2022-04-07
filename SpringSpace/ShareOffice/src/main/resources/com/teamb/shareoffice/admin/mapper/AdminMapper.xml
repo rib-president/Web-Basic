@@ -8,6 +8,11 @@
 	WHERE admin_pw = #{admin_pw}
 </select>
 
+<select id="hostSessionRenewal" resultType="com.teamb.shareoffice.vo.MemberVo">
+	SELECT * FROM SO_Member
+	where member_no = #{member_no}
+</select>
+
 <select id="getGuestInformation" resultType="com.teamb.shareoffice.vo.MemberVo">
 	SELECT * FROM SO_Member 
 		<choose>
@@ -119,13 +124,17 @@
 <update id="officeApply">
 	UPDATE SO_OfficeInfo
 	SET office_approve = 'Y', office_approve_date = now()
-	where office_no = #{office_no}
+	where office_no = #{office_no} AND member_no = #{member_no}
 </update>
 
 <update id="officeRefuse">
 	UPDATE SO_OfficeInfo
 	SET office_approve = 'N', office_approve_comment = #{refuseReason}, office_approve_date = now()
-	where office_no = #{office_no}
+	where office_no = #{office_no} AND member_no = #{member_no}
 </update>
+
+<select id="getImageDetail" resultType="com.teamb.shareoffice.vo.ImageDetailVo">
+	SELECT * FROM SO_ImageDetail
+</select>
 
 </mapper>

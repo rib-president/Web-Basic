@@ -73,12 +73,12 @@ function applyHost(){
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 <div class="row" style="padding-top: 2em;">
   <div class="col">
-   <div class="row  text-center text-fs-23">호스트 등록하기</div>
+   <div class="row text-fs-23" style="text-align: center"><p>호스트 등록하기</p></div>
 
-				<div class="row">
+				<div class="row text-fs-16" style="margin-bottom:1.5rem;" >
 					<div class="col-md-12 ">
 					   <form id="apply_form" action="applyHostProcess" method="post" enctype="multipart/form-data">				
-						<div class="card text-dark bg-light mb-3 " style="margin: 2em">
+						<div class="card text-dark bg-light mb-3 " style="margin:0.5em;">
 							<div class="card-body">
 								<div class="row mt-j2">
 									<div class="col">
@@ -120,7 +120,7 @@ function applyHost(){
 								</div>
 							</div>
 						  
-							<div class="row text-center mt-4" >
+							<div class="row text-center mt-2 mb-2" >
 								<div class="col" >
 									<a onclick="location.href = document.referrer;" type="button" class="btn btn-light">cancel</a>
 								</div>

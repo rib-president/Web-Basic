@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -14,9 +16,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 
+
 <script>
 	function licenseImg(img_url) {
-		window.open("/soUpload/licenseImg/" + img_url, "_blank", "width=500, height=500");
+		window.open("/soUpload/licenseImg/" + img_url, "_blank", "width=250, height=353");
 	}
 
 </script>
@@ -29,40 +32,55 @@
 
 <div class="row" style="padding-top: 2em;">
 	<div class="col">
-	    <div class="row mt-3">
-	       <div class="col">
-	        <h5 class="card-title text-center mt-4">호스트 등록 현황</h5>
+			<div class="row" style="">
+			   <div class="col"></div>
+			   <div class="col-6" style="text-align: center"><p class="text-fs-23">호스트 신청 현황</p></div>
+			   <div class="col"></div>
+			</div>	    
+	    <div class="row mt-1">
+	       <div class="col ">
+
 	       <c:forEach items="${applyList }" var="apply">
-				<div class="card" style="margin: 1em">
+				<div class="card text-fs-16" style="margin: 1em;">
 				  
-					<div class="card-body text-left">						
+					<div class="card-body text-left" style="padding-bottom:0;">						
 						<p class="card-text">대표자명:${apply.hostVo.host_owner}</p>
 						<p class="card-text">상호명:${apply.hostVo.host_name}</p>
 						<p class="card-text">사업자 번호:${apply.hostVo.host_license_number }
 						<i class="bi bi-file-earmark" onclick="licenseImg('${apply.hostVo.host_license_img}')"></i><!-- 사업자등록증 팝업띄우기 --></p>
 						<p class="card=text">신청일:<fmt:formatDate value="${apply.hostVo.host_apply_date }" pattern="yy-MM-dd"/></p>
 					 </div>
-					 <div class="card-body text-center">	 
+					 <div class="card-body text-center" style="padding-top:0">	 
 					    <!-- approve =="P"이면 진행중 어쩌구 -->										
 						<c:if test="${apply.hostVo.host_approve eq 'P' }">
 						   <p class="card-text ">호스트 승인 대기 중입니다.</p> 
 						</c:if>
 						<c:if test="${apply.hostVo.host_approve eq 'Y' }">  
-						   <p class="card-text ">호스트 승인이 완료되었습니다.</p>
+						   <p class="card-text" style="color:blue">호스트 승인이 완료되었습니다.</p>
 						  <div class="col d-grid"> <a href="../host/mainPage" class="btn btn-outline-secondary">호스트 페이지로 가기</a></div>	
 					    </c:if>
 					    <c:if test="${apply.hostVo.host_approve eq 'N'|| apply.hostVo.member_no == null }">  
-						   <p class="card-text" style="color:red">호스트 승인이 거절되었습니다.<br>
-						      거절 사유:${apply.hostVo.host_approve_comment }</p>
-						   <div class="col d-grid"> <a href="../guest/applyHostPage" class="btn btn-outline-secondary">호스트 재신청 하기</a></div>	
+						   <p class="card-text"  style="color:red;margin:0.2rem;" >호스트 승인이 거절되었습니다.</p>
+						   <p class=" text-fs-13" style="color:red;margin:0.5rem;">거절 사유:${apply.hostVo.host_approve_comment }</p>
+						   <p style="margin:0;" onClick="javascript:window.scrollTo(0,document.body.scrollHeight)">호스트 재신청 부탁드립니다.</p>
+						   	
 					    </c:if>
 					  
 					</div>
 								
 				</div>
 			</c:forEach>	
-				
-			     <div class="col d-grid" style="margin: 1em"><a href="./mainPage" class="btn buttonColor">메인으로</a></div>
+				<c:if test="${!empty sessionUser }">
+				<c:choose>
+				   <c:when test="${!empty sessionUser && sessionUser.member_type == 'G'}">
+				       <div class="col d-grid" style="margin: 1em"> <a href="../guest/applyHostPage" class="btn" style="background-color: #A68A64; color: #ffffff;">호스트 재신청 하기</a></div>				  
+				   </c:when>
+				   <c:otherwise>				   
+				   </c:otherwise>				
+				</c:choose>
+						   
+			     </c:if>
+			     <div class="col d-grid" style="margin: 1em"><a href="./mainPage" class="btn" style="background-color: #A68A64; color: #ffffff;">메인으로</a></div>
 			  </div>	
 			</div>
 

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,43 +20,48 @@
 
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 2em;">
-	<div class="col" style="margin:2rem">
+<div class="row" style="padding-top: 2em; padding-bottom: 2em;">
+	<div class="col" style="margin-left: 1rem; margin-right: 1rem;">
 		<%-- 내용작성 --%>
 		<div class="row">
 			<form action="./updateFreeBoardProcess" method="get">
-			<div class="col">
-				<h4 class="text-center">글수정페이지</h4>
+			<div class="row">
+					<div class="col text-fs-23 text-center mb-2">글수정페이지</div>
+			</div>
+			<div class="col text-fs-13">
+				No. ${data.freeBoardVo.freeboard_no}
 			</div>
 				<div class="row">
 					<div class="col">
-						제목  <input type="text" class="form-control" name="freeboard_title" value="${data.freeBoardVo.freeboard_title }">
+						<input type="text" class="form-control text-fs-23 bold" name="freeboard_title" value="${data.freeBoardVo.freeboard_title }">
 					</div>	
 				</div>	
 				 
-				<div class="row">
-					<div class="col">
-						작성자 <div>${data.mebmerVo.member_nick }</div>
+				<div class="row mt-2">
+					<div class="col text-fs-16">
+						<span>작성자</span>
+						<span class="inline-block pl-3 bold">${data.memberVo.member_nick }</span> 
 					</div>
 				</div>
 				 
 				<hr>			
 				<div class="row">
 					<div class="col">
-						내용  <textarea class="form-control" rows="5" name="freeboard_content">${data.freeBoardVo.freeboard_content }</textarea>
+						<textarea class="form-control text-fs-16" rows="5" name="freeboard_content">${data.freeBoardVo.freeboard_content }</textarea>
 					</div>
 				</div>
 				
-				<div class="row">
+				<div class="row" style="margin-top: 1em;">
 					<div class="col">
 						<input type="hidden" name="freeboard_no" value="${data.freeBoardVo.freeboard_no }">
 						<%-- 수정 (세션정보랑 작성자 닉이랑 같은지 비교 해야함)
 						<c:if test="${!empty sessionUser && sessionUser.member_nick == data.memberVo.member_nick}">
 						</c:if>
 						 --%> 
-						<input type="submit" style="background-color: rgb(58,208,171);" class="float-end btn btn-light" value="글수정" onclick="test1()">						
+						<input type="submit" style="background-color: #BBA586; color: white;" class="float-end btn btn-light" value="수정" onclick="test1()">						
 					</div>
 				</div>
 			</form>
@@ -68,6 +72,7 @@
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

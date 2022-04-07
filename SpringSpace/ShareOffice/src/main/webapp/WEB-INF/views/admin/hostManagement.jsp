@@ -30,13 +30,13 @@
 	}
 </script>
 <script>
-	function refuseEvent(host_no)
+	function refuseEvent(host_no, member_no)
 	{		
 		var refuseReason = prompt("거절 사유를 입력해주세요.");
 		
 		if(refuseReason != null)
 		{
-			location.href="./hostRefuseGuest?refuseReason=" + refuseReason + "&host_no=" + host_no;
+			location.href="./hostRefuseGuest?refuseReason=" + refuseReason + "&host_no=" + host_no + "&member_no=" + member_no;
 		}
 	}
 </script>
@@ -77,8 +77,8 @@
 			</form>
 			
 			<col width="50"><col width="200"><col width="200"><col width="150">
-			<col width="150"><col width="100"><col width="200"><col width="250">
-			<col width="250">
+			<col width="150"><col width="100"><col width="200"><col width="150">
+			<col width="300">
 			<thead>
 			    <tr>
 			      <th scope="col">NO</th>
@@ -111,7 +111,7 @@
 						</c:when>
 						<c:when test = "${list.hostVo.host_approve == 'P'}">
 							<td><button type="button" class="btn btn-secondary" onclick="if (confirm('승인하시겠습니까?')) location.href='./hostApplyGuest?member_no=${list.hostVo.member_no }&host_no=${list.hostVo.host_no }';">승인</button></td>
-							<td><button type="button" class="btn btn-secondary" onclick="refuseEvent(${list.hostVo.host_no })">거절</button></td>
+							<td><button type="button" class="btn btn-secondary" onclick="refuseEvent(${list.hostVo.host_no }, ${list.hostVo.member_no })">거절</button></td>
 						</c:when>
 					</c:choose>
 					<c:if test = "${list.hostVo.host_refuse_count > 0}">

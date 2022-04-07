@@ -53,6 +53,16 @@
 			'P' )
 	</insert>
 	
+	<select id="officeRentalWhetherCheck" resultType="int">
+		select count(*)
+		from so_rental sr
+		where sr.order_no in (select so.order_no 
+						      from so_order so
+						      where so.office_no = #{office_no}) 
+					      and sr.rental_date = #{rental_date}
+					      and sr.rental_status in ('U', 'P')
+	</select>
+	
 	<!-- 캘린더관련 -->
 	<select id="getRentalListByOfficeNo" resultType="com.teamb.shareoffice.vo.RentalVo">
 		select sr.* from so_rental sr 

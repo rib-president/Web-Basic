@@ -20,9 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.teamb.shareoffice.admin.service.AdminService;
 import com.teamb.shareoffice.board.service.BoardServicekt;
+import com.teamb.shareoffice.member.service.MemberServiceJs;
 import com.teamb.shareoffice.vo.AdminVo;
 import com.teamb.shareoffice.vo.CouponVo;
+import com.teamb.shareoffice.vo.HostVo;
 import com.teamb.shareoffice.vo.MemberVo;
+import com.teamb.shareoffice.vo.MessageVo;
 
 @Controller
 @RequestMapping("/admin/*")
@@ -103,32 +106,32 @@ public class AdminController
 	}
 	
 	@RequestMapping("hostApplyGuest")
-	public String hostApplyGuest(int member_no, int host_no)
+	public String hostApplyGuest(int member_no, int host_no, HttpSession session)
 	{
-		adminService.hostApplyGuest(member_no, host_no);
+		MemberVo memberVo = adminService.hostApplyGuest(member_no, host_no);
+		String msg = "호스트 신청이 승인되었습니다.";
+		adminService.noticeMessage(msg, member_no);
+		session.setAttribute("sessionUser", memberVo);
 		
 		return "redirect:../admin/hostManagement";
 	}
 	
 	@RequestMapping("hostRefuseGuest")
-	public String hostRefuseGuest(String host_no, String refuseReason, String member_no)
+	public String hostRefuseGuest(String host_no, String refuseReason, String member_no, HttpSession session)
 	{	
-		if(member_no != null)
-		{
-			adminService.hostRefuseGuest(host_no, refuseReason, member_no);
+		MemberVo memberVo = adminService.hostRefuseGuest(host_no, refuseReason, member_no);
+	
+		String msg = "호스트 권한이 거절/해제 되었습니다. \n사유 : " + refuseReason;
 		
-			return "redirect:../admin/deleteOfficeByHostRefuse?member_no=" + member_no;
-		}
-		else
-		{	
-			adminService.hostRefuseGuest(host_no, refuseReason, member_no);
-			
-			return "redirect:../admin/hostManagement";
-		}
+		adminService.noticeMessage(msg, Integer.parseInt(member_no));
+		
+		session.setAttribute("sessionUser", memberVo);
+	
+		return "redirect:../admin/deleteOfficeByHostRefuse?member_no=" + member_no;
 	}
 	
 	@RequestMapping("deleteOfficeByHostRefuse")
-	public String deleteOfficeByHostRefuse(int member_no)
+	public String deleteOfficeByHostRefuse(int member_no, String msg)
 	{
 		adminService.deleteOfficeByHostRefuse(member_no);
 		
@@ -146,17 +149,23 @@ public class AdminController
 	}
 	
 	@RequestMapping("officeApply")
-	public String officeApply(int office_no)
+	public String officeApply(int office_no, int member_no)
 	{
-		adminService.officeApply(office_no);
+		adminService.officeApply(office_no, member_no);
+		
+		String msg = "오피스 신청이 승인되었습니다.";
+		adminService.noticeMessage(msg, member_no);
 		
 		return "redirect:../admin/officeManagement";
 	}
 	
 	@RequestMapping("officeRefuse")
-	public String officeRefuse(String office_no, String refuseReason)
+	public String officeRefuse(String office_no, String refuseReason, int member_no)
 	{	
-		adminService.officeRefuse(office_no, refuseReason);
+		adminService.officeRefuse(office_no, refuseReason, member_no);
+		
+		String msg = "오피스 신청이 거절되었습니다. \n사유 : " + refuseReason;
+		adminService.noticeMessage(msg, member_no);
 		
 		return "redirect:../admin/officeManagement";
 	}
@@ -175,16 +184,13 @@ public class AdminController
 		
 		
 		return "admin/createdCouponListPage";
-		
-	}		
+	}
 		
 	@RequestMapping("createCouponProcess") 
 	public String createCouponProcess(CouponVo param, MultipartFile image, HttpSession session) {
 		String uploadFolder = "C:/shareOffice/couponImage/"; 
-			System.out.println("�뜝�럩逾졿쾬�꼶梨룟뜝�룞�삕占쎈턄占쎈뎨�뜝占�" + image.getOriginalFilename());
 			if(!image.isEmpty()) {
 			
-			//�뜝�럡�뀏嶺뚯쉸裕놅옙占� �뜝�럥夷ⓨ뜝�럥�맠 �뜝�럡臾멨뜝�럡�뎽...
 			Date today = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/"); 
 			String folderPath = sdf.format(today);
@@ -201,7 +207,7 @@ public class AdminController
 			
 			String oriImgName = image.getOriginalFilename();
 	
-			// random uuid + �뜝�럩寃긷뜝�럩�궨�뜝�럥六삥뤆�룊�삕 + �뜝�럩�꼪�뜝�럩�궋�뜝�럩�겱
+			// random uuid + 占쎈쐻占쎈윪野껉막�쐻占쎈윪占쎄땍占쎈쐻占쎈윥筌묒궏琉놅옙猷딉옙�굲 + 占쎈쐻占쎈윪占쎄섈占쎈쐻占쎈윪占쎄텑占쎈쐻占쎈윪占쎄껑
 			UUID uuid = UUID.randomUUID();
 			uuid = UUID.randomUUID();
 			imgName += (uuid.toString() + oriImgName.substring(oriImgName.lastIndexOf(".")));

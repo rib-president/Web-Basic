@@ -33,7 +33,7 @@
 		<div class="col-10">
 			
 			<div class="row">
-				<div class="col center text-fs-23">오피스 예약 내역</div>
+				<div class="col center text-fs-23"><i class="bi bi-receipt-cutoff"></i> 오피스 예약 내역</div>
 			</div>
 			
 			<div class="row mt-5"> <!-- 오피스 예약정보 -->
@@ -42,9 +42,9 @@
 					<c:forEach items="${rentalList }" var="rentalList" varStatus="status">
 					
 					<div class="row"> <!-- 예약한날짜 -->
-						<div class="col"> 
-							<p class="fw-bold text-fs-16" style="margin-bottom: 0px;">
-								<fmt:formatDate value="${rentalList.orderVo.order_date }" pattern="yyyy년MM월dd일 (E)"/>
+						<div class="col text-fs-13"><span>결제일</span>
+							<p class="fw-bold inline-block float-right" style="margin-bottom: 0px; text-align: right;">
+								<fmt:formatDate value="${rentalList.orderVo.order_date }" pattern="yyyy/MM/dd (E)"/>
 							</p> 
 						</div>
 					</div>
@@ -58,8 +58,8 @@
 						
 						<div class="col"> <!-- 오피스 정보 -->
 							<div class="row"> <!-- 오피스 이름 -->
-								<div class="col text-fs-13">
-									<a style="color:#808080" href="../guest/officeDetailPage?office_no=${rentalList.officeInfoVo.office_no }">${rentalList.officeInfoVo.office_name }</a>
+								<div class="col text-fs-15 mb-3">
+									<a style="color:#333" href="../guest/officeDetailPage?office_no=${rentalList.officeInfoVo.office_no }">${rentalList.officeInfoVo.office_name }</a>
 								</div>
 							</div>
 							
@@ -69,33 +69,20 @@
 									<c:forEach items="${rentalList.rentalVoList}" var="rvl">
 										<c:choose>
 											<c:when test="${rvl.rental_status == 'C' }">
-												<p class="text-gray-c_b7" style="text-decoration:line-through"><fmt:formatDate value="${rvl.rental_date}" pattern="yy년MM월dd일 (E)"/></p>
+												<p class="text-gray-c_b7 mb-1" style="text-decoration:line-through"><fmt:formatDate value="${rvl.rental_date}" pattern="yy/MM/dd (E)"/></p>
 											</c:when>
 											<c:otherwise>
-												<p><fmt:formatDate value="${rvl.rental_date}" pattern="yy년MM월dd일 (E)"/></p>
+												<p class="mb-1"><fmt:formatDate value="${rvl.rental_date}" pattern="yy/MM/dd (E)"/></p>
 											</c:otherwise>
 										</c:choose>
 								    </c:forEach>
 								</div>
 							</div>
 							
-							<div class="row"> <!-- 대여 가격 -->
-								<div class="col grayColor text-fs-13">
-									<%-- <fmt:parseNumber value="${rentalList.totalPaymentList.parseTotalPayment}" type="number"/> --%>
-									<fmt:formatNumber value="${rentalList.totalPayment }"/>원</span>
-									
-								</div>
-							</div>
-							
-							<div class="row mt-3"> <!-- 예약 인원 -->
-								<div class="col grayColor text-fs-13"">
-									${rentalList.orderVo.order_personnel }명
-								</div>
-							</div>
 							
 						</div>
 						
-						<div class="col-3 text-fs-16" style="padding-right : 0;"> <!-- 리뷰작성페이지 이동버튼(리뷰 존재여부에 따라 출력 or 미출력) -->
+						<div class="col-3 text-fs-16 pl-0" style="text-align: right; position: relative;"> <!-- 리뷰작성페이지 이동버튼(리뷰 존재여부에 따라 출력 or 미출력) -->
 							<div class="row">
 								<div class="col">
 									<a href="./officeRentalDetailPage?order_no=${rentalList.orderVo.order_no }">예약상세</a>
@@ -114,13 +101,27 @@
 									</c:choose>	
 								</div>
 							</div>
+ 
+							<div class="row" style="position: absolute; bottom: 2em; right: 0.75rem;"> <!-- 대여 가격 -->
+								<div class="col grayColor text-fs-13">
+									<%-- <fmt:parseNumber value="${rentalList.totalPaymentList.parseTotalPayment}" type="number"/> --%>
+									<fmt:formatNumber value="${rentalList.totalPayment }"/>원</span>
+									
+								</div>
+							</div>
+							
+							<div class="row" style="position: absolute; bottom: 0em; right: 0.75em; margin-bottom: 0.25rem;"> <!-- 예약 인원 -->
+								<div class="col grayColor text-fs-13">
+									${rentalList.orderVo.order_personnel }명
+								</div>
+							</div>
 							 
 						</div>
 						
 					</div>
 					
-					<div class="row" style="padding:1em;"></div>
-					
+				<div class="row" style="padding: 2.5rem;"></div>
+				
 					</c:forEach>
 					
 				</div>

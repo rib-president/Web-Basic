@@ -131,10 +131,11 @@ public class RestHostController {
 	}	
 	
 	@RequestMapping("searchOrder")
-	public HashMap<String, Object> searchOrder(String category, String searchKeyword, boolean onlyCancel) {
+	public HashMap<String, Object> searchOrder(String category, String searchKeyword, boolean onlyCancel, HttpSession session) {
 		HashMap<String, Object> data = new HashMap<>();
 		
-		data.put("dataList", hostServiceRN.getOrderList(category, searchKeyword, onlyCancel));		
+		data.put("dataList", hostServiceRN.getOrderList(((MemberVo) session.getAttribute("sessionUser")).getMember_no(), 
+														category, searchKeyword, onlyCancel));		
 		
 		return data;
 	}
@@ -144,6 +145,18 @@ public class RestHostController {
 		HashMap<String, Object> data = new HashMap<>();
 		
 		data.put("monthRentalList", hostServiceRN.getMonthRental(((MemberVo) session.getAttribute("sessionUser")).getMember_no(), rental_date));
+		
+		return data;
+	}
+	
+	@RequestMapping("loadChartData")
+	public HashMap<String, Object> loadChartData(HttpSession session) {
+		HashMap<String, Object> data = new HashMap<>();
+		
+		int member_no = ((MemberVo) session.getAttribute("sessionUser")).getMember_no();
+		
+		data.put("totalProportion", hostServiceRN.getRentalProportion(member_no));
+		data.put("officeProportion", hostServiceRN.getRentalProportionLast5Month(member_no));	
 		
 		return data;
 	}

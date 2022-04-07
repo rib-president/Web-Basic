@@ -9,7 +9,11 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a89f71e1f43b65b9072477b5fb3f976&libraries=services"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link href="../resources/css/commons.css" rel="stylesheet">
+<style>
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(166, 138, 100,.075)!important;
+}
+</style>
 <script type="text/javascript">
 
 
@@ -32,12 +36,12 @@ function initMap(){
 	geocoder = new kakao.maps.services.Geocoder();	
 	
 }
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 
 function createMarker(){
 	//주소-좌표 변환 객체를 생성합니다
 	   
 	//var address_list = ["서울 강남구 강남대로 406 지하1층 감성타코", "서울 강남구 테헤란로 109 강남제일빌딩", "서울 서초구 서초대로77길 7 서초빌딩 1층"];
-	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 
 	$.ajax({
 		url : './getLocationList',
@@ -52,31 +56,7 @@ function createMarker(){
 					var address = officeInfo.office_address;
 					
 					
-					geocoder.addressSearch(address, function(result, status) {
-					
-					// 정상적으로 검색이 완료됐으면 
-					 if (status === kakao.maps.services.Status.OK) {
-						 var imageSize = new kakao.maps.Size(24, 35); 
-						 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-					     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-					
-					    // 결과값으로 받은 위치를 마커로 표시합니다
-					    var marker = new kakao.maps.Marker({
-					        map: map,
-					        position: coords,
-					        image : markerImage
-					    });
-					    //map.setCenter(coords);
-					    
-					    var aaa = new OfficeInfoVo();
-					    aaa.officeInfo = officeInfo;
-					    
-					    kakao.maps.event.addListener(marker, 'click', showDetail(aaa));
-					    
-					} 
-					
-										
-				});
+					geocoder.addressSearch(address, addrSearchCallback(officeInfo ));
 				}
 				
 			}		
@@ -85,23 +65,71 @@ function createMarker(){
 }
 
 
-function showDetail(tttt){
+function addrSearchCallback(officeInfo){
+	return function(result, status){
+		// 정상적으로 검색이 완료됐으면 
+		 if (status === kakao.maps.services.Status.OK) {
+			 var imageSize = new kakao.maps.Size(24, 35); 
+			 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		
+		    // 결과값으로 받은 위치를 마커로 표시합니다
+		    var marker = new kakao.maps.Marker({
+		        map: map,
+		        position: coords,
+		        image : markerImage
+		    });
+		    //map.setCenter(coords);
+		    
+		    kakao.maps.event.addListener(marker, 'click', showDetail(officeInfo));
+		    
+		} 		
+	};
+}
+
+
+
+
+
+
+
+function showDetail(officeInfo){
 	return function(){
+		
+		//document.getElementById("selectedOfficeInfoBox").setAttribute("class" , "col");
+		
+		document.getElementById("selectedOfficeInfoBox").style.visibility = "visible";
+		
+		
+		var boxAddr = document.getElementById("info_addr");
+		boxAddr.innerText = officeInfo.office_address;
+		var boxName = document.getElementById("info_name");
+		boxName.innerText = officeInfo.office_name;
+		var boxTag = document.getElementById("info_tag");
+		boxTag.innerText = officeInfo.office_tags;
+
+		
+		//....
+		
+		var imgBox = document.getElementById("info_img");
+		imgBox.src = officeInfo.office_thumbnail;
+		
+		
 		//alert(officeInfo.office_name);
+		/*
 		var selectedOfficeInfoBox = document.getElementById("selectedOfficeInfoBox");
 		
 		selectedOfficeInfoBox.innerHTML = "";
 		
 		var testNameBox = document.createElement("div");
-		testNameBox.innerText = tttt.office_name;	
+		testNameBox.innerText = officeInfo.office_name;	
 		selectedOfficeInfoBox.appendChild(testNameBox);
 		
 		
 		var testAddrBox = document.createElement("div");
-		testAddrBox.innerText = tttt
-		.office_address;	
+		testAddrBox.innerText = officeInfo.office_address;	
 		selectedOfficeInfoBox.appendChild(testAddrBox);
-		
+		*/
 	};
 	
 }
@@ -153,12 +181,12 @@ window.addEventListener("DOMContentLoaded" , function(){
 <body>
 <div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
-		<div class="row " style="padding-top: 2em;">
+		<div class="row " style="padding-top: 2em;background-image:url('../resources/img/back4.jpg'">
 			<div class="col" style="margin: 0.5em">
 				<div class="row" style="">
 					<p class=" text-fs-23 " style="text-align: center;">오피스 찾기</p>
 				</div>
-				<div class="row mt">
+				<div class="row mt-3">
 					<div class="col" style="margin: 0; padding-right: 0.5rem">
 						<input type="text" id="search__address_keyword"
 							class="form-control form-control-sm"
@@ -173,7 +201,7 @@ window.addEventListener("DOMContentLoaded" , function(){
 
 				</div>
 				<!-- 지도 출력 -->
-				<div class="row">
+				<div class="row mt-3">
 					<div class="col">
 						<p style="margin-top: -0.75em">
 							<em class="link"> <a href="javascript:void(0);"
@@ -187,37 +215,38 @@ window.addEventListener("DOMContentLoaded" , function(){
 				</div>
 				<!-- 마커 클릭 시 오피스 정보 -->
 				<div class="row">
-					<div class="col" id="selectedOfficeInfoBox">
+					<div class="col" id="selectedOfficeInfoBox" style="padding:0.5rem;visibility:hidden;margin:0.5rem ">
 				   <!-- <c:forEach></c:forEach> -->
-						<div class="card" style="padding-top:1rem;padding-bottom:1rem">
-							<div class="row">
-								<div class="col-auto" style="margin-left:0.5rem;padding-right:0">
-									<img src="" width=120rem, height=90em>
+						<div class="card shadow bg-body rounded" style="margin-top:0.7rem; padding-bottom:0rem;   ">
+							<div class="row" style="background-color: #f8f9fa;">
+								<div class="col-4" style="margin-left:0.5rem;padding-right:0">
+									<img src="" class="img-fluid" id="info_img" style="padding:-0.5rem">
 								</div>
 								<div class="col" style="">
-								    <div class="card-body" style="padding:0;margin:0;text-align:left;">
+								    <div class="card-body" style="padding-top:0.5rem;padding-bottom:0.5rem;margin:0;text-align:left;">
 										<div class="row">
-											<div class="col text-fs-17 font-medium2">오피스 이름</div>
+											<div class="col text-fs-17 font-medium2" id="info_name"></div>
 										</div>
 										<div class="row text-fs-13">
 											<div class="col">
 												<p class="card-text">
-													<small class="text-muted">#태그 삽입 </small>
+													#<small class="text-muted" id="info_tag"></small>
 												</p>
 											</div>
 										</div>
 										<div class="row mt text-fs-13" style="">
 						 	                 <div class="col ">
-							                	<p style="margin:0"><i class="bi bi-geo-alt"></i>주소 </p>
+							                	<p style="margin:0"><i class="bi bi-geo-alt"></i><span id="info_addr"></span></p>
 							                </div>						 
 						                 </div>		
-						                 <div class="row mt-1 text-fs-16" style="margin:0;">
-											<div class="col-4" style="text-align:left;padding:0;">
-						                       <p style="margin:0" ><i class="bi bi-star-fill"></i>4.0</p>
-						                    </div>						                   
-					                       	<div class="col fw-bold" style="text-align:right;">
+						                 <div class="row mt-1 text-fs-13 font-light" style="margin:0;">
+											<div class="col" style="text-align:left;padding:0;">
+						                       <p style="margin-bottom:0.3rem"><i class="bi bi-star-fill" style="color:#EDB867;"></i>4.7</p>
+						                    </div>		
+				                   
+					                       	<div class="col " style="text-align:right;">
 								               <p class="text-muted" style="margin:0">
-									              <fmt:formatNumber value="500000" pattern="#,###"/>~ <span class="font-light text-fs-13 ">원/일</span></p>
+									              <span class="fw-bold text-fs-16"id="info_price">50,000</span><span  class="text-fs-13">원/일</span></p>
 						                    </div>						                     
 						                 </div>	
 						              </div>   

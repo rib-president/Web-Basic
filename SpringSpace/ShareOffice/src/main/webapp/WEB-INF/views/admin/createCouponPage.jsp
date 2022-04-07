@@ -49,7 +49,7 @@
 				<input type="text" class="form-control" name="coupon_name">
 			쿠폰수량
 				<input type="text" class="form-control" name="coupon_count">
-			할인가격	
+			할인비율	
 				<input type="text" class="form-control" name="coupon_discount">
 			이미지	
 				<input type="file" class="form-control" accept="image/*" name="image">

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Insert title here</title>
+<title>답장 하기</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -67,7 +67,7 @@
 					<input type="hidden" value="${data.messageVo.sender_no }" name="receive_no">
 				</div>
     		</div>
-    		<hr>
+    		<hr style="margin-left: 1rem; margin-right: 1rem;">
     		<div class="mb-3" style="margin: 1rem;">
 			   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="txt" placeholder="내용을 입력해 주세요."></textarea>
 			</div>

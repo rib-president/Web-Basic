@@ -19,33 +19,32 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 2em;">
-	<div class="col" style="margin:2rem">
+<div class="row" style="padding-top: 2em; padding-bottom: 2em;">
+	<div class="col" style="margin-left: 1rem; margin-right: 1rem;">
 	<%-- 내용작성 --%>
 		<div class="row">
 			<form action="./freeBoardWriteProcess" method="get">
 			<div class="col">
-				<h4 class="text-center">글쓰기페이지</h4>
+				<div class="text-center text-fs-23" style="margin-bottom: 0.5rem;"><i class="bi bi-pencil-square"></i> 글쓰기페이지</div>
 			</div>
+				
+				
 				<div class="row">
-					<div class="col">
-						제목  <input type="text" class="form-control" name="freeboard_title">
-					</div>	
-				</div>	
-				 
-				<div class="row">
-					<div class="col">
-						작성자 : <div>${sessionUser.member_nick }</div>
+					<div class="col" style="margin-bottom: 0.5rem;">
+						<div class="inline-block">작성자</div>
+						<div class="inline-block pl-3 bold">${sessionUser.member_nick }</div>
 					</div>
 				</div>
-				 
-				 
-				<hr>			
+				<div>
+					<input type="text" class="form-control" name="freeboard_title" placeholder="제목을 입력해 주세요.">
+				</div>
+				<hr>
 				<div class="row">
-					<div class="col">
-						내용  <textarea class="form-control" rows="5" name="freeboard_content"></textarea>
+					<div class="col" style="margin-bottom: 1rem;">
+						<textarea class="form-control" rows="5" name="freeboard_content" placeholder="내용을 입력해 주세요."></textarea>
 					</div>
 				</div>
 				<!-- 
@@ -56,8 +55,8 @@
 				</div>
 				 -->
 				<div class="row">
-					<div class="col mt-2">
-						<input type="submit" style="background-color: rgb(58,208,171);" class="float-end btn btn-light" value="글작성">						
+					<div class="col" style="margin-bottom: 1rem;">
+						<button type="submit" style="background-color: #A68A64; color: white; width: 100%;" class="btn btn-light btn-block text-fs-16"><i class="bi bi-pencil-square"></i> 글작성</button>					
 					</div>
 				</div>
 			</form>
@@ -66,6 +65,7 @@
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

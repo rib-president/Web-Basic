@@ -37,6 +37,7 @@ i {text-decoration: none; color:#A68A64;
 }
 
 
+
 </style>
 <script>
 var priceArray =[];
@@ -113,14 +114,17 @@ $(function() {
 			<div class="row mt-3 text-fs-16" style="margin: 0.5em">
 				<div class="col ">
 					<!-- 오피스 간단 소개 -->
-					<div class="row mt-3 font-medium2">
-						<p class="text-fs-23 ">${office.officeVo.office_name }</p>
+					<div class="row mt-3 font-medium2" >
+						 <div class="col card-title" style="margin-bottom:0.7rem;"><p class="text-fs-23 "style="margin-bottom:0;">${office.officeVo.office_name }</p></div>
+						 <div class="col-3 text-fs-16 font-medium" style="margin:0.7rem;margin-bottom:0.7rem;text-align:right;">
+						      <p style="margin-bottom:0.3rem"><i class="bi bi-star-fill" style="color:#EDB867"></i> ${officeAvgRating }</p>
+						  </div>
+					</div>
+					<div class="row" >
+						<p style="margin-bottom:0.2rem;">${office.officeVo.office_simpleContent }</p>
 					</div>
 					<div class="row">
-						<p>${office.officeVo.office_simpleContent }</p>
-					</div>
-					<div class="row">
-						<p class="fs-7 text-muted text-fs-13">#${office.officeVo.office_tags }</p>
+						<p class="fs-7 text-muted text-fs-13" style="margin-bottom:0.4rem;">#${office.officeVo.office_tags }</p>
 					</div>
 					<div class="row">
 					    <div class="col-6">공간 이용료</div>
@@ -158,7 +162,7 @@ $(function() {
 									<tr class="text-center font-light" >
 										<th scope="col" style="font-weight:500">운영일</th>
 										<th scope="col" style="font-weight:500">운영 시간</th>
-										<th scope="col" style="font-weight:500">이용 가격</th>
+										<th scope="col" style="font-weight:500">이용 가격(원)</th>
 									</tr>
 								</thead>
 
@@ -281,7 +285,8 @@ $(function() {
 					<div class="row mt-4 mb-4 ">
 						<div class="col" >
 						   <div class="row font-medium2">
-						     <div class="col"> <a href="./officeReviewPage?office_no=${office.officeVo.office_no}">이용 후기</a><i class="bi bi-chevron-right"></i> </div>			     				  
+						     <div class="col"> <a href="./officeReviewPage?office_no=${office.officeVo.office_no}">이용 후기<span class="text-fs-13">						       
+						     (${reviewCount})</span></a><i class="bi bi-chevron-right"></i> </div>			     				  
 						   </div>
 							<div class="row mt-3">
 								<div class="col">

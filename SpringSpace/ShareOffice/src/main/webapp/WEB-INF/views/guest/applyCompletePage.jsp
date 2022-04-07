@@ -23,16 +23,17 @@
 <div class="row" style="padding-top:2rem ;">
 	<div class="col">
 				<div class="card text-dark bg-light mb-3" style="margin: 1em;margin-top:2em">			  
-					 <div class="card-body text-center">	
+					 <div class="card-body text-center " >	
 					 
 					      <div class="row mt-5"> 
-						     <p class="card-text-fs-23">호스트 신청이<br> 완료되었습니다.</p> 	
+						     <p class="text-fs-18">호스트 신청이 완료되었습니다.</p> 	
+						     <p class="text-muted fs-16">관리자 승인 완료 후에 <br>오피스를 등록할 수 있습니다.</p>
 						   </div>  	
-						   <div class="row mt-5">
-						      <div class="col d-grid" style="margin: 1em"><a href="./applyCheckPage" class="btn btn-outline-secondary">호스트 신청 현황 보러가기</a></div>
+						   <div class="row mt-4 text-fs-16">
+						      <div class="col d-grid" style="margin: 0"><a href="./applyCheckPage" class="btn btn-outline-secondary">호스트 신청 현황 보러가기</a></div>
 				           </div>
 				           <div class="row">
-				              <div class="col d-grid" style="margin: 1em"><a href="./mainPage" class="btn btn-outline-secondary">메인으로</a></div>
+				              <div class="col d-grid" style="margin-top:0.3rem;"><a href="./mainPage" class="btn btn-outline-secondary">메인으로</a></div>
 						   </div>	  
 					</div>								
 				</div>			

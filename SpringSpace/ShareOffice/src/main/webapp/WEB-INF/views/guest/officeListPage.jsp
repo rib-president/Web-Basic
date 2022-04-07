@@ -69,7 +69,7 @@ $(function() {
 						<div class="row" style="height:2rem">
 						  <div class="col card-title text-fs-23 font-medium2 ">	<p>${office.officeVo.office_name }</p></div>
 						   <div class="col-3 text-fs-16 font-medium" style="margin:0.7rem ;text-align:right;">
-						      <p style="margin-bottom:0.3rem"><i class="bi bi-star-fill"></i> ${office.officeAvgRating}</p>
+						      <p style="margin-bottom:0.3rem"><i class="bi bi-star-fill" style="color:#EDB867;"></i> ${office.officeAvgRating}</p>
 						   </div>
 						</div>
 						<div class="row text-fs-13">

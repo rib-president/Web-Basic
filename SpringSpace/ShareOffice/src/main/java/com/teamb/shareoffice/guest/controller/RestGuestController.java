@@ -1,7 +1,11 @@
 package com.teamb.shareoffice.guest.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,11 +53,24 @@ public class RestGuestController {
 	}
 	
 	
-	@RequestMapping("getDayPrice")
-	public HashMap<String, Object> getDayPrice(BusinessDayVo bdvo){
+	@RequestMapping("rentalWhetherCheck")
+	public HashMap<String, Object> rentalWhetherCheck(int office_no, Date [] rental_date){
 		HashMap<String, Object> responseData = new HashMap<String, Object>();
 		
-		responseData.put("businessDayVo", guestServiceB.getPriceAndBusiunessTime(bdvo));
+		for(int i=0; i<rental_date.length; i++) {
+			System.out.println(rental_date[i]);
+		}
+		
+		if(rental_date != null) {
+			for(int i=0; i<rental_date.length; i++) {
+				int rentalWhether = guestServiceB.officeRentalWhetherCheck(office_no, rental_date[i]);
+				
+				System.out.println("렌탈 날짜 : " + rental_date[i] + " -> 렌탈여부 (" + rentalWhether + ")");
+				
+				responseData.put("rentalWhether", rentalWhether);
+			}
+		}
+		
 		
 		return responseData;
 	}

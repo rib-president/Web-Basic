@@ -22,7 +22,7 @@
 <style type="text/css">
  a {text-decoration: none; color:#A68A64;}
  i {text-decoration: none; color:#A68A64;}
- 
+
 </style>
 <script>
 
@@ -48,10 +48,11 @@ $(function() {
 	<div class="col">
 			<div class="row" style="">
 			   <div class="col"><a href="javascript:history.back();"class="btn" style="color: #A68A64"><i class="bi bi-arrow-left"></i></a></div>
-			   <div class="col text-center"><p class="text-fs-23">이용후기</p></div>
-		        <div class="col"></div>
+			   <div class="col-5" style="text-align: center"><p class="text-fs-23">이용후기</p></div>
+			   <div class="col"></div>
 			</div>
-			<div class="row mt-2" style="margin:0.5em">
+			<div class="row" style="text-align: center;padding:0;"><p class="text-fs-16">후기:${reviewCount }개 <i class="bi bi-dot"></i>평균 평점: 4.5</p></div>
+			<div class="row mt-2" style="padding-bottom:1.5rem">
 				<div class="col">
 				    <c:choose>
 				        <c:when test="${reviewList.size() <= 0 }">
@@ -65,7 +66,7 @@ $(function() {
 				        </c:when>
 				        <c:otherwise>
 				              <c:forEach  items="${reviewList}" var="review">
-					      <div class="card" style="">
+					      <div class="card" style="margin:0.5em;">
 						     <div class="row">
 							    <div class="col">
 							 
@@ -94,8 +95,8 @@ $(function() {
 										</div>
 										<div class="col-8 text-left">
 											 <c:choose>
-                                                <c:when test="${fn:length(review.reviewVo.review_title) > 15}">
-                                                   <c:out value="${fn:substring(review.reviewVo.review_title,0,4)}"/>....
+                                                <c:when test="${fn:length(review.reviewVo.review_title)> 15}">
+                                                   <c:out value="${fn:substring(review.reviewVo.review_title,0,14)}"/>....
                                                 </c:when>
                                                 <c:otherwise>
                                                     <c:out value="${review.reviewVo.review_title}"/>

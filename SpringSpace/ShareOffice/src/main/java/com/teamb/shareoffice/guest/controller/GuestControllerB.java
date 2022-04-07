@@ -61,6 +61,18 @@ public class GuestControllerB {
 	@RequestMapping("paymentPage")
 	public String paymentPage(Model model, HttpSession session, int officeNo, OrderVo ovo, BusinessDayVo bdvo, Date [] rental_date) {
 		
+		if(rental_date != null) {
+			for(int i=0; i<rental_date.length; i++) {
+				int rentalWhether = guestServiceB.officeRentalWhetherCheck(officeNo, rental_date[i]);
+				
+				System.out.println("렌탈 날짜 : " + rental_date[i] + " -> 렌탈여부 (" + rentalWhether + ")");
+				
+				if(rentalWhether > 0) {
+					return "guest/orderFail";
+				}
+			}
+		}
+		
 		//orderPage view쪽엔 hidden으로 미리 넘기는 코드 작성
 		HashMap<String, Object> officeInfo = guestServiceB.getOfficeInfo(officeNo);
 		
@@ -213,6 +225,7 @@ public class GuestControllerB {
 
 		return "redirect:./officeRentalListPage";
 	}
+	
 	
 	
 

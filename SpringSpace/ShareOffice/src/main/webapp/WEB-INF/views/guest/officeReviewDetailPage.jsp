@@ -16,6 +16,12 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <link rel="stylesheet" href="../resources/css/fontawesome-stars.css">
 <script type="text/javascript" src="../resources/js/jquery.barrating.min.js"></script>
+<style>
+
+
+
+</style>
+
 <script>
 $(function() {
     $('.reviewRating').barrating({
@@ -36,7 +42,7 @@ $(function() {
 	
 		<div class="row">	
 			 <div class="col"><a href="javascript:history.back();"class="btn" style="color: #A68A64"><i class="bi bi-arrow-left"></i></a></div>
-		     <div class="col text-center"><p class="text-fs-23">이용후기</p></div>
+		     <div class="col" style="text-align: center"><p class="text-fs-23">이용후기</p></div>
 		     <div class="col"></div>
 		</div>
 

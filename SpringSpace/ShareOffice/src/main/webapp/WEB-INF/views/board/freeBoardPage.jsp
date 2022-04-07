@@ -13,30 +13,42 @@
 
 <style>
 	table {
+		border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
 		border-collapse: collapse;
 		border-spacing: 0;
 		width: 100%;
-		border: 1px solid #ddd;
 		font-size: 1em;
 	}
 	th, td {
+		table-layout:fixed;
+		white-space: nowrap;
+		text-overflow: ellipsis;
   		text-align: left;
+  		
+  		overflow: hidden;
+  		width:200;
 	}
 
 	tr:nth-child(even) {
-		background-color: #f2f2f2;
+		background-color: #f8f9fa;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		white-space:nowrap;
 	}
+
+	
 </style>
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../commons/navbar.jsp"></jsp:include>
+<div class="container-fluid px-0" style="overflow-x : hidden">
+<jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 <div class="row" style="padding-top: 2em;">
 		<%--
 			<div style="overflow-x:auto;">
 		 --%>
-				<div class="col" style="margin:2rem">
+				<div class="col" style="margin:1rem">
 				<%-- 내용작성 --%>
 					<div class="row">
 						<div class="col text-center">
@@ -46,31 +58,37 @@
 					
 					<div class="row">
 						<div class="col text-center">
-							<table class="table">
+							<table class="table mt-3">
+								<thead>
 							    <tr>
-							    <%-- class="position-absolute top-50 start-50" --%>
-							      <th class="text-center">no</th>
-							      <th class="text-center">title</th>
+							      <th class="text-center text-fs-16">No</th>
+							      <th class="text-center text-fs-16">Title</th>
+							      <th class="text-center text-fs-16">작성일</th>
+							      <th class="text-center text-fs-16">조회</th>
 							    </tr>
+							    </thead>
+							    <tbody>
 							  <c:forEach items="${freeBoardList }" var="freeBoardList">
 							    <tr>
-							      	<td class="text-center">${freeBoardList.freeBoardVo.freeboard_no }</td>
-							    	<td>
-								      	<a href="./freeBoardReadPage?freeboard_no=${freeBoardList.freeBoardVo.freeboard_no }">
+							      	<td class="text-center py-3">${freeBoardList.freeBoardVo.freeboard_no }</td>
+						    		<td>
+								      	<a href="./freeBoardReadPage?freeboard_no=${freeBoardList.freeBoardVo.freeboard_no }" style="color: #495057; font-weight: bold;">
 								      	${freeBoardList.freeBoardVo.freeboard_title }
 								      	</a>
-								      	 <%-- 새글 뱃지 추가해함
-								      	<c:if test="${!empty data.newKeyword }">
-								      		<span class="badge bg-danger">new</span>
-								      	</c:if>
-								      	  --%> 
+								      	
 								      	  <br>
-								      	<span>작성자 : ${freeBoardList.memberVo.member_nick }</span>
-								      	<span>작성일 : <fmt:formatDate value="${freeBoardList.freeBoardVo.freeboard_writeDate }" pattern="M.dd" /></span>
-								      	<span>조회수 : ${freeBoardList.freeBoardVo.freeboard_readCount }</span>
+								      	<span class="text-fs-13">${freeBoardList.memberVo.member_nick }</span>
+								      	
+							      	</td>
+							      	<td style="text-align: center;">
+							      		<span class="text-fs-13 py-4" ><fmt:formatDate value="${freeBoardList.freeBoardVo.freeboard_writeDate }" pattern="MM/dd" /></span>
+							      	</td>
+							      	<td style="text-align: center;">
+								      	<span class="text-fs-13 py-4" >${freeBoardList.freeBoardVo.freeboard_readCount }</span>
 							      	</td>
 							    	</tr>
 								</c:forEach>
+								</tbody>
 							</table>
 						</div>
 					</div>	
@@ -79,18 +97,24 @@
 						
 				
 			</div>
+		<!-- 	
 		<div class="row">
-			<div class="col">
+			<div class="col" style="margin-right:0.5rem;margin-left:0.5rem;">
 				<%-- 수정
 				<c:if test="${!empty sessionUser }">
 				</c:if>
 				 --%>
-					<a href="./freeBoardWritePage" style="background-color: #adb5bd; color: white;" class="float-end btn btn-light">글쓰기</a>
+					<a href="./freeBoardWritePage" style="background-color: #a68a64; color: white;" class="float-end btn btn-light">글쓰기</a>
 				
 			</div>
-		</div>
+		</div>  -->
+		<c:if test="${!empty sessionUser }">
+			<div class="fixed " style="bottom: 7rem; right: 3rem; z-index: 99">
+				<a href="freeBoardWritePage"><i class="bi bi-plus-circle-fill" style="font-size: 3rem; color: #A68A64;"></i></a>
+			</div>
+		</c:if>
 			
-		<div class="row">
+		<div class="row" style="padding-bottom: 2em;">
 			<div class="col"></div>
 			<div class="col">
 				
@@ -112,12 +136,12 @@
 				    	<c:choose>
 				    		<c:when test="${currentPage == i}">
 						    	<li class="page-item active">
-						    		<a class="page-link" href="./freeBoardPage?pageNum=${i}">${i}</a>
+						    		<a class="page-link" href="./freeBoardPage?pageNum=${i}" style="background-color: #A68A64; margin: 0">${i}</a>
 						    	</li>
 				    		</c:when>
 				    		<c:otherwise>
 						    	<li class="page-item">
-						    		<a class="page-link" href="./freeBoardPage?pageNum=${i}">${i}</a>
+						    		<a class="page-link" href="./freeBoardPage?pageNum=${i}" style="color: #A68A64;">${i}</a>
 						    	</li>
 				    		</c:otherwise>
 				    	</c:choose>
@@ -148,7 +172,7 @@
  --%>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
-
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

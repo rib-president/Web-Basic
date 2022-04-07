@@ -91,12 +91,24 @@ public class GuestControllerRN {
 	
 	// for pc
 	@RequestMapping("orderProcess")
-	public String paymentProcess(Model model, HttpSession session, OrderVo orderVo, Date[] rental_date, int allot_no, double coupon_discount) {
+	public String paymentProcess(Model model, HttpSession session, OrderVo orderVo, Date[] rental_date, int allot_no, double coupon_discount, int office_no) {
 		
 		/*int discountPrice = 0;
 		if(coupon_discount > 0) {
 			discountPrice = (int) (Math.floor((coupon_discount*1.0) / rental_date.length));	
 		}*/
+		
+		if(rental_date != null) {
+			for(int i=0; i<rental_date.length; i++) {
+				int rentalWhether = guestServiceB.officeRentalWhetherCheck(office_no, rental_date[i]);
+				
+				System.out.println("렌탈 날짜 : " + rental_date[i] + " -> 렌탈여부 (" + rentalWhether + ")");
+				
+				if(rentalWhether > 0) {
+					return "guest/rentalFail";
+				}
+			}
+		}
 		
 		orderVo.setMember_no(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
 		
