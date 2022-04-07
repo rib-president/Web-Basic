@@ -101,4 +101,17 @@
 	) 
 </select>
 
+<!-- 통계/대시보드 -->
+<!-- 오피스별 예약비율 -->
+<select id="selectRentalProportion" resultType="map">
+	select count(*) as cnt, so.office_no, sum(sr.rental_price) as totalPrice, so.office_approve_date 
+	from so_officeinfo so, so_order so2, so_rental sr 
+	where so.office_no = so2.office_no 
+	and so2.order_no = sr.order_no 
+	and so.member_no = #{member_no}
+	group by so.office_no
+</select>
+
+
+
 </mapper>

@@ -64,7 +64,7 @@ public class GuestServiceRN {
 			}
 			
 			calendar.setTime(rentalVo.getRental_date());
-			//calendar.add(Calendar.DATE, 1);
+			
 			originPrice += guestMapperRN.selectBusinessDayPrice(orderVo.getOffice_no(), weekList[calendar.get(Calendar.DAY_OF_WEEK)-1]);
 		}
 

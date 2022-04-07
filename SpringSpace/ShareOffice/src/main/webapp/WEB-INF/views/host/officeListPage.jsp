@@ -60,7 +60,7 @@ function createOption() {
 }
 
 window.addEventListener("DOMContentLoaded", function() {
-	createOption()
+	createOption();
 });
 
 </script>

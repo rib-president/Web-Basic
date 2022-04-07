@@ -91,12 +91,12 @@ public class GuestControllerRN {
 	
 	// for pc
 	@RequestMapping("orderProcess")
-	public String paymentProcess(Model model, HttpSession session, OrderVo orderVo, Date[] rental_date, int allot_no, int coupon_discount) {
+	public String paymentProcess(Model model, HttpSession session, OrderVo orderVo, Date[] rental_date, int allot_no, double coupon_discount) {
 		
-		int discountPrice = 0;
+		/*int discountPrice = 0;
 		if(coupon_discount > 0) {
 			discountPrice = (int) (Math.floor((coupon_discount*1.0) / rental_date.length));	
-		}
+		}*/
 		
 		orderVo.setMember_no(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
 		
@@ -122,7 +122,7 @@ public class GuestControllerRN {
 			businessDayVo.setBusiness_day(day);
 						
 			rentalVo.setRental_date(rentalDay);
-			rentalVo.setRental_price(guestServiceB.getPriceAndBusiunessTime(businessDayVo).getBusiness_day_price() - discountPrice);
+			rentalVo.setRental_price((int) Math.round(guestServiceB.getPriceAndBusiunessTime(businessDayVo).getBusiness_day_price() * coupon_discount));
 			
 			rentalVoList.add(rentalVo);
 
@@ -147,11 +147,11 @@ public class GuestControllerRN {
 		String tid = String.valueOf(session.getAttribute("tid"));
 		ArrayList<String> rental_date = (ArrayList<String>) params.get("rental_date");
 		int allot_no = Integer.valueOf(String.valueOf(params.get("allot_no")));
-		int coupon_discount = Integer.valueOf(String.valueOf(params.get("coupon_discount")));
-		int discountPrice = 0;
-		if(coupon_discount > 0) {
-			discountPrice = (int) (Math.floor((coupon_discount*1.0) / rental_date.size()));
-		}
+		double coupon_discount = Integer.valueOf(String.valueOf(params.get("coupon_discount")));
+//		int discountPrice = 0;
+//		if(coupon_discount > 0) {
+//			discountPrice = (int) (Math.floor((coupon_discount*1.0) / rental_date.size()));
+//		}
 		
 		
 		OrderVo orderVo = new OrderVo();
@@ -186,7 +186,7 @@ public class GuestControllerRN {
 			businessDayVo.setBusiness_day(day);
 			
 			rentalVo.setRental_date(rentalDay2);
-			rentalVo.setRental_price(guestServiceB.getPriceAndBusiunessTime(businessDayVo).getBusiness_day_price() - discountPrice);
+			rentalVo.setRental_price((int) Math.round(guestServiceB.getPriceAndBusiunessTime(businessDayVo).getBusiness_day_price() * coupon_discount));
 			
 			rentalVoList.add(rentalVo);
 			} catch (ParseException e) {

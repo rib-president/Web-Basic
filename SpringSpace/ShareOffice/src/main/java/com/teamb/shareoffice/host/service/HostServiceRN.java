@@ -1,12 +1,17 @@
 package com.teamb.shareoffice.host.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.teamb.shareoffice.guest.mapper.GuestMapperB;
 import com.teamb.shareoffice.host.mapper.HostMapperRN;
 import com.teamb.shareoffice.member.mapper.MemberMapperJs;
+import com.teamb.shareoffice.vo.BusinessDayVo;
 import com.teamb.shareoffice.vo.OrderVo;
 import com.teamb.shareoffice.vo.RentalVo;
 
@@ -18,6 +23,9 @@ public class HostServiceRN {
 	
 	@Autowired
 	private MemberMapperJs memberMapper;
+	
+	@Autowired
+	private GuestMapperB guestMapperB;
 	
 	public ArrayList<HashMap<String, Object>> getCalendarRentalList(int host_member_no, String rental_date) {
 		ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
@@ -100,6 +108,49 @@ public class HostServiceRN {
 		String endDay = year + "-" + month + "-31";
 		
 		return hostMapper.selectMonthRental(member_no, startDay, endDay);
+	}
+	
+	public ArrayList<HashMap<String, Object>> getRentalProportion(int member_no) {
+		ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
+		
+		ArrayList<HashMap<String, String>> rentalProportionList = hostMapper.selectRentalProportion(member_no);				
+		int totalCnt = rentalProportionList.stream().mapToInt(a -> Integer.valueOf(a.get("cnt"))).sum();
+		long totalPrice = rentalProportionList.stream().mapToInt(a -> Integer.valueOf(a.get("totalPrice"))).sum();
+		
+		for(HashMap<String, String> rentalProportion : rentalProportionList) {
+			HashMap<String, Object> map = new HashMap<>();
+			
+			int office_no = Integer.valueOf(rentalProportion.get("office_no"));
+			map.put("office_no", rentalProportion.get("office_no"));
+			map.put("cnt", rentalProportion.get("cnt"));
+			map.put("totalPrice", rentalProportion.get("totalPrice"));
+
+			String office_approve_date_str = rentalProportion.get("office_approve_date");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+			ArrayList<BusinessDayVo> businessDayList = guestMapperB.getBusinessDayInfoByOfficeNo(office_no);
+			List<String> dayList = businessDayList.stream().map(a -> a.getBusiness_day()).collect(Collectors.toList());
+			try {
+				Date office_approve_date = formatter.parse(office_approve_date_str);
+				
+				Calendar registDate = Calendar.getInstance();
+				registDate.setTime(office_approve_date);
+				Calendar today = Calendar.getInstance();
+				today.setTime(new Date());
+
+				for (Date date = registDate.getTime(); registDate.before(today); registDate.add(Calendar.DATE, 1), date = registDate.getTime()) {
+					
+				    // 요기부텅
+				}
+			} catch (ParseException e) {
+				System.out.println("date parse 익셉션]" + e.getMessage());
+			}
+						
+			
+			
+		}
+		
+		return resultList;
 	}
 	
 }

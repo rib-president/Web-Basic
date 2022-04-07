@@ -120,7 +120,7 @@ body { padding-right: 0 !important }
 		
 		var item_name = '${officeInfo.officeInfoVo.office_name}' + "(" + totalResvDay + "일)";			
 		
-		var total_amount = document.querySelector("#totalPrice").innerText.split(",").join("");
+		var total_amount = Math.round(document.querySelector("#totalPrice").innerText.split(",").join(""));
 		
 		var newWindow;
 		
@@ -144,7 +144,7 @@ body { padding-right: 0 !important }
 			}
 		};
 		
-		xhr.open("post", "../guest/payToKakao", true);
+		xhr.open("post", "/guest/payToKakao", true);
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xhr.send("item_name=" + item_name + "&quantity=" + quantity + "&total_amount=" + total_amount);
 	}
@@ -166,22 +166,15 @@ body { padding-right: 0 !important }
 			if(allotNo.checked) {
 				couponPrice = parseInt(allotNo.closest(".row").querySelector(".couponPrice").innerText.slice(0, -1).split(",").join(""));
 				document.querySelector("#allot_no").value = allotNo.value;
-				document.querySelector("#coupon_discount").value = couponPrice;
+				document.querySelector("#coupon_discount").value = 1-(couponPrice*0.01);
 			}
 		}
-		document.querySelector("#couponPrice").innerText = couponPrice.toLocaleString();
-		
 		var originPrice = '${totalPayment }';
-		totalPrice.innerText = (parseInt(originPrice) - couponPrice).toLocaleString();
 		
-		/*var offCanvasBottom = document.querySelector("#offcanvasBottom");
-		offCanvasBottom.classList.remove("show");
-		offCanvasBottom.setAttribute("style", "visibility: hidden");
-		offCanvasBottom.setAttribute("aria-hidden", true);
-		offCanvasBottom.removeAttribute("aria-modal");
-		offCanvasBottom.removeAttribute("role");
-		document.querySelector("body").setAttribute("style","");
-		document.querySelector(".offcanvas-backdrop").classList.remove("show");	*/
+		document.querySelector("#couponPrice").innerText = Math.round((parseInt(originPrice) * (couponPrice*0.01))).toLocaleString();
+				
+		document.querySelector("#totalPrice").innerText = Math.round((parseInt(originPrice) * (1-(couponPrice*0.01)))).toLocaleString();
+
 		bsOffcanvas.hide();
 	}
 	
@@ -194,6 +187,7 @@ body { padding-right: 0 !important }
 
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 	<div class="row" style="padding-top: 2em;">
@@ -328,7 +322,7 @@ body { padding-right: 0 !important }
 				<input type="hidden" name="rental_price" value="${businessDayVoList.business_day_price }">
 			</c:forEach>
 				<input id="allot_no" type="hidden" name="allot_no" value="0">
-				<input id="coupon_discount" type="hidden" name="coupon_discount" value="0">
+				<input id="coupon_discount" type="hidden" name="coupon_discount" value="1">
 			</form>
 			
 			<div class="row" style="padding:1em;"></div>
@@ -345,44 +339,22 @@ body { padding-right: 0 !important }
   </div>
   <div class="offcanvas-body small">
   	<c:forEach items="${memberCouponList }" var="memberCoupon">
-  		<c:choose>
-  			<c:when test="${totalPayment < memberCoupon.coupon_discount }">
-			     <div class="row border rounded-5 mt-2 py-3 px-3" style="margin-right:.8rem; margin-left:0.01rem; opacity:0.5">
-			    	<div class="col-1 pt-4 me-2">
-			    		<input disabled type="radio" class="allotNo form-check-input" name="allot_no" value="${memberCoupon.allot_no }">    		
-			    	</div>
-			    	<div class="col">
-			    		<div class="row text-fs-15 bold">
-			    			<div class="couponPrice col"><fmt:formatNumber value="${memberCoupon.coupon_discount }"/> 원</div>
-			    		</div>
-			    		<div class="row mt-2 text-fs-13">
-			    			<div class="col">${memberCoupon.coupon_name }</div>
-			    		</div>
-			    		<div class="row text-fs-11 text-gray-c_3c">
-			    			<div class="col"><i class="bi bi-stopwatch text-gold"></i>&nbsp;<fmt:formatDate value="${memberCoupon.coupon_useDate }" pattern="yyyy년MM월dd일 HH:mm"/>까지</div>
-			    		</div>
-			    	</div>
-			    </div>
-	   		</c:when>
-	   		<c:otherwise>
-			     <div class="row border rounded-5 mt-2 py-3 px-3" style="margin-right:.8rem; margin-left:0.01rem">
-			    	<div class="col-1 pt-4 me-2">
-			    		<input type="radio" class="allotNo form-check-input" name="allot_no" value="${memberCoupon.allot_no }">    		
-			    	</div>
-			    	<div class="col">
-			    		<div class="row text-fs-15 bold">
-			    			<div class="couponPrice col"><fmt:formatNumber value="${memberCoupon.coupon_discount }"/> 원</div>
-			    		</div>
-			    		<div class="row mt-2 text-fs-13">
-			    			<div class="col">${memberCoupon.coupon_name }</div>
-			    		</div>
-			    		<div class="row text-fs-11 text-gray-c_3c">
-			    			<div class="col"><i class="bi bi-stopwatch text-gold"></i>&nbsp;<fmt:formatDate value="${memberCoupon.coupon_useDate }" pattern="yyyy년MM월dd일 HH:mm"/>까지</div>
-			    		</div>
-			    	</div>
-			    </div>	   		
-	   		</c:otherwise>
-	   </c:choose> 	
+	     <div class="row border rounded-5 mt-2 py-3 px-3" style="margin-right:.8rem; margin-left:0.01rem">
+	    	<div class="col-1 pt-4 me-2">
+	    		<input type="radio" class="allotNo form-check-input" name="allot_no" value="${memberCoupon.allot_no }">    		
+	    	</div>
+	    	<div class="col">
+	    		<div class="row text-fs-15 bold">
+	    			<div class="couponPrice col"><fmt:formatNumber value="${memberCoupon.coupon_discount }"/>％ SALE!</div>
+	    		</div>
+	    		<div class="row mt-2 text-fs-13">
+	    			<div class="col">${memberCoupon.coupon_name }</div>
+	    		</div>
+	    		<div class="row text-fs-11 text-gray-c_3c">
+	    			<div class="col"><i class="bi bi-stopwatch text-gold"></i>&nbsp;<fmt:formatDate value="${memberCoupon.coupon_useDate }" pattern="yyyy년MM월dd일 HH:mm"/>까지</div>
+	    		</div>
+	    	</div>
+	    </div>	   		
   	</c:forEach>
 	<div class="row mt-3" style="margin-right:.15rem;">
     	<div class="col d-grid">
@@ -393,6 +365,7 @@ body { padding-right: 0 !important }
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

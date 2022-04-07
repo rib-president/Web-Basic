@@ -15,6 +15,13 @@
 <script>
 var bsOffcanvas = null;
 
+function allCheck(obj) {		
+	
+	for(var cancelInput of document.querySelectorAll(".cancelNo")) {
+		cancelInput.checked = obj.checked;	
+	}			
+}
+
 function cancelRental() {
 	var xhr = new XMLHttpRequest();
 	var cancelBox_list = [];
@@ -25,6 +32,13 @@ function cancelRental() {
 			rental_no_list.push(e.value);
 			cancelBox_list.push(e.closest(".cancelBox"));
 		}
+	}
+	
+	if(rental_no_list == "") {
+		bsOffcanvas.hide();
+		
+		alert("취소가능 예약 없음");
+		return;
 	}
 	
 	xhr.onreadystatechange = function(){
@@ -43,10 +57,10 @@ function cancelRental() {
 				}
 				
 				var cancelPrice = document.querySelector("#cancelPrice");
-				cancelPrice.innerText = "(-) " + (parseInt(cancelPrice.innerText.slice(4, -1).split(",").join("")) + parseInt(data.cancelPrice)).toLocaleString();
+				cancelPrice.innerText = "(-) " + (parseInt(cancelPrice.innerText.slice(4, -1).split(",").join("")) + parseInt(data.cancelPrice)).toLocaleString() + "원";
 				
 				var totalPrice = document.querySelector("#totalPrice");
-				totalPrice.innerText = "￦ " + (parseInt(totalPrice.innerText.slice(2, -1).split(",").join("")) - parseInt(data.cancelPrice)).toLocaleString();
+				totalPrice.innerText = "￦ " + (parseInt(totalPrice.innerText.slice(2, -1).split(",").join("")) - parseInt(data.cancelPrice)).toLocaleString() + "원";
 				
 				
 			} else if(data.result == "error") {
@@ -223,7 +237,8 @@ window.addEventListener("DOMContentLoaded" , function(){
 
 <div class="offcanvas offcanvas-bottom h-50" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasBottomLabel">예약 취소 <i class="bi bi-info-circle text-gray-c_b7 text-fs-15" data-bs-toggle="tooltip" data-bs-placement="top" title="사용한 결제수단으로 환불"></i></h5>    
+    <h5 class="offcanvas-title" id="offcanvasBottomLabel">예약 취소 <i class="bi bi-info-circle text-gray-c_b7 text-fs-15" data-bs-toggle="tooltip" data-bs-placement="top" title="사용한 결제수단으로 환불"></i></h5>
+    <span class="float-right"><input class="form-check-input" type="checkbox" onchange="allCheck(this)"> 전체 취소</span>    
   </div>
   <div class="offcanvas-body small">
   	<c:forEach items="${orderData.rentalVoList }" var="rentalVo">

@@ -58,7 +58,7 @@ public class MemberControllerRN {
 				}
 				
 			}
-			return "redirect:../guest/mainPage";		
+			return "redirect:/";		
 			
 		} else {
 			model.addAttribute("member_id", member_id);
