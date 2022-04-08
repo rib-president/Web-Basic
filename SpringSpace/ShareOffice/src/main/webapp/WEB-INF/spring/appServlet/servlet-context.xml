@@ -30,7 +30,7 @@
 	<!-- ja : 아래 바꿀것... -->
 	<context:component-scan base-package="com.teamb.shareoffice.*.controller" />
 	
-	<interceptors>
+	<!-- <interceptors>
 	    <interceptor>
 	        <mapping path="/guest/*"/>
 	        <exclude-mapping path="/guest/mainPage"/>
@@ -39,6 +39,7 @@
 	        <exclude-mapping path="/guest/officeMapPage"/>
 	        <exclude-mapping path="/guest/officeReviewDetailPage"/>
 	        <exclude-mapping path="/guest/officeReviewPage"/>
+	        <exclude-mapping path="/guest/getLocationList"/>
 	        <beans:bean class="com.teamb.shareoffice.interceptor.GuestInterceptor"></beans:bean>
 	    </interceptor>
 	</interceptors>
@@ -53,10 +54,10 @@
 	<interceptors>
 	    <interceptor>
 	        <mapping path="/member/*"/>
-	        <exclude-mapping path="/member/getKakaoUserInfo"/>
-	        <exclude-mapping path="/member/joinMemberComplete"/>
-	        <exclude-mapping path="/member/joinMemberPage"/>
-	        <exclude-mapping path="/member/loginPage"/>	        
+	        <exclude-mapping path="/member/loginPage"/>
+	        <exclude-mapping path="/member/loginGetCode"/>
+	        <exclude-mapping path="/member/checkJoin"/>
+	        <exclude-mapping path="/member/joinMemberProcess"/>	        	        	      
 	        <beans:bean class="com.teamb.shareoffice.interceptor.GuestInterceptor"></beans:bean>
 	    </interceptor>
 	</interceptors>	
@@ -76,8 +77,9 @@
 	    <interceptor>
 	        <mapping path="/admin/*"/>
 	        <exclude-mapping path="/admin/adminPage"/>
-	        <exclude-mapping path="/admin/loginAdmin"/>	      	       
+	        <exclude-mapping path="/admin/loginAdmin"/>
+	        <exclude-mapping path="/admin/adminLoginProcess"/>	      	       
 	        <beans:bean class="com.teamb.shareoffice.interceptor.AdminInterceptor"></beans:bean>
 	    </interceptor>
-	</interceptors>		
+	</interceptors>	 -->	
 </beans:beans>
