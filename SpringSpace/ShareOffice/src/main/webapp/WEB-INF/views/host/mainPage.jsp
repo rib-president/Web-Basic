@@ -39,6 +39,7 @@
 				var data = JSON.parse(xhr.responseText);
 				
 				drawChart0(data.totalProportion);
+				drawChart0_1(data.totalProportion);
 				drawChart1(data.totalProportion);
 				drawChart2(data.officeProportion);
 				drawChart3(data.officeProportion);
@@ -54,7 +55,8 @@
 		
 		var root = document.querySelector("#chart0Box");
 		var chart0Main = document.createElement("div");
-		chart0Main.setAttribute("style", "width: 20rem;height:22rem; font-size:.813rem");
+		chart0Main.setAttribute("class", "rounded-10 pt-11 ms-1");
+		chart0Main.setAttribute("style", "width: 20rem;height:20rem; font-size:.813rem; padding-top:2rem; background-color:#ffffff89");
 		
 		root.appendChild(chart0Main);
 		
@@ -64,8 +66,8 @@
 		
 		option = {
 			  title: {
-				    text: '총 예약율',
-				    top:'6%',
+				    text: '내 전체 오피스 누적 예약율',
+				    top:'top',
 				    left:'center'
 				  },
 		  	series: [
@@ -111,7 +113,7 @@
 		        valueAnimation: true,
 		        formatter: '{value} ％',
 		        color: 'auto',
-		        fontSize: 20
+		        fontSize: 18
 		      },
 		      data: [
 		        {
@@ -122,19 +124,23 @@
 		  ]
 		};		
 		
-		chart0.setOption(option);
+		chart0.setOption(option);	
+	}
+	
+	function drawChart0_1(data) {
 		
-		var chart0_2Main = document.createElement("div");
-		chart0_2Main.setAttribute("class", "rounded-10 py-11");
-		chart0_2Main.setAttribute("style", "width: 20rem;height:22rem; font-size:.813rem; background-color:#ffffff89");
+		var root = document.querySelector("#chart0_1Box");		
+		var chart0_1Main = document.createElement("div");
+		chart0_1Main.setAttribute("class", "rounded-10 ms-1");
+		chart0_1Main.setAttribute("style", "width: 20rem;height:22rem; font-size:.813rem; background-color:#ffffff89; padding-top: 2.75rem");
 		
-		root.appendChild(chart0_2Main);
+		root.appendChild(chart0_1Main);
 		
-		var chart0_2 = echarts.init(chart0_2Main);
+		var chart0_1 = echarts.init(chart0_1Main);
 		
 		option = {
 		  title: {
-			    text: 'Total',
+			    text: '내 전체 오피스 누적 수익',
 			    left:'center'
 			  },				
 		  series: [
@@ -220,26 +226,8 @@
 		  ]
 		};
 		
-		chart0_2.setOption(option);	
-		
-		var ratingMain = document.createElement("div");
-		ratingMain.setAttribute("class", "rounded-10 py-11");
-		ratingMain.setAttribute("style", "width: 20rem;");
-		var div = document.createElement("div");
-		div.setAttribute("class", "text-fs-40 block text-center");
-		div.innerText = "평균 평점";
-		var i = document.createElement("i");	
-		i.setAttribute("class", "bi bi-star-fill text-fs-65 text-center ms-5");
-		i.setAttribute("style", "color: #d49d4c");
-		var span = document.createElement("span");
-		span.setAttribute("class", "text-fs-65 text-center pl-1");
-		span.innerText = '${reviewAvg}';
-		ratingMain.appendChild(div);
-		ratingMain.appendChild(i);
-		ratingMain.appendChild(span);
-		
-		root.appendChild(ratingMain);
-	}		
+		chart0_1.setOption(option);			
+	}	
 
 	function drawChart1(data) {
 		
@@ -447,13 +435,25 @@
 		<div class="row">
 			<div class="col ms-2 text-gold bold text-fs-30 fst-italic KOHIBaeumOTF pt-2" style="border-left:4px solid #A68A64">Dash board</div>
 		</div>
+		
+		<div class="row rounded-10 bg-dashboard mt-4">
+			<div class="col">
+				<div class="row px-10" style="padding-top:2rem; padding-bottom:2rem;">
+					<div class="col">
+						<div class="text-fs-23 block"><i class="bi bi-calculator text-gold text-center ms-4"></i> 오피스 평균 평점</div>
+						<i class="bi bi-star-fill ms-4 ps-3" style="color: #d49d4c; font-size:2.75rem"></i>
+						<span class="text-center pl-1" style="font-size:2.75rem">${reviewAvg}</span>					
+					</div>					
+				</div>
+			</div>
+		</div>		
 		<div class="row rounded-10 bg-dashboard mt-4">
 			<div class="col">
 				<div class="row pt-6">
 					<div class="col">
 						<div class="row">
 							<div class="col">
-								<span class="col text-fs-18 font-medium ms-2"><i class="bi bi-diagram-3 text-gold"></i> 통계 요약</span>
+								<span class="col text-fs-18 font-medium ms-2"><i class="bi bi-diagram-3 text-gold"></i> 총 예약율</span>
 								<span class="col text-gray-c_3c text-fs-11">등록일로부터 현재</span>							
 							</div>	
 						</div>
@@ -463,7 +463,24 @@
 					</div>					
 				</div>
 			</div>
-		</div>					
+		</div>
+		<div class="row rounded-10 bg-dashboard mt-4">
+			<div class="col">
+				<div class="row pt-6">
+					<div class="col">
+						<div class="row">
+							<div class="col">
+								<span class="col text-fs-18 font-medium ms-2"><i class="bi bi-coin text-gold"></i> 총 수익</span>
+								<span class="col text-gray-c_3c text-fs-11">등록일로부터 현재</span>							
+							</div>	
+						</div>
+						<div class="row mt-3 mb-3">
+							<div id="chart0_1Box" class="col"></div>
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>							
 		<div class="row rounded-10 bg-dashboard mt-4">
 			<div class="col">
 				<div class="row pt-6">

@@ -44,6 +44,9 @@
 		          <a class="nav-link" href="../admin/guestManagement">게스트 관리</a>
 		        </li>
 		        <li class="nav-item">
+          		  <a class="nav-link" href="../admin/officeManagement">오피스 관리</a>
+        		</li>
+		        <li class="nav-item">
 		          <a class="nav-link" href="../board/QnAPage">Q&A 관리</a>
 		        </li>
 		        <li class="nav-item">

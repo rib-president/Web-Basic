@@ -30,4 +30,54 @@
 	<!-- ja : 아래 바꿀것... -->
 	<context:component-scan base-package="com.teamb.shareoffice.*.controller" />
 	
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/guest/*"/>
+	        <exclude-mapping path="/guest/mainPage"/>
+	        <exclude-mapping path="/guest/officeDetailPage"/>
+	        <exclude-mapping path="/guest/officeListPage"/>
+	        <exclude-mapping path="/guest/officeMapPage"/>
+	        <exclude-mapping path="/guest/officeReviewDetailPage"/>
+	        <exclude-mapping path="/guest/officeReviewPage"/>
+	        <beans:bean class="com.teamb.shareoffice.interceptor.GuestInterceptor"></beans:bean>
+	    </interceptor>
+	</interceptors>
+	
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/host/*"/>
+	        <beans:bean class="com.teamb.shareoffice.interceptor.HostInterceptor"></beans:bean>
+	    </interceptor>
+	</interceptors>			
+
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/member/*"/>
+	        <exclude-mapping path="/member/getKakaoUserInfo"/>
+	        <exclude-mapping path="/member/joinMemberComplete"/>
+	        <exclude-mapping path="/member/joinMemberPage"/>
+	        <exclude-mapping path="/member/loginPage"/>	        
+	        <beans:bean class="com.teamb.shareoffice.interceptor.GuestInterceptor"></beans:bean>
+	    </interceptor>
+	</interceptors>	
+	
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/board/*"/>
+	        <exclude-mapping path="/board/freeBoardPage"/>
+	        <exclude-mapping path="/board/freeBoardReadPage"/>
+	        <exclude-mapping path="/board/QnAPage"/>
+	        <exclude-mapping path="/board/QnAReadPage"/>	        
+	        <beans:bean class="com.teamb.shareoffice.interceptor.GuestInterceptor"></beans:bean>
+	    </interceptor>
+	</interceptors>		
+	
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/admin/*"/>
+	        <exclude-mapping path="/admin/adminPage"/>
+	        <exclude-mapping path="/admin/loginAdmin"/>	      	       
+	        <beans:bean class="com.teamb.shareoffice.interceptor.AdminInterceptor"></beans:bean>
+	    </interceptor>
+	</interceptors>		
 </beans:beans>

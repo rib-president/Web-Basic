@@ -72,6 +72,7 @@
     .text-fs-32{font-size:2rem}
     .text-fs-35{font-size:2.205rem}
     .text-fs-40{font-size:2.5rem}
+    .text-fs-45{font-size:2.75rem}
     .text-fs-50{font-size:3rem}
     .text-fs-60{font-size:3.75rem}
     .text-fs-65{font-size:4.095rem}
@@ -245,6 +246,7 @@
 	.pt-8{padding-top:2rem}
 	.pt-9{padding-top:2.25rem}    
     .pt-10 {padding-top: 2.5rem;}
+    .pt-11 {padding-top: 2.75rem;}
     .pt-12{padding-top:3rem}
 	.pt-20 {padding-top: 5rem;}    
 
@@ -291,6 +293,8 @@
     .py-4{padding-bottom:1rem;padding-top:1rem}
     .py-5{padding-bottom:1.25rem;padding-top:1.25rem}
     .py-6{padding-bottom:1.5rem;padding-top:1.5rem}
+    .py-7{padding-bottom:1.75rem;padding-top:1.75rem}
+    .py-8{padding-bottom:2rem;padding-top:2rem}
     .py-9{padding-bottom:2.25rem;padding-top:2.25rem}
     .py-11{padding-bottom:2.75rem;padding-top:2.75rem}
     .py-16{padding-bottom:4rem;padding-top:4rem}

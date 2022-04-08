@@ -221,12 +221,13 @@
 	<form action="../host/updateOfficeProcess" method="post" enctype="multipart/form-data">
     
 	<div class="container">
-		<hr class="my-4">
+		
 	    
-	    <div class="row g-5">
+	    <div class="row g-5 text-fs-16">
 
 	      <div class="col-md-7 col-lg-8">
-	        <h4 class="mb-5 text-fs-23">오피스 수정하기</h4>
+	        <h4 class="mb-3 text-fs-23">오피스 수정하기</h4>
+	        <hr class="my-4">
 	          <div class="row">
 	            <div class="col-sm-6">
 	            	 <p class="fs-6 font-medium2 mb-2">오피스명</p>
@@ -333,17 +334,16 @@
  				<input type="file" accept="image/*" class="form-control" name="subFiles" id="inputFiles" multiple>
 				</div>	            
 			</div>	
-		</div>
-	          <hr class="my-4">
+		
 			
 			<div class="row mt-4 pr-0">				
 			   	<p class="fs-6 font-medium2 mb-4">오피스 운영시간 및 요금</p>
 			   <div class="col-sm-6 ms-2 text-fs-15" id="day-root-box">
 			   	
 			   	<div class="row mb-1">
-			   		<div class="col-2 px-0" >
+			   		<div class="col-2 px-0">
 			          <div class="form-check" style="padding-top:0.3rem;">
-			            <input type="checkbox" class="form-check-input" style="font-size:1rem;" name="business_day" value="월" onchange="checkDay(this)">
+			            <input type="checkbox" class="form-check-input" style="font-size:1rem; margin-right:0.1rem;" name="business_day" value="월" onchange="checkDay(this)">
 			            <label class="form-check-label" >월</label>
 			          </div>
 			   		</div>
@@ -404,12 +404,12 @@
 			   				<option value="21">21:00</option>
 			   				<option value="22">22:00</option>
 			   				<option value="23">23:00</option>
-			   				<option value="24">24:00</option>
+			   				<option value="24" selected>24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1" style="padding-left:0.3rem; padding-top:0.25rem;">₩</div>
+			   		<div class="col-1 text-fs-13" style="padding-right:0.3rem; padding-top:0.4rem;">₩</div>
 			   		<div class="col px-0 me-2">
-						<input type="number" class="form-control price">
+						<input type="number" class="form-control price" style="padding-left:0.2rem; padding-right:0">
 			   		</div>
 			   	</div> 
 			   
@@ -477,12 +477,12 @@
 			   				<option value="21">21:00</option>
 			   				<option value="22">22:00</option>
 			   				<option value="23">23:00</option>
-			   				<option value="24">24:00</option>
+			   				<option value="24" selected>24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1"  style="padding-left:0.3rem; padding-top:0.25rem;">₩</div>
+			   		<div class="col-1 text-fs-13"  style="padding-right:0.3rem; padding-top:0.4rem;">₩</div>
 			   		<div class="col px-0 me-2">
-						<input type="number" class="form-control price">
+						<input type="number" class="form-control price" style="padding-left:0.2rem; padding-right:0">
 			   		</div>
 			   	</div>			   
 			   	
@@ -551,12 +551,12 @@
 			   				<option value="21">21:00</option>
 			   				<option value="22">22:00</option>
 			   				<option value="23">23:00</option>
-			   				<option value="24">24:00</option>
+			   				<option value="24" selected>24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1" style="padding-left:0.3rem; padding-top:0.25rem;">₩</div>
+			   		<div class="col-1 text-fs-13" style="padding-right:0.3rem; padding-top:0.4rem;">₩</div>
 			   		<div class="col px-0 me-2">
-						<input type="number" class="form-control price">
+						<input type="number" class="form-control price" style="padding-left:0.2rem; padding-right:0">
 			   		</div>
 			   	</div>
 
@@ -624,12 +624,12 @@
 			   				<option value="21">21:00</option>
 			   				<option value="22">22:00</option>
 			   				<option value="23">23:00</option>
-			   				<option value="24">24:00</option>
+			   				<option value="24" selected>24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1" style="padding-left:0.3rem; padding-top:0.25rem;">₩</div>
+			   		<div class="col-1 text-fs-13" style="padding-right:0.3rem; padding-top:0.4rem;">₩</div>
 			   		<div class="col px-0 me-2">
-						<input type="number" class="form-control price">
+						<input type="number" class="form-control price" style="padding-left:0.2rem; padding-right:0">
 			   		</div>
 			   	</div>
 			   	
@@ -697,12 +697,12 @@
 			   				<option value="21">21:00</option>
 			   				<option value="22">22:00</option>
 			   				<option value="23">23:00</option>
-			   				<option value="24">24:00</option>
+			   				<option value="24" selected>24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1" style="padding-left:0.3rem; padding-top:0.25rem;">₩</div>
+			   		<div class="col-1 text-fs-13" style="padding-right:0.3rem; padding-top:0.4rem;">₩</div>
 			   		<div class="col px-0 me-2">
-						<input type="number" class="form-control price">
+						<input type="number" class="form-control price" style="padding-left:0.2rem; padding-right:0">
 			   		</div>
 			   	</div>	
 			   	
@@ -770,12 +770,12 @@
 			   				<option value="21">21:00</option>
 			   				<option value="22">22:00</option>
 			   				<option value="23">23:00</option>
-			   				<option value="24">24:00</option>
+			   				<option value="24" selected>24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1" style="padding-left:0.3rem; padding-top:0.25rem;">₩</div>
+			   		<div class="col-1 text-fs-13" style="padding-right:0.3rem; padding-top:0.4rem;">₩</div>
 			   		<div class="col px-0 me-2">
-						<input type="number" class="form-control price">
+						<input type="number" class="form-control price" style="padding-left:0.2rem; padding-right:0">
 			   		</div>
 			   	</div>	
 			   	
@@ -843,19 +843,18 @@
 			   				<option value="21">21:00</option>
 			   				<option value="22">22:00</option>
 			   				<option value="23">23:00</option>
-			   				<option value="24">24:00</option>
+			   				<option value="24" selected>24:00</option>
 			   			</select>
 			   		</div>
-			   		<div class="col-1" style="padding-left:0.3rem; padding-top:0.25rem;">₩</div>
+			   		<div class="col-1 text-fs-13" style="padding-right:0.3rem; padding-top:0.4rem;">₩</div>
 			   		<div class="col px-0 me-2">
-						<input type="number" class="form-control price">
+						<input type="number" class="form-control price" style="padding-left:0.2rem; padding-right:0">
 			   		</div>
 			   	</div>				   	
 			   				   			   				   	
 			   	
 			 </div>
 		</div>
-
 
 	         <hr class="my-4">
 
@@ -910,16 +909,17 @@
 				</c:forEach>		 			 
 	       
 		</div>
-	         
+		</div>
+		
 			</div>
 		</div>
 			 
-	  </div>
 	  		<div class="d-grid gap-2" style="padding-bottom : 2rem; margin-left:1.5rem; margin-right:1.5rem;">
 				<input type="hidden" name="office_no" value="${data.officeInfoVo.office_no}">
 	           <button class="btn" style="background-color:#A68A64; color: #ffffff; "type="submit">수정하기</button>
 	           <button type="button" class="btn btn-outline-dark" onclick="location.href='./deleteOfficeProcess?office_no=${data.officeInfoVo.office_no }'">오피스삭제</button>
 	        </div>   
+	  </div>
 	        </form>
 	      </div> 
 	    </div>

@@ -218,7 +218,7 @@
 				    
 					<div class="d-grid gap-2" style="padding-bottom : 2rem;">
 					  <button type="button" class="btn" style="background-color:#A68A64; color: #ffffff;" onclick="location.href='./updateOfficePage?office_no=${data.officeInfoVo.office_no }'">수정</button>
-					  <button type="button" class="btn btn-outline-dark" onclick="location.href='./deleteOfficeProcess?office_no=${data.officeInfoVo.office_no }'">삭제</button>
+					  <button type="button" class="btn btn-outline-gold" onclick="location.href='./deleteOfficeProcess?office_no=${data.officeInfoVo.office_no }'">삭제</button>
 					</div>
 				    
 				</div>

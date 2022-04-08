@@ -90,7 +90,7 @@
 <div class="row" style="padding-top: 2em; padding-bottom: 2em;">
 	<div class="col">
 		<div class="row">
-			<div class="col text-fs-23" style="text-align: center; margin-bottom: 0.5rem;">쪽지보내기</div>
+			<div class="col text-fs-23 mb-4 bold" style="text-align: center;"><i class="bi bi-envelope-paper"></i> 쪽지보내기</div>
 		</div>
 		
 		<form action="./writeMessageProcess" class="form text-fs-16" role="form" name="userInput">

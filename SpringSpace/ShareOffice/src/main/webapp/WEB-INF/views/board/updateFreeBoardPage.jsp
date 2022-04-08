@@ -29,25 +29,25 @@
 		<div class="row">
 			<form action="./updateFreeBoardProcess" method="get">
 			<div class="row">
-					<div class="col text-fs-23 text-center mb-2">글수정페이지</div>
+					<div class="col text-fs-23 text-center mb-4 bold"><i class="bi bi-pencil-square"></i> 글 수정</div>
 			</div>
-			<div class="col text-fs-13">
+			<div class="col text-fs-13" style="text-align: right; margin-bottom: 0.3rem;">
 				No. ${data.freeBoardVo.freeboard_no}
 			</div>
 				<div class="row">
 					<div class="col">
-						<input type="text" class="form-control text-fs-23 bold" name="freeboard_title" value="${data.freeBoardVo.freeboard_title }">
+						<input type="text" class="form-control text-fs-20" name="freeboard_title" value="${data.freeBoardVo.freeboard_title }">
 					</div>	
 				</div>	
 				 
-				<div class="row mt-2">
+				<div class="row" style="margin-top: 1rem;">
 					<div class="col text-fs-16">
 						<span>작성자</span>
 						<span class="inline-block pl-3 bold">${data.memberVo.member_nick }</span> 
 					</div>
 				</div>
 				 
-				<hr>			
+				<hr style="margin-top: 0.5rem;">			
 				<div class="row">
 					<div class="col">
 						<textarea class="form-control text-fs-16" rows="5" name="freeboard_content">${data.freeBoardVo.freeboard_content }</textarea>
@@ -55,13 +55,13 @@
 				</div>
 				
 				<div class="row" style="margin-top: 1em;">
-					<div class="col">
+					<div class="col" style="margin-bottom: 1rem;">
 						<input type="hidden" name="freeboard_no" value="${data.freeBoardVo.freeboard_no }">
 						<%-- 수정 (세션정보랑 작성자 닉이랑 같은지 비교 해야함)
 						<c:if test="${!empty sessionUser && sessionUser.member_nick == data.memberVo.member_nick}">
 						</c:if>
 						 --%> 
-						<input type="submit" style="background-color: #BBA586; color: white;" class="float-end btn btn-light" value="수정" onclick="test1()">						
+						<button onclick="test1()" type="submit" style="background-color: #A68A64; color: white; width: 100%;" class="btn btn-light btn-block text-fs-16"><i class="bi bi-pencil-square"></i> 글 수정</button>						
 					</div>
 				</div>
 			</form>

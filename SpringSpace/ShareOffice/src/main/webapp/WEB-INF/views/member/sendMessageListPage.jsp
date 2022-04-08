@@ -41,10 +41,12 @@
 <div class="row" style="padding-top: 2em; padding-bottom: 2em;">
 	<div class="col">
 		<div class="row text-fs-16" style="margin-left: 1rem; margin-right: 1rem; margin-bottom: 1rem;">
-			<div class="col" id="message" onclick="location.href='../member/messageListPage'">
-			쪽지보관함</div>
-			<div class="col" id="sendMessage" onclick="location.href='../member/sendMessageListPage'">
-			보낸쪽지함</div>
+			<div class="col bold" id="message" onclick="location.href='../member/messageListPage'">
+				<i class="bi bi-mailbox"></i> 쪽지보관함
+			</div>
+			<div class="col bold" id="sendMessage" onclick="location.href='../member/sendMessageListPage'">
+				<i class="bi bi-mailbox2"></i> 보낸쪽지함
+			</div>
 		</div>
 			<c:forEach items="${datalist }" var="data">
 					<div class="card shadow-sm bg-body rounded" style="width: auto; margin: 1rem;">
@@ -66,8 +68,8 @@
 					보낸 쪽지가 없습니다.</div>
 				</div>
 			</c:if>
-			<div class="fixed " style="bottom: 7rem; right: 3rem; z-index: 99">
-				<a href="./writeMessagePage"><i class="bi bi-plus-circle-fill" style="font-size: 3rem; color: #A68A64"></i></a>
+			<div class="fixed " style="bottom: 4rem; right: 3rem; z-index: 99">
+				<a href="./writeMessagePage"><i class="bi bi-plus-circle-fill" style="font-size: 3.5rem; color: #A68A64"></i></a>
 			</div>
 	</div>
 </div>

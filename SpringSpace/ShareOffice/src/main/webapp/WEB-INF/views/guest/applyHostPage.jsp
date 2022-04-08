@@ -73,7 +73,7 @@ function applyHost(){
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 <div class="row" style="padding-top: 2em;">
   <div class="col">
-   <div class="row text-fs-23" style="text-align: center"><p>호스트 등록하기</p></div>
+   <div class="row text-fs-23 bold" style="text-align: center"><p>호스트 등록하기</p></div>
 
 				<div class="row text-fs-16" style="margin-bottom:1.5rem;" >
 					<div class="col-md-12 ">

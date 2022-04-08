@@ -19,7 +19,7 @@
   <div class="offcanvas-header">
     <h5 class="offcanvas-title bold ms-1 text-gray-c_25 text-fs-23" id="offcanvasExampleLabel">Menu
     	<a href="../member/messageListPage">
-    		<i class="bi bi-bell-fill menu" style="font-size: 1.25rem; color: #3C3C3C;"></i>
+    		<i class="bi bi-bell-fill menu" style="font-size: 1.25rem; color: #d49d4c;"></i>
     	</a>
     </h5>
     

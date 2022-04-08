@@ -34,7 +34,7 @@
 	<div class="col">
 			<div class="row" style="">
 			   <div class="col"></div>
-			   <div class="col-6" style="text-align: center"><p class="text-fs-23">호스트 신청 현황</p></div>
+			   <div class="col-6" style="text-align: center"><p class="text-fs-23 bold">호스트 신청 현황</p></div>
 			   <div class="col"></div>
 			</div>	    
 	    <div class="row mt-1">

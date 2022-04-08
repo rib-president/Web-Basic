@@ -49,6 +49,17 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
+
+<style>
+	th, td {
+		table-layout:fixed;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+  		text-align : center;
+  		overflow: hidden;
+	}
+	
+</style>
 </head>
 <body>
 <jsp:include page="../commons/admin.jsp"></jsp:include>
@@ -71,14 +82,14 @@
 					<input name="searchStr" type="text" class="form-control">
 				</div>
 				<div class="col d-grid">
-					<input type="submit" value="검색" class="btn btn-primary">
+					<input type="submit" value="검색" class="btn btn-dark">
 				</div>
 			</div>
 			</form>
 			
-			<col width="50"><col width="200"><col width="200"><col width="150">
-			<col width="150"><col width="100"><col width="200"><col width="150">
-			<col width="300">
+			<col width="50"><col width="150"><col width="150"><col width="150">
+			<col width="150"><col width="100"><col width="400"><col width="150">
+			<col width="150">
 			<thead>
 			    <tr>
 			      <th scope="col">NO</th>
@@ -89,7 +100,7 @@
 			      <th scope="col">승인여부</th>
 			      <th scope="col">거절사유</th>
 			      <th scope="col">승인/거절 날짜</th>
-			      <th scope="col">예 약 거 절 횟 수</th>
+			      <th scope="col">예약거절 횟수</th>
 			      <th scope="col">기능</th>
 			    </tr>
 			 </thead>
@@ -113,6 +124,9 @@
 							<td><button type="button" class="btn btn-secondary" onclick="if (confirm('승인하시겠습니까?')) location.href='./hostApplyGuest?member_no=${list.hostVo.member_no }&host_no=${list.hostVo.host_no }';">승인</button></td>
 							<td><button type="button" class="btn btn-secondary" onclick="refuseEvent(${list.hostVo.host_no }, ${list.hostVo.member_no })">거절</button></td>
 						</c:when>
+						<c:when test="${list.hostVo.host_approve == 'N'}">
+							<td style="color: #adb5bd;" class="text-fs-13">호스트 권한 해제됨</td>
+						</c:when>
 					</c:choose>
 					<c:if test = "${list.hostVo.host_refuse_count > 0}">
 						<td><button type="button" class="btn btn-secondary" onclick="location.href='hostRefuseDetail?host_no=${list.hostVo.host_no }';">예약 거부 현황</button></td>
@@ -122,9 +136,9 @@
 			</tbody>
 		</table>
 		
-		<!--  
-		<nav aria-label="Page navigation example">
-		  <ul class="pagination">
+		
+		<nav aria-label="Page navigation example" >
+		  <ul class="pagination" style="justify-content: center;">
 		    <li class="page-item"><a class="page-link">이전</a></li>
 		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=1">1</a></li>
 		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=2">2</a></li>
@@ -139,7 +153,7 @@
 		    <li class="page-item"><a class="page-link">다음</a></li>
 		  </ul>
 </nav>
--->
+
 	</div>
 </div>
 <jsp:include page="../commons/footer.jsp"></jsp:include>

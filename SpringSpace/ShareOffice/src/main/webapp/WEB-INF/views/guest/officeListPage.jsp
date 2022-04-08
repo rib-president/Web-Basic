@@ -50,7 +50,8 @@ $(function() {
 	<div class="col">
 	  <%-- 내용작성 --%>
 		<div class="row" style="" >		
-		  <p class=" text-fs-23 "style="text-align:center;">오피스 목록</p>
+		<!-- <i class="bi bi-building" style="color:#464444;"></i> -->
+		  <p class=" text-fs-23 bold "style="text-align:center;">오피스 목록</p>
 		  <p class="text-fs-16" style="text-align:left;margin-bottom:0;">Share Office에서 
 		  <br>최적의 업무 환경을 경험해보세요.</p>
 		  <p class="text-fs-14" style="margin-bottom:0;"><a href="./officeMapPage" style="">위치 검색하러 가기<i class="bi bi-arrow-right"></i></a></p>
@@ -88,7 +89,7 @@ $(function() {
 						 </div>			
 						<div class="row ms-1 " style="height:2rem;">					
 						  <div class="col" style="padding:0rem;margin-top:0.3rem;">
-                             <c:forEach items="${office.facilityCategoryList }" var="facilityVo" end="3">						   					        					          
+                             <c:forEach items="${office.facilityCategoryList }" var="facilityVo" end="2">						   					        					          
 							       <c:if test="${facilityVo.facility_no eq '1'  }">	
 							         <span style="margin-top:0.7rem"><img src="../resources/img/wifi (1).png" width=22em, height=22em></span>			         			   	
 							       </c:if>			     										             

@@ -30,6 +30,12 @@ function getOfficeList(select) {
 	location.href="./officeListPage?office_approve=" + office_approve;
 }
 
+function goReview(event, office_no){
+	
+	event.stopPropagation();
+	location.href="../guest/officeReviewPage?office_no=" + office_no;
+}
+
 function createOption() {
 	var root = document.querySelector("#selectContainer");
 
@@ -75,17 +81,21 @@ window.addEventListener("DOMContentLoaded", function() {
 
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 <div class="row ms-1" style="padding-top: 2rem; padding-bottom:2.75rem;">
 	<div class="col">
 		<%-- 내용작성 --%>
-		<div class="jumbotron" style="font-family: 'NanumSquareRound';">
-  			<h1>공유오피스 리스트</h1>
-  			<p class="text-fs-14 text-gray-c_25 leading-tight">등록하신 공유오피스 목록입니다.</p>
- 		</div> 
+ 	<div class="row">
+		<div class="col text-center">
+			<div class="text-fs-23 bold">공유오피스 리스트</div>
+			<p class="text-fs-14 text-gray-c_25 mt-1">등록하신 공유오피스 목록입니다.</p>
+		</div>
+	</div>
+					
 		
- 		<div class="row">
+ 		<div class="row mt-4">
  			<div class="col"></div>
  			<div id="selectContainer" class="col-4 mr-5" >
  		
@@ -108,22 +118,23 @@ window.addEventListener("DOMContentLoaded", function() {
 						${office.office_name}
 						</div>
 						<c:if test="${office.office_approve eq 'Y' }">
-						<div class="col text-right text-fs-13">
-						<i class="bi bi-star-fill"></i>리뷰
+						<div class="col-4 text-right text-fs-13" onclick="goReview(event,${office.office_no})">
+						<i class="bi bi-star-fill" style="color:#EDB867;"></i>리뷰
 						</div>
 						</c:if>
 						</div>
 
 						
-						<div class="row mt-2">
-						<div class="col text-fs-13">
+						<div class="row mt-2"> 
+						<div class="col text-fs-13 relative">
 						<c:choose>
 							<c:when test="${office.office_approve eq 'P' }">
-								<i class="bi bi-hourglass-split text-gold text-fs-15"></i> 승인대기중
-							</c:when>
+								<i class="bi bi-hourglass-split text-gold text-fs-15 absolute" style="top:-5%; left:8%"></i> <span class="ms-4">승인대기중</span>
+							</c:when> 
 							
 							<c:when test="${office.office_approve eq 'Y' }">
-								<i class="bi bi-check text-green-soft text-fs-19"></i> 승인완료
+								<i class="bi bi-check text-green-soft text-fs-19 absolute" style="top:-25%; left:8%"></i>
+								<span class="ms-4">승인완료</span>
 							</c:when>
 							 
 							<c:otherwise>
@@ -148,6 +159,7 @@ window.addEventListener("DOMContentLoaded", function() {
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

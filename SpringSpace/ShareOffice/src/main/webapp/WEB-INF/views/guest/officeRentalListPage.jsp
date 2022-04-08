@@ -88,7 +88,7 @@
 									<a href="./officeRentalDetailPage?order_no=${rentalList.orderVo.order_no }">예약상세</a>
 								</div>
 							</div>
-							<div class="row mt-2">
+							<div class="row">
 								<div class="col">
 									<c:choose>
 										<c:when test="${rentalList.reviewExist <= 0 && rentalList.officeUseWhether == true && rentalList.rentalUseCount >= 1}">
@@ -102,7 +102,7 @@
 								</div>
 							</div>
  
-							<div class="row" style="position: absolute; bottom: 2em; right: 0.75rem;"> <!-- 대여 가격 -->
+							<div class="row" style="position: absolute; bottom: 1.1em; right: 0.75rem;"> <!-- 대여 가격 -->
 								<div class="col grayColor text-fs-13">
 									<%-- <fmt:parseNumber value="${rentalList.totalPaymentList.parseTotalPayment}" type="number"/> --%>
 									<fmt:formatNumber value="${rentalList.totalPayment }"/>원</span>
@@ -110,7 +110,7 @@
 								</div>
 							</div>
 							
-							<div class="row" style="position: absolute; bottom: 0em; right: 0.75em; margin-bottom: 0.25rem;"> <!-- 예약 인원 -->
+							<div class="row" style="position: absolute; bottom: 0em; right: 0.75em;"> <!-- 예약 인원 -->
 								<div class="col grayColor text-fs-13">
 									${rentalList.orderVo.order_personnel }명
 								</div>

@@ -48,7 +48,7 @@ $(function() {
 	<div class="col">
 			<div class="row" style="">
 			   <div class="col"><a href="javascript:history.back();"class="btn" style="color: #A68A64"><i class="bi bi-arrow-left"></i></a></div>
-			   <div class="col-5" style="text-align: center"><p class="text-fs-23">이용후기</p></div>
+			   <div class="col-5" style="text-align: center"><p class="text-fs-23 bold">이용후기</p></div>
 			   <div class="col"></div>
 			</div>
 			<div class="row" style="text-align: center;padding:0;"><p class="text-fs-16">후기:${reviewCount }개 <i class="bi bi-dot"></i>평균 평점: 4.5</p></div>
@@ -66,7 +66,7 @@ $(function() {
 				        </c:when>
 				        <c:otherwise>
 				              <c:forEach  items="${reviewList}" var="review">
-					      <div class="card" style="margin:0.5em;">
+					      <div class="card shadow-sm bg-body rounded" style="margin:0.5em;">
 						     <div class="row">
 							    <div class="col">
 							 

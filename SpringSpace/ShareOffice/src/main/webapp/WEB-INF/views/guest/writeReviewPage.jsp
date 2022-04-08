@@ -46,7 +46,7 @@
 	
 	
 	$(function() {
-	      $('#example').barrating({
+	      $('.reviewRating').barrating({
 	        theme: 'fontawesome-stars',
 	        initialRating: 5,
 	        onSelect: function(value, text, event){
@@ -55,6 +55,7 @@
 	    	}
 	        
 	      });
+	      $('.reviewRating').barrating('set', 5);
 	   });	
 	
 	
@@ -90,7 +91,7 @@
 			
 			<div class="row"> <!-- 별점 -->
 				<div class="col">
-					<select name="review_rating" id="example">
+					<select class="reviewRating" name="review_rating">
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>

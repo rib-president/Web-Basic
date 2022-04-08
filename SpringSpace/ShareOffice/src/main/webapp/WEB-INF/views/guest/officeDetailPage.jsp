@@ -300,7 +300,7 @@ $(function() {
 										<c:otherwise>
 									<c:forEach items="${office.reviewListThree}" var="review" >
 									
-										<div class="card" style="">
+										<div class="card shadow-sm bg-body rounded" style="">
 											<div class="row">
 												<div class="col">
 													<div class="card-body">
@@ -373,7 +373,7 @@ $(function() {
 
 
                     <!-- Top 위로 스크롤 -->
-					<div class="cursor-pointer" onClick="javascript:window.scrollTo(0,0)" style="position: fixed; bottom: 1.5em; right: 1.5em; z-index:99999;">
+					<div class="cursor-pointer" onClick="javascript:window.scrollTo(0,0)" style="position: fixed; bottom: 5rem; right: 0.5rem; z-index:99999;">
 						 <i class="bi bi-chevron-double-up pl-2"></i>
 						 <span class="block font-medium2" style="color : #A68A64">TOP</span>
 					</div>

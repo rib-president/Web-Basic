@@ -32,52 +32,47 @@
 </div> --%>
 
 <div class="row" style="padding-top: 3rem;">
-	<div class="col relative">
+	<div class="col relative" onclick="location.href='../guest/officeListPage'">
 		<img src="../resources/img/office.jpg" class="img-fluid"> 
-		<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; right:1.5rem" onclick="location.href='../guest/officeListPage'">오피스 구경하러 가기</button>
+		<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; right:1.5rem" >오피스 구경하러 가기</button>
 	</div>
 </div>
 
 
-<%-- <div class="row" style="padding-top: 3rem; padding-bottom: 3rem;">
-	<div class="col" style="background-image: url('../resources/img/host.jpg'); background-position: center; background-size: cover; margin: auto;">
-	<c:choose>
-			<c:when test="${empty sessionUser}">
-				<button type="button" class="btn text-white" style="background-color: #A68A64; margin-top: 11rem; margin-left: 1rem; font-size: 0.8rem;"
-				onclick="location.href='../member/loginPage'">호스트 신청하기</button>
-			</c:when>
-			<c:when test="${!empty sessionUser && sessionUser.member_type == 'G' }">
-				<button type="button" class="btn text-white" style="background-color: #A68A64; margin-top: 11rem; margin-left: 1rem; font-size: 0.8rem;"
-				onclick="location.href='../guest/applyHostPage'">호스트 신청하기</button>
-			</c:when>
-			<c:when test="${!empty sessionUser && sessionUser.member_type == 'H' }">
-				<button type="button" class="btn text-white" style="background-color: #A68A64; margin-top: 11rem; margin-left: 1rem; font-size: 0.8rem;"
-				onclick="location.href='../host/mainPage'">호스트 센터</button>
-			</c:when>	
-		</c:choose>
-	</div>
-	</div>
---%>
+<c:choose>
+	<c:when test="${empty sessionUser}">
+		<div class="row" style="padding-top: 3rem; padding-bottom: 3rem;">
+			<div class="col relative" onclick="location.href='../member/loginPage'">
+				<img class="img-fluid" src="../resources/img/host.jpg">
+					<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; left:1.5rem;">
+						호스트 신청하기
+					</button>
+			</div>
+		</div>
+	</c:when>
 
-<div class="row" style="padding-top: 3rem; padding-bottom: 3rem;">
-	<div class="col relative">
-		<img class="img-fluid" src="../resources/img/host.jpg">
-	<c:choose>
-			<c:when test="${empty sessionUser}">
-				<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; left:1.5rem;"
-				onclick="location.href='../member/loginPage'">호스트 신청하기</button>
-			</c:when>
-			<c:when test="${!empty sessionUser && sessionUser.member_type == 'G' }">
-				<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; left:1.5rem;"
-				onclick="location.href='../guest/applyHostPage'">호스트 신청하기</button>
-			</c:when>
-			<c:when test="${!empty sessionUser && sessionUser.member_type == 'H' }">
-				<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; left:1.5rem;"
-				onclick="location.href='../host/mainPage'">호스트 센터</button>
-			</c:when>	
-		</c:choose>
-	</div>
-</div>
+	<c:when test="${!empty sessionUser && sessionUser.member_type == 'G' }">
+		<div class="row" style="padding-top: 3rem; padding-bottom: 3rem;">
+			<div class="col relative" onclick="location.href='../guest/applyHostPage'">
+				<img class="img-fluid" src="../resources/img/host.jpg">
+					<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; left:1.5rem;">
+						호스트 신청하기
+					</button>
+			</div>
+		</div>
+	</c:when>
+
+	<c:when test="${!empty sessionUser && sessionUser.member_type == 'H' }">
+		<div class="row" style="padding-top: 3rem; padding-bottom: 3rem;">
+			<div class="col relative" onclick="location.href='../host/mainPage'">
+				<img class="img-fluid" src="../resources/img/host.jpg">
+					<button type="button" class="btn text-white absolute" style="background-color: #A68A64; font-size: 0.8rem; bottom:0.75rem; left:1.5rem;">
+						호스트 센터
+					</button>
+			</div>
+		</div>
+	</c:when>
+</c:choose>
 
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>

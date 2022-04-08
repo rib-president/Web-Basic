@@ -35,43 +35,44 @@
 <div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 2em; padding-bottom: 2em;">
+<div class="row" style="padding-top: 1em; padding-bottom: 2em;">
 	<div class="col" style="margin-left: 1rem; margin-right: 1rem;">
 	<%-- 내용작성 --%>
 		<div class="row">
 			<div class="col">
 				<div class="row">
-					<div class="col text-fs-23 text-center mb-2">상세글보기</div>
-				</div>
-				<div class="row text-fs-13">
-					<div class="col">No. ${data.freeBoardVo.freeboard_no}</div>
-					<div class="col text-right">
-						<fmt:formatDate value="${data.freeBoardVo.freeboard_writeDate }" pattern="yyyy/MM/dd" />
+					<div class="col text-fs-13" style="padding-bottom: 2em;">
+						<a href="../board/freeBoardPage" style="color: #602b23;">
+							<i class="bi bi-file-text"></i> 자유게시판 >
+						</a>
 					</div>
 				</div>
 				
 				<div class="row">
-					<div class="col text-fs-23 bold">
+					<div class="col-9 text-fs-23 bold" style="margin-bottom: 1rem;">
 						<span>
 							${data.freeBoardVo.freeboard_title }
-							<i class="bi bi-x-lg float-right" onclick="location.href='../board/freeBoardPage';"></i>
 						</span>
 					</div>
+					<div class="col-3 text-fs-13" style="text-align: right">No. ${data.freeBoardVo.freeboard_no}</div>
 				</div>
 				
-				<div class="row mt-3">
-					<div class="col text-fs-16">
+				<div class="row">
+					<div class="col text-fs-16" style="margin-bottom: 0.3rem;">
 						<span>작성자</span>
 						<span class="inline-block pl-3 bold">${data.memberVo.member_nick }</span> 
 					</div>
-					<div class="col text-fs-13">
-						<div class="row">
-							<div class="col text-right">조회수 : ${data.freeBoardVo.freeboard_readCount }</div>
-						</div>
-					</div>	
-				</div>	
+				</div>
 				
-				<hr>			
+				<div class="row">
+					<div class="col text-fs-12" style="color: #868e96">
+						<fmt:formatDate value="${data.freeBoardVo.freeboard_writeDate }" pattern="yyyy/MM/dd" />
+						조회 ${data.freeBoardVo.freeboard_readCount }
+					</div>
+				</div>
+				
+				<hr style="margin-top: 0rem;">
+							
 				<div class="row">
 					<div class="col">
 						<div>${data.freeBoardVo.freeboard_content }</div>
@@ -91,7 +92,7 @@
 					 
 					</div>
 				</div>
-				<hr class="mt-3">
+				<hr style="margin-bottom: 2rem;">
 				<div class="row">
 					<div class="col">
 					<c:choose>

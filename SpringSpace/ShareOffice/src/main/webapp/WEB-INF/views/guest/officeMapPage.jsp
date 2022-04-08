@@ -27,7 +27,7 @@ function initMap(){
 	var mapContainer = document.getElementById("map"), // 지도를 표시할 div 
 	mapOption = {
 	    center: new kakao.maps.LatLng(37.4997900799939, 127.031119235961), // 지도의 중심좌표
-	    level: 3 // 지도의 확대 레벨
+	    level: 8 // 지도의 확대 레벨
 	};  
 
 	//지도를 생성합니다    
@@ -36,7 +36,17 @@ function initMap(){
 	geocoder = new kakao.maps.services.Geocoder();	
 	
 }
-var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+
+
+
+
+
+
+
+
+var imageSrc = "../resources/img/location (3).png"; 
+
+
 
 function createMarker(){
 	//주소-좌표 변환 객체를 생성합니다
@@ -56,7 +66,7 @@ function createMarker(){
 					var address = officeInfo.office_address;
 					
 					
-					geocoder.addressSearch(address, addrSearchCallback(officeInfo ));
+					geocoder.addressSearch(address, addrSearchCallback(officeInfo));
 				}
 				
 			}		
@@ -69,7 +79,7 @@ function addrSearchCallback(officeInfo){
 	return function(result, status){
 		// 정상적으로 검색이 완료됐으면 
 		 if (status === kakao.maps.services.Status.OK) {
-			 var imageSize = new kakao.maps.Size(24, 35); 
+			 var imageSize = new kakao.maps.Size(35, 35); 
 			 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 		     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 		
@@ -107,12 +117,14 @@ function showDetail(officeInfo){
 		boxName.innerText = officeInfo.office_name;
 		var boxTag = document.getElementById("info_tag");
 		boxTag.innerText = officeInfo.office_tags;
-
+        
 		
 		//....
 		
 		var imgBox = document.getElementById("info_img");
 		imgBox.src = officeInfo.office_thumbnail;
+		
+		document.URL;
 		
 		
 		//alert(officeInfo.office_name);
@@ -167,7 +179,10 @@ window.addEventListener("DOMContentLoaded" , function(){
 	createMarker();
 });
 
-
+function officeDetailPage(officeInfo)  {
+	  window.location.href = 'officeDetailPage?office_no='+ officeInfo.office_no;
+	};
+	
 
 
 
@@ -182,22 +197,18 @@ window.addEventListener("DOMContentLoaded" , function(){
 <div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 		<div class="row " style="padding-top: 2em;background-image:url('../resources/img/back4.jpg'">
-			<div class="col" style="margin: 0.5em">
+			<div class="col" style="margin:0.5rem">
 				<div class="row" style="">
-					<p class=" text-fs-23 " style="text-align: center;">오피스 찾기</p>
+				    
+					<p class=" text-fs-23 bold " style="text-align: center;">오피스 찾기</p>
 				</div>
 				<div class="row mt-3">
 					<div class="col" style="margin: 0; padding-right: 0.5rem">
 						<input type="text" id="search__address_keyword"
 							class="form-control form-control-sm"
-							placeholder="검색할 지역명을 입력해주세요.">
+							placeholder="검색할 지역명을 입력해주세요." onkeypress="javasript:if(event.keyCode==13){moveFocus()}">
 					</div>
-					<div class="col-1" style="padding: 0; text-align: left;">
-						<button type="button" onclick="moveFocus()"
-							class="btn btn-lg default" style="padding: 0;">
-							<i class="bi bi-search"></i>
-						</button>
-					</div>
+				
 
 				</div>
 				<!-- 지도 출력 -->
@@ -215,9 +226,9 @@ window.addEventListener("DOMContentLoaded" , function(){
 				</div>
 				<!-- 마커 클릭 시 오피스 정보 -->
 				<div class="row">
-					<div class="col" id="selectedOfficeInfoBox" style="padding:0.5rem;visibility:hidden;margin:0.5rem ">
+					<div class="col" id="selectedOfficeInfoBox" style="padding:0rem;visibility:hidden;margin:0rem ">
 				   <!-- <c:forEach></c:forEach> -->
-						<div class="card shadow bg-body rounded" style="margin-top:0.7rem; padding-bottom:0rem;   ">
+						<div class="card shadow bg-body rounded" style="margin-top:0.3rem; padding-bottom:0rem;   ">
 							<div class="row" style="background-color: #f8f9fa;">
 								<div class="col-4" style="margin-left:0.5rem;padding-right:0">
 									<img src="" class="img-fluid" id="info_img" style="padding:-0.5rem">
@@ -225,7 +236,7 @@ window.addEventListener("DOMContentLoaded" , function(){
 								<div class="col" style="">
 								    <div class="card-body" style="padding-top:0.5rem;padding-bottom:0.5rem;margin:0;text-align:left;">
 										<div class="row">
-											<div class="col text-fs-17 font-medium2" id="info_name"></div>
+											<div class="col text-fs-17 font-medium2" id="info_name" onclick="officeDetailPage(officeInfo)"></div>
 										</div>
 										<div class="row text-fs-13">
 											<div class="col">
@@ -240,7 +251,7 @@ window.addEventListener("DOMContentLoaded" , function(){
 							                </div>						 
 						                 </div>		
 						                 <div class="row mt-1 text-fs-13 font-light" style="margin:0;">
-											<div class="col" style="text-align:left;padding:0;">
+											<div class="col-3" style="text-align:left;padding:0;">
 						                       <p style="margin-bottom:0.3rem"><i class="bi bi-star-fill" style="color:#EDB867;"></i>4.7</p>
 						                    </div>		
 				                   

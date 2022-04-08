@@ -27,6 +27,25 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 
+<style>
+	
+	#coupon{
+		margin-top: 70px; 
+		margin-left: 650px; 
+		margin-right: 650px; 
+		margin-bottom: 70px;
+		
+		padding-top: 3rem; 
+		padding-bottom: 1rem;
+		
+		background-color: #f1f3f5; 
+		border-radius: 1rem;
+		box-shadow: 0px 5px 5px gray;
+	}
+
+
+</style>
+
 </head>
 <body>
 <div style="width:1925px; margin:0 auto">
@@ -35,8 +54,8 @@
 	<jsp:include page="../commons/admin.jsp"></jsp:include>
 
 
-	<div class="row" style="padding-top: 70px; margin-left: 800px; margin-right: 800px;">
-		<div class="col m-3">
+	<div class="row" id="coupon">
+		<div class="col">
 			<%-- 내용작성 --%>
 			<div class="row">
 				<div class="col"></div>	
@@ -44,19 +63,19 @@
 				<div class="col"></div>	
 			</div>
 			<form action="createCouponProcess" method="post" enctype="multipart/form-data">
-			<div class="row m-3">
+			<div class="row" style="margin: 2.5rem;">
 			쿠폰이름
-				<input type="text" class="form-control" name="coupon_name">
+				<input type="text" class="form-control mb-3" name="coupon_name">
 			쿠폰수량
-				<input type="text" class="form-control" name="coupon_count">
+				<input type="text" class="form-control mb-3" name="coupon_count">
 			할인비율	
-				<input type="text" class="form-control" name="coupon_discount">
+				<input type="text" class="form-control mb-3" name="coupon_discount">
 			이미지	
-				<input type="file" class="form-control" accept="image/*" name="image">
+				<input type="file" class="form-control mb-3" accept="image/*" name="image">
 			사용기한 및 만료일자	
 				<input type="date" class="form-control" name="coupon_useDate">
 				
-				<input type="submit" class="btn btn-primary" value="쿠폰발급">
+				<input type="submit" class="btn btn-dark" value="쿠폰발급" style="margin-top: 2rem;">
 			</div>
 			</form>
 		</div>

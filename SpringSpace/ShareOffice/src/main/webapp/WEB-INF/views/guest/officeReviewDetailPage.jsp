@@ -42,7 +42,7 @@ $(function() {
 	
 		<div class="row">	
 			 <div class="col"><a href="javascript:history.back();"class="btn" style="color: #A68A64"><i class="bi bi-arrow-left"></i></a></div>
-		     <div class="col" style="text-align: center"><p class="text-fs-23">이용후기</p></div>
+		     <div class="col" style="text-align: center"><p class="text-fs-23 bold">이용후기</p></div>
 		     <div class="col"></div>
 		</div>
 

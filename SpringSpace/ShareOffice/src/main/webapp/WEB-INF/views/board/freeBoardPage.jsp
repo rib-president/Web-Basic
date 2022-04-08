@@ -13,7 +13,6 @@
 
 <style>
 	table {
-		border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
 		border-collapse: collapse;
 		border-spacing: 0;
 		width: 100%;
@@ -36,7 +35,7 @@
 		white-space:nowrap;
 	}
 
-	
+
 </style>
 <title>Insert title here</title>
 </head>
@@ -52,13 +51,13 @@
 				<%-- 내용작성 --%>
 					<div class="row">
 						<div class="col text-center">
-							<div class="text-fs-23">자유게시판</div>
+							<div class="text-fs-23 bold"><i class="bi bi-file-text"></i> 자유게시판</div>
 						</div>
 					</div>
 					
 					<div class="row">
 						<div class="col text-center">
-							<table class="table mt-3">
+							<table class="table mt-4">
 								<thead>
 							    <tr>
 							      <th class="text-center text-fs-16">No</th>
@@ -68,25 +67,24 @@
 							    </tr>
 							    </thead>
 							    <tbody>
-							  <c:forEach items="${freeBoardList }" var="freeBoardList">
-							    <tr>
-							      	<td class="text-center py-3">${freeBoardList.freeBoardVo.freeboard_no }</td>
-						    		<td>
-								      	<a href="./freeBoardReadPage?freeboard_no=${freeBoardList.freeBoardVo.freeboard_no }" style="color: #495057; font-weight: bold;">
-								      	${freeBoardList.freeBoardVo.freeboard_title }
-								      	</a>
-								      	
-								      	  <br>
-								      	<span class="text-fs-13">${freeBoardList.memberVo.member_nick }</span>
-								      	
-							      	</td>
-							      	<td style="text-align: center;">
-							      		<span class="text-fs-13 py-4" ><fmt:formatDate value="${freeBoardList.freeBoardVo.freeboard_writeDate }" pattern="MM/dd" /></span>
-							      	</td>
-							      	<td style="text-align: center;">
-								      	<span class="text-fs-13 py-4" >${freeBoardList.freeBoardVo.freeboard_readCount }</span>
-							      	</td>
-							    	</tr>
+								<c:forEach items="${freeBoardList }" var="freeBoardList">
+								   <tr style="color: #868e96">
+								      	<td class="text-center py-3">${freeBoardList.freeBoardVo.freeboard_no }</td>
+							    		<td>
+									    	<a href="./freeBoardReadPage?freeboard_no=${freeBoardList.freeBoardVo.freeboard_no }" style="color: #464444; font-weight: bold;">
+									      	${freeBoardList.freeBoardVo.freeboard_title }
+									      	</a>
+									      	  <br>
+									      	<span class="text-fs-13">${freeBoardList.memberVo.member_nick }</span>
+									      	
+								      	</td>
+								      	<td style="text-align: center;">
+								      		<span class="text-fs-13 py-4" ><fmt:formatDate value="${freeBoardList.freeBoardVo.freeboard_writeDate }" pattern="MM/dd" /></span>
+								      	</td>
+								      	<td style="text-align: center;">
+									      	<span class="text-fs-13 py-4" >${freeBoardList.freeBoardVo.freeboard_readCount }</span>
+								      	</td>
+								    </tr>
 								</c:forEach>
 								</tbody>
 							</table>
@@ -109,8 +107,8 @@
 			</div>
 		</div>  -->
 		<c:if test="${!empty sessionUser }">
-			<div class="fixed " style="bottom: 7rem; right: 3rem; z-index: 99">
-				<a href="freeBoardWritePage"><i class="bi bi-plus-circle-fill" style="font-size: 3rem; color: #A68A64;"></i></a>
+			<div class="fixed " style="bottom: 4rem; right: 3rem; z-index: 99">
+				<a href="freeBoardWritePage"><i class="bi bi-plus-circle-fill" style="font-size: 3.5rem; color: #A68A64;"></i></a>
 			</div>
 		</c:if>
 			
@@ -119,7 +117,7 @@
 			<div class="col">
 				
 				<nav aria-label="...">
-				  <ul class="pagination mb-0">
+				  <ul class="pagination mb-0 my">
 				  <c:choose>
 				  	<c:when test="${startPage <= 1}">
 					    <li class="page-item disabled">
@@ -135,8 +133,8 @@
 				    <c:forEach begin="${startPage}" end="${endPage}" var="i">
 				    	<c:choose>
 				    		<c:when test="${currentPage == i}">
-						    	<li class="page-item active">
-						    		<a class="page-link" href="./freeBoardPage?pageNum=${i}" style="background-color: #A68A64; margin: 0">${i}</a>
+						    	<li class="page-item active ">
+						    		<a class="page-link" href="./freeBoardPage?pageNum=${i}" style="background-color: #A68A64; border-color: #A68A64">${i}</a>
 						    	</li>
 				    		</c:when>
 				    		<c:otherwise>

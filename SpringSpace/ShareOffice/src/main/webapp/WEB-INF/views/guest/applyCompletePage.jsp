@@ -26,7 +26,7 @@
 					 <div class="card-body text-center " >	
 					 
 					      <div class="row mt-5"> 
-						     <p class="text-fs-18">호스트 신청이 완료되었습니다.</p> 	
+						     <p class="text-fs-18 bold">호스트 신청이 완료되었습니다.</p> 	
 						     <p class="text-muted fs-16">관리자 승인 완료 후에 <br>오피스를 등록할 수 있습니다.</p>
 						   </div>  	
 						   <div class="row mt-4 text-fs-16">

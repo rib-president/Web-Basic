@@ -27,21 +27,21 @@
 	<%-- 내용작성 --%>
 		<div class="row">
 			<form action="./freeBoardWriteProcess" method="get">
-			<div class="col">
-				<div class="text-center text-fs-23" style="margin-bottom: 0.5rem;"><i class="bi bi-pencil-square"></i> 글쓰기페이지</div>
+			<div class="col mb-4">
+				<div class="text-center text-fs-23 bold"><i class="bi bi-pencil-square"></i> 글 작성</div>
 			</div>
 				
 				
 				<div class="row">
-					<div class="col" style="margin-bottom: 0.5rem;">
+				<div style="margin-bottom: 1rem;">
+					<input type="text" class="form-control" name="freeboard_title" placeholder="제목을 입력해 주세요.">
+				</div>
+					<div class="col">
 						<div class="inline-block">작성자</div>
 						<div class="inline-block pl-3 bold">${sessionUser.member_nick }</div>
 					</div>
 				</div>
-				<div>
-					<input type="text" class="form-control" name="freeboard_title" placeholder="제목을 입력해 주세요.">
-				</div>
-				<hr>
+				<hr style="margin-top: 0.5rem;">
 				<div class="row">
 					<div class="col" style="margin-bottom: 1rem;">
 						<textarea class="form-control" rows="5" name="freeboard_content" placeholder="내용을 입력해 주세요."></textarea>
@@ -56,7 +56,7 @@
 				 -->
 				<div class="row">
 					<div class="col" style="margin-bottom: 1rem;">
-						<button type="submit" style="background-color: #A68A64; color: white; width: 100%;" class="btn btn-light btn-block text-fs-16"><i class="bi bi-pencil-square"></i> 글작성</button>					
+						<button type="submit" style="background-color: #A68A64; color: white; width: 100%;" class="btn btn-light btn-block text-fs-16"><i class="bi bi-pencil-square"></i> 글 작성</button>					
 					</div>
 				</div>
 			</form>
