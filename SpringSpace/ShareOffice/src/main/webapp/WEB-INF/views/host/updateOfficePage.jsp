@@ -226,7 +226,7 @@
 	    <div class="row g-5 text-fs-16">
 
 	      <div class="col-md-7 col-lg-8">
-	        <h4 class="mb-3 text-fs-23">오피스 수정하기</h4>
+	        <h4 class="mb-3 text-fs-23 bold text-center">오피스 수정하기</h4>
 	        <hr class="my-4">
 	          <div class="row">
 	            <div class="col-sm-6">
@@ -343,7 +343,7 @@
 			   	<div class="row mb-1">
 			   		<div class="col-2 px-0">
 			          <div class="form-check" style="padding-top:0.3rem;">
-			            <input type="checkbox" class="form-check-input" style="font-size:1rem; margin-right:0.1rem;" name="business_day" value="월" onchange="checkDay(this)">
+			            <input type="checkbox" class="form-check-input" name="business_day" value="월" onchange="checkDay(this)">
 			            <label class="form-check-label" >월</label>
 			          </div>
 			   		</div>

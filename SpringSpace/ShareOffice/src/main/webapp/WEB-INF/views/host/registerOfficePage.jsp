@@ -299,7 +299,7 @@
 			   	<div class="row mb-1">
 			   		<div class="col-2 px-0">
 			          <div class="form-check" style="padding-top:0.3rem;">
-			            <input type="checkbox" class="form-check-input" style="font-size:1rem; margin-right:0.1rem;" name="business_day" value="월" onchange="checkDay(this)">
+			            <input type="checkbox" class="form-check-input" name="business_day" value="월" onchange="checkDay(this)">
 			            <label class="form-check-label" >월</label>
 			          </div>
 			   		</div>
@@ -873,6 +873,7 @@
 	  		<div class="d-grid gap-2" style="padding-bottom : 2rem;">
 			  <input type="button" class="btn" style="background-color:#A68A64; color: #ffffff;" value="등록하기" onclick="submitForm()"></button>
 	       	</div> 
+	       	  </div>
 	       	  </div>
 	        </form>
 	      </div>
