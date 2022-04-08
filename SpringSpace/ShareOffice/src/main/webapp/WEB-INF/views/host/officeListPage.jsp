@@ -107,6 +107,11 @@ window.addEventListener("DOMContentLoaded", function() {
 						<div class="col bold">
 						${office.office_name}
 						</div>
+						<c:if test="${office.office_approve eq 'Y' }">
+						<div class="col text-right text-fs-13">
+						<i class="bi bi-star-fill"></i>리뷰
+						</div>
+						</c:if>
 						</div>
 
 						

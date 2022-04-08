@@ -36,7 +36,7 @@
 		
 		Kakao.Auth.authorize({
 			redirectUri: 'http://localhost:8181/member/loginGetCode'
-			//redirectUri: 'http://13.125.166.120:8080/shareoffice/member/loginGetCode'
+			//redirectUri: 'http://13.125.166.120:8080/member/loginGetCode'
 		});
 	}
 	

@@ -13,8 +13,8 @@
 <link href="../resources/css/commons.css" rel="stylesheet">
 
 <style>
-.menu {border: 0.2rem solid rgba(189, 189, 189, 0.781); border-radius: 624.938rem; text-align: center; color: rgba(189, 189, 189, 0.781);}
-.menu.on {border: 0.2rem solid #22223bc9; color:#1a1a2ee5;}
+.menus {border: 0.2rem solid rgba(189, 189, 189, 0.781); border-radius: 624.938rem; text-align: center; color: rgba(189, 189, 189, 0.781);}
+.menus.on {border: 0.2rem solid #22223bc9; color:#1a1a2ee5;}
 
 .sec_cal {
     width: 90%;
@@ -139,7 +139,7 @@
 	var onlyCancel = false;
 	
 	function selectMenu(obj) {
-		for(var e of document.querySelectorAll(".menu.on")) {
+		for(var e of document.querySelectorAll(".menus.on")) {
 			e.classList.remove("on");
 		}
 		
@@ -180,7 +180,7 @@
 				var data = JSON.parse(xhr.responseText);
 	
 				if(data.result == 'success') {					
-				    
+
 				   	document.querySelector("#rentalContainer").innerHTML = "";						
 					
 					if(data.dataList.length > 0) {
@@ -259,14 +259,28 @@
 		nameCol.setAttribute("class", "col text-fs-15");
 		nameCol.innerText = data.orderInfo.office_name;
 		nameRow.appendChild(nameCol);
+		if(data.orderInfo.rental_status == "C") {
+			var div = document.createElement("div");
+			div.setAttribute("class", "col text-red-dsoft text-fs-10");
+			div.setAttribute("style", "padding-top: 0.15rem");
+			div.innerText = "(취소)";
+			nameRow.appendChild(div);
+		}
 		var resvRow = document.createElement("div");
 		resvRow.setAttribute("class", "row mt-1 text-fs-10");
 		var resvCol1 = document.createElement("div");
 		resvCol1.setAttribute("class", "col");
 		resvCol1.innerText = "예약자 : " + data.guestVo.member_nick;
+		
+		
 		var resvCol2 = document.createElement("div");
 		resvCol2.setAttribute("class", "col");
 		resvCol2.innerText = "금액 : " + data.orderInfo.rental_price;
+		if(data.orderInfo.rental_status == "C") {
+			resvCol2.setAttribute("style", "text-decoration:line-through; text-decoration-color: rgba(37,37,37,1);");
+			resvCol2.classList.add("text-gray-c_25");								
+		}
+		
 		resvRow.appendChild(resvCol1);
 		resvRow.appendChild(resvCol2);
 		infoCol.appendChild(nameRow);
@@ -672,13 +686,13 @@
 
 <div class="row" style="padding-top: 2rem;">
 	<div class="col">
-		<div class="row mt-1 ms-1">
-			<div class="col bold text-fs-20 text-gray-c_25"><i class="bi bi-calendar-week text-gold"></i> 예약 내역</div>
+		<div class="row mt-1">
+			<div class="col bold text-fs-23 text-gray-c_25 text-center"><i class="bi bi-calendar-week text-gold"></i> 예약 내역</div>
 		</div>
-		<div class="row mt-3">
+		<div class="row mt-5">
 			<div class="col"></div>
-			<div id="calendarBtn" class="py-2 ms-3 col-4 cursor-pointer menu on bold" onclick="selectMenu(this)">달력으로 보기</div>
-			<div id="listBtn" class="py-2 ms-3 col-4 cursor-pointer menu bold" onclick="selectMenu(this)">리스트로 보기</div>
+			<div id="calendarBtn" class="py-2 ms-3 col-4 cursor-pointer menus on bold" onclick="selectMenu(this)">달력으로 보기</div>
+			<div id="listBtn" class="py-2 ms-3 col-4 cursor-pointer menus bold" onclick="selectMenu(this)">리스트로 보기</div>
 			<div class="col"></div>
 		</div>
 		<div class="row">

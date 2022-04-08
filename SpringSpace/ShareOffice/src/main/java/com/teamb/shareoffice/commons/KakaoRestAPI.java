@@ -36,10 +36,10 @@ public class KakaoRestAPI {
 
 
 	private final String domain = "http://localhost:8181/";
-	//private final String domain = "http://13.125.166.120:8080/shareoffice/";
+	//private final String domain = "http://13.125.166.120:8080/";
 
 	private final String loginGetCode = "http://localhost:8181/member/loginGetCode";
-	//private final String loginGetCode = "http://13.125.166.120:8080/shareoffice/member/loginGetCode";
+	//private final String loginGetCode = "http://13.125.166.120:8080/member/loginGetCode";
 	
 	private final String cid = "TC0ONETIME";
 	

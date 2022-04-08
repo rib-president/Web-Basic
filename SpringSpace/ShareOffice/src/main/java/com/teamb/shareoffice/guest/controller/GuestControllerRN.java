@@ -93,11 +93,6 @@ public class GuestControllerRN {
 	@RequestMapping("orderProcess")
 	public String paymentProcess(Model model, HttpSession session, OrderVo orderVo, Date[] rental_date, int allot_no, double coupon_discount, int office_no) {
 		
-		/*int discountPrice = 0;
-		if(coupon_discount > 0) {
-			discountPrice = (int) (Math.floor((coupon_discount*1.0) / rental_date.length));	
-		}*/
-		
 		if(rental_date != null) {
 			for(int i=0; i<rental_date.length; i++) {
 				int rentalWhether = guestServiceB.officeRentalWhetherCheck(office_no, rental_date[i]);
@@ -160,10 +155,6 @@ public class GuestControllerRN {
 		ArrayList<String> rental_date = (ArrayList<String>) params.get("rental_date");
 		int allot_no = Integer.valueOf(String.valueOf(params.get("allot_no")));
 		double coupon_discount = Integer.valueOf(String.valueOf(params.get("coupon_discount")));
-//		int discountPrice = 0;
-//		if(coupon_discount > 0) {
-//			discountPrice = (int) (Math.floor((coupon_discount*1.0) / rental_date.size()));
-//		}
 		
 		
 		OrderVo orderVo = new OrderVo();

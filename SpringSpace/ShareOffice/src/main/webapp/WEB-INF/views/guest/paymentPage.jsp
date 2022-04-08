@@ -329,7 +329,7 @@ body { padding-right: 0 !important }
 				
 			</div>			
 			
-			<div class="row mt-5 leading-tight" style="height:1.5rem">
+			<div class="row mt-5 leading-tight" style="height:2rem">
 				<div class="col text-fs-13 pt-1">결제수단</div>
 				<div class="col">
 					<img class="ms-1 float-right" src="../resources/img/kakaopay.png" style="height:60%"><input type="radio" class="float-right form-check-input" checked>					
