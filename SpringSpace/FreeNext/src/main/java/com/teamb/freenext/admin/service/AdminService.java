@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.teamb.freenext.admin.mapper.AdminMapper;
 import com.teamb.freenext.biz.service.BizService;
 import com.teamb.freenext.vo.AdminVo;
+import com.teamb.freenext.vo.CooperationCategoryVo;
 import com.teamb.freenext.vo.MemberCompanyVo;
 import com.teamb.freenext.vo.MemberCustomerVo;
 import com.teamb.freenext.vo.MemberVo;
@@ -108,36 +109,35 @@ public class AdminService {
 	// 회원 비율
 	public HashMap<String, Object> getMemberProportion() {
 		ArrayList<HashMap<String, String>> memberTypeCountList = adminMapper.selectAllMemberType();
-		int totalMemberCount = memberTypeCountList.stream().mapToInt(a -> Integer.valueOf(a.get("cnt"))).sum();
-		
+
 		HashMap<String, Object> resultMap = new HashMap<>();
 		
 		for(HashMap<String, String> memberTypeCountMap : memberTypeCountList) {
-			double proportion = (Math.round((Integer.valueOf(memberTypeCountMap.get("cnt")) / (totalMemberCount*1.0)) * 100))/10.0;
-			if(memberTypeCountMap.get("member_type").equals("N")) {
-				resultMap.put("normalProportion", proportion);
+			if(String.valueOf(memberTypeCountMap.get("member_type")).equals("N")) {
+				resultMap.put("normalProportion", memberTypeCountMap.get("cnt"));
 			} else {
-				resultMap.put("bizProportion", proportion);
+				resultMap.put("bizProportion", memberTypeCountMap.get("cnt"));
 			}
 		}
+
 		return resultMap;
 	}
 	
-	// 일별 회원가입(최근 일주일)
+	// 일별 회원가입수(최근 일주일)
 	public ArrayList<HashMap<String, Object>> getMemberCountDuringWeek() {
 		ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
 		
 		ArrayList<String> weekList = bizService.getWeekList();
 		
 		ArrayList<HashMap<String, String>> joinDateDuringWeekList = adminMapper.selectJoinDateDuringWeek(weekList.get(0), weekList.get(6));
-		List<String> scrapDateList = joinDateDuringWeekList.stream().map(e -> e.get("joindate")).collect(Collectors.toList());
+		List<String> joinDateList = joinDateDuringWeekList.stream().map(e -> String.valueOf((Object) e.get("joinDate"))).collect(Collectors.toList());
 
 		for(String week : weekList) {
 			HashMap<String, Object> map = new HashMap<>();
 			
-			if(scrapDateList.contains(week)) {
+			if(joinDateList.contains(week)) {
 				for(HashMap<String, String> memberCountMap : joinDateDuringWeekList) {
-					if(memberCountMap.get("joinDate").equals(week)) {
+					if(String.valueOf((Object) memberCountMap.get("joinDate")).equals(week)) {
 						map.put("day", week);
 						map.put("cnt", memberCountMap.get("cnt"));
 						
@@ -152,17 +152,104 @@ public class AdminService {
 				resultList.add(map);
 			}
 		}
-				
+
 		return resultList;
 	}
 	
-	// 일별 프로젝트 등록/스크래핑 수(최근 일주일)
+	// 일별  등록주체 프로젝트 등록/스크래핑 수(최근 일주일)
+	public ArrayList<HashMap<String, Object>> getRegistProjectCountDuringWeek() {
+		ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
+		
+		ArrayList<String> weekList = bizService.getWeekList();
+		for(int i=1;i<6;i++) {
+			ArrayList<HashMap<String, String>> registProjectCntList = adminMapper.selectRegistProjectCntDuringWeek(i, weekList.get(0), weekList.get(weekList.size()-1));
+			List<String> registDateList = registProjectCntList.stream().map(e -> String.valueOf((Object) e.get("project_date"))).collect(Collectors.toList());
+			
+			HashMap<String, Object> resultMap = new HashMap<>();
+			ArrayList<HashMap<String, Object>> mapList = new ArrayList<>();			
+			
+			for(String week : weekList) {
+				HashMap<String, Object> map = new HashMap<>();
+				
+				if(registDateList.contains(week)) {
+					for(HashMap<String, String> cntCountMap : registProjectCntList) {
+						if(String.valueOf((Object) cntCountMap.get("project_date")).equals(week)) {
+							map.put("day", week);
+							map.put("cnt", cntCountMap.get("cnt"));
+							map.put("cooperation_no", i);
+							
+							mapList.add(map);
+							
+							break;
+						}
+					}
+				} else {
+					map.put("day", week);
+					map.put("cnt", 0);
+					map.put("cooperation_no", i);
+					
+					mapList.add(map);
+				}
+			}
+			
+			resultMap.put("mapList", mapList);
+			resultList.add(resultMap);
+		}
+		
+		return resultList;
+	}
+	
+	public ArrayList<CooperationCategoryVo> getCooperationCategoryList() {
+		return adminMapper.selectCooperationCategoryList();
+	}
 	
 	// 개별등록/스크래핑 비율
+	public ArrayList<HashMap<String, Object>> getCountGroupByCooperation() {
+
+		return adminMapper.selectCountGroupByCooperation();
+	}
 	
 	// 잡 카테고리별 프로젝트 비율
+	public ArrayList<HashMap<String, String>> getJobCategoryProportion() {
+
+		return adminMapper.selectJobCategoryProportion();
+	}
 	
 	// 누적 광고수익
+	public int getTotalAdPrice() {
+		return adminMapper.selectTotalAdPrice();
+	}
 	
 	// 일별 등록 광고(최근 일주일)
+	public ArrayList<HashMap<String, Object>> getAdCountDuringWeek() {
+		ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
+		
+		ArrayList<String> weekList = bizService.getWeekList();
+		
+		ArrayList<HashMap<String, String>> adCountList = adminMapper.selectAdCountDuringWeek(weekList.get(0), weekList.get(weekList.size()-1));
+		List<String> registDateList = adCountList.stream().map(e -> String.valueOf((Object) e.get("registDate"))).collect(Collectors.toList());
+		for(String week : weekList) {
+			HashMap<String, Object> map = new HashMap<>();
+			
+			if(registDateList.contains(week)) {
+				for(HashMap<String, String> adCountMap : adCountList) {
+					if(String.valueOf((Object) adCountMap.get("registDate")).equals(week)) {
+						map.put("cnt", adCountMap.get("cnt"));
+						map.put("registDate", week);
+						
+						resultList.add(map);
+						
+						break;
+					}
+				}
+			} else {
+				map.put("cnt", 0);
+				map.put("registDate", week);
+				
+				resultList.add(map);
+			}
+		}
+		
+		return resultList;
+	}
 }

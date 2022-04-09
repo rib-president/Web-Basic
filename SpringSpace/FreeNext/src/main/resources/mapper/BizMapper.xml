@@ -201,7 +201,7 @@
 		<![CDATA[ 
 		and timestampdiff(hour, scrap_date, now()) < 168
 		]]>	
-		group by date(scrapDate)	
+		group by date(scrap_date)	
 	</select>
 	
 				

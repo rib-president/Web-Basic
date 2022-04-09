@@ -757,7 +757,7 @@
             
             option = {
             	title: {
-                    text: "🟥: 광고신청 프로젝트"
+                    text: "🟥 광고신청 프로젝트"
                 },            		
           		tooltip: {
           		    trigger: 'axis',
@@ -1501,14 +1501,19 @@
 				project_state = "Y";
 				
 				var pBoxes = document.querySelectorAll(".projectBox ");
+				var currentPageNum = pageNum;
+
 				if(pBoxes.length == 1 && !pBoxes[0].getElementsByClassName("cm-toggle")[0].checked) {
-					pageNum--;
+					pageNum = currentPageNum - 1;
 				}
 				
 			} else {
 				project_state = "ALL";
 			}						
 			
+			if(pageNum <= 0) {
+				pageNum = 1;
+			}
 			loadMyProjectData();
 		}
 		

@@ -36,6 +36,7 @@ public class ScrapingService {
 	private KakaoRestAPI kakao;	
 	
 	@Scheduled(fixedDelay = 600000)		// 10분 : 600000
+	//@Scheduled(fixedDelay = 2400000)		// aws용 40분 간격
 	public void getDesignGroupNine() {
 		
 
@@ -198,6 +199,7 @@ public class ScrapingService {
 	}
 	
 	@Scheduled(fixedDelay = 600000, initialDelay = 150000)		// 2분30초 딜레이 후 시작, 10분 간격
+	//@Scheduled(fixedDelay = 2400000, initialDelay = 600000)		// aws용 10분 딜레이 후 시작, 40분 간격
 	public void getElancer() {
 
 		HashMap<String, ArrayList<String>> paramMap = new HashMap<>();
@@ -357,8 +359,9 @@ public class ScrapingService {
 		System.out.println("이랜서 탐색종료");
 	}
 	
-	//@Scheduled(fixedDelay = 50000)
+
 	@Scheduled(fixedDelay = 600000, initialDelay = 300000)		// 5분 딜레이 후 시작, 10분 간격
+	//@Scheduled(fixedDelay = 2400000, initialDelay = 1200000)		// aws용 20분 딜레이 후 시작, 40분 간격
 	public void getWebCruit() {
 		String kakaoKey = getKakaoKey();
 
@@ -560,8 +563,9 @@ public class ScrapingService {
 		}				
 	}
 	
-	//@Scheduled(fixedDelay = 30000)
-	@Scheduled(fixedDelay = 600000, initialDelay = 450000)		//  7분 30초 딜레이 후 시작, 10분 간격		
+
+	@Scheduled(fixedDelay = 600000, initialDelay = 450000)		//  7분 30초 딜레이 후 시작, 10분 간격
+	//@Scheduled(fixedDelay = 2400000, initialDelay = 1800000)		// aws용 30분 딜레이 후 시작, 40분 간격
 	public void getWishket() {
 
 		String kakaoKey = getKakaoKey();

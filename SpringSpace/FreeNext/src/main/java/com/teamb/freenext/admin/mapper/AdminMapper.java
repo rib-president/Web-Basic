@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.teamb.freenext.vo.AdminVo;
+import com.teamb.freenext.vo.CooperationCategoryVo;
 import com.teamb.freenext.vo.MemberCompanyVo;
 import com.teamb.freenext.vo.MemberCustomerVo;
 import com.teamb.freenext.vo.MemberVo;
@@ -38,10 +39,12 @@ public interface AdminMapper {
 	
 	public MemberCompanyVo selectCompanyVoByMemberNo(int member_no);
 	
+	public ArrayList<CooperationCategoryVo> selectCooperationCategoryList();
+	
 	public ArrayList<HashMap<String, String>> selectAllMemberType();
 	public ArrayList<HashMap<String, String>> selectJoinDateDuringWeek(@Param("startDate") String startDate, @Param("endDate") String endDate);
 	public ArrayList<HashMap<String, String>> selectRegistProjectCntDuringWeek(@Param("cooperation_no") int cooperation_no, @Param("startDate") String startDate, @Param("endDate") String endDate);
-	public ArrayList<HashMap<String, String>> selectCountGroupByCooperation();
+	public ArrayList<HashMap<String, Object>> selectCountGroupByCooperation();
 	public ArrayList<HashMap<String, String>> selectJobCategoryProportion();
 	public int selectTotalAdPrice();
 	public ArrayList<HashMap<String, String>> selectAdCountDuringWeek(@Param("startDate") String startDate, @Param("endDate") String endDate);

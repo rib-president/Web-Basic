@@ -14,6 +14,7 @@ import com.teamb.freenext.biz.service.BizService;
 import com.teamb.freenext.commons.KakaoRestAPI;
 import com.teamb.freenext.member.service.MemberService;
 import com.teamb.freenext.normal.service.NormalService;
+import com.teamb.freenext.scraping.service.ScrapingService;
 import com.teamb.freenext.vo.KakaopayVo;
 import com.teamb.freenext.vo.MemberVo;
 import com.teamb.freenext.vo.ProjectBoardVo;
@@ -30,6 +31,9 @@ public class BizController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private ScrapingService scrapingService;
 	
 	@RequestMapping("main")
 	public String main() {
@@ -56,6 +60,8 @@ public class BizController {
 		vo.setMember_no(((MemberVo) session.getAttribute("sessionBizUser")).getMember_no());
 		
 		int project_no = bizService.registProjectProcess(vo, job_no_list, local_no_list, subAd);		
+		
+		scrapingService.registAlarm(job_no_list[0], local_no_list[0], project_no);
 		
 		return "redirect:../normal/projectDetailPage?project_no=" + project_no;
 	}

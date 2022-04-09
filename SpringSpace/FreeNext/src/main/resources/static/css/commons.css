@@ -219,7 +219,8 @@
 	.pt-9{padding-top:2.25rem}    
     .pt-10 {padding-top: 2.5rem;}
     .pt-12{padding-top:3rem}
-	.pt-20 {padding-top: 5rem;}    
+	.pt-20 {padding-top: 5rem;}
+	.pt-24 {padding-top: 6rem;}    
 
 	.pb-10 {padding-bottom: 2.5rem;}
 
@@ -245,6 +246,7 @@
     
     .pr-0{padding-right:0;}
     .pr-1{padding-right:.25rem;}
+    .pr-10{padding-right:2.5rem;}
 
     .px-0{padding-left:0;padding-right: 0;}
     .px-3{padding-left:.75rem;padding-right: .75rem;}
