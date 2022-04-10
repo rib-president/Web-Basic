@@ -17,6 +17,7 @@
 
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
 <div class="row" style="padding-top:2em;">
@@ -38,7 +39,7 @@
                  </ul>
                 
                  <div class="row">
-                 	<div class="col">
+                 	<div class="col d-grid">
                  	
                     <input type="hidden" value="${coupon.CouponVoList.coupon_no }" name="coupon_no">
                     <input type="hidden" value="${sessionUser.member_no }" name="member_no">
@@ -47,13 +48,13 @@
                   <c:choose>
                      <c:when test="${coupon.myReserveCouponCount eq 1 }">
                           <c:if test="${!empty sessionUser }">
-                        <input type="button" class="mb-3 btn btn-secondary float-end me-3" disabled value="발급완료">
+                        <input type="button" class="my-3 btn btn-secondary" disabled value="발급 완료">
                           </c:if>
                      
                      </c:when>
                      <c:when test="${coupon.CouponVoList.coupon_count - coupon.waste <= 0 }">
                           <c:if test="${!empty sessionUser }">
-                        <input type="submit" class="mb-3 btn btn-secondary float-end me-3" disabled value="쿠폰소진">
+                        <input type="submit" class="my-3 btn btn-secondary" disabled value="쿠폰 소진">
                           <!-- 
                            <input type="button" onclick="alert('쿠폰이 소진 되었습니다.')" class="btn btn-primary float-end me-3" value="쿠폰발급">
                          -->
@@ -63,14 +64,14 @@
                      
                      <c:when test="${coupon.CouponVoList.coupon_useDate < now }">
                           <c:if test="${!empty sessionUser }">
-                        <input type="button" class="mb-3 btn btn-secondary float-end me-3" disabled value="기한만료">
+                        <input type="button" class="my-3 btn btn-secondary" disabled value="기한 만료">
                           </c:if>
                      
                      </c:when>
                      
                      <c:otherwise>
                         <c:if test="${!empty sessionUser }">
-                        <input type="submit" class="mb-3 btn btn-primary float-end me-3" value="쿠폰발급">
+                        <input type="submit" class="my-3 btn btn-primary" value="쿠폰 발급">
                           </c:if>                              
                      </c:otherwise>
                   </c:choose>
@@ -104,6 +105,7 @@
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

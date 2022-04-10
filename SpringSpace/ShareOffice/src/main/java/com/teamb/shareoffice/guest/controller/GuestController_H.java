@@ -91,9 +91,17 @@ public class GuestController_H {
         
         int reviewCount = guestService_H.getReviewCount(office_no);
         
+        Double officeAvgRating= guestService_H.getOfficeAvgRating(office_no);		
+        
+        if(officeAvgRating == null) {
+			 officeAvgRating=0.0;
+		 }
+        
 	    model.addAttribute("reviewList",reviewList);
 	    
 	    model.addAttribute("reviewCount",reviewCount);
+	    
+	    model.addAttribute("officeAvgRating",officeAvgRating);
 	    
 		return "guest/officeReviewPage";
 	}
@@ -178,6 +186,9 @@ public class GuestController_H {
 		
 		MemberVo sessionUser = (MemberVo)session.getAttribute("sessionUser");
 		int memberNo = sessionUser.getMember_no();
+		
+		HostVo hostVo = new HostVo();
+		hostVo.setMember_no(memberNo);
 	
 		return"guest/applyCompletePage";
 	}
@@ -190,13 +201,14 @@ public class GuestController_H {
 				
         ArrayList<HashMap<String, Object>> applyList =guestService_H.getHostApprove(memberNo);
 		
-        if(sessionUser !=null) {
+        if(sessionUser != null) {
 		
 			HostVo hostVo = new HostVo();
 			hostVo.setMember_no(memberNo);
       
         
 		model.addAttribute("applyList",applyList);
+		model.addAttribute("sessionUser",sessionUser);
        }
 				
 		return "guest/applyCheckPage";

@@ -14,39 +14,39 @@
 
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 70px;">
-	<div class="col">
-			<div class="row" style="padding:50px;"><!-- 여백 -->
- 			</div>
-		
+<div class="row mb-5" style="padding-top: 5rem;">
+	<div class="col">		
 			<div class="row">
 				<div class="col"></div>
-				<div class="col-7 text-center fs-4 fw-bold"> 회원가입을 축하드립니다.</div>
+				<div class="col-7 text-center text-fs-23 fw-bold">
+					<div>회원가입을</div>
+					<div>축하드립니다</div>
+				</div>
 				<div class="col"></div>
 			</div>
 			<div class="row mt-5">
 				<div class="col"></div>
-				<div class="col-7 text-center fs-4"> 로그인하여 서비스이용이 가능합니다.</div>
-				<div class="col"></div>
-			</div>		
-			<div class="row mt-4">
-				<div class="col"></div>
-				<div class="col-2">
-					<div class="d-grid">
-						<input type="submit" value="로그인하기" class="btn btn-light" onClick="window.location.href='./loginPage'">
-					</div>
+				<div class="col-7 text-center text-fs-16">
+					<div>로그인하여 서비스이용이</div>
+					<div>가능합니다.</div>
 				</div>
 				<div class="col"></div>
-			</div>
-			
-			<div class="row" style="padding:100px;"><!-- 여백 --></div>
-		
+			</div>		
+			<div class="row mt-4 mb-5">
+				<div class="col"></div>
+				<div class="col-4 d-grid">
+					<input type="submit" value="로그인하기" class="btn btn-light" onClick="window.location.href='./loginPage'">
+				</div>
+				<div class="col"></div>
+			</div>			
 	</div>
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -32,6 +32,15 @@ body { padding-right: 0 !important }
 	var bsOffcanvas = null;
 	var rental_date_list = [];
 	var isFirstSubmit = true;
+	
+	/*function rentalWhetherCheck() {
+		
+		//submit 실행
+		var frm2 = document.getElementById("frm2");
+		frm2.submit();
+		
+		
+	}*/
 
 	function convertRentalDate(totalResvDay) {
 		var monthMap = new Map();
@@ -70,7 +79,7 @@ body { padding-right: 0 !important }
 	}
 	
 	// for mobile
-	/*function kakaoPay(totalResvDay) {
+	function kakaoPay(totalResvDay) {
 		var xhr = new XMLHttpRequest();	
 		
 		var quantity = 1;			
@@ -110,11 +119,11 @@ body { padding-right: 0 !important }
 		xhr.open("POST", "../guest/payToKakao", true);
 		xhr.setRequestHeader("Content-type","application/json");
 		xhr.send(JSON.stringify(sendData));
-	}*/
+	}
 	
 	
 	// for pc
-	function kakaoPay(totalResvDay) {
+	/*function kakaoPay(totalResvDay) {
 		var xhr = new XMLHttpRequest();	
 		
 		var quantity = 1;			
@@ -148,11 +157,13 @@ body { padding-right: 0 !important }
 		xhr.open("post", "/guest/payToKakao", true);
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xhr.send("item_name=" + item_name + "&quantity=" + quantity + "&total_amount=" + total_amount);
-	}
+	}*/
 	
 	function sendMeData(data) {
 		var frm = document.querySelector("form");
-
+		frm.setAttribute("action", "./orderProcess");
+		frm.setAttribute("method", "post");
+		
 		if(data == 200) {
 			frm.submit();
 		} else {
@@ -178,6 +189,7 @@ body { padding-right: 0 !important }
 
 		bsOffcanvas.hide();
 	}
+	
 	
 	<%-- 
 	function rentalWhetherCheck(){
@@ -228,10 +240,13 @@ body { padding-right: 0 !important }
 		<div class="col"></div> <!-- 왼쪽 여백 -->
 		
 		<div class="col-10">
-		<form id="frm" action="./orderProcess" method="post">
+		<form id="frm">
 		
 			<div class="row">
-				<div class="col fs-2 center font-medium1">결제하기</div>
+				<div class="col center text-fs-23 bold">
+					<i class="bi bi-credit-card" style="margin-right:0.05rem;"></i>
+					<span>결제하기</span>
+				</div>
 			</div>
 			
 			<div class="row mt-5">
@@ -342,8 +357,8 @@ body { padding-right: 0 !important }
 			<div class="row mt-3"> <!-- 결제하기버튼 -->
 				<div class="col">
 					<div class="d-grid">
-						<button class="btn buttonColor" type="button" onclick="convertRentalDate(${fn:length(formatRentalDateList) })">결제하기</button>
-						
+						<button class="btn buttonColor" type="button" onclick="convertRentalDate(${fn:length(formatRentalDateList) });">결제하기</button>
+						<%-- onclick="rentalWhetherCheck();" --%>
 					</div>
 				</div>
 			</div>
@@ -361,7 +376,14 @@ body { padding-right: 0 !important }
 				<input id="coupon_discount" type="hidden" name="coupon_discount" value="1">
 			</form>
 			
-			<div class="row" style="padding:1em;"></div>
+			<%--<form id="frm2" action="./officeRentalWhetherCheck" method="post">
+				<input type="hidden" name="office_no" value="${officeInfo.officeInfoVo.office_no }">
+				<c:forEach items="${rental_date }" var="rentalDate">
+					<input type="hidden" name="rental_date" value="${rentalDate }">
+				</c:forEach>
+			</form> --%>
+			
+			<div class="row" style="padding:1.5em;"></div>
 		
 		</div>
 		

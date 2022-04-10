@@ -1,6 +1,8 @@
 package com.teamb.shareoffice.guest.controller;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -100,7 +102,7 @@ public class GuestControllerB {
 		if(rental_date != null) {
 			for(int i=0; i<rental_date.length; i++) {
 				String formatDate = simpleDateFormat.format(rental_date[i]);
-				
+
 				formatRentalDateList.add(formatDate);
 				
 				String businessDay = formatDate.substring(15);
@@ -132,14 +134,37 @@ public class GuestControllerB {
 		return "guest/paymentPage";
 	}
 	
+	/*
+	@RequestMapping("officeRentalWhetherCheck")
+	public String officeRentalWhetherCheck(int office_no, String [] rental_date) throws Exception {
+		
+		//예약날짜 타입 변경(Parse : String -> Date)
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+		
+		if(rental_date != null) {
+			for(int i=0; i<rental_date.length; i++) {
+				int rentalWhether = guestServiceB.officeRentalWhetherCheck(office_no, sdf.parse(rental_date[i]));
+				
+				System.out.println("렌탈 날짜 : " + rental_date[i] + " -> 렌탈여부 (" + rentalWhether + ")");
+				
+				if(rentalWhether > 0) {
+					return "guest/rentalFail";
+				} 
+			}
+		}
+		
+		
+		return "redirect:./paymentPage";
+		
+		
+	}
+	*/
 	
 	@RequestMapping("orderAndPaymentProcess")
 	public String orderAndPaymentProcess(HttpSession session, OrderVo ovo, String [] rental_date, int [] rental_price) {
 		
 		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
 		int member_no = sessionUser.getMember_no();
-		
-//		int member_no = 1; // memberNo 임의설정
 		
 		ovo.setMember_no(member_no);
 		
@@ -154,8 +179,6 @@ public class GuestControllerB {
 	
 		MemberVo sessionUser = (MemberVo) session.getAttribute("sessionUser");
 		int member_no = sessionUser.getMember_no();
-		
-//		int member_no = 1; // memberNo 임의설정
 		
 		ArrayList<HashMap<String, Object>> rentalList = guestServiceB.getGuestRentalList(member_no);
 		

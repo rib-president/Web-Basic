@@ -29,7 +29,7 @@
 	<div class="row">
 		<c:choose>
 			<c:when test="${empty sessionUser }">
-				<div class="col cursor-pointer" onclick="location.href='../member/loginPage'"><img class="img-fluid" src="../resources/img/4.png" style="width:100%"></div>
+				<div class="col cursor-pointer rounded-10 ms-2 me-3 px-8" style="background-color:#aa834d; padding-top:.7rem; padding-bottom:.7rem" onclick="location.href='../member/loginPage'"><i class="bi bi-chat-fill" style="color:#3A1D1D"></i><span class="ms-5 ps-1 text-gray-c_ff text-fs-13">카카오 로그인</span></div>
 			</c:when>
 			<c:otherwise>
 				<div class="col text-gray-c_25 text-fs-16" style="font-weight: bold; margin-left: .5rem;"><span class="text-fs-23" style="color: #333"> ${sessionUser.member_nick }</span> 님</div>

@@ -129,7 +129,8 @@ window.addEventListener("DOMContentLoaded", function() {
 						<div class="col text-fs-13 relative">
 						<c:choose>
 							<c:when test="${office.office_approve eq 'P' }">
-								<i class="bi bi-hourglass-split text-gold text-fs-15 absolute" style="top:-5%; left:8%"></i> <span class="ms-4">승인대기중</span>
+								<i class="bi bi-hourglass-split text-gold text-fs-15 absolute" style="top:-5%; left:8%"></i> 
+								<span class="ms-4">승인대기중</span>
 							</c:when> 
 							
 							<c:when test="${office.office_approve eq 'Y' }">
@@ -138,7 +139,9 @@ window.addEventListener("DOMContentLoaded", function() {
 							</c:when>
 							 
 							<c:otherwise>
-								<div class="text-red-soft"><i class="bi bi-x-octagon text-red-soft"></i> 승인거절</div> <div class="text-fs-12 text-muted">${office.office_approve_comment }</div> 
+								<i class="bi bi-x-octagon text-red-soft text-fs-15 absolute" style="top:-3%; left:8%"></i> 
+								<span class="ms-4 text-red-soft" >승인거절</span>
+							 	<div class="text-fs-12 text-muted">${office.office_approve_comment }</div> 
 							</c:otherwise>
 						</c:choose>
 						</div>

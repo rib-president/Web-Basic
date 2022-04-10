@@ -5,12 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
+
+<style>
+.title {width:5rem;}
+</style>
 
 <script>
 
@@ -221,63 +225,66 @@ function setEmailDomain(domain){
 
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 4.375rem;">
+<div class="row" style="padding-top: 2rem;">
 	<div class="col">
-			<div class="row" style="padding:1.5rem"><!-- 여백 --></div>
 			<div class="row">
-				<div class="col text-center fs-2 fw-bold">회원가입</div>
+				<div class="col text-center text-fs-23 bold"><i class="bi bi-pencil"></i> 회원가입</div>
 			</div>
-		 	<div class="row mt-5">
+			<div class="row mt-1">
+				<div class="col divider"></div>
+			</div>
+		 	<div class="row mt-3">		 		
 		 		<div class="col">
 		 			<form id="frm" action="joinMemberProcess" method="post">		 			
 			 			<div class="row"><!-- 닉네임 입력란 -->
-			 				<div class="col-2 ms-4">
-			 					<p class="center pt-2">닉네임</p>
+			 				<div class="col-3 ms-4 pr-0 title text-fs-13">
+			 					<p class="center pt-1">닉네임</p>
 			 				</div>
-			 				<div class="col-6">
+			 				<div class="col-7 pl-0">
 			 					<input type="hidden" name="member_id" value="${member_id }">
-			 					<input id="inputNick" name="member_nick" type="text" class="form-control" placeholder="닉네임을 입력해주세요" value="${member_nick }">
+			 					<input id="inputNick" name="member_nick" type="text" class="form-control form-control-sm text-fs-13" placeholder="닉네임을 입력해주세요" value="${member_nick }">
 			 				</div>
 			 				<div class="col"></div>
 			 			</div>
-						<div class="row mt-3"><!-- 이름 입력란 -->
-			 				<div class="col-2 ms-4">
+						<div class="row"><!-- 이름 입력란 -->
+			 				<div class="col-3 ms-4 pr-0 title text-fs-13">
 			 					<p class="center pt-2">성별</p>
 			 				</div>
-			 				<div class="col-4 pt-2">
-			 					<input name="member_gender" type="radio" value="M" checked> 남
-			 					<input name="member_gender" type="radio" value="F"> 여
+			 				<div class="col-4 pt-2 pl-0">
+			 					<input class="form-check-input" name="member_gender" type="radio" value="M" checked> 남&nbsp;
+			 					<input class="form-check-input" name="member_gender" type="radio" value="F"> 여
 			 				</div>
 			 			</div>		 			
-			 			<div class="row mt-3"><!-- 휴대폰 입력란 -->
-			 				<div class="col-2 ms-4">
-			 					<p class="center pt-2">휴대폰</p>
+			 			<div class="row"><!-- 휴대폰 입력란 -->
+			 				<div class="col-3 ms-4 pr-0 title text-fs-13">
+			 					<p class="center pt-1">휴대폰</p>
 			 				</div>
-			 				<div class="col-6">
-			 					<input id="inputPhone" type="text" name="member_phone" class="form-control" id="my_pnumber" oninput="inputPhoneNumber(this);" maxlength="13">
+			 				<div class="col-7 pl-0">
+			 					<input id="inputPhone" type="text" name="member_phone" class="form-control form-control-sm text-fs-13" id="my_pnumber" oninput="inputPhoneNumber(this);" maxlength="13">
 			 				</div>
 			 			</div>		 			
 			 			<div class="row mt-3"><!-- email 입력란 -->
 			 				<div class="col">
 			 					<div class="row">
-			 						<div class="col-2 ms-4">
+			 						<div class="col-3 ms-4 pr-0 title text-fs-13">
 					 					<p class="center pt-2">이메일</p>
 					 					<input type="hidden" name="member_email">
 					 				</div>
 					 				<c:choose>
 					 					<c:when test="${member_email == 'undefined'}">
-							 				<div class="col-3" style="padding-right:0; padding-left:.5rem;">
+							 				<div class="col-3 pl-0 title text-fs-11" style="padding-right:0">
 							 					<input id="inputEmail" type="text" onblur="confirmEmail()" 
-							 					class="form-control">							 					
+							 					class="form-control form-control-sm">							 					
 							 				</div>
-							 				<div class="center" style="width:.5rem; padding-right:.25rem; padding-left:0;padding-top:.5rem;">@</div>
-							 				<div class="col-3" style="padding-left:.5rem; padding-right:.25rem;">
-							 					<input id="inputEmailDomain" type="text" class="form-control" onblur="confirmEmailDomain()">
+							 				<div class="center" style="width:.5rem; padding-right:.25rem; padding-left:0;padding-top:.25rem;">@</div>
+							 				<div class="col-3 text-fs-11" style="padding-left:.5rem; padding-right:.25rem; width:5.5rem">
+							 					<input id="inputEmailDomain" type="text" class="form-control form-control-sm" onblur="confirmEmailDomain()">
 							 				</div>
-							 				<div class="col-3" style="padding:0;">
-							 					<select class="form-select" onchange="setEmailDomain(this.value);return false;">
+							 				<div class="col-3 text-fs-11" style="padding:0; width:6rem">
+							 					<select class="form-select form-select-sm pl-1 pr-0" onchange="setEmailDomain(this.value);return false;">
 												    <option value="">직접입력</option>
 												    <option value="naver.com">naver.com</option>
 												    <option value="gmail.com">gmail.com</option>
@@ -308,18 +315,18 @@ function setEmailDomain(domain){
 			 			<div class="row mt-3"><!-- 생년월일 -->			 			
 			 				<div class="col">
 			 					<div class="row">
-			 						<div class="col-2 ms-4">
-					 					<p class="center pt-2">생년월일</p>
+			 						<div class="col-3 ms-4 title">
+					 					<p class="center pt-2 text-fs-13">생년월일</p>
 					 				</div>
-					 				<div class="col-3">			 					
-					 					<select class="form-control" id="inputBirth_yy"></select>
+					 				<div class="col-3 pl-0" style="width:6rem">			 					
+					 					<select class="form-control text-fs-13" id="inputBirth_yy"></select>
 										<input type="hidden" name="member_birth">
 					 				</div>
-					 				<div class="col-3">
-		                                <select class="form-control" id="inputBirth_mm"></select>
+					 				<div class="col-3 pl-0" style="width:6rem">
+		                                <select class="form-control text-fs-13" id="inputBirth_mm"></select>
 					 				</div>
-					 				<div class="col-3">
-					 					<select class="form-control" id="inputBirth_dd"></select>
+					 				<div class="col-3 pl-0" style="width:6rem">
+					 					<select class="form-control text-fs-13" id="inputBirth_dd"></select>
 					 				</div>
 			 					</div>
 			 				</div>
@@ -343,6 +350,7 @@ function setEmailDomain(domain){
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

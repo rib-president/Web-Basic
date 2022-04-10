@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a89f71e1f43b65b9072477b5fb3f976&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dcba11bad3364b22a9a962b80ee0acfb&libraries=services"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
 .shadow-sm {
@@ -19,6 +19,7 @@
 
 var geocoder = null;
 var map = null;
+var officeNo = 0;
 
 function OfficeInfoVo(){}
 
@@ -98,6 +99,8 @@ function addrSearchCallback(officeInfo){
 }
 
 
+//전역변수
+
 
 
 
@@ -117,7 +120,8 @@ function showDetail(officeInfo){
 		boxName.innerText = officeInfo.office_name;
 		var boxTag = document.getElementById("info_tag");
 		boxTag.innerText = officeInfo.office_tags;
-        
+		
+        officeNo = officeInfo.office_no; 
 		
 		//....
 		
@@ -125,6 +129,7 @@ function showDetail(officeInfo){
 		imgBox.src = officeInfo.office_thumbnail;
 		
 		document.URL;
+		
 		
 		
 		//alert(officeInfo.office_name);
@@ -158,7 +163,7 @@ function moveFocus(){
 		// 정상적으로 검색이 완료됐으면 
 		 if (status === kakao.maps.services.Status.OK) {
 		     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-		    var moveLatLon = new kakao.maps.LatLng(coords.Ma, coords.La);
+		     var moveLatLon = new kakao.maps.LatLng(coords.Ma, coords.La);
 		    
 		    // 지도 중심을 부드럽게 이동시킵니다
 		    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
@@ -179,8 +184,12 @@ window.addEventListener("DOMContentLoaded" , function(){
 	createMarker();
 });
 
-function officeDetailPage(officeInfo)  {
-	  window.location.href = 'officeDetailPage?office_no='+ officeInfo.office_no;
+function officeDetailPage()  {
+	if (officeNo == 0 ){
+		return
+	}
+
+	  window.location.href = 'officeDetailPage?office_no='+ officeNo;
 	};
 	
 
@@ -236,7 +245,7 @@ function officeDetailPage(officeInfo)  {
 								<div class="col" style="">
 								    <div class="card-body" style="padding-top:0.5rem;padding-bottom:0.5rem;margin:0;text-align:left;">
 										<div class="row">
-											<div class="col text-fs-17 font-medium2" id="info_name" onclick="officeDetailPage(officeInfo)"></div>
+											<div class="col text-fs-17 font-medium2" id="info_name" onclick="officeDetailPage()"></div>
 										</div>
 										<div class="row text-fs-13">
 											<div class="col">

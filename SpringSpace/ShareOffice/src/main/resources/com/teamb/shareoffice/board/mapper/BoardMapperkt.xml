@@ -218,11 +218,12 @@
 	
 	<insert id="insertAllotCoupon">
 		INSERT INTO SO_AllotCoupon
-		(member_no, coupon_no, allot_date)
+		(member_no, coupon_no, allot_date, allot_useOrUnuse)
 		VALUES(
 		#{member_no},
 		#{coupon_no},
-		NOW()
+		NOW(),
+		'N'
 		)
 	</insert>
 	

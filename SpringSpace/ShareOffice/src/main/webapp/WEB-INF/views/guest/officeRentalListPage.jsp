@@ -33,7 +33,7 @@
 		<div class="col-10">
 			
 			<div class="row">
-				<div class="col center text-fs-23"><i class="bi bi-receipt-cutoff"></i> 오피스 예약 내역</div>
+				<div class="col center text-fs-23 bold"><i class="bi bi-receipt-cutoff"></i> 오피스 예약 내역</div>
 			</div>
 			
 			<div class="row mt-5"> <!-- 오피스 예약정보 -->
@@ -42,7 +42,8 @@
 					<c:forEach items="${rentalList }" var="rentalList" varStatus="status">
 					
 					<div class="row"> <!-- 예약한날짜 -->
-						<div class="col text-fs-13"><span>결제일</span>
+						<div class="col text-fs-13">
+							<span>결제일</span><i class="bi bi-calendar-check text-gold" style="margin-left:0.2rem;"></i>
 							<p class="fw-bold inline-block float-right" style="margin-bottom: 0px; text-align: right;">
 								<fmt:formatDate value="${rentalList.orderVo.order_date }" pattern="yyyy/MM/dd (E)"/>
 							</p> 
@@ -56,7 +57,7 @@
 							<img src="/soUpload/officeImage/${rentalList.officeInfoVo.office_thumbnail }" width="80em" height="84em">
 						</div>
 						
-						<div class="col"> <!-- 오피스 정보 -->
+						<div class="col" style="margin-left:0.6rem;"> <!-- 오피스 정보 -->
 							<div class="row"> <!-- 오피스 이름 -->
 								<div class="col text-fs-15 mb-3">
 									<a style="color:#333" href="../guest/officeDetailPage?office_no=${rentalList.officeInfoVo.office_no }">${rentalList.officeInfoVo.office_name }</a>
@@ -120,7 +121,7 @@
 						
 					</div>
 					
-				<div class="row" style="padding: 2.5rem;"></div>
+				<div class="row" style="padding: 2.2rem;"></div>
 				
 					</c:forEach>
 					

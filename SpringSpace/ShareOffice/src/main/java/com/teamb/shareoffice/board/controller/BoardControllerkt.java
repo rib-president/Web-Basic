@@ -41,7 +41,6 @@ public class BoardControllerkt {
 		return "board/test";
 	}
 	
-	
 	@RequestMapping("freeBoardPage")
 	public String freeBoardPage(Model model,
 			@RequestParam(value = "pageNum" , defaultValue = "1") int pageNum) {

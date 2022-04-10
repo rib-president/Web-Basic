@@ -35,7 +35,7 @@ public class GuestControllerRN {
 	private GuestServiceRN guestServiceRN;
 	
 	// for pc
-	@RequestMapping("kakaoPayApproval")
+	/*@RequestMapping("kakaoPayApproval")
 	public String kakaoPayApproval(String pg_token, HttpSession session, Model model) {
 		String kakaoKey = memberService.getKakaoKey();
 
@@ -48,11 +48,11 @@ public class GuestControllerRN {
 		session.removeAttribute("kakaopayVo");
 		
 		return "guest/payDone";
-	}
+	}*/
 	
 	
 	// for mobile
-	/*@RequestMapping("kakaoPayApproval")
+	@RequestMapping("kakaoPayApproval")
 	public String kakaoPayApproval(String pg_token, HttpSession session, Model model) {
 		String kakaoKey = memberService.getKakaoKey();
 	
@@ -68,7 +68,7 @@ public class GuestControllerRN {
 		}
 
 		return "redirect:../guest/kakaoPayFail";
-	}*/
+	}
 	
 	@RequestMapping("kakaoPayCancel")
 	public String kakaoPayCancel(HttpSession session) {
@@ -90,7 +90,7 @@ public class GuestControllerRN {
 	
 	
 	// for pc
-	@RequestMapping("orderProcess")
+	/*@RequestMapping("orderProcess")
 	public String paymentProcess(Model model, HttpSession session, OrderVo orderVo, Date[] rental_date, int allot_no, double coupon_discount, int office_no) {
 		
 		if(rental_date != null) {
@@ -140,21 +140,21 @@ public class GuestControllerRN {
 		if(allot_no > 0) {
 			guestServiceRN.useCoupon(allot_no);
 		}
-		
+
 		return "redirect:../guest/officeRentalDetailPage?order_no=" + order_no;
-	}
+	}*/
 	
 	
 	// for mobile
-	/*@RequestMapping("orderProcess")
+	@RequestMapping("orderProcess")
 	public String paymentProcess(Model model, HttpSession session) {
-		
+		System.out.println("여기옴");
 		HashMap<String, Object> params = (HashMap<String, Object>) session.getAttribute("params");
 		
 		String tid = String.valueOf(session.getAttribute("tid"));
 		ArrayList<String> rental_date = (ArrayList<String>) params.get("rental_date");
 		int allot_no = Integer.valueOf(String.valueOf(params.get("allot_no")));
-		double coupon_discount = Integer.valueOf(String.valueOf(params.get("coupon_discount")));
+		double coupon_discount = Double.valueOf(String.valueOf(params.get("coupon_discount")));
 		
 		
 		OrderVo orderVo = new OrderVo();
@@ -176,22 +176,22 @@ public class GuestControllerRN {
 			try {
 				rentalDay2 = sdf.parse(rentalDay);
 			
-			
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(rentalDay2);
-			
-			String day = weekList[calendar.get(Calendar.DAY_OF_WEEK)-1];
-			
-			BusinessDayVo businessDayVo = new BusinessDayVo();
-			
-			businessDayVo.setOffice_no(orderVo.getOffice_no());
-			
-			businessDayVo.setBusiness_day(day);
-			
-			rentalVo.setRental_date(rentalDay2);
-			rentalVo.setRental_price((int) Math.round(guestServiceB.getPriceAndBusiunessTime(businessDayVo).getBusiness_day_price() * coupon_discount));
-			
-			rentalVoList.add(rentalVo);
+				System.out.println("렌탈데이 : " + rentalDay2);
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(rentalDay2);
+				
+				String day = weekList[calendar.get(Calendar.DAY_OF_WEEK)-1];
+				
+				BusinessDayVo businessDayVo = new BusinessDayVo();
+				
+				businessDayVo.setOffice_no(orderVo.getOffice_no());
+				
+				businessDayVo.setBusiness_day(day);
+				
+				rentalVo.setRental_date(rentalDay2);
+				rentalVo.setRental_price((int) Math.round(guestServiceB.getPriceAndBusiunessTime(businessDayVo).getBusiness_day_price() * coupon_discount));
+				
+				rentalVoList.add(rentalVo);
 			} catch (ParseException e) {
 				System.out.println("parse date 익셉션]" + e.getMessage());
 			}
@@ -208,7 +208,7 @@ public class GuestControllerRN {
 		session.removeAttribute("tid");
 		
 		return "redirect:../guest/officeRentalDetailPage?order_no=" + order_no;
-	}*/
+	}
 	
 	@RequestMapping("officeRentalDetailPage")
 	public String officeRentalDetailPage(int order_no, HttpSession session, Model model) {

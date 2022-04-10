@@ -62,7 +62,6 @@
 					    <c:if test="${apply.hostVo.host_approve eq 'N'|| apply.hostVo.member_no == null }">  
 						   <p class="card-text"  style="color:red;margin:0.2rem;" >호스트 승인이 거절되었습니다.</p>
 						   <p class=" text-fs-13" style="color:red;margin:0.5rem;">거절 사유:${apply.hostVo.host_approve_comment }</p>
-						   <p style="margin:0;" onClick="javascript:window.scrollTo(0,document.body.scrollHeight)">호스트 재신청 부탁드립니다.</p>
 						   	
 					    </c:if>
 					  
@@ -70,17 +69,19 @@
 								
 				</div>
 			</c:forEach>	
-				<c:if test="${!empty sessionUser }">
+				
 				<c:choose>
-				   <c:when test="${!empty sessionUser && sessionUser.member_type == 'G'}">
-				       <div class="col d-grid" style="margin: 1em"> <a href="../guest/applyHostPage" class="btn" style="background-color: #A68A64; color: #ffffff;">호스트 재신청 하기</a></div>				  
+				   <c:when test="${!empty sessionUser && sessionUser.member_type eq 'G'}">
+				         <div class="col d-grid" style="margin: 1em"> <a href="../guest/applyHostPage" class="btn" style="background-color: #A68A64; color: #ffffff;">호스트 재신청 하기</a></div>				  
+				         <div class="col d-grid" style="margin: 1em"><a href="./mainPage" class="btn" style="background-color: #A68A64; color: #ffffff;">메인으로</a></div>
 				   </c:when>
-				   <c:otherwise>				   
-				   </c:otherwise>				
-				</c:choose>
-						   
-			     </c:if>
-			     <div class="col d-grid" style="margin: 1em"><a href="./mainPage" class="btn" style="background-color: #A68A64; color: #ffffff;">메인으로</a></div>
+				   <c:when test="${!empty sessionUser && sessionUser.member_type eq 'H' }">
+				         <div class="col d-grid" style="margin: 1em"><a href="./mainPage" class="btn" style="background-color: #A68A64; color: #ffffff;">메인으로</a></div>
+ 				   </c:when>			
+				</c:choose>					   
+		
+			     	     
+			    
 			  </div>	
 			</div>
 

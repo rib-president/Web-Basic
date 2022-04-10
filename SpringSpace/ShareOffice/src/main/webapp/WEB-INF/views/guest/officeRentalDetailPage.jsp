@@ -99,16 +99,23 @@ window.addEventListener("DOMContentLoaded" , function(){
 		<div class="col-10">
 
 			<div class="row">
-				<div class="col fs-2 text-center font-medium1">예약상세 <i class="bi bi-pencil-square text-gold"></i></div>
+				<div class="col text-center text-fs-23 bold">
+					<i class="bi bi-pencil-square" style="margin-right:0.04rem;"></i>
+					<span>예약상세</span>
+				</div>
+			</div>
+			
+			<div class="row mt-5">
+				<div class="col fs-5">예약정보 <i class="bi bi-clipboard-check text-gold"></i></div>
 			</div>
 	
+			<div class="row"> <div class="col"><hr></div> </div> <!-- 구분선 -->
 			
-			<div class="row mt-4"> <!-- 결제정보 -->
-				<hr>
+			<div class="row"> <!-- 결제정보 -->
 				<div class="col">
 					<div class="row">
 						<div class="col fw-light">
-							<i class="bi bi-shop text-gold"></i> 예약 오피스
+							<i class="bi bi-building text-gold"></i> 예약 오피스
 						</div>
 						<div class="col fw-light">
 							<p class="text-right cursor-pointer" onclick="location.href='../guest/officeDetailPage?office_no=${orderData.officeVo.office_no}'">${orderData.officeVo.office_name }</p>

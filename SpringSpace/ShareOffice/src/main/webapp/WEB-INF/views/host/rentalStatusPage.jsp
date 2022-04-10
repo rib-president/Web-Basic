@@ -687,7 +687,7 @@
 <div class="row" style="padding-top: 2rem;">
 	<div class="col">
 		<div class="row mt-1">
-			<div class="col bold text-fs-23 text-gray-c_25 text-center"><i class="bi bi-calendar-week text-gold"></i> 예약 내역</div>
+			<div class="col bold text-fs-23 text-gray-c_25 text-center"><i class="bi bi-calendar-week"></i> 예약 내역</div>
 		</div>
 		<div class="row mt-5">
 			<div class="col"></div>

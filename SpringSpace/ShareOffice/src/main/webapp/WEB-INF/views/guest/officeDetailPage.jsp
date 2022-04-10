@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
@@ -40,6 +40,7 @@ i {text-decoration: none; color:#A68A64;
 
 </style>
 <script>
+
 var priceArray =[];
 var min = Math.min.apply(null,priceArray);
 
@@ -59,8 +60,14 @@ $(function() {
 <div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-	<div class="row" style="padding-top:2em;">
+	<div class="row" style="padding-top:1rem;">
 		<div class="col">
+		  <div class="row">
+		     <div class="col"><a href="javascript:history.back();"class="btn" style="color: #A68A64;padding-top:0;"><i class="bi bi-arrow-left"></i></a></div>
+		     <div class="col-7" style="text-align: center"><p class="fs-16">오피스 상세 보기</p></div>
+		     <div class="col"></div>
+		      
+		  </div>
 		
 			<!-- 이미지 -->
 			<div class="row">
@@ -117,7 +124,7 @@ $(function() {
 					<div class="row mt-3 font-medium2" >
 						 <div class="col card-title" style="margin-bottom:0.7rem;"><p class="text-fs-23 "style="margin-bottom:0;">${office.officeVo.office_name }</p></div>
 						 <div class="col-3 text-fs-16 font-medium" style="margin:0.7rem;margin-bottom:0.7rem;text-align:right;">
-						      <p style="margin-bottom:0.3rem"><i class="bi bi-star-fill" style="color:#EDB867"></i> ${officeAvgRating }</p>
+						      <p style="margin-bottom:0.3rem" onClick="javascript:window.scrollTo(0,document.body.scrollHeight)"><i class="bi bi-star-fill" style="color:#EDB867"></i> ${officeAvgRating }</p>
 						  </div>
 					</div>
 					<div class="row" >
@@ -128,12 +135,14 @@ $(function() {
 					</div>
 					<div class="row">
 					    <div class="col-6">공간 이용료</div>
-                        <div class="col"style="text-align: right;padding:0">                      
-                           <p class="card-text font-medium2" > <fmt:formatNumber value="${minOfficePrice}" pattern="#,###"/> ~</p> 
+                        <div class="col fs-3, fw-bold"style="text-align: right;">                      
+                           <p class="card-text " > <fmt:formatNumber value="${minOfficePrice}" pattern="#,###"/> ~ <span class="font-light text-fs-13 ">원/일</span></p> 
                        </div>	
+                       <!--  
                        <div class="col-2" style="text-align: right;">  
                            <small class="text-muted text-fs-13">원/일</small>
-                       </div>		
+                       </div>	
+                       -->	
 					</div>
 					<div class="row mt-3 ">
 						<div class="col d-grid">
@@ -386,7 +395,7 @@ $(function() {
 	</div>
 	
 <%--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a89f71e1f43b65b9072477b5fb3f976&libraries=services"></script> --%>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0a89f71e1f43b65b9072477b5fb3f976&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dcba11bad3364b22a9a962b80ee0acfb&libraries=services"></script>
 <script>
 var mapContainer = document.getElementById("map"), // 지도를 표시할 div 
 mapOption = {

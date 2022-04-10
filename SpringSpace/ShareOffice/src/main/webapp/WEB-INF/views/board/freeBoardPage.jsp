@@ -25,9 +25,9 @@
   		text-align: left;
   		
   		overflow: hidden;
-  		width:200;
+  		
 	}
-
+	
 	tr:nth-child(even) {
 		background-color: #f8f9fa;
 		overflow:hidden;

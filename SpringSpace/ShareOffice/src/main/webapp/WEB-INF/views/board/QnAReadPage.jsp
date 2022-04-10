@@ -68,7 +68,7 @@
 		  </div>
 		</nav>
 	</c:when>
-	<c:otherwise>
+	<c:otherwise>	
 		<jsp:include page="../commons/navbar.jsp"></jsp:include>
 	</c:otherwise>
 </c:choose>
@@ -121,7 +121,7 @@
 				</div>
 					<div class="row">
 						<div class="col">
-							<div>좋아요 수 : ${totalLikeCount }</div>
+							<div>추천 수 : ${totalLikeCount }</div>
 						</div>
 					</div>
 				</div>

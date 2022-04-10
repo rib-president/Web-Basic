@@ -6,11 +6,17 @@
 <meta charset="UTF-8">
 <title>결제 실패</title>
 <script>
-	window.close();
+
+	// for pc
+	/*window.close();
 	
 	window.addEventListener('unload', function() {
 		window.opener.sendMeData("결제 실패");
-	});
+	});*/
+	
+	
+	// for mobile
+	window.history.go(-1);	
 </script>
 </head>
 <body>

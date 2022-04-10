@@ -64,79 +64,127 @@ function applyHost(){
 	
 }
 
+function goList() {
+    if (!confirm("호스트 신청을 취소하시겠습니까?")) {
+        return;
+    } else {
+    	location.href= '/';
+    }
+}
+
 
 
 </script>
 </head>
 <body>
-<div class="container-fluid px-0" style="overflow-x : hidden">
-<jsp:include page="../commons/navbar.jsp"></jsp:include>
-<div class="row" style="padding-top: 2em;">
-  <div class="col">
-   <div class="row text-fs-23 bold" style="text-align: center"><p>호스트 등록하기</p></div>
-
-				<div class="row text-fs-16" style="margin-bottom:1.5rem;" >
-					<div class="col-md-12 ">
-					   <form id="apply_form" action="applyHostProcess" method="post" enctype="multipart/form-data">				
-						<div class="card text-dark bg-light mb-3 " style="margin:0.5em;">
-							<div class="card-body">
-								<div class="row mt-j2">
-									<div class="col">
-										<p class="fw-lighter ">대표자명</p>
-										<input type="text" id="host_owner" name="host_owner" 
-										class="form-control form-control-sm"placeholder="대표자명을 입력해주세요.">
-									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col">
-										<p class="fw-lighter">상호명</p>
-										<input  type="text"  id="host_name" name="host_name" 
-											class="form-control form-control-sm"placeholder="상호명을 입력해주세요.">
-									</div>
-								</div>
-
-
-								<div class="row mt-2">
-									<p class="fw-lighter">사업자 등록번호</p>
-									<div class="col">
-										<input id="host_license_number" name="host_license_number" type="text" maxlength="3" 
-											class="form-control form-control-sm"placeholder="000">
-									</div>-
-									<div class="col">
-										<input id="host_license_number2" type="text" maxlength="2"
-											class="form-control form-control-sm" placeholder="00">
-									</div>-
-									<div class="col">
-										<input id="host_license_number3" type="text" maxlength="5"
-											class="form-control form-control-sm" placeholder="00000">
-									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col">
-										<p class="fw-lighter">사업자 등록증 첨부</p>
-										<input class="form-control form-control-sm" id="host_license_img"
-											type="file" name="license_img" accept="image/*" multiple>
-									</div>
-								</div>
+	<div class="container-fluid px-0" style="overflow-x : hidden">
+	<jsp:include page="../commons/navbar.jsp"></jsp:include>
+	
+	<div class="row" style="padding-top: 2em;">
+		<div class="col"></div>
+		
+		<div class="col-10">
+		 	<div class="row">
+		 		<div class="col  center text-fs-23 bold">
+		 			<i class="bi bi-person-lines-fill"></i>
+		 			<span>호스트 신청하기</span>
+		 		</div>
+		 	</div>
+		 	
+		 	<div class="row mt-1"> <div class="col"><hr></div> </div> <!-- 구분선 -->
+		
+			<div class="row text-fs-16">
+				<div class="col-md-12 ">
+				   <form id="apply_form" action="applyHostProcess" method="post" enctype="multipart/form-data">		
+				   		 
+						<div class="row">
+							<div class="col" style="text-align: right;">
+								<i class="bi bi-x-lg text-fs-18" onclick="goList();"></i>
+							</div> 
+						</div>	
+							
+						<div class="row">
+							<div class="col">
+								<p class="fw-lighter" style="margin-bottom:0.3rem;">대표자명</p>
 							</div>
-						  
-							<div class="row text-center mt-2 mb-2" >
-								<div class="col" >
-									<a onclick="location.href = document.referrer;" type="button" class="btn btn-light">cancel</a>
+						</div>
+						<div class="row">
+							<div class="col">
+								<input type="text" id="host_owner" name="host_owner" style="padding-left:0;"
+								class="form-control form-control-sm" placeholder=" 대표자명을 입력해주세요">
+							</div>
+						</div>
+						
+						<div class="row mt-3">
+							<div class="col">
+								<p class="fw-lighter" style="margin-bottom:0.3rem;">상호명</p>
+								<input  type="text"  id="host_name" name="host_name" style="padding-left:0;"
+									class="form-control form-control-sm" placeholder=" 상호명을 입력해주세요">
+							</div>
+						</div>
+		
+		
+						<div class="row mt-3">
+							<p class="fw-lighter" style="margin-bottom:0.3rem;">사업자 등록번호</p>
+							<div class="col">
+								<input id="host_license_number" name="host_license_number" type="text" maxlength="3" 
+									class="form-control form-control-sm"placeholder=" 000" style="padding-left:0;">
+							</div>-
+							<div class="col">
+								<input id="host_license_number2" type="text" maxlength="2"
+									class="form-control form-control-sm" placeholder="00">
+							</div>-
+							<div class="col">
+								<input id="host_license_number3" type="text" maxlength="5"
+									class="form-control form-control-sm" placeholder="00000">
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col">
+								<div class="row">
+									<div class="col">
+										<p class="fw-lighter" style="margin-bottom:0.3rem;">사업자등록증 첨부</p>
+									</div>
 								</div>
-								<div class="col">
-									<input type="button" class="btn btn-light" onclick="applyHost(event)" value="submit">
+								<div class="row">
+									<div class="col-6" style="padding-right:0;">
+										<label class="file-label text-fs-16" for="host_license_img" style="margin-top:0;">사진 선택</label>
+				 						<input class="file" id="host_license_img" type="file" name="license_img" accept="image/*" multiple>	
+									</div>
+									<div class="col"></div>
 								</div>
 							</div>
 						</div>
-                       </form>
-					</div>
+						
+						<div class="row" style="padding:1em;"></div>
+						
+						<div class="row"> <div class="col"><hr></div> </div> <!-- 구분선 -->
+				  
+						<div class="row text-center mt-3" >
+							<%-- 
+							<div class="col d-grid" style="padding-right:0.05rem">
+								<a onclick="location.href = document.referrer;" type="button" class="btn buttonColor">
+								취소
+								</a>
+							</div>
+							--%>
+							<div class="col d-grid">
+								<input type="button" class="btn buttonColor" onclick="applyHost(event)" value="호스트 신청">
+							</div>
+						</div>
+                    </form>
+                    
+                    <div class="row" style="padding:1.5em;"></div>
+                    
 				</div>
+			</div>
 		</div>
-</div>	
-	
-	<jsp:include page="../commons/footer.jsp"></jsp:include>
-</div>
+		
+		<div class="col"></div>
+	</div>	
+		
+		<jsp:include page="../commons/footer.jsp"></jsp:include>
+	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
