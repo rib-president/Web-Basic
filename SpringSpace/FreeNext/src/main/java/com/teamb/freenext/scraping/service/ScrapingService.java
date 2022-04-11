@@ -273,9 +273,10 @@ public class ScrapingService {
 						board_no = a.attr("href").split("project\\?fm_str\\=")[1];
 						
 						if(endKeyList.contains(board_no) || endKeyList.isEmpty()) {
+
 							hasEndKey = true;
 						}
-						
+
 						projectBoardVo.setProject_key(board_no);
 						
 						projectBoardVo.setWorkType_no(getWorkTypeNo(a.text().split("\\[|\\]")[1]));
