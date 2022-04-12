@@ -35,7 +35,7 @@ public class GuestControllerRN {
 	private GuestServiceRN guestServiceRN;
 	
 	// for pc
-	/*@RequestMapping("kakaoPayApproval")
+	@RequestMapping("kakaoPayApproval")
 	public String kakaoPayApproval(String pg_token, HttpSession session, Model model) {
 		String kakaoKey = memberService.getKakaoKey();
 
@@ -48,11 +48,11 @@ public class GuestControllerRN {
 		session.removeAttribute("kakaopayVo");
 		
 		return "guest/payDone";
-	}*/
+	}
 	
 	
 	// for mobile
-	@RequestMapping("kakaoPayApproval")
+	/*@RequestMapping("kakaoPayApproval")
 	public String kakaoPayApproval(String pg_token, HttpSession session, Model model) {
 		String kakaoKey = memberService.getKakaoKey();
 	
@@ -68,7 +68,7 @@ public class GuestControllerRN {
 		}
 
 		return "redirect:../guest/kakaoPayFail";
-	}
+	}*/
 	
 	@RequestMapping("kakaoPayCancel")
 	public String kakaoPayCancel(HttpSession session) {
@@ -90,20 +90,8 @@ public class GuestControllerRN {
 	
 	
 	// for pc
-	/*@RequestMapping("orderProcess")
-	public String paymentProcess(Model model, HttpSession session, OrderVo orderVo, Date[] rental_date, int allot_no, double coupon_discount, int office_no) {
-		
-		if(rental_date != null) {
-			for(int i=0; i<rental_date.length; i++) {
-				int rentalWhether = guestServiceB.officeRentalWhetherCheck(office_no, rental_date[i]);
-				
-				System.out.println("렌탈 날짜 : " + rental_date[i] + " -> 렌탈여부 (" + rentalWhether + ")");
-				
-				if(rentalWhether > 0) {
-					return "guest/rentalFail";
-				}
-			}
-		}
+	@RequestMapping("orderProcess")
+	public String paymentProcess(Model model, HttpSession session, OrderVo orderVo, Date[] rental_date, int allot_no, double coupon_discount) {
 		
 		orderVo.setMember_no(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
 		
@@ -142,11 +130,11 @@ public class GuestControllerRN {
 		}
 
 		return "redirect:../guest/officeRentalDetailPage?order_no=" + order_no;
-	}*/
+	}
 	
 	
 	// for mobile
-	@RequestMapping("orderProcess")
+	/*@RequestMapping("orderProcess")
 	public String paymentProcess(Model model, HttpSession session) {
 		System.out.println("여기옴");
 		HashMap<String, Object> params = (HashMap<String, Object>) session.getAttribute("params");
@@ -208,7 +196,7 @@ public class GuestControllerRN {
 		session.removeAttribute("tid");
 		
 		return "redirect:../guest/officeRentalDetailPage?order_no=" + order_no;
-	}
+	}*/
 	
 	@RequestMapping("officeRentalDetailPage")
 	public String officeRentalDetailPage(int order_no, HttpSession session, Model model) {

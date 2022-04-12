@@ -43,6 +43,7 @@ body { padding-right: 0 !important }
 	}*/
 
 	function convertRentalDate(totalResvDay) {
+		
 		var monthMap = new Map();
 		
 		monthMap.set("Jan", "01");
@@ -79,7 +80,7 @@ body { padding-right: 0 !important }
 	}
 	
 	// for mobile
-	function kakaoPay(totalResvDay) {
+	/*function kakaoPay(totalResvDay) {
 		var xhr = new XMLHttpRequest();	
 		
 		var quantity = 1;			
@@ -119,11 +120,11 @@ body { padding-right: 0 !important }
 		xhr.open("POST", "../guest/payToKakao", true);
 		xhr.setRequestHeader("Content-type","application/json");
 		xhr.send(JSON.stringify(sendData));
-	}
+	}*/
 	
 	
 	// for pc
-	/*function kakaoPay(totalResvDay) {
+	function kakaoPay(totalResvDay) {
 		var xhr = new XMLHttpRequest();	
 		
 		var quantity = 1;			
@@ -157,7 +158,7 @@ body { padding-right: 0 !important }
 		xhr.open("post", "/guest/payToKakao", true);
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xhr.send("item_name=" + item_name + "&quantity=" + quantity + "&total_amount=" + total_amount);
-	}*/
+	}
 	
 	function sendMeData(data) {
 		var frm = document.querySelector("form");
@@ -191,8 +192,9 @@ body { padding-right: 0 !important }
 	}
 	
 	
-	<%-- 
-	function rentalWhetherCheck(){
+	function rentalWhetherCheck(ev){
+		
+		ev.preventDefault();
 		
 		var rentalDateArr = new Array();
 		
@@ -202,16 +204,24 @@ body { padding-right: 0 !important }
 			rentalDateArr.push(convertedDate);
 		}
 		
+		//var jsonRentalDateArr = JSON.stringify(rentalDateArr);
+		
 		var xhr = new XMLHttpRequest();
 		
 		xhr.onreadystatechange = function(){
 			if(xhr.readyState == 4 && xhr.status == 200){
 				var data = JSON.parse(xhr.responseText);
 				
-				if(data.rentalWhether > 0) {
-					alert("이미 예약완료된 날짜입니다.");
-					return;
+				for(e of data.rentalWhether) {
+					if(e > 0) {
+						alert("이미 예약완료된 날짜입니다.");
+						location.href = document.referrer;
+					}
 				}
+				
+				convertRentalDate("${fn:length(formatRentalDateList) }");
+				
+				
 			}
 			
 		};
@@ -219,9 +229,33 @@ body { padding-right: 0 !important }
 		
 		xhr.open("post" , "./rentalWhetherCheck", true);
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		xhr.send("office_no=" + officeNo + "&rental_date=" + rentalDateArr);
+		
+		//mk test
+		//xhr.send("office_no=" + officeNo + "&rental_date=" + jsonRentalDateArr);
+		//jsonRentalDateArr = "2022-04-05";
+		var dateParam = "";
+		for(ttt of rentalDateArr){
+			dateParam += "&rental_date=";
+			dateParam += ttt.getFullYear() + "-";
+			
+			if(rentalDateArr[0].getMonth() + 1 < 10){
+				dateParam += "0";
+			}
+			
+			dateParam += ttt.getMonth() + 1 + "-";
+			
+			if(ttt.getDate() < 10){
+				dateParam += "0";
+			}
+			
+			dateParam += ttt.getDate(); 
+		}
+		
+		//xhr.send("office_no=" + officeNo + "&rental_date=" + jsonRentalDateArr);
+		
+		xhr.send("office_no=" + officeNo + dateParam);
 	}
-	--%>
+	
 	
 	window.addEventListener("DOMContentLoaded", function() {
 		var myOffcanvas = document.getElementById('offcanvasBottom');
@@ -357,8 +391,9 @@ body { padding-right: 0 !important }
 			<div class="row mt-3"> <!-- 결제하기버튼 -->
 				<div class="col">
 					<div class="d-grid">
-						<button class="btn buttonColor" type="button" onclick="convertRentalDate(${fn:length(formatRentalDateList) });">결제하기</button>
+						<button class="btn buttonColor" type="button" onclick="rentalWhetherCheck(event)">결제하기</button>
 						<%-- onclick="rentalWhetherCheck();" --%>
+						<%-- onclick="convertRentalDate(${fn:length(formatRentalDateList) });" --%>
 					</div>
 				</div>
 			</div>

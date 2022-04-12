@@ -40,6 +40,7 @@ public class AdminController
 	@RequestMapping("loginAdmin")
 	public String loginAdmin()
 	{
+		
 		return "admin/loginAdmin";
 	}
 	
@@ -74,14 +75,14 @@ public class AdminController
 	public String adminPage(HttpSession session)
 	{	
 		AdminVo adminUser = (AdminVo) session.getAttribute("adminUser");
-		
+
 		if(adminUser != null)
 		{
 			session.setAttribute("adminUser", adminUser);
-			
+
 			return "redirect:../admin/guestManagement";
 		}					
-		
+
 		return "redirect:../admin/loginAdmin";
 	}
 	

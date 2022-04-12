@@ -146,9 +146,9 @@ function cancelRental(obj, rental_no) {
 							<c:when test="${rental.rental_status == 'C' }">
 								<span class="btn-medium2 ms-5"><i class="bi bi-x-octagon text-red-soft"></i> 취소 완료</span>
 							</c:when>
-							<c:when test="${rental.rental_status == 'P' }">
-								<span class="btn-medium2 btn-outline-gold bold useBtn" style="margin-left:2.5rem" onclick="useRental(this, ${rental.rental_no})">사용</span>
-								<span class="btn-medium2 btn-outline-gold bold canBtn" onclick="cancelRental(this, ${rental.rental_no})">취소</span>
+							<c:when test="${rental.rental_status == 'P' }">								
+								<span class="btn-medium2 btn-outline-gold bold canBtn float-right ms-1 me-1" onclick="cancelRental(this, ${rental.rental_no})">취소</span>
+								<span class="btn-medium2 btn-outline-gold bold useBtn float-right" onclick="useRental(this, ${rental.rental_no})">사용</span>
 							</c:when>												
 						</c:choose>
 						</li>

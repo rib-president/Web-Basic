@@ -162,7 +162,7 @@ public class HostController {
 		ovo.setMember_no(((MemberVo) session.getAttribute("sessionUser")).getMember_no());
 		
 		hostService.registerOffice(ovo, imageDetailVoList, facility_no , businessDayVoList);
-		return "host/mainPage";
+		return "redirect:../host/officeListPage";
 	}
 	
 	@RequestMapping("officeListPage")

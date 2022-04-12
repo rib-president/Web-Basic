@@ -8,15 +8,15 @@
 <script>
 
 	// for pc
-	/*window.close();
+	window.close();
 	
 	window.addEventListener('unload', function() {
 		window.opener.sendMeData("결제 취소");
-	});*/
+	});
 	
 	
 	// for mobile
-	window.history.go(-1);
+	//window.history.go(-1);
 	
 </script>
 </head>
