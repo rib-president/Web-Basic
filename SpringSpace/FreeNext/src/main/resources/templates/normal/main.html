@@ -334,13 +334,13 @@
     				img.setAttribute("src", "../img/invidual.jpg");	
     			}    				
     		} else if(coono == 2) {
-    			img.setAttribute("src", "../img/elancer.png");
+    			img.setAttribute("src", "../img/elancer.jpg");
     		} else if(coono == 3) {
-    			img.setAttribute("src", "../img/design9.png");
+    			img.setAttribute("src", "../img/design9.jpg");
     		} else if(coono == 4) {
-    			img.setAttribute("src", "../img/wishket.png");
+    			img.setAttribute("src", "../img/wishket.jpg");
     		} else if(coono == 5) {
-    			img.setAttribute("src", "../img/webcruit.png");
+    			img.setAttribute("src", "../img/webcruit.jpg");
     		}
     		img.setAttribute("class", "card-img-top items-center");
     		//img.setAttribute("style", "width: 318px; height: 272px;");
@@ -348,10 +348,10 @@
     		
     		var iTag = document.createElement("i");    		    	
     		if(dataList[i].myScrap > 0) {
-    			iTag.setAttribute("class", "bi bi-star-fill absolute border rounded-full px-1 text-fs-20 bg-gray-c_ff");
+    			iTag.setAttribute("class", "bi bi-star-fill absolute px-1 text-fs-20 bg-gray-c_ff");
     			iTag.setAttribute("style", "top: 5%; right:3%; color: rgb(255, 219, 17);");
     		} else {
-    			iTag.setAttribute("class", "bi bi-star absolute border rounded-full px-1 text-fs-20 bg-gray-c_ff");
+    			iTag.setAttribute("class", "bi bi-star absolute px-1 text-fs-20 bg-gray-c_ff");
     			iTag.setAttribute("style", "top: 5%; right:3%;");
     		}
     		iTag.setAttribute("onclick", "doScrap(event, this," + dataList[i].projectVo.project_no + ", true)");

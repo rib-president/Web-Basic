@@ -128,7 +128,7 @@ function cancelRental(obj, rental_no) {
 				</div>									
 				<div class="row mt-3">
 					<div class="col"></div>
-					<div class="col float-right bold text-fs-15 ms-5">￦ <fmt:formatNumber type="number" maxFractionDigits="3" value="${resultMap.totalPrice }" /></div>
+					<div class="col float-right bold text-fs-15 ms-4 me-1">￦ <fmt:formatNumber type="number" maxFractionDigits="3" value="${resultMap.totalPrice }" /></div>
 				</div>					
 			</div>				
 		</div>
@@ -147,7 +147,7 @@ function cancelRental(obj, rental_no) {
 								<span class="btn-medium2 ms-5"><i class="bi bi-x-octagon text-red-soft"></i> 취소 완료</span>
 							</c:when>
 							<c:when test="${rental.rental_status == 'P' }">								
-								<span class="btn-medium2 btn-outline-gold bold canBtn float-right ms-1 me-1" onclick="cancelRental(this, ${rental.rental_no})">취소</span>
+								<span class="btn-medium2 btn-outline-gold bold canBtn float-right ms-1 me-2" onclick="cancelRental(this, ${rental.rental_no})">취소</span>
 								<span class="btn-medium2 btn-outline-gold bold useBtn float-right" onclick="useRental(this, ${rental.rental_no})">사용</span>
 							</c:when>												
 						</c:choose>

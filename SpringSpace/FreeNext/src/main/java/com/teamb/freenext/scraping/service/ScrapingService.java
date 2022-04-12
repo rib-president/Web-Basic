@@ -119,6 +119,10 @@ public class ScrapingService {
 		            projectBoardVo.setProject_state((text00s.get(4).text().equals("접수중")) ? "Y" : "N");
 		            projectBoardVo.setProject_period(text00s.get(6).text());
 		            projectBoardVo.setProject_price(text00s.get(8).text());
+		            if(getWorkTypeNo(text00s.get(10).text()) > 4) {
+		            	board_no = String.valueOf((Integer.parseInt(board_no) + 1));
+		            	continue;
+		            }
 		            projectBoardVo.setWorkType_no(getWorkTypeNo(text00s.get(10).text()));           
 		
 		        	Element text00 = text00s.get(12);            	

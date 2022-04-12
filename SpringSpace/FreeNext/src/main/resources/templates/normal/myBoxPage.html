@@ -1166,13 +1166,15 @@
 		var modal = document.createElement("div");
 		modal.setAttribute("id", "modal-dialog");
 		modal.setAttribute("class", "modal-dialog modal-lg modal-dialog-scrollable");		
+		modal.setAttribute("style", "background-color: white;");
 		
 		var row = document.createElement("div");
 		row.setAttribute("class", "modal-row row");
-		row.setAttribute("style", "background-color: white;");			
+		//row.setAttribute("style", "background-color: white;");			
 		
 		var col = document.createElement("div");
 		col.setAttribute("class", "col");
+		//col.setAttribute("style", "background-color: white;");
 		
 		var eframe = document.createElement("div");
 		eframe.setAttribute("class", "eframe-width py-6 mt-4 mx-auto");
@@ -1446,6 +1448,8 @@
     }
     
     function createNoScrapBox() {
+    	
+    	document.querySelector("#cardContainer").innerHTML = "";
     	
     	var wrapper = document.createElement("div");
     	wrapper.setAttribute("class", "relative");

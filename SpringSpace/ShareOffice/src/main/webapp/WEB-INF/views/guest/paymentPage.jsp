@@ -80,7 +80,7 @@ body { padding-right: 0 !important }
 	}
 	
 	// for mobile
-	/*function kakaoPay(totalResvDay) {
+	function kakaoPay(totalResvDay) {
 		var xhr = new XMLHttpRequest();	
 		
 		var quantity = 1;			
@@ -120,11 +120,11 @@ body { padding-right: 0 !important }
 		xhr.open("POST", "../guest/payToKakao", true);
 		xhr.setRequestHeader("Content-type","application/json");
 		xhr.send(JSON.stringify(sendData));
-	}*/
+	}
 	
 	
 	// for pc
-	function kakaoPay(totalResvDay) {
+	/*function kakaoPay(totalResvDay) {
 		var xhr = new XMLHttpRequest();	
 		
 		var quantity = 1;			
@@ -158,7 +158,7 @@ body { padding-right: 0 !important }
 		xhr.open("post", "/guest/payToKakao", true);
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xhr.send("item_name=" + item_name + "&quantity=" + quantity + "&total_amount=" + total_amount);
-	}
+	}*/
 	
 	function sendMeData(data) {
 		var frm = document.querySelector("form");
