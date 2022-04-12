@@ -15,22 +15,38 @@
 
 </head>
 <body>
-<div class="container-fluid px-0" style="overflow-x : hidden">
+<div class="container-fluid px-0" style="overflow-x : 
+hidden">
 <jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 2em;">
-	<h1>보유 쿠폰 내역</h1>
-	<div class="col" style="margin:2rem">
-		<%-- 내용작성 --%>
-		<c:forEach items="${myCouponList }" var="myCoupon">
+<div class="row" style="padding-top: 2em; margin-bottom: 1rem; margin-left: 1rem; margin-right: 1rem;">
+	
+	<div class="col">
 		<div class="row">
-			<div>쿠폰 이름 : ${myCoupon.myCouponVo.coupon_name }</div>
-			<div>쿠폰 할인 금액 : ${myCoupon.myCouponVo.coupon_discount }</div>
+			<div class="col text-center text-fs-23 bold" style="margin-bottom: 2rem;"><i class="bi bi-ticket-perforated"></i> 쿠폰함</div>
 		</div>
-		<hr>
-		
-		
-		</c:forEach>		
+		<%-- 내용작성 --%>
+
+		<c:forEach items="${myCouponList }" var="myCoupon">
+		<c:if test="${myCoupon.myCouponVo.allot_useOrUnuse == 'N' }">
+			<div class="row shadow-sm bg-body rounded" style="border: solid 0.1rem; border-radius: 0.4rem; border-color: #dee2e6; margin-bottom: 1rem;">
+				<div class="col-3 pr-0">
+					<img class="img-fluid py-3" src="/soUpload/couponImage/${myCoupon.myCouponVo.coupon_image }">
+				</div>
+				<div class="col">
+					<div class="row">
+						<div class="col pt-1">
+							<span class="text-fs-20 bold">${myCoupon.myCouponVo.coupon_discount }%</span>
+							<span class="text-fs-13 float-right" style="color: #868e96">~<fmt:formatDate value="${myCoupon.myCouponVo.coupon_useDate}" pattern="yy/MM/dd"/> 까지</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col mt-2 pb-1">${myCoupon.myCouponVo.coupon_name }</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
+		</c:forEach>	
 	</div>
 </div>
 

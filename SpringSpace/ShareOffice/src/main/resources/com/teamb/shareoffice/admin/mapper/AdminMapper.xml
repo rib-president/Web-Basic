@@ -135,6 +135,8 @@
 
 <select id="getImageDetail" resultType="com.teamb.shareoffice.vo.ImageDetailVo">
 	SELECT * FROM SO_ImageDetail
+	where office_no = #{office_no}
 </select>
+
 
 </mapper>

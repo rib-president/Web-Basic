@@ -76,7 +76,7 @@ function goList() {
 
 </script>
 </head>
-<body>
+<body class="bg-light">
 	<div class="container-fluid px-0" style="overflow-x : hidden">
 	<jsp:include page="../commons/navbar.jsp"></jsp:include>
 	
@@ -86,7 +86,7 @@ function goList() {
 		<div class="col-10">
 		 	<div class="row">
 		 		<div class="col  center text-fs-23 bold">
-		 			<i class="bi bi-person-lines-fill"></i>
+		 			<i class="bi bi-person-fill"></i> 
 		 			<span>호스트 신청하기</span>
 		 		</div>
 		 	</div>
@@ -141,18 +141,18 @@ function goList() {
 						</div>
 						<div class="row mt-3">
 							<div class="col">
-								<div class="row">
-									<div class="col">
-										<p class="fw-lighter" style="margin-bottom:0.3rem;">사업자등록증 첨부</p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-6" style="padding-right:0;">
-										<label class="file-label text-fs-16" for="host_license_img" style="margin-top:0;">사진 선택</label>
-				 						<input class="file" id="host_license_img" type="file" name="license_img" accept="image/*" multiple>	
-									</div>
-									<div class="col"></div>
-								</div>
+			                   <p class="fw-lighter" style="margin-bottom:0.3rem;">사업자등록증 첨부</p>
+			                   <input class="form-control form-control-sm" id="host_license_img" 
+											type="file" name="license_img" accept="image/*" multiple>
+
+
+									<!--<div class="col d-gird" style="padding-right:0;">
+										  <label class="file-label text-fs-16" for="host_license_img" style="margin-top:0;">사진 선택</label>
+				 						<input class="file" id="host_license_img" class="form-control" type="file" name="license_img" accept="image/*" multiple>	
+									    </div>
+									    <div class="col"></div>
+									-->
+		
 							</div>
 						</div>
 						

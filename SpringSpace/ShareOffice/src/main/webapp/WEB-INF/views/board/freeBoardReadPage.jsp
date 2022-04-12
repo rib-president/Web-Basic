@@ -54,7 +54,7 @@
 							${data.freeBoardVo.freeboard_title }
 						</span>
 					</div>
-					<div class="col-3 text-fs-13" style="text-align: right">No. ${data.freeBoardVo.freeboard_no}</div>
+					<div class="py-2 col-3 text-fs-13" style="text-align: right;">No. ${data.freeBoardVo.freeboard_no}</div>
 				</div>
 				
 				<div class="row">
@@ -92,43 +92,8 @@
 					 
 					</div>
 				</div>
-				<hr style="margin-bottom: 2rem;">
-				<div class="row">
-					<div class="col">
-					<c:choose>
-					<c:when test="${!empty sessionUser }">
-						<form action="./freeBoardCommentWriteProcess" method="get">
-							<p style="margin-bottom: 0.5em;">
-								<label>댓글</label>
-								<%--
-								코멘트리스트는 배열 같은 거라서 인덱스로 뽑아 오는거 아니면 에러남	
-								작성자 : <span>${freeBoardCommentList.get(0).memberVo.member_nick }</span>
-								 --%>
-								작성자<span class="pl-3 bold">${sessionUser.member_nick }</span>
-								
-								<input type="hidden" name="freeboard_no" value="${data.freeBoardVo.freeboard_no }">
-								
-							</p>
-							<p style="margin-bottom: 0.5em;">
-								<textarea rows="2" class="form-control" name="comment_content"></textarea>
-							</p>
-							<p>
-								<%-- 수정
-								<c:if test="${!empty sessionUser }">
-								</c:if>
-								 --%> 
-								<input type="submit" style="background-color: #BBA586; color: white;" class="float-end btn btn-light" value="등록">
-							</p>
-						</form>
-						</c:when>
-						<c:otherwise>
-							<div class="row">
-								<div class="col text-center" style="color: #868e96; margin: 1rem;">로그인 후 댓글을 작성해 주세요.</div>
-							</div> 
-						</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
+				<hr>
+			
 				<!-- 
 				<table class="table" style="margin-top: 1em;">
 				 <thead>
@@ -155,7 +120,7 @@
 					</c:forEach>
 				</tbody>
 			</table>  -->
-			<div class="row mt-5">
+			<div class="row mt-3">
 				<div class="col text-fs-16">
 					<c:forEach items="${freeBoardCommentList }" var="freeBoardCommentList">
 						<div class="row">
@@ -171,6 +136,40 @@
 					</c:forEach>
 				</div>
 			</div>
+				
+				
+				
+				<div class="row">
+					<div class="col">
+					<c:choose>
+					<c:when test="${!empty sessionUser }">
+						<form action="./freeBoardCommentWriteProcess" method="get">
+							<p style="margin-bottom: 0.5em;">
+								<label>댓글</label>
+							
+								작성자<span class="pl-3 bold">${sessionUser.member_nick }</span>
+								
+								<input type="hidden" name="freeboard_no" value="${data.freeBoardVo.freeboard_no }">
+								
+							</p>
+							<p style="margin-bottom: 0.5em;">
+								<textarea rows="2" class="form-control" name="comment_content"></textarea>
+							</p>
+							<p>
+							
+								<input type="submit" style="background-color: #BBA586; color: white;" class="float-end btn btn-light" value="등록">
+							</p>
+						</form>
+						</c:when>
+						<c:otherwise>
+							<div class="row">
+								<div class="col text-center" style="color: #868e96; margin: 1rem;">로그인 후 댓글을 작성해 주세요.</div>
+							</div> 
+						</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+				
 				
 			</div>
 		</div>

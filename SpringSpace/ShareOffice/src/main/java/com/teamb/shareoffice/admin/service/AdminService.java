@@ -103,8 +103,6 @@ public class AdminService
 	{
 		ArrayList<HashMap<String, Object>> getOfficeList = new ArrayList<HashMap<String, Object>>();
 		
-		ArrayList<ImageDetailVo> imageDetailVo = adminMapper.getImageDetail();
-		
 		ArrayList<OfficeInfoVo> getVoList = adminMapper.getOfficeInformation(searchOption, searchStr, pageNum);
 		
 		for(OfficeInfoVo officeInfoVo : getVoList)
@@ -112,12 +110,18 @@ public class AdminService
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("getOffice", officeInfoVo);
 			
+			int officeNo = officeInfoVo.getOffice_no();
+			
+			map.put("imageDetailList", adminMapper.getImageDetail(officeNo));
+			
+			
 			getOfficeList.add(map);
 		}
 		
 		return getOfficeList;
 	}
-
+	
+	
 	
 	public void officeApply(int office_no, int member_no)
 	{
@@ -138,7 +142,7 @@ public class AdminService
 	{
 		MessageVo ttt = new MessageVo();
 		ttt.setSender_no(0);
-		ttt.setReceive_no(member_no); //여긴 세팅...
+		ttt.setReceive_no(member_no); //�ш릿 �명��...
 		ttt.setTxt(msg);
 		
 		memberMapperJs.insertMessage(ttt);

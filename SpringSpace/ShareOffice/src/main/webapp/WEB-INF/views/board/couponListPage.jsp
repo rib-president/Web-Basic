@@ -71,7 +71,7 @@
                      
                      <c:otherwise>
                         <c:if test="${!empty sessionUser }">
-                        <input type="submit" class="my-3 btn btn-primary" value="쿠폰 발급">
+                        <input type="submit" class="my-3 btn" style="background-color: #A68A64; color: #ffffff;" value="쿠폰 발급">
                           </c:if>                              
                      </c:otherwise>
                   </c:choose>

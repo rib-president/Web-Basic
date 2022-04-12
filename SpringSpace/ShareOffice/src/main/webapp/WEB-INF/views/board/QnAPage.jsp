@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -13,11 +14,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="../resources/css/commons.css" rel="stylesheet">
 
+
+
 	<style>
 	.ellipsis{
 		overflow:hidden;
 		text-overflow:ellipsis;
 		white-space:nowrap;
+		width: 3em;
 	}
 	.border_bottom{
 		border-bottom:0.063em solid #d1d1d1;
@@ -41,6 +45,28 @@
 		overflow:hidden;
 		text-overflow:ellipsis;
 	}
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+		width: 100%;
+		font-size: 1em;
+	}
+	th, td {
+		table-layout:fixed;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+  		text-align: left;
+  		
+  		overflow: hidden;
+  		
+	}
+	
+	tr:nth-child(even) {
+		background-color: #f8f9fa;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		white-space:nowrap;
+	}
 	
 	</style>
 
@@ -48,162 +74,145 @@
 <body>
 <div class="container-fluid px-0" style="overflow-x : hidden">
 
-	 
-	<c:choose>
-		<c:when test="${!empty adminUser }">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			  <div class="container-fluid" style="padding-left:550px;">
-			    <a class="navbar-brand">관리자 모드</a>
-			    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			      <span class="navbar-toggler-icon"></span>
-			    </button>
-			    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-			      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-			        <li class="nav-item">
-			          <a class="nav-link" href="../admin/hostManagement">호스트 관리</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="../admin/guestManagement">게스트 관리</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="../board/QnAPage">Q&A 관리</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="../admin/createCouponPage">쿠폰 발급</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="../admin/createdCouponListPage">발급 쿠폰 목록</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="../admin/logoutAdmin">로그아웃</a>
-			        </li>
-			      </ul>
-			    </div>
-			  </div>
-			</nav>
-		</c:when>
-		<c:otherwise>	
-			<jsp:include page="../commons/navbar.jsp"></jsp:include>
-		</c:otherwise>
-	</c:choose>
-	
+	<jsp:include page="../commons/navbar.jsp"></jsp:include>
+
 	
 	
 	<div class="row" style="padding-top: 2em ">
 		
-		<div class="col" style="margin: 1rem;">
 			
-			
+		<div class="col" style="margin-bottom: 1rem; margin-left: 1rem; margin-right: 1rem;">
 			<div class="row">
-				<div class="col text-center text-fs-23 bold"><i class="bi bi-file-text"></i> QnA</div>
+				<div class="col text-center text-fs-23 bold"><i class="bi bi-question-circle"></i> QnA</div>
 			</div>
-			<%--
-			<div class="row mt-3">
-				<div class="col text-center text-fs-20 bold">best 3</div>		
-			</div>
-				
-			 --%>
-			<div class="row mt-3">
-				
-				<div class="col-8 pr-0">
-					<div class="pb-1 text-center text-fs-16 bold" style="border-bottom:0.125em solid;">best3 title</div>	
-				</div>
-				<div class="col-2 px-0">
-					<div class="pb-1 text-center text-fs-16 bold" style="border-bottom:0.125em solid;">case</div>	
-				</div>
-				<div class="col-2 pl-0">
-					<div class="pb-1 text-center text-fs-16 bold" style="border-bottom:0.125em solid;">date</div>	
-				</div>
+			<div class="row mt-4">
+				<div class="col text-fs-18 bold">자주 묻는 질문 Best3</div>
 			</div>
 			
-				<c:forEach items="${hotQnAVoList }" var="hotList">
-			<div class="row pt-1 text-center pattern">
-					
-				<div class="col-8 ml-3 py-2 pr-0">
-					<div class="ellipsis"><a class="main_color text-fs-16 bold" href="QnAReadPage?qna_no=${hotList.QnAVo.qna_no }">
-					${hotList.QnAVo.qna_title }</a></div>
-				</div>
-		
-					<c:choose>
-						<c:when test="${hotList.getCheckedQnAComment >= 1}">
-				<div class="col-2 py-2 px-0 text_center text-fs-20"><i class="complete_color bi bi-patch-check"></i></div>
-						</c:when>	
-						<c:otherwise>
-				<div class="col-2 py-2 px-0 text_center text-fs-20"><i class="bi bi-patch-question"></i></div>
-						</c:otherwise>				
-					</c:choose>
-				
-				
-				<div class="col-2 py-2 pl-0">
-					<div class="ellipsis"><fmt:formatDate value="${hotList.QnAVo.qna_writeDate }" pattern="M.dd"/></div>
-				</div>
-				
-			</div>
-				<hr class="my-1">
-				</c:forEach>
+			
+				<div class="row">
+					<div class="col text-center">
+						<table class="table">
+							<thead>
+							    <tr>
+							      <th class="text-center text-fs-16">No</th>
+							      <th class="text-center text-fs-16">Title</th>
+							      <th class="text-center text-fs-16">작성일</th>
+							      <th class="text-center text-fs-16">답변여부</th>
+							    </tr>
+							    </thead>
+							    <tbody>
+								<c:forEach items="${hotQnAVoList }" var="hotList">
+								   	<tr style="color: #868e96">
+								      	<td class="text-center">${hotList.QnAVo.qna_no }</td>
+							    		<td class="text-fs-14 pt-2 ellipsis">
+									    	<a href="./QnAReadPage?qna_no=${hotList.QnAVo.qna_no }" style="color: #464444;">
+									      		${hotList.QnAVo.qna_title }
+									      	</a>									      	
+								      	</td>
+								      	<td style="text-align: center;">
+								      		<span class="text-fs-13" ><fmt:formatDate value="${hotList.QnAVo.qna_writeDate }" pattern="MM/dd" /></span>
+								      	</td>
+								      	<c:choose>
+								      	<c:when test="${hotList.getCheckedQnAComment >= 1}">
+									      	<td style="text-align: center;">
+										      	<i class="complete_color bi bi-patch-check"></i>
+									      	</td>
+								      	</c:when>
+								      	<c:otherwise>
+								      		<td style="text-align: center;">
+										      	<i class="bi bi-patch-question"></i>
+									      	</td>
+								      	</c:otherwise>
+								      	</c:choose>
+								    </tr>
+								</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
 
 	
 			<div class="row mt-3">
 				<div class="col text-center"><img src="../resources/img/iu-상큼.webp" style="width:20.438em;"></div>		
 			</div>
 			
-
 	
-			<div class="row mt-3">
-				<div class="col-8 pr-0">
-					<div class="pb-1 text-center text-fs-16 bold" style="border-bottom:0.125em solid;">title</div>	
-				</div>
-				<div class="col-2 px-0">
-					<div class="pb-1 text-center text-fs-16 bold" style="border-bottom:0.125em solid;">case</div>	
-				</div>
-				<div class="col-2 pl-0">
-					<div class="pb-1 text-center text-fs-16 bold" style="border-bottom:0.125em solid;">date</div>			
-				</div>
-				
-			</div>		
-			
-			<c:forEach items="${QnABoardList }" var="List">
-			
-			
-			
-			<div class="row pt-1 pattern">
-			
-				<div class="col-8 pr-0">
-				<%-- 비밀글 관련 --%>
-					<c:choose>
-						<c:when test="${List.QnABoardVo.qna_screct eq 'N' }">
-							<c:choose>
-								<c:when test="${(!empty sessionUser && sessionUser.member_no eq List.QnABoardVo.member_no) || !empty adminUser }">
-									<div class="text-center ellipsis pr-0 py-2 text-fs-16 bold">
-											<a class="main_color" href="QnAReadPage?qna_no=${List.QnABoardVo.qna_no }">${List.QnABoardVo.qna_title }</a></div>	
-								</c:when>
-								<c:otherwise>
-									<div class="basic_color text-center ellipsis pr-0 py-2 text-fs-16 bold"><i class="py-3 text-fs-20 bi bi-file-lock-fill"></i> 비공개 글입니다.</div>
-								</c:otherwise>
-							</c:choose>
-						</c:when>
-						<c:otherwise>
-							<div class="text-center text-fs-16 ellipsis pr-0 py-2 bold">
-							<a class="main_color bold" href="QnAReadPage?qna_no=${List.QnABoardVo.qna_no }">${List.QnABoardVo.qna_title }</a></div>
-						</c:otherwise>
-					</c:choose>
-				</div>
-				
-					<c:choose>
-						<c:when test="${List.CheckedQnAComment >= 1}">
-				<div class="col-2 px-0 py-2 text-center text-fs-20"><i class="complete_color bi bi-patch-check"></i></div>
-						</c:when>	
-						<c:otherwise>
-				<div class="col-2 px-0 py-2 text-center text-fs-20"><i class="bi bi-patch-question"></i></div>
-						</c:otherwise>				
-					</c:choose>
-				
-				<div class="col-2 pl-0">
-					<div class="text-center py-2"><fmt:formatDate value="${List.QnABoardVo.qna_writeDate }" pattern="M.dd"/> </div>
-				</div>
-			</div>
-			<hr class="my-1">
-			</c:forEach>
+			<div class="row">
+					<div class="col text-center text-truncate">
+						<table class="table mt-4">
+							<thead>
+							    <tr>
+							      <th class="text-center text-fs-16">No</th>
+							      <th class="text-center text-fs-16">Title</th>
+							      <th class="text-center text-fs-16">작성일</th>
+							      <th class="text-center text-fs-16">답변여부</th>
+							    </tr>
+							    </thead>
+							    <tbody>
+								<c:forEach items="${QnABoardList }" var="List">
+								   	<tr style="color: #868e96" class="text-truncate">
+								      	<td class="text-center">${List.QnABoardVo.qna_no }</td>
+								      	<c:choose>
+									      	<c:when test="${List.QnABoardVo.qna_screct eq 'N' }">
+									      		<c:choose>
+									      		<c:when test="${(!empty sessionUser && sessionUser.member_no eq List.QnABoardVo.member_no) || !empty adminUser }">
+										    		<c:choose>
+									      			<c:when test="${fn:length(List.QnABoardVo.qna_title) >= 10}">
+											      		<td class="text-fs-14 pt-2 text-truncate">
+											      			<a class="text-truncate ellipsis" style="color: black;" href="QnAReadPage?qna_no=${List.QnABoardVo.qna_no }">${List.QnABoardVo.qna_title.substring(0,10) }...</a>
+											      		</td>
+									      			</c:when>
+									      			<c:otherwise>
+									      				<td class="text-fs-14 pt-2 ellipsis">
+												    		<a style="color: #464444;" href="QnAReadPage?qna_no=${List.QnABoardVo.qna_no }">${List.QnABoardVo.qna_title }</a>								      	
+											      		</td>
+									      			</c:otherwise>
+									      		</c:choose>
+									      		</c:when>
+									      		<c:otherwise>
+									      			<td class="text-fs-14">
+									      				<i class="text-fs-15 bi bi-file-lock2"></i> 비공개 글입니다.
+									      			</td>
+									      		</c:otherwise>
+									      		</c:choose>
+									      	</c:when>
+									      	<c:otherwise>
+									      		<c:choose>
+									      			<c:when test="${fn:length(List.QnABoardVo.qna_title) >= 10}">
+											      		<td class="text-fs-14 pt-2 text-truncate">
+											      			<a class="text-truncate ellipsis" style="color: black;" href="QnAReadPage?qna_no=${List.QnABoardVo.qna_no }">${List.QnABoardVo.qna_title.substring(0,10) }...</a>
+											      		</td>
+									      			</c:when>
+									      			<c:otherwise>
+									      				<td class="text-fs-14 pt-2 ellipsis">
+												    		<a style="color: #464444;" href="QnAReadPage?qna_no=${List.QnABoardVo.qna_no }">${List.QnABoardVo.qna_title }</a>								      	
+											      		</td>
+									      			</c:otherwise>
+									      		</c:choose>
+									      	</c:otherwise>
+								      	</c:choose>
+								      	<td>
+								      		<span class="text-fs-13" ><fmt:formatDate value="${List.QnABoardVo.qna_writeDate }" pattern="MM/dd"/></span>
+								      	</td>
+								      	<c:choose>
+								      	<c:when test="${List.CheckedQnAComment >= 1}">
+									      	<td style="text-align: center;">
+										      	<i class="complete_color bi bi-patch-check"></i>
+									      	</td>
+								      	</c:when>
+								      	<c:otherwise>
+								      		<td style="text-align: center;">
+										      	<i class="bi bi-patch-question"></i>
+									      	</td>
+								      	</c:otherwise>
+								      	</c:choose>
+								    </tr>
+								</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				<%--
 			<div class="row">
 				<div class="col">
@@ -213,10 +222,10 @@
 				 --%>
 				<c:if test="${!empty sessionUser }">
 					<div class="fixed " style="bottom: 4rem; right: 3rem; z-index: 99">
-						<a href="QnAWritePage"><i class="bi bi-pencil" style="font-size: 2.5rem; color: #A68A64;"></i></a>
+						<a href="QnAWritePage"><i class="bi bi-plus-circle-fill" style="font-size: 3.5rem; color: #A68A64;"></i></a>
 					</div>
 				</c:if>
-			
+					
 		
 		
 		<div class="row mt-3" style="padding-bottom: 2em;">
@@ -224,7 +233,7 @@
 			<div class="col">
 				
 				<nav aria-label="...">
-				  <ul class="pagination mb-0 my">
+				  <ul class="pagination mb-0 my" style="justify-content: center;">
 				  <c:choose>
 				  	<c:when test="${startPage <= 1}">
 					    <li class="page-item disabled">
@@ -233,7 +242,7 @@
 				  	</c:when>
 				  	<c:otherwise>
 					    <li class="page-item">
-					      <a class="page-link" href="./freeBoardPage?pageNum=${startPage-1 }">&lt;</a>
+					      <a class="page-link" href="./QnAPage?pageNum=${startPage-1 }">&lt;</a>
 					    </li>
 				  	</c:otherwise>
 				  </c:choose>
@@ -241,12 +250,12 @@
 				    	<c:choose>
 				    		<c:when test="${currentPage == i}">
 						    	<li class="page-item active ">
-						    		<a class="page-link" href="./freeBoardPage?pageNum=${i}" style="background-color: #A68A64; border-color: #A68A64">${i}</a>
+						    		<a class="page-link" href="./QnAPage?pageNum=${i}" style="background-color: #A68A64; border-color: #A68A64">${i}</a>
 						    	</li>
 				    		</c:when>
 				    		<c:otherwise>
 						    	<li class="page-item">
-						    		<a class="page-link" href="./freeBoardPage?pageNum=${i}" style="color: #A68A64;">${i}</a>
+						    		<a class="page-link" href="./QnAPage?pageNum=${i}" style="color: #A68A64;">${i}</a>
 						    	</li>
 				    		</c:otherwise>
 				    	</c:choose>
@@ -260,7 +269,7 @@
 				    	</c:when>
 				    	<c:otherwise>
 						    <li class="page-item">
-						      <a class="page-link" href="./freeBoardPage?pageNum=${endPage+1 }">&gt;</a>
+						      <a class="page-link" href="./QnAPage?pageNum=${endPage+1 }">&gt;</a>
 						    </li>
 				    	</c:otherwise>							    
 				    </c:choose>

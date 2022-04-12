@@ -1,6 +1,7 @@
 package com.teamb.shareoffice.board.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -76,7 +77,7 @@ public interface BoardMapperkt {
 	//회원이 발급한 쿠폰정보
 	public int memberReserveCoupon2(AllotCouponVo vo);
 	//내 쿠폰 정보
-	public ArrayList<CouponVo> getMyCoupon(int member_no);
+	public ArrayList<HashMap<String, Object>> getMyCoupon(int member_no);
 	
 	
 }

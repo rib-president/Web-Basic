@@ -240,8 +240,8 @@
 		AND coupon_no = #{coupon_no}		
 	</select>
 	
-	<select id="getMyCoupon" resultType="com.teamb.shareoffice.vo.CouponVo">
-		SELECT c.*
+	<select id="getMyCoupon" resultType="map">
+		SELECT *
 		FROM SO_Coupon c, SO_AllotCoupon a 
 		WHERE c.coupon_no = a.coupon_no 
 		AND member_no = #{member_no}

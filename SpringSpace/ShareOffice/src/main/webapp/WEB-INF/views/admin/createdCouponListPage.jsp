@@ -19,6 +19,11 @@
 %>
 
 <html>
+<style>
+th, td {
+  vertical-align : middle;
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -32,35 +37,51 @@
 <body>
 <jsp:include page="../commons/admin.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 10px;">
+<div class="row" style="padding:5rem">
 	<div class="col m-3">
-		<h1 style="text-align: center">발급 쿠폰 목록</h1>
-		<%-- 내용작성 --%>
-		<%--
-		 <c:if test="${!empty adminUser }">
+	   <div class="row">
+               <h1>발급 쿠폰 목록</h1>
+	   
+	    </div>
+	  
+
+	   <div class="row mt-2">
+	      <div class="col">
+	 
+			<table class="table table-hover " style="word-wrap:break-word;word-break:break-all;table-layout: fixed;text-align: center;">
+				<thead>
+					<tr>
+						<th width="5%" scope="col">No</th>
+						<th width="30%" scope="col">Image</th>
+						<th width="25%" scope="col">Name</th>
+						<th width="10%" scope="col">Total</th>
+						<th width="10%" scope="col">Price</th>
+						<th width="10%" scope="col">Until</th>
+						<th width="10%" scope="col"></th>
+					</tr>
+				</thead>
+			   
+				<tbody>
+				    <c:forEach items="${CouponVo }" var="coupon">
+					<tr style="height:10rem;" >
+						<th scope="row" >${coupon.CouponVoList.coupon_no }</th>
+						<td style="word-break:break-all"> <img class="" src="/soUpload/couponImage/${coupon.CouponVoList.coupon_image }"  style="height:9rem" alt="쿠폰이미지"></td>
+						<td>${coupon.CouponVoList.coupon_name }</td>
+						<td>${coupon.CouponVoList.coupon_count }</td>
+						<td>${coupon.CouponVoList.coupon_discount }원</td>
+						<td>~<fmt:formatDate value="${coupon.CouponVoList.coupon_useDate }" pattern="yy.MM.dd"/>까지</td>
+						<td style="text-align: right"><button type="button" class="btn btn-secondary ml-1 ">수정</button>
+						<button type="button" class="btn btn-secondary ml-1 ">삭제</button></td>
+					</tr>
+				   </c:forEach>
+				</tbody>
+		    
+			</table>
 	
-		 </c:if>
-		 --%>
-		<a href="./createCouponPage" class="btn btn-primary float-end">쿠폰발급하기</a>
-		
-		<c:forEach items="${CouponVo }" var="coupon">
-		<div class="card" style="width: 16rem;">
-		   <img src="/soUpload/couponImage/${coupon.CouponVoList.coupon_image }" class="card-img-top" alt="쿠폰이미지">
-		  <div class="card-body">
-		    <h5 class="card-title">${coupon.CouponVoList.coupon_name }</h5>
-		    <p class="card-text">${coupon.CouponVoList.coupon_discount }원</p>
-		  </div>
-		  <ul class="list-group list-group-flush">
-		    <li class="list-group-item"><fmt:formatDate value="${coupon.CouponVoList.coupon_useDate }" pattern="yy.MM.dd"/>까지 </li>
-		    <li class="list-group-item">총수량 : ${coupon.CouponVoList.coupon_count }</li>
-		  </ul>
-		  <div class="card-body">
-		<!-- 
-		    <a href="#" class="btn btn-primary" onclick="test1()">발급받기?</a>
-		 -->
-		  </div>	
-		</div>
-		</c:forEach>
+       </div>
+     </div>
+
+	
 		
 		
 		

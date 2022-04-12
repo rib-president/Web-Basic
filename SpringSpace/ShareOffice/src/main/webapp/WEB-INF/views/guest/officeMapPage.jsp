@@ -209,7 +209,7 @@ function officeDetailPage()  {
 			<div class="col" style="margin:0.5rem">
 				<div class="row" style="">
 				    
-					<p class=" text-fs-23 bold " style="text-align: center;">오피스 찾기</p>
+					<p class=" text-fs-23 bold " style="text-align: center;"><i class="bi bi-search" style="color:#464444"> </i>오피스 찾기</p>
 				</div>
 				<div class="row mt-3">
 					<div class="col" style="margin: 0; padding-right: 0.5rem">

@@ -117,7 +117,7 @@
 			<div class="col">
 				
 				<nav aria-label="...">
-				  <ul class="pagination mb-0 my">
+				  <ul class="pagination mb-0 my" style="justify-content: center;">
 				  <c:choose>
 				  	<c:when test="${startPage <= 1}">
 					    <li class="page-item disabled">

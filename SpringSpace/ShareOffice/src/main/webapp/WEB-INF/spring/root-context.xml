@@ -19,6 +19,11 @@
         <property name="url" value="jdbc:mysql://15.164.100.116:3306/team_b?serverTimezone=Asia/Seoul"></property>
         <property name="username" value="jungsugi"></property>
         <property name="password" value="blacktiger"></property>
+        <!-- 
+        <property name="url" value="jdbc:mysql://localhost:3306/team_b?serverTimezone=Asia/Seoul"></property>
+        <property name="username" value="scott"></property>
+        <property name="password" value="scott"></property>
+         -->
     </bean>        
         
  

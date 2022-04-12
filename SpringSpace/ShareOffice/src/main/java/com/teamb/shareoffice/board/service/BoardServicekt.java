@@ -296,9 +296,9 @@ public class BoardServicekt {
 	public ArrayList<HashMap<String, Object>> getMyCoupon(int member_no){
 		 ArrayList<HashMap<String, Object>> dataList = new  ArrayList<HashMap<String, Object>>();
 		 
-		 ArrayList<CouponVo> myCouponVoList = boardMapperkt.getMyCoupon(member_no);
+		 ArrayList<HashMap<String, Object>> myCouponVoList = boardMapperkt.getMyCoupon(member_no);
 		 
-		 	for(CouponVo myCoupon : myCouponVoList) {
+		 	for(HashMap<String, Object> myCoupon : myCouponVoList) {
 		 		HashMap<String, Object> data = new HashMap<String, Object>();
 		 		
 		 		data.put("myCouponVo", myCoupon);

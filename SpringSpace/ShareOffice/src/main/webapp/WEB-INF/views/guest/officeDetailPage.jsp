@@ -63,8 +63,8 @@ $(function() {
 	<div class="row" style="padding-top:1rem;">
 		<div class="col">
 		  <div class="row">
-		     <div class="col"><a href="javascript:history.back();"class="btn" style="color: #A68A64;padding-top:0;"><i class="bi bi-arrow-left"></i></a></div>
-		     <div class="col-7" style="text-align: center"><p class="fs-16">오피스 상세 보기</p></div>
+		     <div class="col"><a href="javascript:history.back();"class="btn" style="color: #A68A64;padding-top:0;"><i class="bi bi-arrow-left bold"></i></a></div>
+		     <div class="col-7 " style="text-align: center"><p class="fs-16 bold">오피스 상세 보기</p></div>
 		     <div class="col"></div>
 		      
 		  </div>
@@ -136,7 +136,7 @@ $(function() {
 					<div class="row">
 					    <div class="col-6">공간 이용료</div>
                         <div class="col fs-3, fw-bold"style="text-align: right;">                      
-                           <p class="card-text " > <fmt:formatNumber value="${minOfficePrice}" pattern="#,###"/> ~ <span class="font-light text-fs-13 ">원/일</span></p> 
+                           <p class="card-text text-fs-16" > <fmt:formatNumber value="${minOfficePrice}" pattern="#,###"/> ~ <span class="font-light text-fs-13 ">원/일</span></p> 
                        </div>	
                        <!--  
                        <div class="col-2" style="text-align: right;">  
@@ -323,7 +323,7 @@ $(function() {
 															</div>
 															<div class="col">
 																<p class="card-text">
-																	<small class="text-muted text-fs-13"><fmt:formatDate value="${review.review_date}" pattern="yyyy-MM-dd"/></small>
+																	<small class="text-muted text-fs-13"><fmt:formatDate value="${review.review_date}" pattern="yyyy/MM/dd"/></small>
 																</p>
 															</div>
 

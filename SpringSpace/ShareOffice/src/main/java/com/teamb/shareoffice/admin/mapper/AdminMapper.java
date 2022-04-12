@@ -20,8 +20,7 @@ public interface AdminMapper
 	public ArrayList<HostVo> getCheckApplyHostList();
 
 	public ArrayList<OfficeInfoVo> getOfficeInformation(@Param("searchOption") String searchOption, @Param("searchStr") String searchStr, @Param("pageNum") int pageNum);
-	public ArrayList<OfficeInfoVo> officeDetail();
-	public ArrayList<ImageDetailVo> getImageDetail();
+	public ArrayList<ImageDetailVo> getImageDetail(int office_no);
 	
 	public void updateMemberType(@Param("member_no") String member_no, @Param("member_type") String member_type);
 	public void hostApplyGuest(int host_no);

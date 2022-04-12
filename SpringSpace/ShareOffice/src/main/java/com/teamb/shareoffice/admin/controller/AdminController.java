@@ -40,7 +40,6 @@ public class AdminController
 	@RequestMapping("loginAdmin")
 	public String loginAdmin()
 	{
-		
 		return "admin/loginAdmin";
 	}
 	
@@ -62,7 +61,7 @@ public class AdminController
 		{
 			session.setAttribute("adminUser", adminUser);
 			
-			return "redirect:../admin/adminPage";
+			return "redirect:../admin/guestManagement";
 		}
 		else
 		{
@@ -72,9 +71,18 @@ public class AdminController
 	}
 	
 	@RequestMapping("adminPage")
-	public String adminPage()
+	public String adminPage(HttpSession session)
 	{	
-		return "admin/adminPage";
+		AdminVo adminUser = (AdminVo) session.getAttribute("adminUser");
+		
+		if(adminUser != null)
+		{
+			session.setAttribute("adminUser", adminUser);
+			
+			return "redirect:../admin/guestManagement";
+		}					
+		
+		return "redirect:../admin/loginAdmin";
 	}
 	
 	@RequestMapping("guestManagement")
@@ -147,7 +155,7 @@ public class AdminController
 		
 		return "admin/officeManagement";
 	}
-	
+
 	@RequestMapping("officeApply")
 	public String officeApply(int office_no, int member_no)
 	{
@@ -207,7 +215,6 @@ public class AdminController
 			
 			String oriImgName = image.getOriginalFilename();
 	
-			// random uuid + 占쎈쐻占쎈윪野껉막�쐻占쎈윪占쎄땍占쎈쐻占쎈윥筌묒궏琉놅옙猷딉옙�굲 + 占쎈쐻占쎈윪占쎄섈占쎈쐻占쎈윪占쎄텑占쎈쐻占쎈윪占쎄껑
 			UUID uuid = UUID.randomUUID();
 			uuid = UUID.randomUUID();
 			imgName += (uuid.toString() + oriImgName.substring(oriImgName.lastIndexOf(".")));

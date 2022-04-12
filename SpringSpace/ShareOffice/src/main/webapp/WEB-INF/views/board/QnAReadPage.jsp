@@ -19,7 +19,7 @@
 		border-collapse: collapse;
 		border-spacing: 0;
 		width: 100%;
-		border: 1px solid #ddd;
+		border: 0.021em solid #ddd;
 		font-size: 1em;
 	}
 	th, td {
@@ -32,177 +32,135 @@
 </style>
 </head>
 <body>
-<c:choose>
-	<c:when test="${!empty adminUser }">
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		  <div class="container-fluid" style="padding-left:550px;">
-		    <a class="navbar-brand">관리자 모드</a>
-		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-		      <span class="navbar-toggler-icon"></span>
-		    </button>
-		    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-		        <li class="nav-item">
-		          <a class="nav-link" href="../admin/hostManagement">호스트 관리</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="../admin/guestManagement">게스트 관리</a>
-		        </li>
-		        <li class="nav-item">
-          		  <a class="nav-link" href="../admin/officeManagement">오피스 관리</a>
-        		</li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="../board/QnAPage">Q&A 관리</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="../admin/createCouponPage">쿠폰 발급</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="../admin/createdCouponListPage">발급 쿠폰 목록</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="../admin/logoutAdmin">로그아웃</a>
-		        </li>
-		      </ul>
-		    </div>
-		  </div>
-		</nav>
-	</c:when>
-	<c:otherwise>	
-		<jsp:include page="../commons/navbar.jsp"></jsp:include>
-	</c:otherwise>
-</c:choose>
+<div class="container-fluid px-0" style="overflow-x : hidden">
+<jsp:include page="../commons/navbar.jsp"></jsp:include>
 
-<div class="row" style="padding-top: 2em;">
-	<div class="col" style="margin:2rem">
+
+<div class="row" style="padding-top: 1em; padding-bottom: 2em;">
+	<div class="col" style="margin-left: 1rem; margin-right:1rem;">
 	<%-- 내용작성 --%>
 		<div class="row">
 			<div class="col">
-				<h4 class="text-center">글읽기 페이지</h4>
-			
 				
 				<div class="row">
-					<div class="col">
-						작성자 : <span>${readQnABoardRow.MemberVo.member_nick }</span> 
+					<div class="col text-fs-13" style="padding-bottom: 2em;">
+						<a href="../board/QnAPage" style="color: #602b23;">
+							<i class="bi bi-question-circle"></i> QnA >
+						</a>
+					</div>
+				</div>
+			
+				<div class="row">
+					<div class="col-9 text-fs-23 bold" style="margin-bottom: 1rem;">
+						<span>
+							${readQnABoardRow.QnAVo.qna_title }
+						</span>
+					</div>
+					<div class="py-2 col-3 text-fs-13" style="text-align: right;">No. ${readQnABoardRow.QnAVo.qna_no }</div>
+				</div>
+				<!-- 
+				<hr class="mt-3 mb-0 ">
+					<div class="row">
+						<div class="col text-fs-12" style="background-color:#f5f5f5;">
+							<span>${readQnABoardRow.MemberVo.member_nick } &nbsp&nbsp</span>
+							<span><i class="bi bi-hand-thumbs-up"> ${totalLikeCount }</i></span> 
+							<span></span> 
+							<span class="float-end"><fmt:formatDate value="${readQnABoardRow.QnAVo.qna_writeDate }" pattern="yyyy.MM.dd"></fmt:formatDate></span> 
+						</div>
+					</div> --> 
+				
+				<div class="row">
+					<div class="col text-fs-16" style="margin-bottom: 0.3rem;">
+						<span>작성자</span>
+						<span class="inline-block pl-3 bold">${readQnABoardRow.MemberVo.member_nick }</span> 
 					</div>
 				</div>
 				
 				<div class="row">
-					<div class="col">
-						제목  : <span>${readQnABoardRow.QnAVo.qna_title } &nbsp &nbsp</span>
-						
-					</div>	
-				</div>	
+					<div class="col text-fs-12" style="color: #868e96">
+						<fmt:formatDate value="${readQnABoardRow.QnAVo.qna_writeDate }" pattern="yyyy/MM/dd" />
+					</div>
+				</div>
 				
-				<hr>			
+				<hr class="mb-1 mt-0">
+		
 				<div class="row">
 					<div class="col">
-						내용 : <div>${readQnABoardRow.QnAVo.qna_content }</div>
+						${readQnABoardRow.QnAVo.qna_content }
 					</div>
 					<br>
-				<%-- 수정 로그인 했을때만 쓸수있게 
-					
-				--%>
-				<div class="row">
-					<div class="col-5"></div>
-					<div class="col-2 text-center pt-2">
-						<c:if test="${!empty sessionUser }">
-							<c:choose>
-								<c:when test="${myLikeCount > 0}">
-									<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }"><h2><i class="bi bi-hand-thumbs-down"></i></h2></a>
-								</c:when>
-								<c:otherwise>
-									<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }"><h2><i class="bi bi-hand-thumbs-up"></i></h2></a>
-								</c:otherwise>
-							</c:choose>
-						</c:if>	
-					</div>
-					<div class="col-5"></div>
-				</div>
+					<c:if test="${!empty sessionUser }">
 					<div class="row">
-						<div class="col">
-							<div>추천 수 : ${totalLikeCount }</div>
+						<div class="col text-center pt-2">
+							<c:if test="${!empty sessionUser }">
+								<c:choose>
+									<c:when test="${myLikeCount > 0}">
+										<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }" style="color: #bba586">
+											<i class="bi bi-hand-thumbs-up-fill text-fs-20"></i> ${totalLikeCount }
+										</a>
+									</c:when>
+									<c:otherwise>
+										<a href="./likeProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }" style="color: #bba586">
+											<i class="bi bi-hand-thumbs-up text-fs-20"></i> ${totalLikeCount }
+										</a>
+									</c:otherwise>
+								</c:choose>
+							</c:if>	
 						</div>
+					</div>
+					</c:if>
+					
+				</div>
+				<c:if test="${!empty sessionUser && sessionUser.member_no == readQnABoardRow.QnAVo.member_no || !empty adminUser}">
+					<div class="row">
+						<div class="col mt-2">
+							<a style="background-color: #bba586; color: white;" class="float-end btn btn-light" href="./deleteQnAContentProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }">삭제</a>	
+							<a style="background-color: #bba586; color: white;" class="float-end btn btn-light" href="./updateQnAPage?qna_no=${readQnABoardRow.QnAVo.qna_no }">수정</a> 
+						</div>
+					</div>
+				</c:if>
+				
+				<hr>
+
+				<div class="row mt-3">
+					<div class="col text-fs-16">
+						<c:forEach items="${answerList }" var="answer">
+							<div class="row">
+								<div class="col bold">${answer.author }</div>
+								<div class="col text-fs-13" style="text-align: right; color: #868e96">
+									<fmt:formatDate value="${answer.QnAAnswerVo.answer_writeDate }" pattern="MM월dd일" />
+								</div>
+							</div>
+							<div class="row mt-2">
+								<div class="col">${answer.QnAAnswerVo.answer_content }</div>
+							</div>
+							<hr style="margin-top: 0.7em; margin-bottom: 0.7em;">
+						</c:forEach>
 					</div>
 				</div>
 				
-				<div class="row">
-					<div class="col mt-2">
-					<%--
-				<c:if test="${!empty sessionUser && sessionUser.member_no == readQnARow.QnAVo.member_no }">
-					 --%>
-					<a style="background-color: rgb(58,208,171);" class="float-end btn btn-light" href="./deleteQnAContentProcess?qna_no=${readQnABoardRow.QnAVo.qna_no }">삭제</a>	
-					<a style="background-color: rgb(58,208,171);" class="float-end btn btn-light" href="./updateQnAPage?qna_no=${readQnABoardRow.QnAVo.qna_no }">수정</a> 
-					<a style="background-color: rgb(58,208,171);" class="float-end btn btn-light" href="./QnAPage">목록</a>	
-					<%--
-				</c:if>
-					 --%>
-					</div>
-				</div>
-				<hr class="mt-3">
+				
 				<c:if test="${!empty adminUser }">
 				<div class="row">
 					<div class="col mt-2">
 						<form action="./QnAAnswerWriteProcess" method="get">
 							<p>
-								<label>댓글</label>
-								<%--
-								코멘트리스트는 배열 가틍ㄴ거	
-								작성자 : <span>${freeBoardCommentList.get(0).memberVo.member_nick }</span>
-								 수정 세션 정보 혹은 어드민 세션 정보 있을때만 나오게 
-								<c:if test="${!empty sessionUser }">
-								작성자 : <span>${sessionUser.member_nick }</span>
-								</c:if>
-								
-								<c:if test="${!empty adminUser }">
-								작성자 : <span>${adminUser.admin_name }</span>
-								</c:if>
-								 --%>
 								
 								<input type="hidden" name="qna_no" value="${readQnABoardRow.QnAVo.qna_no }">
 								
 							</p>
 							<p>
-								<textarea rows="2" class="form-control" name="answer_content"></textarea>
+								<textarea rows="1" class="form-control" name="answer_content"></textarea>
 							</p>
 							<p>
-								<%-- 수정
-								<c:if test="${!empty sessionUser }">
-								</c:if>
-								 --%> 
-								<input type="submit" style="background-color: #f0edcc;" class="float-end btn btn-light" value="댓글작성">
+								<input type="submit" style="background-color: #bba586;" class="float-end btn btn-light" value="댓글작성">
 							</p>
 							
 						</form>
 					</div>
 				</div>
 				</c:if>
-				<table class="table mt-2">
-				 
-				    <tr>
-				      <th class="text-center">작성자</th>
-				      <th class="text-center">내용</th>
-				      <th class="text-center">날짜</th>
-				
-				    </tr>
-				 
-				  <c:forEach items="${answerList }" var="answer">
-				    <tr>
-				      	<td>
-				      		
-								<span>${answer.author }</span>
-								
-				      	</td>
-				      	<td>
-				      		<span>${answer.QnAAnswerVo.answer_content }</span>
-				      	</td>
-				      	<td>
-				      		<span><fmt:formatDate value="${answer.QnAAnswerVo.answer_writeDate }" pattern="M.dd" /></span>
-				      	</td>
-				    	</tr>
-					</c:forEach>
-				
-			</table>	
+			
 			</div>	
 			
 		</div>
@@ -210,6 +168,7 @@
 </div>
 
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

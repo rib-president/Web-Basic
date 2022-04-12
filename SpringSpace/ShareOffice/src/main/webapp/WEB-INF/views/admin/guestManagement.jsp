@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <%
@@ -38,8 +38,11 @@
 	
 </style>
 
+
+
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/admin.jsp"></jsp:include>
 <div class="row" style="padding-top: 5em; padding-bottom: 5em; padding-left: 5em; padding-right: 5em;">
 	<div class="col">
@@ -96,26 +99,27 @@
 			  </tbody>
 		</table>
 
-		<!-- 
-		<nav aria-label="Page navigation example">
-		  <ul class="pagination">
-		    <li class="page-item"><a class="page-link">이전</a></li>
-		    <li class="page-item"><a class="page-link" href="./guestManagement?pageNum=1">1</a></li>
-		    <li class="page-item"><a class="page-link" href="./guestManagement?pageNum=2">2</a></li>
-		    <li class="page-item"><a class="page-link" href="./guestManagement?pageNum=3">3</a></li>
-		    <li class="page-item"><a class="page-link" href="./guestManagement?pageNum=4">4</a></li>
-		    <li class="page-item"><a class="page-link" href="./guestManagement?pageNum=5">5</a></li>
-		    <li class="page-item"><a class="page-link" href="./guestManagement?pageNum=6">6</a></li>
-		    <li class="page-item"><a class="page-link" href="./guestManagement?pageNum=7">7</a></li>
-		    <li class="page-item"><a class="page-link" href="./guestManagement?pageNum=8">8</a></li>
-		    <li class="page-item"><a class="page-link" href="./guestManagement?pageNum=9">9</a></li>
-		    <li class="page-item"><a class="page-link" href="./guestManagement?pageNum=10">10</a></li>
-		    <li class="page-item"><a class="page-link">다음</a></li>
-		  </ul>
-</nav>
--->
+		<div class="row mt-3" style="padding-bottom: 2em;">
+			<div class="col"></div>
+			<div class="col">
+				
+      <nav aria-label="..." >
+        <ul class="pagination" style="justify-content: center;">
+          <li class="page-item" ><a class="page-link" style="color: #000000;"> < </a></li>
+          <li class="page-item"><a class="page-link"  style="color:white; background-color: #000000; border-color: #000000;" href="./guestManagement?pageNum=1">1</a></li>
+          <li class="page-item"><a class="page-link" style="color: #000000;" href="./guestManagement?pageNum=2">2</a></li>
+          <li class="page-item"><a class="page-link" style="color: #000000;" href="./guestManagement?pageNum=3">3</a></li>
+          <li class="page-item"><a class="page-link" style="color: #000000;">></a></li>
+        </ul>
+      </nav>						
+			
+			
+			</div>
+			<div class="col"></div>
+		</div>	
 	</div>
 </div>
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

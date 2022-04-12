@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <%
@@ -62,6 +61,7 @@
 </style>
 </head>
 <body>
+<div class="container-fluid px-0" style="overflow-x : hidden">
 <jsp:include page="../commons/admin.jsp"></jsp:include>
 
 <div class="row" style="padding-top: 5em; padding-bottom: 5em; padding-left: 5em; padding-right: 5em;">
@@ -121,8 +121,10 @@
 							<td><button type="button" class="btn btn-secondary" onclick="clearAuthorityHost(${list.hostVo.host_no }, ${list.hostVo.member_no })">호스트 권한 해제</button></td>
 						</c:when>
 						<c:when test = "${list.hostVo.host_approve == 'P'}">
-							<td><button type="button" class="btn btn-secondary" onclick="if (confirm('승인하시겠습니까?')) location.href='./hostApplyGuest?member_no=${list.hostVo.member_no }&host_no=${list.hostVo.host_no }';">승인</button></td>
-							<td><button type="button" class="btn btn-secondary" onclick="refuseEvent(${list.hostVo.host_no }, ${list.hostVo.member_no })">거절</button></td>
+							<td>
+							<button type="button" class="btn btn-secondary mr-1" onclick="if (confirm('승인하시겠습니까?')) location.href='./hostApplyGuest?member_no=${list.hostVo.member_no }&host_no=${list.hostVo.host_no }';">승인</button>
+							<button type="button" class="btn btn-secondary ml-1" onclick="refuseEvent(${list.hostVo.host_no }, ${list.hostVo.member_no })">거절</button>
+							</td>
 						</c:when>
 						<c:when test="${list.hostVo.host_approve == 'N'}">
 							<td style="color: #adb5bd;" class="text-fs-13">호스트 권한 해제됨</td>
@@ -137,26 +139,29 @@
 		</table>
 		
 		
-		<nav aria-label="Page navigation example" >
-		  <ul class="pagination" style="justify-content: center;">
-		    <li class="page-item"><a class="page-link">이전</a></li>
-		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=1">1</a></li>
-		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=2">2</a></li>
-		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=3">3</a></li>
-		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=4">4</a></li>
-		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=5">5</a></li>
-		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=6">6</a></li>
-		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=7">7</a></li>
-		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=8">8</a></li>
-		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=9">9</a></li>
-		    <li class="page-item"><a class="page-link" href="./hostManagement?pageNum=10">10</a></li>
-		    <li class="page-item"><a class="page-link">다음</a></li>
-		  </ul>
-</nav>
+		<div class="row mt-3" style="padding-bottom: 2em;">
+			<div class="col"></div>
+			<div class="col">
+				
+	  <nav aria-label="..." >
+        <ul class="pagination" style="justify-content: center;">
+          <li class="page-item" ><a class="page-link" style="color: #000000;"> < </a></li>
+          <li class="page-item"><a class="page-link"  style="color:white; background-color: #000000; border-color: #000000;" href="./guestManagement?pageNum=1">1</a></li>
+          <li class="page-item"><a class="page-link" style="color: #000000;" href="./guestManagement?pageNum=2">2</a></li>
+          <li class="page-item"><a class="page-link" style="color: #000000;" href="./guestManagement?pageNum=3">3</a></li>
+          <li class="page-item"><a class="page-link" style="color: #000000;">></a></li>
+        </ul>
+      </nav>	
+			
+			
+			</div>
+			<div class="col"></div>
+		</div>	
 
 	</div>
 </div>
 <jsp:include page="../commons/footer.jsp"></jsp:include>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
