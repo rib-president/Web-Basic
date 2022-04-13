@@ -62,7 +62,10 @@
 		
 		var chart0 = echarts.init(chart0Main);
 		
-			
+		var totalProportion = parseInt(data.totalProportion);
+		if(totalProportion > 100) {			
+			totalProportion = 100;			
+		}	
 		
 		option = {
 			  title: {
@@ -117,7 +120,7 @@
 		      },
 		      data: [
 		        {
-		          value: data.totalProportion
+		          value: totalProportion
 		        }
 		      ]
 		    }
