@@ -1,6 +1,7 @@
 package com.teamb.shareoffice.guest.service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,9 @@ public class GuestServiceRN {
 		System.out.println("member_no : " + member_no + ", order_no" + order_no);
 		OrderVo orderVo = guestMapperRN.selectOrderByOrderNo(order_no);
 		ArrayList<RentalVo> rentalVoList = guestMapperB.getRentalListByOrderNo(order_no);
-
+		
+		//rental_date 오름차순으로 정렬
+		List<RentalVo> sortRentalVoList = rentalVoList.stream().sorted(Comparator.comparing(RentalVo::getRental_date)).collect(Collectors.toList());
 
 		Calendar calendar = Calendar.getInstance();
 		String[] weekList = {"일", "월", "화", "수", "목", "금", "토"};
@@ -67,9 +70,9 @@ public class GuestServiceRN {
 			
 			originPrice += guestMapperRN.selectBusinessDayPrice(orderVo.getOffice_no(), weekList[calendar.get(Calendar.DAY_OF_WEEK)-1]);
 		}
-
+		
 		map.put("orderVo", orderVo);
-		map.put("rentalVoList", guestMapperB.getRentalListByOrderNo(order_no));
+		map.put("rentalVoList", sortRentalVoList);
 		map.put("totalPrice", totalPrice);
 		map.put("originPrice", originPrice);
 		map.put("couponPrice", originPrice - totalPrice - cancelPrice);

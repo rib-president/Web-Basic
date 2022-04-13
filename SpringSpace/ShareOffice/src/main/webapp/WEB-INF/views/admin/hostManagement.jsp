@@ -94,8 +94,8 @@
 			<thead>
 			    <tr>
 			      <th scope="col">NO</th>
-			      <th scope="col">상호명</th>
 			      <th scope="col">대표자명</th>
+			      <th scope="col">상호명</th>
 			      <th scope="col">사업자번호</th>
 			      <th scope="col">신청일</th>
 			      <th scope="col">승인여부</th>

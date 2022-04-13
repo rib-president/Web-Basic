@@ -329,11 +329,11 @@ $(function() {
 
 														</div>
 														<div class="row">
-															<div class="col">
+															<div class="col-4">
 																<img src="/soUpload/reviewImage/${review.review_image }"
-																	class="img-fluid rounded-start" width=40rem, height=40rem>
+																	class="rounded-start" style="width:100%; height:100%;">
 															</div>
-															<div class="col-8 text-left">
+															<div class="col-7 text-left">
 																<c:choose>
 																	<c:when
 																		test="${fn:length(review.review_title) > 10}">
@@ -357,7 +357,7 @@ $(function() {
 																</c:choose>
 
 															</div>
-															<div class="col">
+															<div class="col-1" style="padding-left:0;">
 																<a href="./officeReviewDetailPage?review_no=${review.review_no }"><i class="bi bi-chevron-right"></i></a>
 															</div>
 														</div>

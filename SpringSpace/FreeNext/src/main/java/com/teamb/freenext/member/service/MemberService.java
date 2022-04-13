@@ -97,6 +97,7 @@ public class MemberService {
 		
 		String msgg ="";
 		msgg += "<a href='http://localhost:8181/member/mailAuthProcess?authKey="+authKey+"'>메일 인증하기</a>";
+		//msgg += "<a href='http://home.s001lec.com:7780/member/mailAuthProcess?authKey="+authKey+"'>메일 인증하기</a>"; 
 		
 		try {
 			message.addRecipients(MimeMessage.RecipientType.TO, member_email);

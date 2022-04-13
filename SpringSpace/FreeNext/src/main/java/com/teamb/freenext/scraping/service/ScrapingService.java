@@ -283,7 +283,12 @@ public class ScrapingService {
 
 						projectBoardVo.setProject_key(board_no);
 						
-						projectBoardVo.setWorkType_no(getWorkTypeNo(a.text().split("\\[|\\]")[1]));
+						if(getWorkTypeNo(a.text().split("\\[|\\]")[1]) > 4) {
+							projectBoardVo.setWorkType_no(4);
+						} else {
+							projectBoardVo.setWorkType_no(getWorkTypeNo(a.text().split("\\[|\\]")[1]));	
+						}
+						
 						projectBoardVo.setCooperation_no(2);
 						projectBoardVo.setRecruitType_no(1);
 						
@@ -814,7 +819,7 @@ public class ScrapingService {
 			return 2;
 		} else if(workTypeName.indexOf("정규직") != -1) {
 			return 3;
-		} else return 5;
+		} else return 4;
 	}
 	
 	public int getLocalNo(String localName) {

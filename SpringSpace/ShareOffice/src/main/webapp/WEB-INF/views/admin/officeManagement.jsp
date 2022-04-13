@@ -126,13 +126,15 @@ if (strReferer == null) {
 				<div class="col-4 m-3">
 					<div class="row">
 						<div class="col text-center" style="border: solid 0.1rem; border-color: #dee2e6; height: 25em;">
-							<img class="img-fluid" src="/soUpload/officeImage/${list.getOffice.office_thumbnail }"><br>
+							<img style="width:100%; height:100%" src="/soUpload/officeImage/${list.getOffice.office_thumbnail }"><br>
 						</div>
 					</div>
 					<div class="row text-center">
 						<c:forEach items="${list.imageDetailList }" var="imgList">
 							<div class="col pt-3" style="text-align: center;">
-								<div style="width: 7.5em; height:5em; border: solid 0.1rem; border-color: #dee2e6; margin: auto;  padding: 0; text-align: center;"><img src="/soUpload/officeImage/${imgList.image_url }" class="img-fluid"></div>
+								<%-- <div style=" border: solid 0.1rem; border-color: #dee2e6; margin: auto;  padding: 0; text-align: center;"><img src="/soUpload/officeImage/${imgList.image_url }" class="img-fluid">--%>
+								<div style="width: 7.5em; height:5em; border: solid 0.1rem; border-color: #dee2e6; margin: auto;  padding: 0; text-align: center;"><img src="/soUpload/officeImage/${imgList.image_url }" style="width: 100%; height:100%;">
+								</div>
 							</div>
 						</c:forEach>
 					</div>
@@ -146,7 +148,7 @@ if (strReferer == null) {
 					<div class="text-fs-16 mb-2">#${list.getOffice.office_tags}</div>
 					<div class="text-fs-16 mb-2">주소 :${list.getOffice.office_address} ${list.getOffice.office_address_detail}</div>
 					<div class="text-fs-16 mb-2">담당자 전화번호 (가상번호) :${list.getOffice.office_managerPhone} ( ${list.getOffice.office_changedPhone} )</div>
-					<div class="text-fs-16 mb-2">최소 예약일 :${list.getOfficeVo.office_min_booking_day}</div>
+					<div class="text-fs-16 mb-2">최소 예약일 :${list.getOffice.office_min_booking_day}</div>
 					<div class="text-fs-16 mb-2">승인 여부 :${list.getOffice.office_approve}</div>
 					<c:if test = "${list.getOffice.office_approve == 'N'}">  
 						<div class="text-fs-16 mb-2">거절 사유 :${list.getOffice.office_approve_comment}</div>

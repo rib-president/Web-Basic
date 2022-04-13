@@ -34,6 +34,8 @@ public class KakaoRestAPI {
 	private static final String LOGIN_GET_TOKEN = "/oauth/token";	
 	
 	private final String domain = "http://localhost:8181/";
+	//private final String domain = "http://home.s001lec.com:7780/";
+	//private final String domain = "http://home.s001lec.com:8080/";
 	private final String cid = "TC0ONETIME";
 	
 	public Map<String, Object> getLocalInfo(String kakaoKey, String extLoc) {
@@ -114,6 +116,8 @@ public class KakaoRestAPI {
     	params.put("grant_type", "authorization_code");
     	params.put("client_id", kakaoKey);
     	params.put("redirect_uri", "http://localhost:8181/member/loginGetCode");
+    	//params.put("redirect_uri", "http://home.s001lec.com:7780/member/loginGetCode");
+    	//params.put("redirect_uri", "http://home.s001lec.com:8080/member/loginGetCode");
     	params.put("code", code);
     	
     	String sendParams = mapToParams(params);

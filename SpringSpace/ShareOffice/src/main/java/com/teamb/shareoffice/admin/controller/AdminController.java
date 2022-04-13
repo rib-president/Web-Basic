@@ -197,7 +197,8 @@ public class AdminController
 		
 	@RequestMapping("createCouponProcess") 
 	public String createCouponProcess(CouponVo param, MultipartFile image, HttpSession session) {
-		String uploadFolder = "C:/shareOffice/couponImage/"; 
+		//String uploadFolder = "C:/shareOffice/couponImage/";
+		String uploadFolder = "/shareOffice/couponImage/";
 			if(!image.isEmpty()) {
 			
 			Date today = new Date();

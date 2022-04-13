@@ -153,7 +153,7 @@ public class NormalController {
 		
 		MemberVo sessionBizUser = (MemberVo) session.getAttribute("sessionBizUser");		
 		if(sessionBizUser != null) {
-			return "normal/BizBoxPage";			
+			return "normal/bizBoxPage";			
 		}		
 		
 		return "normal/main";

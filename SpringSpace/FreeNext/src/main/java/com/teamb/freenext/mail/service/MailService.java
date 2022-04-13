@@ -48,6 +48,8 @@ public class MailService {
 				for(ProjectBoardVo send : sendList) {
 					mailText += "<a href='http://localhost:8181/normal/projectDetailPage?project_no=" + send.getProject_no() + 
 							"'><h3>" + send.getProject_name() + "</h3></a><br>";
+					/*mailText += "<a href='http://home.s001lec.com:7780/normal/projectDetailPage?project_no=" + send.getProject_no() + 
+							"'><h3>" + send.getProject_name() + "</h3></a><br>";*/
 				}				
 				System.out.println(mailText);
 				mailSenderThread = new MailSenderThread(javaMailSender, customer.getMember_email(), "[FreeNext] 오늘의 추천 프로젝트", mailText);

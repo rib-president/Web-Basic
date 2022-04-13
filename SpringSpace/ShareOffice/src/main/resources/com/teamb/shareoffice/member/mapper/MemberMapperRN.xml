@@ -24,4 +24,10 @@
 	)
 </insert>
 
+<select id="selectMemberByNo" resultType="com.teamb.shareoffice.vo.MemberVo">
+	select *
+	from so_member
+	where member_no = #{member_no}
+</select>
+
 </mapper>

@@ -126,7 +126,7 @@ function showDetail(officeInfo){
 		//....
 		
 		var imgBox = document.getElementById("info_img");
-		imgBox.src = officeInfo.office_thumbnail;
+		imgBox.src = '/soUpload/officeImage/' + officeInfo.office_thumbnail;
 		
 		document.URL;
 		

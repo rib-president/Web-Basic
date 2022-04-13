@@ -89,4 +89,8 @@ public class MemberServiceRN {
 	public ArrayList<HostVo> getHostVoList(int member_no) {
 		return guestMapperH.getHostApproveCheck(member_no);
 	}
+	
+	public MemberVo getMemberByNo(int member_no) {
+		return memberMapper.selectMemberByNo(member_no);
+	}
 }

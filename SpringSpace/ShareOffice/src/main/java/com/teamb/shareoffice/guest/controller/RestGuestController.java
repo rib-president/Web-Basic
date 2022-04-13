@@ -57,6 +57,7 @@ public class RestGuestController {
 	
 	@RequestMapping("rentalWhetherCheck")
 	public HashMap<String, Object> rentalWhetherCheck(int office_no, String [] rental_date) throws Exception{
+		
 		HashMap<String, Object> responseData = new HashMap<String, Object>();
 		/*
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);

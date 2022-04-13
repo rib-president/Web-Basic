@@ -6,4 +6,5 @@ public interface MemberMapperRN {
 	
 	public MemberVo selectMemberById(String member_id);
 	public void insertMember(MemberVo vo);
+	public MemberVo selectMemberByNo(int member_no);
 }

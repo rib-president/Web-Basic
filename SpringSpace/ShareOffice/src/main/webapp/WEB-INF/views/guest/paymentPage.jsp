@@ -251,6 +251,7 @@ body { padding-right: 0 !important }
 			dateParam += ttt.getDate(); 
 		}
 		
+		
 		//xhr.send("office_no=" + officeNo + "&rental_date=" + jsonRentalDateArr);
 		
 		xhr.send("office_no=" + officeNo + dateParam);

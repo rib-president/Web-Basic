@@ -504,7 +504,12 @@
 			row4_col1_span2.innerText = " | ";
 			var row4_col1_span3 = document.createElement("span");
 			row4_col1_span3.setAttribute("class", "bold");
-			row4_col1_span3.innerText = data.workTypeVo.workType_name;
+			if(data.workTypeVo == null) {
+				row4_col1_span3.innerText = "기타";
+			} else {
+				row4_col1_span3.innerText = data.workTypeVo.workType_name;	
+			}
+			
 			row4_col1.appendChild(row4_col1_span1);
 			row4_col1.appendChild(row4_col1_span2);
 			row4_col1.appendChild(row4_col1_span3);					

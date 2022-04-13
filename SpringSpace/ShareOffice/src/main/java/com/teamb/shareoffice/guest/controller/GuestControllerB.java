@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -121,7 +122,7 @@ public class GuestControllerB {
 			}
 		}
 		
-		
+		formatRentalDateList.sort(null);
 		
 		model.addAttribute("officeInfo", officeInfo); // 오피스정보
 		model.addAttribute("ovo", ovo); 

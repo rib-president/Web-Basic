@@ -134,7 +134,8 @@
 
 	
 			<div class="row mt-3">
-				<div class="col text-center"><img src="../resources/img/iu-상큼.webp" style="width:20.438em;"></div>		
+				<%-- <div class="col text-center"><img src="../resources/img/iu-상큼.webp" style="width:20.438em;"></div> --%>
+				<div class="col text-center"><img src="../resources/img/qnabanner.jpg" style="width:20.438em;"></div>		
 			</div>
 			
 	
