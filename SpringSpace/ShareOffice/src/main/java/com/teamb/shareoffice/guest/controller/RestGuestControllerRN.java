@@ -29,7 +29,7 @@ public class RestGuestControllerRN {
 	@Autowired GuestServiceRN guestServiceRN;
 	
 	// for pc
-	/*@RequestMapping("payToKakao")
+	@RequestMapping("payToKakao")
 	public HashMap<String, Object> payToKakao(String item_name, String quantity, int total_amount, HttpSession session) {
 
 		String kakaoKey = memberService.getKakaoKey();
@@ -55,11 +55,11 @@ public class RestGuestControllerRN {
 		data.put("tid", result.get("tid"));
 
 		return data;
-	}*/
+	}
 	
 	
 	// for mobile
-	@RequestMapping("payToKakao")		
+	/*@RequestMapping("payToKakao")		
 	public HashMap<String, Object> payToKakao(@RequestBody HashMap<String, Object> params, HttpSession session) {	
 
 		System.out.println("size : " + params.size());
@@ -93,5 +93,5 @@ public class RestGuestControllerRN {
 		data.put("next_redirect_mobile_url", result.get("next_redirect_mobile_url"));
 
 		return data;
-	}
+	}*/
 }

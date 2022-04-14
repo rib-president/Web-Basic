@@ -239,8 +239,8 @@ function officeDetailPage()  {
 				   <!-- <c:forEach></c:forEach> -->
 						<div class="card shadow bg-body rounded" style="margin-top:0.3rem; padding-bottom:0rem;   ">
 							<div class="row" style="background-color: #f8f9fa;">
-								<div class="col-4" style="margin-left:0.5rem;padding-right:0">
-									<img src="" class="img-fluid" id="info_img" style="padding:-0.5rem">
+								<div class="col-4" style="margin-right:0.5rem;margin:0.5rem;padding-right:0;">
+									<img src="" id="info_img" style="padding:-0.5rem;width:100%;height:100%;">
 								</div>
 								<div class="col" style="">
 								    <div class="card-body" style="padding-top:0.5rem;padding-bottom:0.5rem;margin:0;text-align:left;">
