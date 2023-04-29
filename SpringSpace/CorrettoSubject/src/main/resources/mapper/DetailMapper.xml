@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.corretto.board.detail.mapper.DetailMapper">
+
+<select id="selectArticle" resultType="com.corretto.board.vo.ArticleVo">
+	select * from Article where id=#{id}
+</select>
+
+<update id="updateArticleViewCount">
+	update Article set view_count=view_count+1 where id=#{id}
+</update>
+
+<select id="selectBoardName" resultType="string">
+	select name from Board where id=#{board_id}
+</select>
+
+<select id="selectAttachment" resultType="com.corretto.board.vo.AttachmentVo">
+	select * from Attachment where article_id=#{article_id}
+</select>
+
+</mapper>

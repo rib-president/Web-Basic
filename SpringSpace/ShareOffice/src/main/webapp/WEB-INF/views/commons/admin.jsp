@@ -9,29 +9,31 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid" style="padding-left: 550px;">
-    <a class="navbar-brand" href="../admin/adminPage">관리자 모드</a>
+  <div class="container-fluid">
+  <div class="col-4"></div>
+  <div class="col ms-5">    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+    <div class="collapse navbar-collapse ms-5" id="navbarSupportedContent">
+    <a class="navbar-brand me-5" style="margin-left:7rem" href="../admin/adminPage">관리자 모드</a>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item me-4">
           <a class="nav-link" href="hostManagement">호스트 관리</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item me-4">
           <a class="nav-link" href="guestManagement">게스트 관리</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item me-4">
           <a class="nav-link" href="officeManagement">오피스 관리</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item me-4">
           <a class="nav-link" href="../admin/QnAPage">Q&A 관리</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item me-4">
           <a class="nav-link" href="createCouponPage">쿠폰 발급</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item me-4">
           <a class="nav-link" href="createdCouponListPage">발급 쿠폰 목록</a>
         </li>
         <li class="nav-item">
@@ -45,6 +47,7 @@
         </c:choose>  
         </li>
       </ul>
+    </div>
     </div>
   </div>
 </nav>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.corretto.board.delete.mapper.DeleteMapper">
+
+<delete id="deleteArticle">
+	delete from Article where id=#{id}
+</delete>
+
+<delete id="deleteAttachment">
+	delete from Attachment where article_id=#{article_id}
+</delete>
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.corretto.board.list.mapper.ListMapper">
+
+<select id="selectArticleList" resultType="map">
+	select *,
+	(select name from board where article.board_id = id) as boardName,
+	(select location from attachment where id = (select MIN(id) from attachment where article_id = article.id)) as location
+	from article
+	where 1=1
+	<if test="startDateTime != null">
+	<![CDATA[ 
+	and DATE(created_datetime) >= #{startDateTime}
+	]]>
+	</if>
+	<if test="endDateTime != null">
+	<![CDATA[ 
+	and DATE(created_datetime) <= #{endDateTime}
+	]]>
+	</if>
+	<if test="boardName != null">
+	and board_id in (select id from board where name like CONCAT('%',#{boardName},'%'))
+	</if>
+	order by created_datetime desc
+</select>
+
+</mapper>

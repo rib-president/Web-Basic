@@ -46,10 +46,10 @@ public class MailService {
 				String mailText = "<h1>" + customer.getMember_name() + "님을 위한 오늘의 추천 프로젝트💌</h1><br>" +
 									"<h2>" + desiredCategory + " 프로젝트 정보만 가져왔어요</h2><br><br>";
 				for(ProjectBoardVo send : sendList) {
-					mailText += "<a href='http://localhost:8181/normal/projectDetailPage?project_no=" + send.getProject_no() + 
-							"'><h3>" + send.getProject_name() + "</h3></a><br>";
-					/*mailText += "<a href='http://home.s001lec.com:7780/normal/projectDetailPage?project_no=" + send.getProject_no() + 
+					/*mailText += "<a href='http://localhost:8181/normal/projectDetailPage?project_no=" + send.getProject_no() + 
 							"'><h3>" + send.getProject_name() + "</h3></a><br>";*/
+					mailText += "<a href='http://home.s001lec.com:7781/normal/projectDetailPage?project_no=" + send.getProject_no() + 
+							"'><h3>" + send.getProject_name() + "</h3></a><br>";
 				}				
 				System.out.println(mailText);
 				mailSenderThread = new MailSenderThread(javaMailSender, customer.getMember_email(), "[FreeNext] 오늘의 추천 프로젝트", mailText);

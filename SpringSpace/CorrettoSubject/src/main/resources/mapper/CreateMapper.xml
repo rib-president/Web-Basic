@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.corretto.board.create.mapper.CreateMapper">
+
+<select id="selectBoard" resultType="com.corretto.board.vo.BoardVo">
+	select * from Board
+</select>
+
+<insert id="insertArticle" useGeneratedKeys="true" keyProperty="id">
+	insert into Article
+	(board_id, title, content, view_count, created_datetime)
+	values (
+	#{board_id}, 
+	#{title},
+	#{content},
+	0,
+	NOW()
+	)
+</insert>
+
+<insert id="insertAttachment">
+	insert into Attachment
+	(article_id, location, created_datetime)
+	values (
+	#{article_id},
+	#{location},
+	NOW()
+	)
+</insert>
+
+</mapper>

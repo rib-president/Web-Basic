@@ -21,9 +21,9 @@
         /* effect */
         .fade {
         -webkit-animation-name: fade;
-        -webkit-animation-duration: 2.5s;
+        -webkit-animation-duration: 4s;
         animation-name: fade;
-        animation-duration: 2.5s;
+        animation-duration: 4s;
         }
 
         @-webkit-keyframes fade {
@@ -48,7 +48,7 @@
         color: black;
         font-weight: bold;
         font-size: 18px;
-        transition: 0.6s ease;
+        transition: 0.1s ease;
         /*border-radius: 0 3px 3px 0;*/
         }	
 	
@@ -726,7 +726,7 @@
 		loadMainData();
 		
 		$(".mySlideDiv").not(".active").hide(); //화면 로딩 후 첫번째 div를 제외한 나머지 숨김        
-        setInterval(nextSlide, 8000); //4초(4000)마다 다음 슬라이드로 넘어감
+        setInterval(nextSlide, 4000); //4초(4000)마다 다음 슬라이드로 넘어감
         NumAni__start('.num');
 	});
 	

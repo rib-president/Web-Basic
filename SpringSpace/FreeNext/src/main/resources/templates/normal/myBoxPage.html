@@ -2485,7 +2485,7 @@
 				
 				if(obj.closest(".project-scrap-box") != null) {
 					var id = obj.closest(".project-scrap-box").querySelector(".project-name").getAttribute("aria-controls");
-					console.log(id);
+					//console.log(id);
 					document.querySelector("#" + id).closest(".collapse-container").remove();
 					obj.closest(".project-scrap-box").remove();
 					
