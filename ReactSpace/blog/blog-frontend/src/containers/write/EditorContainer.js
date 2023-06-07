@@ -13,7 +13,6 @@ const EditorContainer = () => {
     // 언마운트될 때 초기화
     useEffect(() => {
         return () => {
-            console.log('바봉!!')
             dispatch(initialize());
         };
     }, [dispatch]);

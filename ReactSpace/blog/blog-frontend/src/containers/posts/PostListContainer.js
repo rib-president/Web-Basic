@@ -16,14 +16,9 @@ const PostListContainer = () => {
             user: user.user
         }),
     );
-
-    
     
     const {search} = useLocation();
     const {username} = useParams();
-
-    console.log(username);
-    console.log(search);
 
     const Fetchevent = useCallback(() => {
         
