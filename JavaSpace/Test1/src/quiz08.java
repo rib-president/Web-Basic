@@ -1,4 +1,5 @@
 
+
 public class quiz08 {
 	public static int solution(String s, String w) {
 		int answer = 0;
